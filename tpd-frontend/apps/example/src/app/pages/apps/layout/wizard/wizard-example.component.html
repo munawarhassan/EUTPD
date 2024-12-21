@@ -1,0 +1,57 @@
+<div class="row my-10 justify-content-end">
+  <label class="col-md-2 col-form-label d-flex justify-content-end fw-bold">Mode:</label>
+  <div class="col-md-2">
+    <select
+      select2
+      class="form-control form-select form-select-transparent"
+      select2
+      name="mode"
+      [(ngModel)]="mode"
+      placeholder="Select Mode"
+      [allowClear]="false"
+    >
+      <option></option>
+      <option value="tab">Tabulation</option>
+      <option value="linear">Linear</option>
+      <option value="aside">Aside</option>
+    </select>
+  </div>
+</div>
+<lt-wizard [mode]="mode" (changeStep)="handleChange()" (completeWizard)="handleComplete()">
+  <lt-wizard-step
+    title="Account Setup"
+    icon="far fa-user-circle fa-1x"
+    description="Setup Your Account Details"
+    [valid]="Step1.valid.bind(Step1)"
+  >
+    <app-wizard-example-step1 #Step1 [user]="user"></app-wizard-example-step1>
+  </lt-wizard-step>
+  <!--begin: Form Wizard Step   2-->
+  <lt-wizard-step
+    title="Profile Setup"
+    icon="fas fa-user-cog fa-1x"
+    description="Setup Your Account Settings"
+    [valid]="Step2.valid.bind(Step2)"
+  >
+    <app-wizard-example-step2 #Step2 [user]="user"></app-wizard-example-step2>
+  </lt-wizard-step>
+
+  <!--end: Form Wizard Step 2-->
+
+  <!--begin: Form Wizard Step 3-->
+  <lt-wizard-step
+    title="Billing Setup"
+    icon="far fa-id-card fa-1x"
+    description="Set Your Payment Methods"
+    [valid]="Step3.valid.bind(Step3)"
+  >
+    <app-wizard-example-step3 #Step3 [user]="user"></app-wizard-example-step3>
+  </lt-wizard-step>
+
+  <!--end: Form Wizard Step 3-->
+
+  <!--begin: Form Wizard Step 4-->
+  <lt-wizard-step title="Confirmation" icon="far fa-check-circle fa-1x" description="Woah, we are here">
+    <app-wizard-example-step4 #Step4 [user]="user"></app-wizard-example-step4>
+  </lt-wizard-step>
+</lt-wizard>

@@ -1,0 +1,289 @@
+version: '3.9'
+
+services:
+  db-blue:
+    image: "mysql:${DOMIBUS_MYSQL_VERSION}"
+    command:
+      - "mysqld"
+      - "--default-authentication-plugin=mysql_native_password"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_bin"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_USER=${DOMIBUS_DATABASE_USERNAME}"
+      - "MYSQL_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "MYSQL_DATABASE=domibus"
+    healthcheck:
+        test: ["CMD", "mysqladmin" , "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    configs:
+      - source: myql_config
+        target: /etc/mysql/conf.d/config-file.cnf
+    volumes:
+      - "db-blue:/var/lib/mysql"
+    networks:
+      - c2c3_backend
+  domibus-blue:
+    image: "domibus/domibus:${DOMIBUS_MAJOR_VERSION}"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 250s
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
+    environment:
+      - "DATABASE_SERVER=db-blue"
+      - "DATABASE_SCHEMA=domibus"
+      - "DATABASE_PORT=3306"
+      - "DATABASE_USERNAME=${DOMIBUS_DATABASE_USERNAME}"
+      - "DATABASE_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "CHECK_DEFAULT_PASSWORD=false"
+      - "CERT_ALIAS=${DOMIBUS_CERT_BLUE_ALIAS}"
+      - "KEYSTORE_TYPE=${DOMIBUS_KEYSTORE_TYPE}"
+      - "TRUSTSTORE_TYPE=${DOMIBUS_TRUSTSTORE_TYPE}"
+      - "KEYSTORE_LOCATION=${DOMIBUS_KEYSTORE_LOCATION}"
+      - "TRUSTSTORE_LOCATION=${DOMIBUS_TRUSTSTORE_LOCATION}"
+      - "DOMIBUS_PLUGINS=${DOMIBUS_PLUGINS}"
+      - "PASSWORD_EXPIRATION=0"
+      - "DEFAULT_PASSWORD_EXPIRATION=0"
+    entrypoint: ["dockerize", "-wait", "tcp://db-blue:3306", "-timeout", "60s", "/entrypoint.sh", "run" ]
+    configs:
+      - source: truststore
+        target: /usr/share/domibus/truststore/gateway_truststore.p12
+        mode: 0660
+      - source: keystore
+        target: /usr/share/domibus/keystore/gateway_keystore.p12
+        mode: 0660
+    volumes:
+      - "home-blue:/usr/share/domibus/home"
+    ports:
+      - "6262:61616"
+      - "7080:8080"
+    networks:
+      - c2c3_backend
+      - net
+  updater-blue:
+    image: "domibus/updater:${DOMIBUS_MAJOR_VERSION}"
+    entrypoint:
+      - "dockerize"
+      - "-wait"
+      - "tcp://domibus-blue:8080"
+      - "-timeout"
+      - "500s"
+      - "/entrypoint.sh"
+      - "pmode"
+      - "--force"
+      - "--server=http://domibus-blue:8080"
+      - "--username=${DOMIBUS_ADMIN_USERNAME}"
+      - "--password=${DOMIBUS_ADMIN_PASSWORD}"
+      - "--filename=/pmodes/pmode.xml"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: none
+    configs:
+      - source: pmode-blue
+        target: /pmodes/pmode.xml
+    networks:
+      - c2c3_backend
+  db-red:
+    image: "mysql:${DOMIBUS_MYSQL_VERSION}"
+    command:
+     - "mysqld"
+     - "--default-authentication-plugin=mysql_native_password"
+     - "--character-set-server=utf8mb4"
+     - "--collation-server=utf8mb4_bin"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 180s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_USER=${DOMIBUS_DATABASE_USERNAME}"
+      - "MYSQL_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "MYSQL_DATABASE=domibus"
+    healthcheck:
+        test: ["CMD", "mysqladmin" , "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    configs:
+      - source: myql_config
+        target: /etc/mysql/conf.d/config-file.cnf
+    volumes:
+      - "db-red:/var/lib/mysql"
+    networks:
+      - c2c3_backend
+  domibus-red:
+    image: "domibus/domibus:${DOMIBUS_MAJOR_VERSION}"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 250s
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
+    environment:
+      - "DATABASE_SERVER=db-red"
+      - "DATABASE_SCHEMA=domibus"
+      - "DATABASE_PORT=3306"
+      - "DATABASE_USERNAME=${DOMIBUS_DATABASE_USERNAME}"
+      - "DATABASE_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "CHECK_DEFAULT_PASSWORD=false"
+      - "CERT_ALIAS=${DOMIBUS_CERT_RED_ALIAS}"
+      - "KEYSTORE_TYPE=${DOMIBUS_KEYSTORE_TYPE}"
+      - "TRUSTSTORE_TYPE=${DOMIBUS_TRUSTSTORE_TYPE}"
+      - "KEYSTORE_LOCATION=${DOMIBUS_KEYSTORE_LOCATION}"
+      - "TRUSTSTORE_LOCATION=${DOMIBUS_TRUSTSTORE_LOCATION}"
+#      - "DOMIBUS_MODE=test"
+      - "DOMIBUS_PLUGINS=jms"
+      - "PASSWORD_EXPIRATION=0"
+      - "DEFAULT_PASSWORD_EXPIRATION=0"
+    entrypoint: ["dockerize", "-wait", "tcp://db-red:3306", "-timeout", "60s", "/entrypoint.sh", "run" ]
+    configs:
+      - source: truststore
+        target: /usr/share/domibus/truststore/gateway_truststore.p12
+      - source: keystore
+        target: /usr/share/domibus/keystore/gateway_keystore.p12
+    volumes:
+      - "home-red:/usr/share/domibus/home"
+    ports:
+      - "6363:61616"
+      - "7081:8080"
+    networks:
+      - c2c3_backend
+  updater-red:
+    image: "domibus/updater:${DOMIBUS_MAJOR_VERSION}"
+    entrypoint:
+      - "dockerize"
+      - "-wait"
+      - "tcp://domibus-red:8080"
+      - "-timeout"
+      - "320s"
+      - "/entrypoint.sh"
+      - "pmode"
+      - "--force"
+      - "--server=http://domibus-red:8080"
+      - "--username=${DOMIBUS_ADMIN_USERNAME}"
+      - "--password=${DOMIBUS_ADMIN_PASSWORD}"
+      - "--filename=/pmodes/pmode.xml"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: none
+    configs:
+      - source: pmode-red
+        target: /pmodes/pmode.xml
+    networks:
+      - c2c3_backend
+  receiver:
+    image: "tpd/backend-receiver:${TPD_TAG}"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    environment:
+      - "APP_DOMIBUS_URL=http://domibus-red:8080"
+      - "APP_DOMIBUS_JMS_OPTIONS_URL=tcp://domibus-red:61616"
+    configs:
+      - source: keystore-receiver
+        target: /usr/share/receiver/conf/config/keystore-receiver.jks
+    networks:
+      - c2c3_backend
+volumes:
+  db-blue: {}
+  home-blue: {}
+  db-red: {}
+  home-red: {}
+networks:
+  c2c3_backend: {}
+  net:
+    external: true
+configs:
+  myql_config:
+    file: ./config/mysql/conf.d/config-file.cnf
+  pmode-blue:
+    file: ./config/domibus/pmodes/tpd-pmode-blue.xml
+  pmode-red:
+    file: ./config/domibus/pmodes/tpd-pmode-red.xml
+  truststore:
+    file: ./config/domibus/truststore/tpd_gateway_truststore.p12
+  keystore:
+    file: ./config/domibus/keystore/tpd_gateway_keystore.p12
+  keystore-receiver:
+    file: ./config/receiver/keystore-receiver.jks

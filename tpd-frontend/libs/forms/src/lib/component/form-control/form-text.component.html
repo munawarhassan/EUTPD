@@ -1,0 +1,39 @@
+<label *ngIf="label" class="form-label">
+  <span [ngClass]="{ required: required }">{{ label }} </span>
+  <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+</label>
+<div [ngClass]="{ 'position-relative': icon }">
+  <input
+    #Input
+    [type]="type"
+    [name]="inputId"
+    [class]="controlClass"
+    [placeholder]="placeholder || label"
+    [disabled]="disabled"
+    (input)="handleInput($event)"
+    (blur)="markAsTouched()"
+    (focus)="touched = false"
+    [autocomplete]="autocomplete ? 'on' : 'off'"
+  />
+  <div
+    *ngIf="icon"
+    class="position-absolute translate-middle-y top-50"
+    [ngClass]="{ 'end-0 me-3': iconPosition === 'end', 'start-0 ms-3': iconPosition === 'start' }"
+  >
+    <i *ngIf="!useSVG(icon)" [class]="icon" [ngClass]="iconCLass"></i>
+    <inline-svg class="me-2" *ngIf="useSVG(icon)" [inlineSVG]="icon" [ngClass]="iconCLass"></inline-svg>
+  </div>
+</div>
+<div class="form-text text-muted" [innerHTML]="helpText"></div>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('required')">{{ fieldName }} is required.</span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('pattern')">{{ fieldName }} is invalid.</span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('maxlength')">
+    {{ fieldName }} Cannot be longer than {{ ngControl.errors?.maxlength.requiredLength }} characters.</span
+  >
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('minlength')">
+    {{ fieldName }} must be at least {{ ngControl.errors?.minlength.requiredLength }} characters.</span
+  >
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('email')">{{ fieldName }} is invalid.</span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('equalTo')">{{ fieldName }} must match.</span>
+</div>

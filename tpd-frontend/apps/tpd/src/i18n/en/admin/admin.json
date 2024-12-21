@@ -1,0 +1,53 @@
+{
+  "admin": {
+    "title": "Administration",
+    "users": {
+      "description": "Edit individual user details, passwords and groups membership."
+    },
+    "server": {
+      "description": "Configure HTTP other server settings."
+    },
+    "audits": {
+      "description": "View current access activity."
+    },
+    "database": {
+      "description": "View and migrate database configurations."
+    },
+    "console": {
+      "description": "View and Logs setttings."
+    },
+    "index": {
+      "description": "The search index allows searching of submission content."
+    },
+    "health": {
+      "description": "View some main diagnostics of application."
+    },
+    "mail": {
+      "description": "Configure the SMTP server used to send notification emails."
+    },
+    "ldap": {
+      "description": "Connect TPD to user directory servers - Active Directory and LDAP.."
+    },
+    "keystore": {
+      "description": "Manage certificate and key pairs used by application."
+    },
+    "domibus": {
+      "description": "Configure the Domibus server used to send submission to E.U.."
+    },
+    "metrics": {
+      "description": "View some main metrics of application."
+    },
+    "tracker": {
+      "description": "View all current users on the applicaton."
+    },
+    "groups": {
+      "description": "Create groups and manage users within each group."
+    },
+    "globalpermissions": {
+      "description": "Configure global user permissions."
+    },
+    "api": {
+      "description": "Swagger API."
+    }
+  }
+}

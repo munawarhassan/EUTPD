@@ -1,0 +1,84 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# The app.home configuration must be set and specifies the directory in which application will store its data files.
+# This must be set to an absolute path. Relative paths are not allowed.
+# Ensure that only one application instance uses the selected Home foled.
+#
+###########################
+# Note for Windows Users
+###########################
+#
+# NOTE : If you are using Windows, you will need to use double \ characters, for example c:\app-home should be written
+# as c:\\app-home
+#
+# You can also use Unix like paths which Java/Portal can handle. eg c:/app-home
+#-----------------------------------------------------------------------------------------------------------------------
+app:
+  home: E:/tpd/integration/tpd-home
+  dev.mode: false
+  auto-setup: true
+  log:
+    # log level : (DEBUG|TRACE|INFO|WARN|ERROR)
+    loglevel: INFO
+    fullStackTraces: true
+  security:
+    keystore:
+      location: classpath:certificates/keystore.jks
+      notification:      
+         contact: christophe.friederich@pmi.com
+         expiration:
+            enable: true
+    authentication:
+      directory: # ldap, activeDirectory, internalLdap, internalActiveDirectory
+        # LDAP directory that you will connect to.
+        activeDirectory:
+          name: "Delegated LDAP Authentication PMI Active Directory"          
+          domain: PMINTL.NET
+          authenticationOnly: true
+          hostname: ldap.app.pmi
+          port: 389
+          username:
+          password:          
+          ldapSchema:
+            baseDn: DC=PMINTL,DC=NET
+            additionalUserDn: (objectClass=user)
+
+database:
+    liquibase:
+        contexts: dev,production
+
+jpa:
+    show_sql: true
+
+spring.profiles.include: mock
+
+# Domibus Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+# Domibus Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+app.domibus:
+  enable: true
+  connectionType: Jms
+  #  url: https://pmpsa-as4-inttst.app.pmi/domibus
+  url: https://domibus-blue-192-168-1-175.traefik.me
+  action: SubmitRequest
+  serviceType: "e-delivery"
+  service: "http://ec.europa.eu/e-delivery/services/tobacco-ecig-reporting"
+  originalSender: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C1
+  finalRecipient: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C4
+  partyIdType: urn:oasis:names:tc:ebcore:partyid-type:unregistered:EUCEG
+  fromPartyId: ACC-EUCEG-99962-AS4
+  toPartyId: EUCEG_EC
+  keyPairAlias: acc-euceg-99962-as4
+  trustedCertificateAlias: euceg_ec
+  username: eutpd
+  # cd78b8a30a583523395103cc6b88a1f7b8aa84d6ed339ee34c31469e579522
+  password: "EuTPD#2018"
+  jmsOptions:
+    url: tcp://neptune.local:6262
+    receiveTimeout: 10
+    concurrency: "1-1"
+    username: "domibus"
+    password: "changeit"
+  wsOptions:
+    authorizationType: BASIC
+    pendingInterval: 5

@@ -1,0 +1,195 @@
+<!--begin::Authentication - Sign-up -->
+<!--begin::Form-->
+<form
+  [formGroup]="formControl"
+  #form="ngForm"
+  (ngSubmit)="register()"
+  class="form"
+  class="form w-100"
+  novalidate="novalidate"
+  id="m-sign_up_form"
+>
+  <!--begin::Heading-->
+  <div class="mb-10 text-center">
+    <!--begin::Title-->
+    <h1 class="text-dark mb-3">Create an Account</h1>
+    <!--end::Title-->
+    <!--begin::Link-->
+    <div class="text-gray-400 fw-bold fs-4">
+      Already have an account?
+      <a routerLink="/login" class="link-primary fw-bolder">Sign in here</a>
+    </div>
+    <!--end::Link-->
+  </div>
+  <!--end::Heading-->
+  <!--begin::Input group-->
+  <div class="fv-row mb-7">
+    <label class="form-label fw-bolder text-dark fs-6">{{ 'global.form.username' | translate }}</label>
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="text"
+      [placeholder]="'global.form.username.placeholder' | translate"
+      name="username"
+      formControlName="username"
+      autocomplete="off"
+    />
+    <div *ngIf="(form?.submitted || username.touched) && username.invalid">
+      <div
+        id="username-required-error"
+        class="error invalid-feedback"
+        *ngIf="username.hasError('required')"
+        translate="global.messages.validate.username.required"
+      ></div>
+      <div
+        id="username-minlength-error"
+        class="error invalid-feedback"
+        *ngIf="username.hasError('minlength')"
+        translate="global.messages.validate.username.minlength"
+      ></div>
+      <div
+        id="username-maxlength-error"
+        class="error invalid-feedback"
+        *ngIf="username.hasError('maxlength')"
+        translate="global.messages.validate.username.maxlength"
+      ></div>
+      <div
+        id="username-pattern-error"
+        class="error invalid-feedback"
+        *ngIf="username.hasError('pattern')"
+        translate="global.messages.validate.username.pattern"
+      ></div>
+    </div>
+  </div>
+  <div class="fv-row mb-7">
+    <label class="form-label fw-bolder text-dark fs-6">{{ 'global.form.displayname' | translate }}</label>
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="text"
+      [placeholder]="'global.form.displayname.placeholder' | translate"
+      name="displayName"
+      formControlName="displayName"
+      autocomplete="off"
+    />
+    <div *ngIf="(form?.submitted || displayName.touched) && displayName.invalid">
+      <div
+        id="displayname-required-error"
+        class="error invalid-feedback"
+        *ngIf="displayName.hasError('required')"
+        translate="global.messages.validate.displayname.required"
+      ></div>
+    </div>
+  </div>
+  <!--end::Input group-->
+  <!--begin::Input group-->
+  <div class="fv-row mb-7">
+    <label class="form-label fw-bolder text-dark fs-6">{{ 'global.form.email' | translate }}</label>
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="email"
+      [placeholder]="'global.form.email.placeholder' | translate"
+      name="email"
+      formControlName="email"
+      autocomplete="off"
+    />
+    <div *ngIf="(form?.submitted || email.touched) && email.invalid">
+      <div
+        id="email-required-error"
+        class="error invalid-feedback"
+        *ngIf="email.hasError('required')"
+        translate="global.messages.validate.email.required"
+      ></div>
+      <div
+        id="email-invalid-error"
+        class="error invalid-feedback"
+        *ngIf="email.hasError('email')"
+        translate="global.messages.validate.email.invalid"
+      ></div>
+    </div>
+  </div>
+  <!--end::Input group-->
+  <!--begin::Input group-->
+  <div class="mb-10 fv-row">
+    <div class="mb-1">
+      <label class="form-label fw-bolder text-dark fs-6">{{ 'global.form.password' | translate }}</label>
+      <lt-password-input
+        controlClass="form-control-lg form-control-solid"
+        formControlName="password"
+        name="password"
+        [placeholder]="'global.form.password.placeholder' | translate"
+      ></lt-password-input>
+      <div *ngIf="(form?.submitted || password.touched) && password.invalid">
+        <div
+          id="password-required-error"
+          class="error invalid-feedback"
+          *ngIf="password.hasError('required')"
+          translate="global.messages.validate.password.required"
+        ></div>
+        <div
+          id="password-minlength-error"
+          class="error invalid-feedback"
+          *ngIf="password.hasError('minlength')"
+          translate="global.messages.validate.password.minlength"
+        ></div>
+        <div
+          id="password-maxlength-error"
+          class="error invalid-feedback"
+          *ngIf="password.hasError('maxlength')"
+          translate="global.messages.validate.password.maxlength"
+        ></div>
+      </div>
+    </div>
+    <!--begin::Hint-->
+    <div class="text-muted">Use 5 or more characters with a mix of letters, numbers &amp; symbols.</div>
+    <!--end::Hint-->
+  </div>
+  <!--end::Input group=-->
+  <!--begin::Input group-->
+  <div class="fv-row mb-5">
+    <label class="form-label fw-bolder text-dark fs-6">{{ 'global.form.confirmpassword' | translate }}</label>
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="password"
+      [placeholder]="'global.form.confirmpassword.placeholder' | translate"
+      name="confirmPassword"
+      formControlName="confirmPassword"
+      autocomplete="off"
+    />
+    <div *ngIf="(form?.submitted || confirmPassword.touched) && confirmPassword.invalid">
+      <div
+        id="confirmpassword-required-error"
+        class="error invalid-feedback"
+        *ngIf="confirmPassword.hasError('required')"
+        translate="global.messages.validate.confirmpassword.required"
+      ></div>
+      <div
+        id="confirmpassword-compareTo-error"
+        class="error invalid-feedback"
+        *ngIf="confirmPassword.hasError('equalTo')"
+        translate="global.messages.validate.confirmpassword.compareTo"
+      ></div>
+    </div>
+  </div>
+  <!--end::Input group-->
+  <!--begin::Input group-->
+  <div class="fv-row mb-10">
+    <label class="form-check form-check-custom form-check-solid form-check-inline">
+      <input class="form-check-input" type="checkbox" name="toc" value="1" />
+      <span class="form-check-label fw-bold text-gray-700 fs-6"
+        >I Agree <a href="#" class="ms-1 link-primary">Terms and conditions</a>.</span
+      >
+    </label>
+  </div>
+  <!--end::Input group-->
+  <!--begin::Actions-->
+  <div class="text-center">
+    <button type="submit" id="m-sign_up_submit" class="btn btn-lg btn-primary">
+      <span class="indicator-label">{{ 'signup.button' | translate }}</span>
+      <span [ngClass]="{ 'd-none': !loading }"
+        >Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span
+      ></span>
+    </button>
+  </div>
+  <!--end::Actions-->
+</form>
+<!--end::Form-->
+<!--end::Authentication - Sign-up-->

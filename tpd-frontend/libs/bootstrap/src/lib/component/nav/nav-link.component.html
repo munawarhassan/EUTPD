@@ -1,0 +1,19 @@
+<!-- link mode -->
+<a #toggle *ngIf="target" role="tab" [ngClass]="linkClass" [attr.href]="target" [attr.aria-selected]="active">
+  <i *ngIf="!useSVG && icon" [class]="icon" [ngClass]="iconClass"></i>
+  <inline-svg *ngIf="useSVG && icon" [inlineSVG]="icon" [ngClass]="iconClass"></inline-svg>
+  <span *ngIf="title" [innerHtml]="title"></span>
+</a>
+<!-- route mode -->
+<a
+  *ngIf="link"
+  [ngClass]="linkClass"
+  role="tab"
+  [routerLink]="link"
+  routerLinkActive="active"
+  [attr.aria-selected]="active"
+>
+  <i *ngIf="!useSVG && icon" [class]="icon" [ngClass]="iconClass"></i>
+  <inline-svg *ngIf="useSVG && icon" [inlineSVG]="icon" size="1" [ngClass]="iconClass"></inline-svg>
+  <span *ngIf="title" [innerHtml]="title"></span>
+</a>

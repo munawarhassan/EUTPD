@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:element name="SubmitterDetails">
+        <xs:annotation>
+            <xs:documentation>Defines the submitter details.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SubmitterID" type="SubmitterNumber" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The submitter ID of the submitter details</xs:documentation>
+                    </xs:annotation>
+                </xs:element>              
+                <xs:element name="Name" type="String100Value">
+                    <xs:annotation>
+                        <xs:documentation>The name of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Sme" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>Indication whether the submitter is an SME as defined in Commission Recommendation 2003/361/EC.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="HasVatNumber" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>Indication whether the submitter has a VAT number.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="VatNumber" type="String40Value" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The VAT number of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Address" type="String300Value">
+                    <xs:annotation>
+                        <xs:documentation>The address of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Country" type="CountryValue">
+                    <xs:annotation>
+                        <xs:documentation>The country of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="PhoneNumber" type="PhoneNumberValue">
+                    <xs:annotation>
+                        <xs:documentation>The phone number of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Email" type="EmailAddressValue">
+                    <xs:annotation>
+                        <xs:documentation>The email of the submitter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SubmitterDetailsResponse">
+        <xs:annotation>
+            <xs:documentation>Defines the submitter details response returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AbstractAppResponse">
+                    <xs:sequence>
+                        <xs:element name="SubmitterID" type="SubmitterNumber">
+                            <xs:annotation>
+                                <xs:documentation>The submitter ID of the submitter details sent to the system</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Submitter">
+        <xs:annotation>
+            <xs:documentation>Defines a submitter.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SubmitterType" type="SubmitterType">
+                <xs:annotation>
+                    <xs:documentation>The submitter type.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HasParent" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter has a parent company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Parent" type="Company" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The parent company information.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HasAffiliates" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter has affiliate companies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Affiliates" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Affiliate" type="Company" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="HasEnterer" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter has an enterer companies.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Enterer" type="Company" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The enterer company information.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HasNaturalLegalRepresentative" type="Boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter has legal representative.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NaturalLegalRepresentative" type="Company" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The enterer company information.</xs:documentation>
+                </xs:annotation>
+            </xs:element>            
+        </xs:sequence>
+        <xs:attribute name="confidential" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Indicates whether or not the submitter is confidential.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="submitterID" type="SubmitterNumber" use="required">
+            <xs:annotation>
+                <xs:documentation>The submitter ID is the identification number attributed pursuant to Article 4.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="SubmitterType">
+        <xs:annotation>
+            <xs:documentation>The list of submitter types.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="MANUFACTURER"/>
+            <xs:enumeration value="IMPORTER"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

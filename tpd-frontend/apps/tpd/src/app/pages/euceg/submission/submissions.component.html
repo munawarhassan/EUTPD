@@ -1,0 +1,317 @@
+<lt-toolbar>
+  <a
+    href="#"
+    class="btn btn-icon btn-light-dark"
+    (click)="ActivityDrawer.toggle()"
+    ltTooltip="Activity Log"
+    placement="top"
+  >
+    <inline-svg [src]="svgIcons.Duotone.general.histogram" size="2"> </inline-svg>
+  </a>
+</lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_submissions">
+  <lt-portlet-body>
+    <div class="d-flex flex-wrap flex-stack pb-3">
+      <div class="d-flex align-items-center">
+        <app-search
+          (search)="search($event)"
+          (cleared)="clearSearch()"
+          [placeholder]="'submissions.search.placeholder' | translate"
+        ></app-search>
+        <app-submission-filter
+          #submissionFilter="appSubmissionFilter"
+          [storageName]="'submission_filter'"
+          [activatedReport]="reportMode !== undefined"
+          (changed)="onFilterChanged($event)"
+        ></app-submission-filter>
+      </div>
+      <div class="d-flex flex-wrap my-1">
+        <!--begin::Actions-->
+        <!--begin::Button Export-->
+        <button *ngIf="reportMode" type="button" (click)="generateReport()" class="btn btn-primary me-3">
+          <inline-svg size="2" [src]="svgIcons.Duotone.arrows.upload"></inline-svg>
+          Export
+        </button>
+        <!--end::Button Export-->
+        <!--begin::Button Report-->
+        <a
+          href="#"
+          class="btn btn-light-primary"
+          data-lt-menu-trigger="click"
+          data-lt-menu-attach="parent"
+          data-lt-menu-placement="bottom-start"
+        >
+          <inline-svg size="2" [src]="svgIcons.Duotone.abstract.abs027"></inline-svg>
+          <span>Report Tracking</span>
+          <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+        </a>
+        <!--end::Button Report-->
+        <!--begin::Menu-->
+        <div
+          ltMenu
+          class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-250px py-4"
+        >
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a href="#" (click)="openReportsModal()" class="menu-link px-3">
+              <span class="menu-icon">
+                <span class="svg-icon svg-original svg-icon-1" [inlineSVG]="svgIcons.Duotone.files.folder"></span>
+              </span>
+              <span class="menu-title">List Reports...</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu separator-->
+          <div class="separator border-gray-200 my-2"></div>
+          <!--end::Menu separator-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a
+              href="#"
+              (click)="enterReport(submissionFilter, ReportType.submission)"
+              class="menu-link px-3"
+              [class.active]="reportMode === ReportType.submission"
+            >
+              <span class="menu-icon">
+                <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+              </span>
+              <span class="menu-title">EU Submission</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a
+              href="#"
+              (click)="enterReport(submissionFilter, ReportType.tobaccoProduct)"
+              class="menu-link px-3"
+              [class.active]="reportMode === ReportType.tobaccoProduct"
+            >
+              <span class="menu-icon">
+                <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+              </span>
+              <span class="menu-title">Tobacco Products EU</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a
+              href="#"
+              (click)="enterReport(submissionFilter, ReportType.novelTobaccoProduct)"
+              class="menu-link px-3"
+              [class.active]="reportMode === ReportType.novelTobaccoProduct"
+            >
+              <span class="menu-icon">
+                <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+              </span>
+              <span class="menu-title">Novel Tobacco Products EU</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a
+              href="#"
+              (click)="enterReport(submissionFilter, ReportType.ecigaretteProduct)"
+              class="menu-link px-3"
+              [class.active]="reportMode === ReportType.ecigaretteProduct"
+            >
+              <span class="menu-icon">
+                <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+              </span>
+              <span class="menu-title">E-Cigarettes EU</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+        </div>
+        <!--end::Menu-->
+        <!--end::Actions-->
+      </div>
+    </div>
+    <app-submission-filter-result
+      class="mb-2"
+      [filters]="filters"
+      (cleared)="clearFilters(submissionFilter)"
+      (removeTag)="submissionFilter.removeTag($event)"
+      (not)="refresh()"
+    ></app-submission-filter-result>
+    <lt-table
+      id="m_submissions_list"
+      [page]="page"
+      [pageable]="currentPageable"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<div
+  #ActivityDrawer="ltDrawer"
+  [ltDrawer]="{
+    name: 'activities',
+    width: { default: '450px', lg: '900px' }
+  }"
+  id="m_drawer_activity_log"
+  class="bg-white"
+>
+  <app-audit-timeline
+    class="w-100 rounded-0"
+    *ngIf="ActivityDrawer.shown"
+    title="Activity Logs"
+    [channels]="channels"
+    (closeAudit)="ActivityDrawer.hide()"
+  ></app-audit-timeline>
+</div>
+
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let submission of page.content; trackBy: submissionTrack">
+    <td>
+      <a class="link" [routerLink]="['view', submission.submissionId]">{{ submission.productId }}</a>
+    </td>
+    <td class="d-none d-md-table-cell">
+      <a
+        class="link"
+        *ngIf="submission.type === 'ECIGARETTE'"
+        [routerLink]="['/product/ecig-products/view', submission.productNumber]"
+        >{{ submission.productNumber }}</a
+      >
+      <a
+        class="link"
+        *ngIf="submission.type === 'TOBACCO'"
+        [routerLink]="['/product/tobacco-products/view', submission.productNumber]"
+        >{{ submission.productNumber }}</a
+      >
+      <app-pir-status [readonly]="true" [value]="submission.pirStatus"></app-pir-status>
+    </td>
+    <td class="d-none d-xxl-table-cell">
+      <div
+        class="text-truncate mw-200px d-inline-block"
+        [ltTooltip]="euceg.getProductType(submission.productType, submission.type)"
+        placement="bottom"
+      >
+        {{ euceg.getProductType(submission.productType, submission.type) }}
+      </div>
+    </td>
+    <td class="d-none d-xxl-table-cell">
+      {{ submission.previousProductId ? submission.previousProductId : '' }}
+    </td>
+    <td data-header="nationalMarkets" class="d-none d-xl-table-cell text-center">
+      <app-market-symbol [countries]="getCountries(submission.presentations)" [size]="5"></app-market-symbol>
+    </td>
+    <td class="d-none d-md-table-cell">
+      <div
+        class="text-truncate mw-200px d-inline-block"
+        [ltTooltip]="euceg.getSubmissionType(submission.submissionType)"
+        placement="bottom"
+      >
+        {{ euceg.getSubmissionType(submission.submissionType) }}
+      </div>
+    </td>
+    <td class="text-center">
+      <lt-progress-bar
+        *ngIf="submission.submissionStatus === 'PENDING' || submission.submissionStatus === 'SUBMITTING'"
+        [value]="progress(submission)"
+        [striped]="submission.striped"
+        [enableLabel]="!submission.striped"
+        color="primary"
+      >
+        {{ submission.striped ? '' : progress(submission) + ' %' }}
+      </lt-progress-bar>
+      <span
+        submissionStatus
+        *ngIf="submission.submissionStatus !== 'PENDING' && submission.submissionStatus !== 'SUBMITTING'"
+        [status]="submission.submissionStatus"
+      ></span>
+    </td>
+    <td>{{ submission.lastModifiedDate | date : 'medium' }}</td>
+    <td class="text-end text-nowrap">
+      <button
+        type="button"
+        *ngIf="submission.submissionStatus === 'NOT_SEND' && submission.sendType === 'MANUAL'"
+        (click)="send(submission.submissionId)"
+        class="btn btn-primary btn-sm me-2"
+      >
+        Send
+      </button>
+      <button
+        *ngIf="submission.submissionStatus === 'NOT_SEND' && submission.sendType === 'MANUAL'"
+        type="button"
+        class="btn btn-secondary btn-sm me-2"
+        securedLink="./rest/api/submissions/{{ submission.submissionId }}/package"
+      >
+        Download
+      </button>
+      <button
+        type="button"
+        *ngIf="submission.cancelable"
+        (click)="cancel(submission)"
+        class="btn btn-danger btn-sm me-2"
+      >
+        <i class="fa fa-ban fa-fw"></i>Cancel
+      </button>
+      <!--begin::Button Actions-->
+      <a
+        [ngClass]="{
+          'd-none': !(
+            submission.exportable ||
+            submission.submissionStatus === 'SUBMITTED' ||
+            submission.submissionStatus === 'ERROR' ||
+            submission.submissionStatus === 'CANCELLED'
+          )
+        }"
+        href="#"
+        class="btn btn-light btn-active-light-primary btn-sm text-nowrap menu-dropdown"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-250px py-4"
+      >
+        <!--begin::Menu item-->
+        <div
+          *ngIf="
+            submission.submissionStatus === 'SUBMITTED' ||
+            submission.submissionStatus === 'ERROR' ||
+            submission.submissionStatus === 'CANCELLED'
+          "
+          class="menu-item px-3"
+        >
+          <a href="#" [routerLink]="['view', submission.submissionId]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">View</span>
+          </a>
+        </div>
+        <div class="separator my-2 opacity-75"></div>
+        <!--begin::Menu item-->
+        <div *ngIf="submission.exportable" class="menu-item px-3">
+          <a href="#" securedLink="./rest/api/submissions/{{ submission.submissionId }}/export" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg-file extension="zip" size="1"></inline-svg-file>
+            </span>
+            <span class="menu-title">Export Sent Report</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" securedLink="./rest/api/submissions/{{ submission.submissionId }}/package" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg-file extension="xml" size="1"></inline-svg-file>
+            </span>
+            <span class="menu-title">Download Submission</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+      <!--end::Button Actions-->
+    </td>
+  </tr>
+</ng-template>

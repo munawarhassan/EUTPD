@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="audit-event-1-schema">
+    <validCheckSum>7:777e3c7e45eadc3a939a133a4e950408</validCheckSum>
+    <createTable tableName="t_audit_event_data">
+      <column name="event_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="data_value" type="VARCHAR(255)" />
+      <column name="data_name" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <createTable tableName="t_audit_event">
+      <column name="event_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="event_date" type="datetime" />
+      <column name="event_type" type="VARCHAR(255)" />
+      <column name="principal" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addPrimaryKey columnNames="event_id, data_name" tableName="t_audit_event_data" />
+    <addPrimaryKey columnNames="event_id" constraintName="t_audit_eventPK" tableName="t_audit_event" />
+    <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="t_audit_event_data"
+      constraintName="fk_event_data_event_id" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id"
+      referencedTableName="t_audit_event" />
+  </changeSet>
+</databaseChangeLog>
+

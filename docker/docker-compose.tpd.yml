@@ -1,0 +1,245 @@
+version: "3.9"
+
+services:
+
+  postgresql:
+    image: "postgres:${POSTGRES_TAG}"
+    hostname: postgresql
+    deploy:
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    environment:
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    networks:
+      - tpd_backend
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+      start_period: 10s
+
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_TAG}"
+    hostname: elasticsearch
+    user: elasticsearch
+    environment:
+      - "cluster.initial_master_nodes=elasticsearch"
+      - "node.name=elasticsearch"
+      - "cluster.name=${ELASTICSEARCH_CLUSTERNAME}"
+      - "xpack.monitoring.enabled=false"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "bootstrap.memory_lock=true"
+      - "network.tcp.keep_alive=true"
+      - "http.cors.enabled=true"
+      - "http.cors.allow-origin=*"
+      - "http.cors.allow-methods=OPTIONS, HEAD, GET, POST, PUT, DELETE"
+      - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+      - "http.cors.allow-credentials=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 128M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.es-http.rule=Host(`es.${DOMAIN}`)"
+        - "traefik.http.routers.es-http.entrypoints=http"
+        - "traefik.http.routers.es-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.es-https.rule=HostRegexp(`es.${DOMAIN}`,`es-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.es-https.entrypoints=https"
+        - "traefik.http.routers.es-https.tls=true"
+        - "traefik.http.services.es.loadbalancer.server.port=9200"
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+      - "eslog:/usr/share/elasticsearch/logs"
+    networks:
+      - tpd_backend
+      - discovery
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "curl --silent --fail localhost:9200/_cluster/health || exit 1"
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  tpd-frontend:
+    image: "${TPD_FRONTEND_IMAGE}:${TPD_TAG}"
+    hostname: tpd
+    user: node
+    deploy:
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 50M
+        reservations:
+          memory: 10M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.tpd-frontend-http.rule=HostRegexp(`tpd.${DOMAIN}`,`tpd-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.tpd-frontend-http.entrypoints=http"
+        - "traefik.http.routers.tpd-frontend-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.tpd-frontend-https.rule=HostRegexp(`tpd.${DOMAIN}`,`tpd-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.tpd-frontend-https.entrypoints=https"
+        - "traefik.http.routers.tpd-frontend-https.tls=true"
+        - "traefik.http.services.tpd-frontend.loadbalancer.server.port=3000"
+    environment:
+      - "MIDDLEWARE_TARGET=http://tpd-backend:8080"
+      - "PUBLIC_HOSTNAME=tpd.${DOMAIN}"
+      - "CHECK_PUBLIC_HOSTNAME=false"
+      # "production" | "development" | "none"
+      - "NODE_ENV=${TPD_NODE_ENV:-production}"
+    labels:
+      - "com.pmi.tpd.description=TPD Submission Tool Frontend"
+      - "com.pmi.tpd.frontent"
+    networks:
+      - tpd_backend
+      - discovery
+  tpd-backend:
+    hostname: tpd-backend
+    image: "${TPD_BACKEND_IMAGE}:${TPD_TAG}"
+    deploy:
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role!=manager"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 800M
+        reservations:
+          memory: 256M
+    command: dockerize -wait tcp://postgresql:5432 -wait tcp://elasticsearch:9200 -timeout 60s catalina.sh run
+    environment:
+      - "APP_LOG_LOGLEVEL=${TPD_LOGLEVEL}"
+      # database configuration
+      - "DATABASE_JDBC_USERNAME=${POSTGRES_USER}"
+      - "DATABASE_JDBC_PASSWORD=${POSTGRES_PASSWORD}"
+      - "DATABASE_JDBC_DRIVERCLASSNAME=org.postgresql.Driver"
+      - "DATABASE_JDBC_URL=jdbc:postgresql://postgresql:5432/${POSTGRES_DB}"
+      # set deployment mode
+      - "TPD_PROFILES=${TPD_PROFILES:-production}"
+      # elastic search configuration
+      - "APP_ELASTICSEARCH_USEEMBEDDED=false"
+      - "APP_ELASTICSEARCH_CLUSTERNODES=elasticsearch:9200"
+      # metrics configuration
+      - "JMX_ENABLED=true"
+      - "METRICS_GRAPHITE_ENABLED=true"
+      - "METRICS_GRAPHITE_TYPE=Pickle"
+      - "METRICS_JMX_ENABLED=true"
+      - "METRICS_GRAPHITE_POLLING=10"
+      - "METRICS_GRAPHITE_HOST=graphite"
+      - "METRICS_GRAPHITE_PORT=2004"
+      # domibus configuration
+      - "APP_DOMIBUS_URL=http://domibus-blue:8080"
+      - "APP_DOMIBUS_JMS_OPTIONS_URL=tcp://domibus-blue:61616"
+    labels:
+      - "com.pmi.tpd.description=TPD Submission Tool Backend"
+      - "com.pmi.tpd.backend"
+    # Fix docker-compose config depends_on to be compliant to v3 and v2
+    # see https://github.com/docker/compose/pull/8054
+    # depends_on:
+    #   - postgresql
+    #   - elasticsearch
+    networks:
+      - tpd_backend
+      - net
+    volumes:
+      - "home:/usr/share/tpd/home"
+
+  graphite:
+    image: "graphiteapp/graphite-statsd:${GRAPHITE_TAG}"
+    hostname: graphite
+    environment:
+      - "COLLECTD=0"
+      - "GRAPHITE_DEBUG=0"
+      - "REDIS_TAGDB=0"
+    deploy:
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.graphite-http.rule=HostRegexp(`graphite.${DOMAIN}`,`graphite-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.graphite-http.entrypoints=http"
+        - "traefik.http.routers.graphite-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.graphite-https.rule=HostRegexp(`graphite.${DOMAIN}`,`graphite-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.graphite-https.entrypoints=https"
+        - "traefik.http.routers.graphite-https.tls=true"
+        - "traefik.http.services.graphite.loadbalancer.server.port=80"
+        - "org.label-schema.group=monitoring"
+    networks:
+      - net
+      - discovery
+    # Fix docker-compose config depends_on to be compliant to v3 and v2
+    # see https://github.com/docker/compose/pull/8054
+    # depends_on:
+    #   - tpd-backend
+    configs:
+      - source: graphite-conf
+        target: /opt/graphite/conf/carbon.conf
+    volumes:
+      - "graphite-data:/opt/graphite/storage"
+networks:
+  tpd_backend:
+  discovery:
+    external: true
+  net:
+    external: true
+volumes:
+  graphite-data: {}
+  dbdata: {}
+  home: {}
+  esdata: {}
+  eslog: {}
+configs:
+  graphite-conf:
+    file: ${PWD}/etc/graphite/carbon.conf

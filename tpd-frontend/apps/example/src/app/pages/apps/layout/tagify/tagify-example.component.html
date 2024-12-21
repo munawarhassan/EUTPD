@@ -1,0 +1,77 @@
+<form name="theForm" #theForm="ngForm" novalidate (ngSubmit)="submit(theForm)">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">Tagify with string value:</label>
+          <div>
+            <input tagify type="text" class="form-control" name="tagsString" [(ngModel)]="tagsString" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5 px-7 py-5">
+          <label class="form-label fw-bold">Tagify custom:</label>
+          <div>
+            <input
+              tagify
+              type="text"
+              class="form-control form-control-lg"
+              name="tagUsers"
+              [dropdown]="{
+                closeOnSelect: false,
+                enabled: 0,
+                classname: 'users-list',
+                searchKeys: ['name', 'email']
+              }"
+              tagTextProp="name"
+              [whitelist]="usersList"
+              [skipInvalid]="true"
+              [enforceWhitelist]="true"
+              [tagTemplate]="tagTemplate"
+              [dropdownItemTemplate]="dropdownItemTemplate"
+              (showDropdown)="onDropdownShow($event)"
+              (updatedDropdown)="onDropdownShow($event)"
+              (selectDropdown)="onSelectSuggestion($event)"
+              [(ngModel)]="tagUsers"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5 px-7 py-5">
+          <label class="form-label fw-bold">Tagify async custom:</label>
+          <div>
+            <input
+              tagify
+              type="text"
+              class="form-control form-control-solid form-control-lg"
+              name="tagAsyncUsers"
+              tagTextProp="name"
+              [dropdown]="{
+                closeOnSelect: false,
+                enabled: 0,
+                classname: 'users-list',
+                searchKeys: ['name', 'email']
+              }"
+              [whitelist]="usersAsyncList"
+              [blacklist]="blacklist"
+              [enforceWhitelist]="true"
+              [tagTemplate]="tagTemplate"
+              [dropdownItemTemplate]="dropdownItemTemplate"
+              (showDropdown)="onDropdownShow($event)"
+              (updatedDropdown)="onDropdownShow($event)"
+              (selectDropdown)="onSelectSuggestion($event)"
+              [(ngModel)]="tagAsyncUsers"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 my-6">
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

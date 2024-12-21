@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title" translate="groups.create.title"></h4>
+</div>
+<form
+  [formGroup]="formControl"
+  #form="ngForm"
+  role="form"
+  (ngSubmit)="createGroup()"
+  class="form"
+  novalidate
+  show-validation
+>
+  <div class="modal-body" id="modal-body">
+    <div class="row mb-4">
+      <form-text
+        [label]="'groups.fields.name' | translate"
+        controlClass="form-control-solid"
+        formControlName="groupName"
+        [placeholder]="'groups.fields.name.placeholder' | translate"
+        [icon]="svgIcons.Simple.communication.group"
+        [iconPosition]="'start'"
+        [autocomplete]="false"
+      ></form-text>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary me-3" translate="global.button.save"></button>
+    <a
+      href="#"
+      id="change-password-cancel"
+      class="link-primary"
+      (click)="bsModalRef.hide()"
+      translate="global.button.cancel"
+    ></a>
+  </div>
+</form>

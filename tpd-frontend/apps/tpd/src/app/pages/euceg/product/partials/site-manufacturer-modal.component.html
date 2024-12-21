@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <h4 class="modal-title">Site Address</h4>
+</div>
+<form [formGroup]="formControl" name="addressForm" #form="ngForm" (ngSubmit)="onClose()">
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <app-confidential
+          formControlName="confidential"
+          class="mt-2"
+          label="Is Address Confidential?"
+          name="Address_Confidential"
+        >
+        </app-confidential>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <form-text name="Address_Address" controlClass="form-control-solid" label="Address" formControlName="Address">
+        </form-text>
+      </div>
+      <div class="col-md-6">
+        <form-select
+          label="Country"
+          controlClass="form-select-solid"
+          [searchable]="true"
+          searchPlaceholder="Select Country..."
+          [options]="euceg.Countries"
+          optionValue="name"
+          optionText="value"
+          formControlName="Country"
+        >
+        </form-select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <form-text
+          name="Address_Phone"
+          controlClass="form-control-solid"
+          label="Phone Number"
+          formControlName="PhoneNumber"
+        >
+        </form-text>
+      </div>
+      <div class="col-md-6">
+        <form-text
+          type="email"
+          controlClass="form-control-solid"
+          name="Address_Email"
+          label="Email"
+          formControlName="Email"
+        ></form-text>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      *ngIf="!readonly"
+      type="submit"
+      class="btn btn-primary btn-bold me-4"
+      translate="global.button.close"
+    ></button>
+    <a href="#" (click)="onCancel()" class="link link-primary me-3" translate="global.button.cancel"></a>
+  </div>
+</form>

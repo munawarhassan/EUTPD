@@ -1,0 +1,26 @@
+{
+  "globalpermissions": {
+    "title": "Global Permissions",
+    "usertitle": "User access",
+    "grouptitle": "Group access",
+    "fields": {
+      "groupname": "Group",
+      "username": "User"
+    },
+    "permission": {
+      "user": {
+        "description": "Can log in to TPD and access products and submission."
+      },
+      "admin": {
+        "description": "Has access to most settings required to administer TPD on a daily basis. Can add new users, administer permissions and change general application settings. Administrators have full access to all products and submissions."
+      },
+      "sysadmin": {
+        "description": "Has full control over TPD - can modify system configuration properties and all application settings, and has full access to all products and submissions. We recommend granting this permission to as few users as possible."
+      }
+    },
+    "tooltip": {
+      "group.remove": "Remove all explicit permissions for this group",
+      "user.remove": "Remove all explicit permissions for this user"
+    }
+  }
+}

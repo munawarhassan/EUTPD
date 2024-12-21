@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title">Import PKCS #12 Key Pair</h4>
+</div>
+<form name="theForm" #form="ngForm" [formGroup]="theForm" (ngSubmit)="onSubmit()" novalidate show-validation>
+  <div class="modal-body">
+    <div
+      *ngIf="alertMessage"
+      role="alert"
+      class="
+        bg-light-danger
+        text-danger
+        border border-dashed border-danger
+        d-flex
+        align-items-baseline
+        mb-9
+        p-6
+        rounded
+      "
+    >
+      <span
+        class="svg-icon svg-icon-2tx svg-icon-danger me-4"
+        [inlineSVG]="svgIcons.Duotone.general.exclamationCircle"
+      ></span>
+      <div class="d-flex flex-stack flex-grow-1">
+        {{ alertMessage }}
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <form-text
+        type="password"
+        controlClass="form-control-solid"
+        formControlName="password"
+        label="Password"
+      ></form-text>
+    </div>
+    <div class="row mb-4">
+      <form-file
+        label="Key pair file to Upload"
+        formControlName="file"
+        accept="*/*"
+        helpText="The key pair PKCS #12 file to import."
+      ></form-file>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary me-3">Import</button>
+    <a href="" class="link link-primary" (click)="onCancel()" translate="global.button.cancel"></a>
+  </div>
+</form>

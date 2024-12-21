@@ -1,0 +1,4 @@
+# PropertySource Loaders
+com.pmi.tpd.spring.env.PropertySourceLoader=\
+com.pmi.tpd.spring.env.PropertiesPropertySourceLoader,\
+com.pmi.tpd.spring.env.YamlPropertySourceLoader

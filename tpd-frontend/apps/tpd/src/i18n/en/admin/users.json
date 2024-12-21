@@ -1,0 +1,79 @@
+{
+  "users": {
+    "title": "User Management",
+    "button": {
+      "create": "Create User"
+    },
+    "fields": {
+      "username": "Username",
+      "username.placeholder": "Username",
+      "displayname": "Display Name",
+      "displayname.placeholder": "Display Name",
+      "email": "Email Address",
+      "email.link": "Email a link to the user to set their password",
+      "email.placeholder": "Email Address",
+      "directory": "Directory",
+      "directory.placeholder": "Directory",
+      "active": "Activated",
+      "active.placeholder": "Activated",
+      "groups": "Groups",
+      "groupname": "Group Name",
+      "action": "Action"
+    },
+    "create": {
+      "title": "Create User",
+      "notify": {
+        "created": "The user <b>{{user}}</b> has been successfully created."
+      },
+      "button": {
+        "create": "Create User"
+      }
+    },
+    "rename": {
+      "title": "Rename <b>{{user}}</b>"
+    },
+    "changepassword": {
+      "title": "Change the password for <b>{{user}}</b>"
+    },
+    "search": {
+      "placeholder": "Search User..."
+    },
+    "view": {
+      "alert": {
+        "delete": {
+          "title": "Are you sure?",
+          "msg": "Are you sure that you want to delete user <b>{{user}}</b>?"
+        },
+        "deactivate": {
+          "title": "Are you sure?",
+          "msg": "Are you sure that you want to deactivate user <b>{{user}}</b>?"
+        }
+      },
+      "tooltip": {
+        "groupremove": "Remove user from group"
+      },
+      "notify": {
+        "updated": "{{user}} has been successfully updated",
+        "deleted": "The user {{user}} has been deleted.",
+        "removefromgroup": "The user <b>{{user}}</b> has been removed to group <b>{{group}}</b>."
+      },
+      "button": {
+        "back": "Back to users",
+        "edit": "Edit",
+        "changepassword": "Change Password",
+        "rename": "Rename",
+        "delete": "Delete",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+      },
+      "actions": {
+        "edit": "Edit...",
+        "changepassword": "Change Password...",
+        "rename": "Rename...",
+        "delete": "Delete...",
+        "activate": "Activate...",
+        "deactivate": "Deactivate..."
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite
+    PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
+    "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite decode-using="null">
+  <!-- Events Error Pages -->
+  <rule>
+    <from>^/unavailable$</from>
+    <to last="true">/unavailable</to>
+  </rule>
+  <!-- System endpoints. These are not generally expected to be seen directly by end users -->
+  <rule>
+    <!-- Make /system/maintenance a synonym for /mvc/maintenance -->
+    <from>^/system/maintenance(.*)$</from>
+    <to last="true">/system/maintenance$1</to>
+  </rule>
+  <rule>
+    <from>^/auth$</from>
+    <to last="true">/rest/api/auth/authenticate</to>
+  </rule>
+
+</urlrewrite>

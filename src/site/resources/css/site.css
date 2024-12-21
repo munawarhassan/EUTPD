@@ -1,0 +1,276 @@
+/*
+ * svg bootstrap color
+*/
+.svg-icon {
+    height: 23px;
+    width: 23px
+}
+
+.svg-icon g [fill] {
+    fill: var(--blue)
+}
+
+.svg-icon.svg-icon--brand g [fill] {
+    fill: var(--brand) !important
+}
+
+.svg-icon.svg-icon--light g [fill] {
+    fill: var(--light) !important
+}
+
+.svg-icon.svg-icon--dark g [fill] {
+    fill: var(--dark) !important
+}
+
+.svg-icon.svg-icon--primary g [fill] {
+    fill: var(--primary) !important
+}
+
+.svg-icon.svg-icon--secondary g [fill] {
+    fill: var(--secondary) !important
+}
+
+.svg-icon.svg-icon--success g [fill] {
+    fill: var(--success) !important
+}
+
+.svg-icon.svg-icon--info g [fill] {
+    fill: var(--info) !important
+}
+
+.svg-icon.svg-icon--warning g [fill] {
+    fill: var(--warning) !important
+}
+
+.svg-icon.svg-icon--danger g [fill] {
+    fill: var(--danger) !important
+}
+
+.svg-icon.svg-icon--purple g [fill] {
+    fill: var(--purple) !important
+}
+
+
+.svg-icon.svg-icon--sm {
+    height: 20px;
+    width: 20px
+}
+
+.svg-icon.svg-icon--md {
+    height: 30px;
+    width: 30px
+}
+
+.svg-icon.svg-icon--lg {
+    height: 40px;
+    width: 40px
+}
+
+.svg-icon.svg-icon--xl {
+    height: 50px;
+    width: 50px
+}
+
+a.btn .svg-icon {
+    padding-bottom: 2px;
+}
+
+a.btn-primary:hover .svg-icon g [fill],
+a.btn-outline-primary:hover .svg-icon g [fill] {
+    fill: var(--light) !important;
+}
+
+
+
+#m-toc-sidebar li.h5 {
+    padding-left: 30px;
+}
+
+
+/*
+ * Specific color of reflow brand name
+*/
+.color-highlight {
+    color: #69bcf9;
+}
+
+
+
+/* additional menu: enforce row after collapse */
+.navbar .navbar-additional {
+    flex-direction: row;
+}
+
+/*  remove the jump before top navbar size adjustement */
+BODY {
+    padding-top: 59px;
+}
+
+
+h2,
+h3 {
+    margin-top: 2rem;
+    margin-bottom: 1.6rem;
+}
+
+
+/*
+ * header
+*/
+.header {
+    background: #fff url(../images/european-union.jpg) center;
+    background-size: cover;
+    min-height: 20rem;
+    height: auto;
+    border-radius: 0;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.header h1 {
+    font-weight: 200;
+}
+
+.header p.lead {
+    margin: 1rem auto;
+    color: var(--white);
+}
+
+
+.header .btn {
+    color: var(--white);
+    background-color: transparent;
+    border-color: var(--white);
+    border-width: 1px;
+}
+
+.header .btn:hover,
+.header .btn:focus,
+.header .btn:active {
+    color: #46484a;
+    background-color: var(--white);
+}
+
+.header .btn .btn__link-icon svg g [fill],
+.header .btn .btn__link-icon svg g [fill],
+.header .btn .btn__link-icon svg g [fill] {
+    transition: fill .3s ease;
+    fill: #fff;
+}
+
+
+.header .btn:hover .btn__link-icon svg g [fill],
+.header .btn:focus .btn__link-icon svg g [fill],
+.header .btn:active .btn__link-icon svg g [fill] {
+    transition: fill .3s ease;
+    fill: #46484a;
+}
+
+
+
+.highlight {
+    padding-top: 45px;
+    font-size: 21.6px
+}
+
+.highlight .svg-icon--highlight {
+    height: 80%;
+    width: 80%;
+}
+
+
+.highlight img {
+    max-width: 90%;
+}
+
+
+.highlight.highlight-about {
+    margin-bottom: 0;
+}
+
+.highlight.highlight-general {
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.highlight.highlight-general .svg-icon--highlight {
+    height: 100px;
+    width: 100px;
+    margin-top: 1.5rem;
+}
+
+.highlight.highlight-general img {
+    max-height: 125px;
+    padding-top: 6.25px;
+    padding-bottom: 16.67px
+}
+
+.highlight.highlight-responsive-layout {
+    margin-bottom: 0;
+    background-color: #eee
+}
+
+.highlight.highlight-feature .svg-icon--highlight {
+    height: 100px;
+    width: 100px;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+/*
+ * callout from bootstrap
+*/
+.bd-callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+}
+
+.bd-callout h4 {
+    margin-top: 0;
+    margin-bottom: .25rem;
+}
+
+.bd-callout p:last-child {
+    margin-bottom: 0;
+}
+
+.bd-callout code {
+    border-radius: .25rem;
+}
+
+.bd-callout+.bd-callout {
+    margin-top: -.25rem;
+}
+
+.bd-callout-info {
+    border-left-color: var(--info);
+}
+
+.bd-callout-info h4 {
+    color: var(--info);
+}
+
+.bd-callout-warning {
+    border-left-color: var(--warning);
+}
+
+.bd-callout-warning h4 {
+    color: var(--warning);
+}
+
+.bd-callout-danger {
+    border-left-color: var(--danger);
+}
+
+.bd-callout-danger h4 {
+    color: var(--danger);
+}
+
+.footer-dark time {
+    color: rgba(255, 255, 255, .35);
+    font-size: .8rem;
+}

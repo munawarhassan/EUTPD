@@ -1,0 +1,48 @@
+{
+  "submitters": {
+    "title": "Soumissionnaire",
+    "button": {
+      "create": "Créer Soumissionnaire"
+    },
+    "list": {
+      "fields": {
+        "submitterId": "Submitter ID",
+        "name": "Nom",
+        "status": "Status",
+        "sme": "SME",
+        "vat": "VAT",
+        "address": "Adresse",
+        "country": "Pays",
+        "phone": "Téléphone",
+        "email": "Email",
+        "action": "Action"
+      }
+    },
+    "view": {
+      "title": "Soumissionnaire",
+      "description": "Modifiez le detail du soumissionnaire and sauvegarder"
+    },
+    "search": {
+      "placeholder": "Rechercher..."
+    },
+    "revision": {
+      "fields": {
+        "check": "Choix",
+        "version": "Version",
+        "submitterId": "Submitter ID",
+        "name": "Nom",
+        "country": "Pays",
+        "modifiedDate": "Modif.",
+        "modifiedBy": "Par"
+      },
+      "title": "Soumissionnaire - {{submitterId}} - {{name}}",
+      "description": "Versions du soumissionnaire"
+    },
+    "alert": {
+      "delete": {
+        "title": "Êtes-vous sûr ?",
+        "msg": "Êtes-vous sûr de vouloir effacer le soumissionnaire <b>{{submitterId}}</b> ??"
+      }
+    }
+  }
+}

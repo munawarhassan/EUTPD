@@ -1,0 +1,30 @@
+# config file version
+apiVersion: 1
+
+# list of datasources that should be deleted from the database
+# deleteDatasources:
+#   - name: Prometheus
+#   - name: Graphite
+
+
+# list of datasources to insert/update depending
+# what's available in the database
+datasources:
+  # <string, required> name of the datasource. Required
+- name: Graphite
+  # <string, required> datasource type. Required
+  type: graphite
+  # <string, required> access mode. proxy or direct (Server or Browser in the UI). Required
+  access: proxy
+  # <string> url
+  url: http://graphite
+  version: 1
+  # <bool> allow users to edit datasources from the UI.
+  editable: false
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  url: http://prometheus:9090
+  isDefault: true
+  version: 1
+  editable: false

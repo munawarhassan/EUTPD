@@ -1,0 +1,14 @@
+{
+  "euceg": {
+    "menu": {
+      "product": {
+        "title": "Product",
+        "submitters": "Submitters",
+        "tobacco-products": "Tobacco Products",
+        "e-cigarettes": "E-Cigarettes",
+        "attachments": "Attachments",
+        "submissions": "Submissions"
+      }
+    }
+  }
+}

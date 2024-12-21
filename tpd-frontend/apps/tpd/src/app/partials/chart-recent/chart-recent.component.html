@@ -1,0 +1,91 @@
+<!--begin::Charts-->
+<div id="m_card_recent_chart" class="card card-stretch mb-xl-8">
+  <!--begin::Header-->
+  <div class="card-header border-0 pt-5">
+    <!--begin::Title-->
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-3 mb-1">Recent Statistics</span>
+    </h3>
+    <!--end::Title-->
+    <!--begin::Toolbar-->
+    <div class="card-toolbar">
+      <div [formGroup]="formControl" class="nav-group nav-group-fluid me-3">
+        <ng-container *ngFor="let interval of intervals">
+          <!--begin::Option-->
+          <label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="interval"
+              formControlName="interval"
+              [value]="interval.value"
+              autocomplete="off"
+            />
+            <span class="btn btn-active btn-active-primary btn-color-gray-500 btn-sm fw-bolder px-4 text-nowrap">{{
+              interval.name
+            }}</span>
+          </label>
+          <!--end::Option-->
+        </ng-container>
+      </div>
+    </div>
+    <!--end::Toolbar-->
+  </div>
+  <!--end::Header-->
+  <!--begin::Body-->
+  <div class="card-body">
+    <!--begin::Chart-->
+    <div id="m_histogram_recent" style="height: 350px; min-height: 365px">
+      <apx-chart
+        *ngIf="histogramCreated$ | async as chartOptions"
+        [series]="chartOptions.series"
+        [stroke]="chartOptions.stroke"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [yaxis]="chartOptions.yaxis"
+        [fill]="chartOptions.fill"
+        [states]="chartOptions.states"
+        [tooltip]="chartOptions.tooltip"
+        [plotOptions]="chartOptions.plotOptions"
+        [legend]="chartOptions.legend"
+        [grid]="chartOptions.grid"
+        [dataLabels]="chartOptions.dataLabels"
+      ></apx-chart>
+    </div>
+    <!--end::Chart-->
+    <div class="card-footer d-flex flex-center py-5">
+      <!--begin::Item-->
+      <div class="d-flex align-items-center flex-shrink-0 me-7 me-lg-12">
+        <!--begin::Bullet-->
+        <span class="bullet bg-primary me-2 h-10px"></span>
+        <!--end::Bullet-->
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-400 fs-6">Submission</span>
+        <!--end::Label-->
+      </div>
+      <!--ed::Item-->
+      <!--begin::Item-->
+      <div class="d-flex align-items-center flex-shrink-0 me-7 me-lg-12">
+        <!--begin::Bullet-->
+        <span class="bullet bg-dark me-2 h-10px"></span>
+        <!--end::Bullet-->
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-400 fs-6">Tobacco Product</span>
+        <!--end::Label-->
+      </div>
+      <!--end::Item-->
+      <!--begin::Item-->
+      <div class="d-flex align-items-center flex-shrink-0">
+        <!--begin::Bullet-->
+        <span class="bullet bg-gray-600 me-2 h-10px"></span>
+        <!--end::Bullet-->
+        <!--begin::Label-->
+        <span class="fw-bold text-gray-400 fs-6">Ecig Product</span>
+        <!--end::Label-->
+      </div>
+      <!--end::Item-->
+    </div>
+  </div>
+  <!--end::Body-->
+</div>
+<!--end::Charts-->

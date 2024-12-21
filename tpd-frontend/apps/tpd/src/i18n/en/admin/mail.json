@@ -1,0 +1,33 @@
+{
+  "mail": {
+    "title": "Mail server configuration",
+    "title.test": "Send a test email",
+    "fields": {
+      "hostname": "Hostname",
+      "hostname.help": "The hostname of the mail server (for exemple \"localhost\" or \"192.168.1.15\").",
+      "port": "Port",
+      "port.help": "The port of the mail server (if unspecified, the port 25 will be used).",
+      "username": "Username",
+      "username.help": "The username to use to connect to the mail server.",
+      "password": "Password",
+      "password.help": "The password to use to connect to the mail server.",
+      "tls": "TLS",
+      "tls.help": "Tick if the SMTP server you are connecting to uses TLS.",
+      "emailFrom": "Email From",
+      "emailFrom.help": "Specifies the From: header in notification emails (for example: noreply@company.com).",
+      "recipient": "Recipient",
+      "recipient.help": "The email address to send the test message to."
+    },
+    "validate": {
+      "hostname.required": "Hostname is required",
+      "port.required": "Port is required",
+      "email.required": "Email From is required",
+      "email.email": "Email From is invalid",
+      "recipient.required": "Recipient From is required",
+      "recipient.email": "Recipient From is invalid"
+    },
+    "notify": {
+      "updated": "The mail server configuration has been updated."
+    }
+  }
+}

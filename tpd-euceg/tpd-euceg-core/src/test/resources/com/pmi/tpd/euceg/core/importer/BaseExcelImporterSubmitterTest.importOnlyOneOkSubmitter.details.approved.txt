@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubmitterDetails>
+   <Name>Philip Morris Products S.A.</Name>
+   <Sme>false</Sme>
+   <HasVatNumber>true</HasVatNumber>
+   <VatNumber>CHE116276488TVA</VatNumber>
+   <Address>Quai Jeanrenaud 3, 2000 Neuchâtel</Address>
+   <Country>CH</Country>
+   <PhoneNumber>+41 (58) 242 3384</PhoneNumber>
+   <Email>ProductInformationReporting.PIR@pmi.com</Email>
+</SubmitterDetails>

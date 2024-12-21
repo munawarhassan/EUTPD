@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Product xsi:type="TobaccoProduct" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ProductID confidential="false">00000-00-00000</ProductID>
+  <OtherProductsExist confidential="true">false</OtherProductsExist>
+  <SameCompositionProductsExist confidential="true">true</SameCompositionProductsExist>
+  <SameCompositionProducts>
+    <ProductIdentification type="TEXT" confidential="true">other EU markets</ProductIdentification>
+  </SameCompositionProducts>
+  <Manufacturers>
+    <Manufacturer confidential="false">
+      <Name>Philip Morris Manufacturing &amp; Technology Bologna S.p.A.</Name>
+      <Address>Piazza Belgioioso, 2 - 20121 Milano</Address>
+      <Country>IT</Country>
+      <PhoneNumber>+39 051 3517865</PhoneNumber>
+      <Email>philipmorrisbolognia@pec.it</Email>
+      <ProductionSiteAddresses>
+        <ProductionSiteAddress confidential="false">
+          <Address>Via Fratelli Rosselli, 4 - 40069 Predosa (BO)</Address>
+          <Country>IT</Country>
+        </ProductionSiteAddress>
+      </ProductionSiteAddresses>
+    </Manufacturer>
+  </Manufacturers>
+  <MarketResearchFiles>
+    <Attachment attachmentID="b12a23f1-5f11-4e62-9a4f-b7fb288afa8d" />
+  </MarketResearchFiles>
+  <ProductType confidential="false">11</ProductType>
+  <Weight confidential="false">801.1</Weight>
+  <TobaccoWeight confidential="false">306.03</TobaccoWeight>
+  <Filter confidential="false">false</Filter>
+  <TechnicalFiles>
+    <Attachment attachmentID="2702e2bf-b963-4a55-a697-212220dc93a2" />
+  </TechnicalFiles>
+  <Presentations>
+    <Presentation>
+      <NationalMarket confidential="false">FR</NationalMarket>
+      <BrandName confidential="false">iQOS - Marlboro Smooth</BrandName>
+      <BrandSubtypeNameExists confidential="false">true</BrandSubtypeNameExists>
+      <BrandSubtypeName confidential="false">Hard Pack - 20 Heaststicks</BrandSubtypeName>
+      <LaunchDate confidential="false">2016-05-20</LaunchDate>
+      <WithdrawalIndication confidential="false">false</WithdrawalIndication>
+      <ProductNumberType confidential="false">SUBMITTER</ProductNumberType>
+      <ProductNumber confidential="false">POM.fr.pending</ProductNumber>
+      <PackageType confidential="false">14</PackageType>
+      <PackageNetWeight confidential="false">6.1</PackageNetWeight>
+      <HasOtherMarketData confidential="true">false</HasOtherMarketData>
+    </Presentation>
+    <Presentation>
+      <NationalMarket confidential="false">GB</NationalMarket>
+      <BrandName confidential="false">iQOS - Marlboro Smooth</BrandName>
+      <BrandSubtypeNameExists confidential="false">true</BrandSubtypeNameExists>
+      <BrandSubtypeName confidential="false">Hard Pack - 20 Heaststicks</BrandSubtypeName>
+      <LaunchDate confidential="false">2016-05-20</LaunchDate>
+      <WithdrawalIndication confidential="false">false</WithdrawalIndication>
+      <ProductNumberType confidential="false">SUBMITTER</ProductNumberType>
+      <ProductNumber confidential="false">POM.fr.pending</ProductNumber>
+      <PackageType confidential="false">14</PackageType>
+      <PackageNetWeight confidential="false">6.1</PackageNetWeight>
+      <HasOtherMarketData confidential="true">false</HasOtherMarketData>
+    </Presentation>
+  </Presentations>
+  <TobaccoIngredients>
+    <TobaccoIngredient>
+      <PartType confidential="true">3</PartType>
+      <LeafType confidential="true">7</LeafType>
+      <LeafTypeOther confidential="true">Homogenized</LeafTypeOther>
+      <LeafCureMethod confidential="true">6</LeafCureMethod>
+      <LeafCureMethodOther confidential="true">See Tobacco Part Description File</LeafCureMethodOther>
+      <Quantity confidential="true">201.5</Quantity>
+      <PartDescriptionFiles>
+        <Attachment attachmentID="1f7c8855-cd38-4424-8c40-84ccb5b0fbb9" />
+      </PartDescriptionFiles>
+      <Suppliers>
+        <Supplier confidential="true">
+          <Name>Philip Morris Manufacturing &amp; Technology Bologna S.p.A.</Name>
+          <Address>Piazza Belgioioso, 2 - 20121 Milano</Address>
+          <Country>IT</Country>
+          <PhoneNumber>+39 051 3517865</PhoneNumber>
+          <Email>philipmorrisbolognia@pec.it</Email>
+        </Supplier>
+      </Suppliers>
+    </TobaccoIngredient>
+  </TobaccoIngredients>
+  <OtherIngredientsExist confidential="false">true</OtherIngredientsExist>
+  <OtherIngredients>
+    <Ingredient>
+      <Name confidential="false">glycerol</Name>
+      <CasNumberExists confidential="false">true</CasNumberExists>
+      <CasNumber confidential="false">55-82-5</CasNumber>
+      <RecipeQuantity confidential="false">52.3</RecipeQuantity>
+      <Functions>
+        <Function confidential="false">13</Function>
+      </Functions>
+      <ToxicityStatus confidential="false">0</ToxicityStatus>
+      <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+      <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+      <ToxicologicalDetails>
+        <ToxicologicalDataAvailable confidential="false">3</ToxicologicalDataAvailable>
+        <ToxEmission confidential="false">true</ToxEmission>
+        <ToxCmr confidential="false">true</ToxCmr>
+        <ToxCardioPulmonary confidential="false">true</ToxCardioPulmonary>
+        <ToxAddictive confidential="false">false</ToxAddictive>
+        <ToxOther confidential="false">true</ToxOther>
+        <ToxEmissionFiles>
+          <Attachment attachmentID="9b482c1a-4f0b-4787-b299-3925f1afce94" />
+        </ToxEmissionFiles>
+        <ToxCmrFiles>
+          <Attachment attachmentID="42d13839-c26d-40eb-b12a-a17993bd8c6e" />
+        </ToxCmrFiles>
+        <ToxCardioPulmonaryFiles>
+          <Attachment attachmentID="698b3869-9196-40f7-9dbc-160d0497d6aa" />
+        </ToxCardioPulmonaryFiles>
+        <ToxOtherFiles>
+          <Attachment attachmentID="ccc25b1b-662e-4b9a-9a7d-e18599bf23fc" />
+        </ToxOtherFiles>
+      </ToxicologicalDetails>
+      <Category confidential="false">2</Category>
+      <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+      <PriorityAdditive confidential="false">true</PriorityAdditive>
+      <PriorityAdditiveFiles>
+        <Attachment attachmentID="98ad589f-4058-4d19-8d66-e7270cabae92" />
+      </PriorityAdditiveFiles>
+    </Ingredient>
+    <Ingredient>
+      <Name confidential="false">water</Name>
+      <CasNumberExists confidential="false">true</CasNumberExists>
+      <CasNumber confidential="false">7732-28-5</CasNumber>
+      <RecipeQuantity confidential="false">36.1</RecipeQuantity>
+      <Functions>
+        <Function confidential="false">17</Function>
+      </Functions>
+      <ToxicityStatus confidential="false">0</ToxicityStatus>
+      <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+      <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+      <ToxicologicalDetails>
+        <ToxicologicalDataAvailable confidential="false">1</ToxicologicalDataAvailable>
+        <ToxEmission confidential="false">false</ToxEmission>
+        <ToxCmr confidential="false">false</ToxCmr>
+        <ToxCardioPulmonary confidential="false">false</ToxCardioPulmonary>
+        <ToxAddictive confidential="false">false</ToxAddictive>
+        <ToxOther confidential="false">false</ToxOther>
+      </ToxicologicalDetails>
+      <Category confidential="false">2</Category>
+      <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+      <PriorityAdditive confidential="false">false</PriorityAdditive>
+    </Ingredient>
+  </OtherIngredients>
+  <OtherEmissionsAvailable confidential="false">true</OtherEmissionsAvailable>
+  <OtherEmissions>
+    <Emission>
+      <CasNumber confidential="false">53-51-7</CasNumber>
+      <IupacName confidential="false">12345</IupacName>
+      <Quantity confidential="false">12</Quantity>
+      <Unit confidential="false">mg</Unit>
+      <MethodsFile>
+        <Attachment attachmentID="c7777273-12e3-48ff-b748-23e583ada2e7" />
+        <Attachment attachmentID="e1faa54d-ebd7-4f68-abc3-d0bb13a85f83" />
+      </MethodsFile>
+      <Name confidential="false">emission 4</Name>
+    </Emission>
+  </OtherEmissions>
+  <NovelSpecific>
+    <DetailsDescriptionFile attachmentID="d9c81f4c-f670-4eea-a7c6-2b0b2880063a" />
+    <UseInstructionsFile attachmentID="6fe90f12-d339-47f0-a844-d63e1c72dc11" />
+    <RiskBenefitFile attachmentID="f281d3e9-d5bf-4941-9259-fc488cb72ea9" />
+    <StudyFiles>
+      <Attachment attachmentID="6a300956-b784-4f00-986e-60b4d61998e8" />
+    </StudyFiles>
+  </NovelSpecific>
+</Product>

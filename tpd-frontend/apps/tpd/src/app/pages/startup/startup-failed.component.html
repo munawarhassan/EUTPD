@@ -1,0 +1,19 @@
+<div class="startup-failed container">
+  <div class="jumbotron">
+    <div class="container">
+      <img class="m-startup-failed__image" src="assets/img/error/icon-skull-64.png" />
+      <h1 class="m-startup-failed__header">Oops!!!</h1>
+      <p class="lead text-center">{{ applicationInfo.displayName }} has failed</p>
+      <hr class="my-4" />
+      <div class="m-startup-failed__body">
+        <p *ngFor="let event of events">
+          <b>{{ event.level.level }} error</b>: {{ event.description }}
+        </p>
+      </div>
+      <hr class="my-4" />
+      <div class="m-startup-failed__footer">
+        <a class="btn btn-primary btn-lg" href="#" role="button" (click)="reportError()">Request assistance</a>
+      </div>
+    </div>
+  </div>
+</div>

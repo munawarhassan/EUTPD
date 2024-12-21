@@ -1,0 +1,51 @@
+{
+  "name": "forms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/forms/src",
+  "prefix": "lt",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": [
+        "{workspaceRoot}/dist/libs/forms"
+      ],
+      "options": {
+        "project": "libs/forms/ng-package.json",
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/forms/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/forms/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/forms"
+      ],
+      "options": {
+        "jestConfig": "libs/forms/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/forms/src/**/*.ts",
+          "libs/forms/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "ui",
+    "form",
+    "validator"
+  ]
+}

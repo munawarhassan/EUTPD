@@ -1,0 +1,46 @@
+title: Download
+author: Christophe Friederich
+email: devacfr@mac.com
+
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+
+$h1 Download
+
+This page lists versions of ${context.get("application.title")} available for download. Older versions may no longer be supported.
+
+| Version                                                                | Distribution                                      | Release Date      | Changes                  |
+|------------------------------------------------------------------------|---------------------------------------------------|-------------------|--------------------------|
+| TPD Submission Tool 2.4   {{< badge color="success" text="NEW" />}}    | [Standalone Windows zip x64 with JDK 13][zip-2.4] | 23 February 2021  | [Release Notes][rel-2.4] |
+| TPD Submission Tool 2.3                                                | Standalone [zip][zip-2.3] [tar.gz][gz-2.3]        | 14 September 2020 | [Release Notes][rel-2.3] |
+| TPD Submission Tool 2.2   {{< badge color="danger" text="REMOVED" />}} |                                                   | 09 September 2019 | [Release Notes][rel-2.2] |
+| TPD Submission Tool 2.1                                                | Standalone [zip][zip-2.1] [tar.gz][gz-2.1]        | 13 September 2018 | [Release Notes][rel-2.1] |
+| TPD Submission Tool 2.0                                                | Standalone [zip][zip-2.0] [tar.gz][gz-2.0]        | 30 August 2018    | [Release Notes][rel-2.0] |
+
+$h2 Previous Versions
+
+Older non-recommended releases can be found on our [Archives][sdlc-distribution].
+
+[sdlc-distribution]: ${site.distribution.url}
+
+[zip-2.4]: ${site.distribution.url}/2.4.3/tpd-distribution-2.4.3.zip
+[rel-2.4]: release-notes/release-notes.2.4.html
+
+[zip-2.3]: ${site.distribution.url}/2.3.2/tpd-distribution-2.3.2.zip
+[gz-2.3]: ${site.distribution.url}/2.3.2/tpd-distribution-2.3.2.tar.gz
+[rel-2.3]: release-notes/release-notes.2.3.html
+
+[zip-2.2]: ${site.distribution.url}/2.3.0/tpd-distribution-2.3.0.zip
+[gz-2.2]: ${site.distribution.url}/2.3.0/tpd-distribution-2.3.0.tar.gz
+[rel-2.2]: release-notes/release-notes.2.2.html
+
+[zip-2.1]: ${site.distribution.url}/2.1.0/tpd-distribution-2.1.0.zip
+[gz-2.1]: ${site.distribution.url}/2.1.0/tpd-distribution-2.1.0.tar.gz
+[rel-2.1]: release-notes/release-notes.2.1.html
+
+[zip-2.0]: ${site.distribution.url}/2.0.2/tpd-distribution-2.0.2.zip
+[gz-2.0]: ${site.distribution.url}/2.0.2/tpd-distribution-2.0.2.tar.gz
+[rel-2.0]: release-notes/release-notes.2.0.html

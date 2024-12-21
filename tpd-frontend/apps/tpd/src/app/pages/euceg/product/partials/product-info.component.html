@@ -1,0 +1,133 @@
+<ng-container *ngIf="product">
+  <form name="infoForm" #infoForm="ngForm" novalidate>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">PMI Product Number</label>
+        <input class="form-control" [value]="product.productNumber" readonly />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Internal ProductNumber</label>
+        <input class="form-control" [value]="product.internalProductNumber" readonly />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Preferred Submission Type</label>
+        <input class="form-control" [value]="euceg.getSubmissionType(product.submissionType)" readonly />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Source file name</label>
+        <input class="form-control" [value]="product.sourceFilename" readonly />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">Submitter Name</label>
+        <input class="form-control" [value]="submitter?.details?.Name" readonly />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Submitter Type</label>
+        <input class="form-control" [value]="euceg.getSubmitterType(submitter?.submitter?.SubmitterType)" readonly />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label class="form-label">General Comment</label>
+        <textarea class="form-control" [value]="product.generalComment" readonly></textarea>
+      </div>
+    </div>
+  </form>
+  <h4 class="my-8">Submission History</h4>
+  <lt-table
+    id="m_submissions_list"
+    [page]="submissionsPage"
+    [pageable]="currentPageable"
+    [lineTemplate]="lineTemplate"
+    [options]="tableOptions"
+  >
+  </lt-table>
+</ng-container>
+
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let submission of page.content">
+    <td>
+      <a class="link" [routerLink]="['/product/submissions/view', submission.submissionId]">{{
+        submission.productId
+      }}</a>
+    </td>
+    <td class="d-none d-xl-table-cell">{{ submission.productNumber }}</td>
+    <td class="d-none d-xl-table-cell">
+      <div
+        class="text-truncate mw-200px d-inline-block"
+        [ltTooltip]="euceg.getProductType(submission.productType, submission.type)"
+        placement="bottom"
+      >
+        {{ euceg.getProductType(submission.productType, submission.type) }}
+      </div>
+    </td>
+    <td class="d-none d-xl-table-cell">{{ submission.previousProductId ? submission.previousProductId : '' }}</td>
+    <td class="d-none d-xl-table-cell text-center">
+      <app-market-symbol [countries]="getCountries(submission.presentations)" [size]="5"></app-market-symbol>
+    </td>
+    <td>
+      <div
+        class="text-truncate mw-200px d-inline-block"
+        [ltTooltip]="euceg.getSubmissionType(submission.submissionType)"
+        placement="bottom"
+      >
+        {{ euceg.getSubmissionType(submission.submissionType) }}
+      </div>
+    </td>
+    <td class="text-center">
+      <span
+        submissionStatus
+        *ngIf="submission.submissionStatus !== 'PENDING' && submission.submissionStatus !== 'SUBMITTING'"
+        [status]="submission.submissionStatus"
+      ></span>
+    </td>
+    <td>{{ submission.lastModifiedDate | date : 'medium' }}</td>
+    <td class="text-end text-nowrap min-w-100px">
+      <a
+        href="#"
+        class="btn btn-light btn-active-light-primary btn-sm text-nowrap menu-dropdown"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+      >
+        <!--begin::Menu item-->
+        <div
+          *ngIf="
+            submission.submissionStatus === 'SUBMITTED' ||
+            submission.submissionStatus === 'ERROR' ||
+            submission.submissionStatus === 'CANCELLED'
+          "
+          class="menu-item px-3"
+        >
+          <a href="#" [routerLink]="['/product/submissions/view', submission.submissionId]" class="menu-link px-3">
+            <span class="menu-title">View</span>
+          </a>
+        </div>
+        <div class="separator my-2 opacity-75"></div>
+        <!--begin::Menu item-->
+        <div *ngIf="submission.exportable" class="menu-item px-3">
+          <a href="#" securedLink="./rest/api/submissions/{{ submission.submissionId }}/export" class="menu-link px-3">
+            <span class="menu-title">Export Sent Report</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" securedLink="./rest/api/submissions/{{ submission.submissionId }}/package" class="menu-link px-3">
+            <span class="menu-title">Download Submission</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+    </td>
+  </tr>
+</ng-template>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<propertysets>
+    <propertyset name="properties" class="com.opensymphony.module.propertyset.file.PropertiesFilePropertySet"/>
+    <propertyset name="aggregate" class="com.opensymphony.module.propertyset.aggregate.AggregatePropertySet" />
+    <propertyset name="cached" class="com.pmi.tpd.core.context.propertyset.CachingPropertySet" />
+    <propertyset name="map" class="com.opensymphony.module.propertyset.map.MapPropertySet" />
+    <propertyset name="memory" class="com.opensymphony.module.propertyset.memory.MemoryPropertySet" />
+    <propertyset name="serializable" class="com.opensymphony.module.propertyset.memory.SerializablePropertySet" />
+    <propertyset name="xml" class="com.opensymphony.module.propertyset.xml.XMLPropertySet" />
+    <propertyset name="jpa" class="com.pmi.tpd.core.context.propertyset.spi.provider.JpaPropertySet" />
+
+</propertysets>

@@ -1,0 +1,290 @@
+<lt-toolbar>
+  <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<form role="form" #form="ngForm" name="importForm" (ngSubmit)="importExcel()" novalidate>
+  <lt-portlet [mode]="['bordered-semi']" id="m_portlet_products_import">
+    <lt-portlet-head title="Import Product"> </lt-portlet-head>
+    <lt-portlet-body>
+      <portlet-tab id="m_portlet_file" heading="File Selection" icon="flaticon2-download">
+        <div class="offset-md-1 row">
+          <div class="col-md-8">
+            <form-dropzone
+              label="Selected File(s)"
+              input-name="file"
+              [multiple]="true"
+              [uploader]="uploader"
+              (removeFile)="onRemoveFileItem($event)"
+              (errorItem)="onErrorItem($event)"
+              helpText="Select one or more files to import."
+            >
+            </form-dropzone>
+          </div>
+        </div>
+        <div class="offset-md-1 row">
+          <div class="col-md-8">
+            <label class="fw-bold fs-6 mb-5">Import Options</label>
+            <form-checkbox
+              label="Keep sales data history"
+              controlClass="form-check-solid"
+              name="keepSaleHistory"
+              [(ngModel)]="this.keepSaleHistory"
+              (ngModelChange)="onKeepSaleHistory()"
+              helpText="Add or update new sales data to the existing, otherwise only add the new ones."
+            ></form-checkbox>
+          </div>
+        </div>
+        <ng-container *ngIf="uploader.queue.length">
+          <div class="offset-md-1 row my-3">
+            <div class="col-lg-8">
+              <div class="separator separator-dashed my-5"></div>
+            </div>
+          </div>
+          <!--begin::Row-->
+          <div class="offset-md-1 row my-4">
+            <!--begin::Col-->
+            <div class="col-lg-8">
+              <div class="align-items-stretch d-flex flex-sm-column flex-lg-row">
+                <div class="col-md-4 me-lg-2 me-sm-0">
+                  <!--begin::Option-->
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="sheetOptions"
+                    [(ngModel)]="sheetOptions"
+                    id="m_sheet_options_all"
+                    value="all"
+                    (change)="onSheetOptionsChange()"
+                    [disabled]="!uploader.queue.length"
+                  />
+                  <label
+                    class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center h-100 mb-lg-2 mb-sm-5"
+                    for="m_sheet_options_all"
+                  >
+                    <inline-svg class="me-3" size="3x" [src]="svgIcons.Simple.design.flatten"></inline-svg>
+                    <!--begin::Info-->
+                    <span class="d-block fw-bold text-start">
+                      <span class="text-dark d-block">All Spreadsheets</span>
+                    </span>
+                    <!--end::Info-->
+                  </label>
+                  <!--end::Option-->
+                </div>
+                <div class="col-md-4">
+                  <!--begin::Option-->
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="sheetOptions"
+                    [(ngModel)]="sheetOptions"
+                    id="m_sheet_options_select"
+                    value="select"
+                    (change)="onSheetOptionsChange()"
+                    [disabled]="!uploader.queue.length"
+                  />
+                  <label
+                    class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center h-100"
+                    for="m_sheet_options_select"
+                  >
+                    <inline-svg class="me-3" size="3x" [src]="svgIcons.Duotone.general.setting"></inline-svg>
+                    <!--begin::Info-->
+                    <span class="d-block fw-bold text-start">
+                      <span class="text-dark d-block">Selected Spreadsheets</span>
+                    </span>
+                    <!--end::Info-->
+                  </label>
+                  <!--end::Option-->
+                </div>
+              </div>
+            </div>
+            <!--end::Col-->
+          </div>
+          <!--end::Row-->
+          <div class="offset-md-1 row" *ngIf="sheetOptions === 'select'">
+            <div class="col-lg-8">
+              <div class="separator separator-dashed my-5"></div>
+              <h4 class="my-5">Select Spreadsheets</h4>
+              <div id="m_list_sheets" *ngIf="sheets">
+                <div
+                  class="form-check form-check-custom form-check-solid mb-3"
+                  *ngFor="let sheet of sheets; index as index"
+                >
+                  <!--begin::Input-->
+                  <input
+                    class="form-check-input me-3"
+                    [name]="'selectedSheets_' + index"
+                    type="checkbox"
+                    [value]="sheet.name"
+                    [(ngModel)]="sheet.selected"
+                    [disabled]="sheet.required"
+                    (change)="onSelectedSheetChange()"
+                  />
+                  <!--end::Input-->
+                  <!--begin::Label-->
+                  <label class="form-check-label" for="kt_modal_update_role_option_0">
+                    <div class="fw-bolder text-gray-800">
+                      <strong>{{ sheet.name }}</strong> spreadsheets.
+                      <div *ngIf="sheet.required" class="d-inline-block text-danger text-uppercase">required</div>
+                    </div>
+                  </label>
+                  <!--end::Label-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </portlet-tab>
+      <portlet-tab
+        id="m_portlet_diff"
+        heading="Change Preview"
+        icon="flaticon2-browser"
+        [disabled]="uploader.queue.length === 0"
+        (selectTab)="handleSelectDiffTab()"
+      >
+        <div class="d-flex flex-row">
+          <div
+            id="m_aside_product"
+            [ltScroll]="scrollOptions"
+            class="d-flex flex-column min-w-350px border rounded-1 shadow hover-scroll-overlay-y py-2 pe-2"
+          >
+            <div
+              ltMenu
+              id="m_import_product_list_product"
+              class="menu menu-column menu-dark menu-state-bg-light-primary menu-state-icon-primary menu-state-title-dark"
+            >
+              <div
+                *ngFor="let entry of diffRequest.map() | keyvalue"
+                class="menu-item menu-accordion"
+                [ngClass]="{ show: selectedDiff && entry.value.includes(selectedDiff) }"
+                data-lt-menu-trigger="click"
+              >
+                <div class="menu-link">
+                  <span class="menu-icon">
+                    <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+                  </span>
+                  <span class="menu-title">{{ entry.key.name }}</span>
+                  <span class="menu-arrow"></span>
+                </div>
+                <div class="menu-sub menu-sub-accordion">
+                  <div class="menu-item menu-accordion" *ngFor="let diff of entry.value">
+                    <a
+                      href="#"
+                      class="menu-link d-flex flex-row"
+                      (click)="onSelectDiff(diff)"
+                      [class.active]="selectedDiff === diff"
+                      [attr.data-product-number]="diff.productNumber"
+                    >
+                      <span class="menu-icon">
+                        <span class="svg-icon svg-icon-1" [inlineSVG]="svgIcons.Simple.shopping.box2"></span>
+                      </span>
+                      <span>{{ diff.productNumber }}</span>
+                      <span
+                        class="badge text-uppercase ms-auto"
+                        [attr.data-change-status]="diff.change"
+                        [ngClass]="{
+                          'badge-light-success': diff.change === 'Added',
+                          'badge-light-primary': diff.change === 'Modified',
+                          'badge-light-dark': diff.change === 'Unchanged'
+                        }"
+                        >{{ diff.change }}</span
+                      >
+                      <i
+                        *ngIf="!diff.validationResult.hasFailures"
+                        class="fas fa-check-circle ms-2 text-success"
+                        [attr.data-invalid]="diff.validationResult.hasFailures"
+                        ltTooltip="This product is valid"
+                      ></i>
+                      <i
+                        *ngIf="diff.validationResult.hasFailures"
+                        class="fas fa-times-circle ms-2 text-warning"
+                        [attr.data-invalid]="diff.validationResult.hasFailures"
+                        ltTooltip="This product is invalid"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column mx-4 w-100">
+            <lt-portlet [mode]="['fit']" class="me-0">
+              <lt-portlet-head [title]="titleDiff">
+                <div class="d-flex flex-wrap flex-stack">
+                  <div class="d-flex flex-wrap">
+                    <!--begin::Tab nav-->
+                    <ul class="nav nav-pills">
+                      <li class="nav-item m-0">
+                        <a
+                          ltTooltip="Line by Line"
+                          placement="bottom"
+                          class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-light-primary me-3"
+                          [class.active]="diffOutputFormat === 'line-by-line'"
+                          (click)="diffOutputFormat = 'line-by-line'"
+                        >
+                          <inline-svg [src]="svgIcons.Duotone.general.layerHorizontal" size="2"></inline-svg>
+                        </a>
+                      </li>
+                      <li class="nav-item m-0">
+                        <a
+                          ltTooltip="Side by Side"
+                          placement="bottom"
+                          class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-light-primary"
+                          [class.active]="diffOutputFormat === 'side-by-side'"
+                          (click)="diffOutputFormat = 'side-by-side'"
+                        >
+                          <inline-svg [src]="svgIcons.Duotone.general.layerVertical" size="2"></inline-svg>
+                        </a>
+                      </li>
+                    </ul>
+                    <!--end::Tab nav-->
+                    <!--begin::Actions-->
+                    <div class="d-flex my-0"></div>
+                    <!--end::Actions-->
+                  </div>
+                </div>
+                <lt-portlet-tool type="toggle"></lt-portlet-tool>
+                <lt-portlet-tool type="fullscreen" (action)="onFullscreen($event)"></lt-portlet-tool>
+              </lt-portlet-head>
+              <lt-portlet-body [mode]="['fit']">
+                <ng-scrollbar class="min-vh-100">
+                  <app-diff-html
+                    *ngIf="selectedDiff"
+                    [diff]="selectedDiff.patch"
+                    [fileSummary]="false"
+                    [outputFormat]="diffOutputFormat"
+                  >
+                  </app-diff-html>
+                </ng-scrollbar>
+              </lt-portlet-body>
+            </lt-portlet>
+            <lt-portlet *ngIf="selectedDiff?.validationResult.hasFailures">
+              <lt-portlet-head title="Xml Validation Output">
+                <lt-portlet-tool type="toggle"></lt-portlet-tool>
+              </lt-portlet-head>
+              <lt-portlet-body>
+                <div class="hover-scroll" style="height: 400px">
+                  <pre><code [innerHtml]="selectedDiff?.validationResult.failures | json"></code></pre>
+                </div>
+              </lt-portlet-body>
+            </lt-portlet>
+          </div>
+        </div>
+      </portlet-tab>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="offset-md-3 col align-right">
+          <button id="m_import_submit" type="submit" class="btn btn-primary me-3" [disabled]="!uploader.queue.length">
+            Import
+          </button>
+          <a
+            href="#"
+            id="m_import_cancel"
+            class="link link-primary"
+            (click)="goBack()"
+            translate="global.button.cancel"
+          ></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

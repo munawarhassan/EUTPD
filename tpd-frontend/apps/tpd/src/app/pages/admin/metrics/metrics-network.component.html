@@ -1,0 +1,92 @@
+<lt-portlet mode="bordered-semi">
+  <lt-portlet-head icon="fa flaticon-network" title="Network"> </lt-portlet-head>
+  <lt-portlet-body>
+    <div class="row m-row--no-padding m-row--col-separator-xl">
+      <div class="col-md-12 col-lg-12 col-xl-12">
+        <!--begin:: Widgets/request rate-->
+        <div class="m-widget14">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="m-widget14__chart" style="width: 100%; height: 160px">
+                <canvas
+                  baseChart
+                  [datasets]="chartRequestRate.data"
+                  [labels]="chartRequestRate.labels"
+                  type="line"
+                  [options]="chartRequestRate.options"
+                  [legend]="false"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[0]"></span>
+                  <span>{{ chartRequestRate.data[0].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[1]"></span>
+                  <span>{{ chartRequestRate.data[1].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[2]"></span>
+                  <span>{{ chartRequestRate.data[2].label }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end:: Widgets/request rate-->
+      </div>
+    </div>
+    <div class="row m-row--no-padding m-row--col-separator-xl">
+      <div class="col-md-12 col-lg-12 col-xl-12">
+        <!--begin:: Widgets/ request-->
+        <div class="m-widget14">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="m-widget14__chart" style="width: 100%; height: 160px">
+                <canvas
+                  baseChart
+                  [datasets]="chartRequest.data"
+                  [labels]="chartRequest.labels"
+                  type="line"
+                  [options]="chartRequest.options"
+                  [legend]="false"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[0]"></span>
+                  <span>{{ chartRequest.data[0].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[1]"></span>
+                  <span>{{ chartRequest.data[1].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[2]"></span>
+                  <span>{{ chartRequest.data[2].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="colorScheme.domain[3]"></span>
+                  <span>{{ chartRequest.data[3].label }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end:: Widgets/ request-->
+      </div>
+    </div>
+    <!-- end : row -->
+  </lt-portlet-body>
+</lt-portlet>

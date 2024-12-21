@@ -1,0 +1,72 @@
+<div
+  class="btn btn-icon btn-active-light-primary"
+  [ngClass]="buttonHeight"
+  data-lt-menu-trigger="click"
+  data-lt-menu-attach="parent"
+  data-lt-menu-placement="bottom-end"
+  data-lt-menu-flip="bottom"
+>
+  <span [inlineSVG]="'icons/duotune/general/gen025.svg'" class="svg-icon" [ngClass]="iconSize"></span>
+</div>
+<div ltMenu class="menu menu-sub menu-sub-dropdown menu-column w-250px w-lg-325px">
+  <div
+    class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10"
+    [style.background-image]="'url(./assets/media/misc/pattern-1.jpg)'"
+  >
+    <h3 class="text-white fw-bold mb-3">Quick Links</h3>
+    <span class="badge bg-primary py-2 px-3">25 pending tasks</span>
+  </div>
+
+  <div class="row g-0">
+    <div class="col-6">
+      <a class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom cursor-pointer">
+        <span
+          [inlineSVG]="'icons/duotune/finance/fin009.svg'"
+          class="svg-icon svg-icon-3x svg-icon-primary mb-2"
+        ></span>
+        <span class="fs-5 fw-bold text-gray-800 mb-0">Accounting</span>
+        <span class="fs-7 text-gray-400">eCommerce</span>
+      </a>
+    </div>
+
+    <div class="col-6">
+      <a class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-bottom cursor-pointer">
+        <span
+          [inlineSVG]="'icons/duotune/communication/com010.svg'"
+          class="svg-icon svg-icon-3x svg-icon-primary mb-2"
+        ></span>
+        <span class="fs-5 fw-bold text-gray-800 mb-0">Administration</span>
+        <span class="fs-7 text-gray-400">Console</span>
+      </a>
+    </div>
+
+    <div class="col-6">
+      <a class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end cursor-pointer">
+        <span
+          [inlineSVG]="'icons/duotune/abstract/abs042.svg'"
+          class="svg-icon svg-icon-3x svg-icon-primary mb-2"
+        ></span>
+        <span class="fs-5 fw-bold text-gray-800 mb-0">Projects</span>
+        <span class="fs-7 text-gray-400">Pending Tasks</span>
+      </a>
+    </div>
+
+    <div class="col-6">
+      <a class="d-flex flex-column flex-center h-100 p-6 bg-hover-light cursor-pointer">
+        <span
+          [inlineSVG]="'icons/duotune/finance/fin006.svg'"
+          class="svg-icon svg-icon-3x svg-icon-primary mb-2"
+        ></span>
+        <span class="fs-5 fw-bold text-gray-800 mb-0">Customers</span>
+        <span class="fs-7 text-gray-400">Latest cases</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="py-2 text-center border-top">
+    <a routerLink="/crafted/pages/profile" class="btn btn-color-gray-600 btn-active-color-primary">
+      View All
+      <span [inlineSVG]="'icons/duotune/arrows/arr064.svg'" class="svg-icon svg-icon-5"></span>
+    </a>
+  </div>
+</div>

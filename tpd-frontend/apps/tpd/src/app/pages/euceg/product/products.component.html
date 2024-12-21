@@ -1,0 +1,193 @@
+<lt-toolbar [sticky]="true">
+  <a href="#" class="btn btn-light-dark" data-lt-menu-trigger="click" data-lt-menu-placement="bottom-end">
+    <inline-svg size="2" [src]="svgIcons.Duotone.coding.setting"></inline-svg>
+    <span>Tools</span>
+    <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+  </a>
+  <!--begin::Menu-->
+  <div
+    ltMenu
+    class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+  >
+    <!--begin::Menu item-->
+    <div class="menu-item px-3">
+      <a href="#" [routerLink]="['import']" class="menu-link px-3">
+        <span class="menu-icon">
+          <inline-svg size="2" [src]="svgIcons.Duotone.files.folderDownload"></inline-svg>
+        </span>
+        <span class="menu-title">Import Files...</span>
+      </a>
+    </div>
+    <!--end::Menu item-->
+    <!--begin::Menu item-->
+    <div class="menu-item px-3">
+      <a href="#" [routerLink]="['bulk']" class="menu-link px-3">
+        <span class="menu-icon">
+          <inline-svg size="2" [src]="svgIcons.Duotone.ecommerce.basket"></inline-svg>
+        </span>
+        <span class="menu-title">Bulk Operation...</span>
+      </a>
+    </div>
+    <!--end::Menu item-->
+  </div>
+  <!--end::Menu-->
+  <span class="h-25px border-gray-300 border-start mx-4"></span>
+  <a
+    href="#"
+    class="btn btn-icon btn-light-dark"
+    (click)="ActivityDrawer.toggle()"
+    ltTooltip="Activity Log"
+    placement="top"
+  >
+    <inline-svg [src]="svgIcons.Duotone.general.histogram" size="2"> </inline-svg>
+  </a>
+</lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_products">
+  <lt-portlet-body>
+    <div class="d-flex flex-wrap flex-stack pb-3">
+      <div class="d-flex align-items-center">
+        <app-search
+          (search)="search($event)"
+          (cleared)="clearFilter()"
+          [placeholder]="'products.search.placeholder' | translate"
+        ></app-search>
+        <app-product-filter
+          #productFilter="appProductFilter"
+          [productType]="productType"
+          [storageName]="'product_' + this.productType + '_filter'"
+          (changed)="onFilterChanged($event)"
+        ></app-product-filter>
+      </div>
+      <div class="d-flex flex-wrap my-1">
+        <!--begin::Actions-->
+        <div class="d-flex my-0">
+          <button *ngIf="!readonly" type="button" [routerLink]="['new']" class="btn btn-light-primary me-3">
+            <inline-svg size="2" [src]="svgIcons.Duotone.abstract.cross"></inline-svg>
+            <span>New Product</span>
+          </button>
+        </div>
+        <!--end::Actions-->
+      </div>
+    </div>
+    <app-product-filter-result
+      [filters]="filters"
+      (cleared)="productFilter.clearFilters()"
+      (removeTag)="productFilter.removeTag($event)"
+      (notChanged)="productFilter.storeFitler(); refresh()"
+    ></app-product-filter-result>
+    <lt-table
+      #table
+      id="m_products_list"
+      [page]="page"
+      [pageable]="currentPageable"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<div
+  #ActivityDrawer="ltDrawer"
+  [ltDrawer]="{
+    name: 'activities',
+    width: { default: '450px', lg: '900px' }
+  }"
+  id="m_drawer_activity_log"
+  class="bg-white"
+>
+  <app-audit-timeline
+    class="w-100 rounded-0"
+    *ngIf="ActivityDrawer.shown"
+    title="Activity Logs"
+    [channels]="channels"
+    (closeAudit)="ActivityDrawer.hide()"
+  ></app-audit-timeline>
+</div>
+
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let product of page.content; trackBy: productTrack">
+    <td data-header="productNumber" [attr.data-entity-id]="product.productNumber">
+      <a class="link link-primary" [routerLink]="['view', product.productNumber]">{{ product.productNumber }}</a>
+    </td>
+    <td data-header="child" class="d-none d-xxl-table-cell">{{ product.child }}</td>
+    <td data-header="type" class="d-none d-xxl-table-cell">
+      <span class="text-truncate mw-200px d-inline-block">
+        {{ euceg.getProductType(product.type, product.productType) }}
+      </span>
+    </td>
+    <td data-header="nationalMarkets" class="text-center">
+      <app-market-symbol [countries]="getCountries(product.presentations)" [size]="5"></app-market-symbol>
+    </td>
+    <td data-header="pirStatus">
+      <app-pir-status [readonly]="false" [product]="product" (changed)="table.refresh()"></app-pir-status>
+    </td>
+    <td data-header="status" class="text-center">
+      <app-product-status [status]="product.status"></app-product-status>
+    </td>
+    <td data-header="latestSubmissionStatus" class="text-center">
+      <div submissionStatus [status]="product.latestSubmissionStatus"></div>
+    </td>
+    <td data-header="lastModifiedDate" class="d-none d-xl-table-cell">
+      {{ product.lastModifiedDate | date }}
+    </td>
+    <td class="text-end">
+      <!--begin::Button Options-->
+      <a
+        href="#"
+        class="btn btn-light btn-active-light-primary btn-sm text-nowrap menu-dropdown"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4"
+      >
+        <!--begin::Menu item-->
+        <div *ngIf="!product.readOnly" class="menu-item px-3">
+          <a href="#" [routerLink]="['edit', product.productNumber]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">Edit</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div *ngIf="product.readOnly" class="menu-item px-3">
+          <a href="#" [routerLink]="['view', product.productNumber]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">View</span>
+          </a>
+        </div>
+        <!--begin::Menu item-->
+        <div *ngIf="product.sendable" class="menu-item px-3">
+          <a href="#" [routerLink]="['send', product.productNumber]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.communication.share" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">Send</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <div class="separator my-3"></div>
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" [routerLink]="['rev', product.productNumber]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.code.git4" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">Revision</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+      <!--end::Button Options-->
+    </td>
+  </tr>
+</ng-template>

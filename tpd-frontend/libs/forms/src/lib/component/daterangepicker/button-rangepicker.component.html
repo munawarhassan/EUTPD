@@ -1,0 +1,11 @@
+<a
+  class="btn btn-light-twitter btn-icon-primary ms-2"
+  ltDateRangePickr
+  [range]="range$ | async"
+  [defaultRanges]="true"
+  mode="range"
+  (changedRange)="rangeEmitter.next($event)"
+>
+  <i class="far fa-calendar-alt"></i>
+  <span class="me-2">{{ rangeText }}</span>
+</a>

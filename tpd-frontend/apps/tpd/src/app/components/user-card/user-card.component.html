@@ -1,0 +1,91 @@
+<ng-container *ngIf="user">
+  <ng-container *ngIf="layer === 'line'">
+    <div *ngIf="user.avatarUrl" class="symbol symbol-circle symbol-50px align-self-center">
+      <img alt="avatar" [src]="user.avatarUrl" />
+    </div>
+    <div *ngIf="!user.avatarUrl" class="symbol symbol-circle symbol-50px align-self-center">
+      <div class="symbol-label fs-2 fw-bold bg-light-dark text-gray-600">{{ user.displayName | firstLetter }}</div>
+    </div>
+    <div class="d-flex flex-column justify-content-center ms-3">
+      <div>
+        <a class="text-gray-800 text-hover-primary stretched-link" [routerLink]="link">{{ user.displayName }}</a>
+      </div>
+      <span
+        *ngIf="highestPermission$ | async as highestPermission"
+        class="badge badge-sm badge-light-primary align-self-start my-1"
+      >
+        {{ highestPermission }}
+      </span>
+      <div>
+        <inline-svg
+          class="me-2"
+          [src]="svgIcons.Duotone.communication.envelopClose"
+          size="4"
+          color="gray-500"
+        ></inline-svg>
+        <span id="m_user_email_label" class="text-muted">{{ user.email }}</span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="layer === 'card'">
+    <div class="card">
+      <!--begin::Card body-->
+      <div class="card-body">
+        <!--begin::Summary-->
+        <div class="d-flex flex-row justify-content-end">
+          <div
+            class="badge badge-sm py-1"
+            [ngClass]="{ 'badge-light-success': user.activated, 'badge-light-danger': !user.activated }"
+          >
+            <span *ngIf="user.activated">Activated</span>
+            <span *ngIf="!user.activated">Deactivated</span>
+          </div>
+        </div>
+        <!--begin::User Info-->
+        <div class="d-flex flex-center flex-column py-5">
+          <!--begin::Avatar-->
+          <div class="symbol symbol-100px symbol-circle mb-7">
+            <img [src]="user.avatarUrl" alt="image" />
+            <div
+              *ngIf="chatEnable"
+              class="
+                bg-success
+                border border-4 border-white
+                h-20px
+                position-absolute
+                rounded-circle
+                start-100
+                top-25
+                translate-middle
+                w-20px
+              "
+            ></div>
+          </div>
+          <!--end::Avatar-->
+          <!--begin::Name-->
+          <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bolder mb-3" [routerLink]="link">{{
+            user.displayName
+          }}</a>
+          <!--end::Name-->
+          <!--begin::Position-->
+          <div class="mb-9" *ngIf="highestPermission$ | async as highestPermission">
+            <!--begin::Badge-->
+            <div class="badge badge-lg badge-light-primary d-inline">{{ highestPermission }}</div>
+            <!--begin::Badge-->
+          </div>
+          <!--end::Position-->
+          <!--begin::Info-->
+          <div *ngIf="chatEnable" class="d-flex flex-wrap flex-center">
+            <button type="button" class="btn btn-primary btn-sm me-3">chat</button>
+            <button type="button" class="btn btn-success btn-sm">follow</button>
+          </div>
+          <!--end::Info-->
+        </div>
+        <!--end::User Info-->
+        <!--end::Summary-->
+        <ng-content></ng-content>
+      </div>
+      <!--end::Card body-->
+    </div>
+  </ng-container>
+</ng-container>

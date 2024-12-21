@@ -1,0 +1,1 @@
+ mvnw org.codehaus.cargo:cargo-maven2-plugin:run -pl tpd-web -Denv=dev

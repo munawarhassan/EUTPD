@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    elementFormDefault="qualified">
+    <xs:element name="AS4Payload">
+        <xs:annotation>
+            <xs:documentation>Defines the xml payload to send via the AS4 protocol</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!--  [devacfr] Added expectedContentTypes attribute to add streaming feature -->
+                <xs:element name="Content" type="xs:base64Binary"
+                    xmime:expectedContentTypes="application/octet-stream">
+                    <xs:annotation>
+                        <xs:documentation>The Base64-encoded encrypted binary data of the document.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="DocumentHash" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The hash value of the (non-encrypted) document</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Key" type="xs:base64Binary">
+                    <xs:annotation>
+                        <xs:documentation>The Base64-encoded encrypted binary data of the symmetric key.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

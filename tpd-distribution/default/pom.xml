@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.pmi.tpd</groupId>
+    <artifactId>tpd.distribution.parent</artifactId>
+    <version>3.4.0</version>
+  </parent>
+
+  <artifactId>tpd.distribution</artifactId>
+  <packaging>pom</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Commission Common Entry Gate Default Distribution Module.</description>
+
+  <properties>
+    <!-- See http://jira.codehaus.org/browse/MRESOURCES-104 (which says it's fixed but actually isn't) -->
+    <at.hack>@</at.hack>
+    <installed.tomcat.windows-x64.dir>${project.build.directory}/tomcat-window-x64/apache-tomcat-${tomcat.version}</installed.tomcat.windows-x64.dir>
+    <installed.tomcat.linux-x64.dir>${project.build.directory}/tomcat-linux-x64/apache-tomcat-${tomcat.version}</installed.tomcat.linux-x64.dir>
+    <installed.tomcat.mac-x64.dir>${project.build.directory}/tomcat-mac-x64/apache-tomcat-${tomcat.version}</installed.tomcat.mac-x64.dir>
+    <db.driver.dir>${project.build.directory}/db-drivers</db.driver.dir>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.tomcat.bootstrap</artifactId>
+      <version>${project.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.web</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.adoptium</groupId>
+      <artifactId>jdk-hotspot</artifactId>
+      <version>${jdk.version}</version>
+      <type>zip</type>
+      <classifier>windows-x64</classifier>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.adoptium</groupId>
+      <artifactId>jdk-hotspot</artifactId>
+      <version>${jdk.version}</version>
+      <type>tar.gz</type>
+      <classifier>linux-x64</classifier>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.adoptium</groupId>
+      <artifactId>jdk-hotspot</artifactId>
+      <version>${jdk.version}</version>
+      <type>tar.gz</type>
+      <classifier>mac-x64</classifier>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${application.name}-${distribution.version}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>install-tomcat-windows-x64</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.tomcat</groupId>
+                  <artifactId>apache-tomcat</artifactId>
+                  <version>${tomcat.version}</version>
+                  <type>zip</type>
+                  <classifier>windows-x64</classifier>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/tomcat-window-x64</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>install-tomcat-linux-x64</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.tomcat</groupId>
+                  <artifactId>apache-tomcat</artifactId>
+                  <version>${tomcat.version}</version>
+                  <type>zip</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/tomcat-linux-x64</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>install-tomcat-mac-x64</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.tomcat</groupId>
+                  <artifactId>apache-tomcat</artifactId>
+                  <version>${tomcat.version}</version>
+                  <type>zip</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/tomcat-mac-x64</outputDirectory>
+              <!-- allows to unpack both same tomcat artifact -->
+              <markersDirectory>${project.build.directory}/other-dependency-maven-plugin-markers</markersDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${maven-antrun-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <id>ant-update-tomcat</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <property name="basedir" value="${project.basedir}" />
+                <property name="outputDir" value="${project.build.outputDirectory}" />
+                <property name="sourceDir" value="${project.build.sourceDirectory}" />
+                <property name="project.build.directory" value="${project.build.directory}" />
+                <ant antfile="${basedir}/src/main/ant/tomcat-override.xml" target="update">
+                  <property name="tomcat.dir" value="${installed.tomcat.windows-x64.dir}" />
+                </ant>
+                <ant antfile="${basedir}/src/main/ant/tomcat-override.xml" target="update">
+                  <property name="tomcat.dir" value="${installed.tomcat.linux-x64.dir}" />
+                </ant>
+                <ant antfile="${basedir}/src/main/ant/tomcat-override.xml" target="update">
+                  <property name="tomcat.dir" value="${installed.tomcat.mac-x64.dir}" />
+                </ant>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>standalone-windows-x64</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>true</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/main/assembly/standalone-windows-x64.xml</descriptor>
+              </descriptors>
+              <filters>
+                <filter>src/main/assembly//filters/windows-x64.properties</filter>
+              </filters>
+              <tarLongFileMode>gnu</tarLongFileMode>
+            </configuration>
+          </execution>
+          <execution>
+            <id>standalone-linux-x64</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>true</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/main/assembly/standalone-linux-x64.xml</descriptor>
+              </descriptors>
+              <filters>
+                <filter>src/main/assembly//filters/linux-x64.properties</filter>
+              </filters>
+              <tarLongFileMode>gnu</tarLongFileMode>
+            </configuration>
+          </execution>
+          <execution>
+            <id>standalone-macos-x64</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>true</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/main/assembly/standalone-macos-x64.xml</descriptor>
+              </descriptors>
+              <filters>
+                <filter>src/main/assembly/filters/macos-x64.properties</filter>
+              </filters>
+              <tarLongFileMode>gnu</tarLongFileMode>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh-external</artifactId>
+        <version>${maven-wagon-ssh-external.version}</version>
+      </extension>
+    </extensions>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>distribution-deploy</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+            <version>${wagon-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>distribution-deploy</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+                <configuration>
+                  <fromDir>${basedir}/target</fromDir>
+                  <includes>*.tar.gz,*.zip</includes>
+                  <toDir>${site.distribution.path}</toDir>
+
+                  <serverId>${site.deploy.id}</serverId>
+                  <url>${site.deploy.root}</url>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

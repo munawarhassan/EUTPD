@@ -1,0 +1,137 @@
+<lt-toolbar> </lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_submitters">
+  <lt-portlet-body>
+    <div class="d-flex flex-wrap flex-stack pb-7">
+      <div class="d-flex align-items-center">
+        <app-search
+          (search)="search($event)"
+          (cleared)="clearFilter()"
+          [placeholder]="'submitters.search.placeholder' | translate"
+        ></app-search>
+      </div>
+      <div class="d-flex flex-wrap my-1">
+        <!--begin::Actions-->
+        <div class="d-flex my-0">
+          <button type="button" class="btn btn-primary" (click)="openFileDialog()">
+            <inline-svg size="2" [src]="svgIcons.Duotone.arrows.download"></inline-svg>
+            <span>Import Files...</span>
+          </button>
+          <a
+            *ngIf="!readonly"
+            (click)="createSubmitter()"
+            class="btn btn-dark btn-bold"
+            translate="submitters.button.create"
+          ></a>
+          <input #inputFile type="file" ng2FileSelect [uploader]="uploader" multiple style="display: none" />
+        </div>
+        <!--end::Actions-->
+      </div>
+    </div>
+    <lt-table
+      id="m_submitters_list"
+      [page]="page"
+      [pageable]="currentPageable"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let submitter of page.content">
+    <td data-header="submitterId" [attr.data-entity-id]="submitter.submitterId">
+      <span>
+        <a href="#" class="m-link" [routerLink]="['view', submitter.submitterId]">{{ submitter.submitterId }}</a>
+      </span>
+    </td>
+    <td data-header="name">
+      <span>{{ submitter.name }}</span>
+    </td>
+    <td data-header="address">
+      <span>{{ submitter.address }}</span>
+    </td>
+    <td data-header="country" class="text-center">
+      <span
+        class="symbol symbol-25px me-1 mb-1"
+        [ltTooltip]="euceg.getCountry(submitter.country)"
+        popover-placement="top"
+      >
+        <img [src]="'./assets/media/flags/' + submitter.country + '.svg'" alt="image" />
+      </span>
+    </td>
+    <td data-header="phone" class="text-nowrap">
+      <span>{{ submitter.phone }}</span>
+    </td>
+    <td data-header="email" class="d-none d-xl-table-cell">
+      <span>{{ submitter.email }}</span>
+    </td>
+    <td data-header="status" class="text-center">
+      <div class="badge badge-sm" [ngClass]="getClassStatus(submitter.status)">
+        {{ submitter.status }}
+      </div>
+    </td>
+    <td class="text-end">
+      <!--begin::Button Options-->
+      <a
+        href="#"
+        class="btn btn-light btn-active-light-primary btn-sm text-nowrap menu-dropdown"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        class="
+          menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary
+          fw-bold
+          fs-7
+          w-150px
+          py-4
+        "
+      >
+        <!--begin::Menu item-->
+        <div *ngIf="!readonly" class="menu-item px-3">
+          <a href="#" [routerLink]="['edit', submitter.submitterId]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">Edit</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" [routerLink]="['view', submitter.submitterId]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">View</span>
+          </a>
+        </div>
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" [routerLink]="['rev', submitter.submitterId]" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.code.git4" size="1"></inline-svg>
+            </span>
+            <span class="menu-title">Revision</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <div *ngIf="!readonly" class="separator my-2"></div>
+        <!--begin::Menu item-->
+        <div *ngIf="!readonly" class="menu-item px-3">
+          <a href="#" class="menu-link px-3" (click)="deleteSubmitter(submitter)">
+            <span class="menu-icon"> </span>
+            <span class="menu-title text-danger">Delete...</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+      <!--end::Button Options-->
+    </td>
+  </tr>
+</ng-template>

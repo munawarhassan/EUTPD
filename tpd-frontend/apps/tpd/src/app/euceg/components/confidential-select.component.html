@@ -1,0 +1,36 @@
+<label *ngIf="label" class="form-label">
+  <span [ngClass]="{ required: required }">{{ label }}</span>
+  <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+</label>
+<div class="d-flex align-items-center flex-nowrap">
+  <div class="flex-grow-1">
+    <select
+      select2
+      class="form-select form-select-solid"
+      [placeholder]="label || placeholder"
+      [datasource]="options$"
+      [optionValue]="optionValue"
+      [optionText]="optionText"
+      [hideSearch]="!searchable"
+      [allowClear]="allowClear"
+      [disabled]="disabled"
+      [required]="required"
+      [value]="value"
+      (valueChange)="handleSelectValueChange($event)"
+      (focus)="touched = false"
+      (blur)="markAsTouched()"
+    >
+      <ng-content></ng-content>
+    </select>
+  </div>
+  <div class="ms-2">
+    <app-confidential
+      (valueChange)="handleChangeCheckbox($event)"
+      [disabled]="disabled"
+      [enforce-confidential]="enforceConfidential"
+    ></app-confidential>
+  </div>
+</div>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="error invalid-feedback" *ngIf="ngControl.hasError('required')">{{ label }} is required. </span>
+</div>

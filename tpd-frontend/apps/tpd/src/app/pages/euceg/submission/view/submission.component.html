@@ -1,0 +1,207 @@
+<ng-container *ngIf="submission$ | async as submission">
+  <lt-toolbar [sticky]="true">
+    <!--begin::Button Export-->
+    <button
+      type="button"
+      class="btn btn-light-dark show menu-dropdown"
+      data-lt-menu-trigger="click"
+      data-lt-menu-placement="bottom-end"
+    >
+      <inline-svg [src]="svgIcons.Duotone.arrows.download"></inline-svg>
+      <span>Export</span>
+      <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+    </button>
+    <div
+      ltMenu
+      class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-250px py-4"
+    >
+      <div class="menu-item px-3">
+        <a href="#" securedLink="./rest/api/submissions/{{ submission.id }}/export" class="menu-link px-3">
+          <span class="menu-icon">
+            <inline-svg-file extension="zip" size="1"></inline-svg-file>
+          </span>
+          <span class="menu-title">Export Sent Report</span>
+        </a>
+      </div>
+      <!--end::Menu item-->
+      <!--begin::Menu item-->
+      <div class="menu-item px-3">
+        <a href="#" securedLink="./rest/api/submissions/{{ submission.id }}/package" class="menu-link px-3">
+          <span class="menu-icon">
+            <inline-svg-file extension="xml" size="1"></inline-svg-file>
+          </span>
+          <span class="menu-title">Download Submission</span>
+        </a>
+      </div>
+    </div>
+    <!--end::Button Export-->
+    <!--begin::Separator-->
+    <span class="h-25px border-gray-300 border-start mx-4"></span>
+    <!--end::Separator-->
+    <button
+      type="button"
+      *ngIf="submission.submissionStatus === 'NOT_SEND' && submission.sendType === 'MANUAL'"
+      (click)="send(submission)"
+      class="btn btn-bolder btn-primary me-2"
+    >
+      Send
+    </button>
+    <button
+      type="button"
+      *ngIf="rejectable(submission) | async"
+      (click)="reject(submission)"
+      class="btn btn-bolder btn-primary me-2"
+    >
+      Reject
+    </button>
+    <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+  </lt-toolbar>
+  <div id="m_submission">
+    <div class="card mb-4">
+      <div class="card-header py-3">
+        <h4 class="card-title">
+          <inline-svg class="me-2" size="2hx" color="primary" [src]="svgIcons.Simple.shopping.box2"></inline-svg>
+          <span>Product</span>
+        </h4>
+        <div class="card-toolbar">
+          <div class="d-flex justify-content-end"></div>
+        </div>
+      </div>
+      <div class="card-body mx-2">
+        <div class="row">
+          <label class="col-md-2 col-form-label">Product Id:</label>
+          <div class="col-md-3">
+            <input class="form-control-plaintext" [value]="submission.productId" readonly />
+          </div>
+          <label class="col-md-2 col-form-label">Submission Type:</label>
+          <div class="col-md-3">
+            <input
+              class="form-control-plaintext"
+              [value]="euceg.getSubmissionType(submission.submission.SubmissionType)"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="row" *ngIf="submitter$ | async as submitter">
+          <label class="col-md-2 col-form-label">Submitter:</label>
+          <div class="col-md-3">
+            <input class="form-control-plaintext" [value]="submitter.name" readonly />
+          </div>
+          <label class="col-md-2 col-form-label">Product Type:</label>
+          <div class="col-md-3">
+            <input
+              class="form-control-plaintext"
+              [value]="euceg.getProductType(submission.submission.Product.ProductType, submission.productType)"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <!-- card body end -->
+    </div>
+    <div class="card">
+      <div class="card-header py-3">
+        <h4 class="card-title">
+          <inline-svg class="me-2" color="primary" size="2hx" [src]="svgIcons.Simple.shopping.wallet3"></inline-svg>
+          <span>Receipts</span>
+        </h4>
+      </div>
+      <div class="card-body">
+        <div
+          *ngFor="let receipt of submission.receipts() | async; trackBy: trackReciept; last as last"
+          id="m_receipt_{{ receipt.messageId }}"
+        >
+          <lt-portlet [mode]="['bordered-semi', 'height-fluid', 'unelevate']">
+            <lt-portlet-head
+              [mode]="['noborder']"
+              [icon]="'fa fa-fw fa-2x ' + getReceiptIcon(receipt)"
+              [title]="getDescription(receipt)"
+            >
+            </lt-portlet-head>
+            <lt-portlet-body>
+              <portlet-tab id="m_tab_receipt_{{ receipt.messageId }}" heading="Detail" icon="la la-archive la-2x">
+                <p *ngIf="receipt.messageId"><strong>Message Id</strong>:&nbsp;{{ receipt.messageId }}</p>
+                <p *ngIf="receipt.errorDetails && receipt.errorDetails.length > 0">
+                  <em><strong>Business Rule Errors</strong></em>
+                </p>
+                <ul style="background-color: white; border-radius: 5px">
+                  <li *ngFor="let error of receipt.errorDetails">{{ error.code }}:&nbsp;{{ error.message }}</li>
+                </ul>
+              </portlet-tab>
+              <portlet-tab
+                id="m_tab_message_log_{{ receipt.messageId }}"
+                heading="Message Log"
+                icon="la la-comment-o la-2x"
+                (selectTab)="handleSelectTab($event, receipt)"
+              >
+                <table
+                  *ngIf="messageLogs[receipt.messageId]"
+                  class="m-table m-table--default m-table--head-no-border table table-responsive"
+                >
+                  <thead class="table-head">
+                    <tr class="table-row">
+                      <th class="table-cell"><span>Message Id</span></th>
+                      <th class="table-cell"><span>From</span></th>
+                      <th class="table-cell"><span>To</span></th>
+                      <th class="table-cell"><span>Message Status</span></th>
+                      <th class="table-cell"><span>AP Role</span></th>
+                      <th class="table-cell"><span>Received From</span></th>
+                      <th class="table-cell"><span>Received To</span></th>
+                      <th class="table-cell"><span>Send Attempts</span></th>
+                      <th class="table-cell"><span>Send Attempts Max</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let messageLog of messageLogs[receipt.messageId] | async">
+                      <td>{{ messageLog.messageId }}</td>
+                      <td>{{ messageLog.fromPartyId }}</td>
+                      <td>{{ messageLog.toPartyId }}</td>
+                      <td>{{ messageLog.messageStatus }}</td>
+                      <td>{{ messageLog.mshRole }}</td>
+                      <td>{{ messageLog.received | date : 'medium' }}</td>
+                      <td>{{ messageLog.deleted | date : 'medium' }}</td>
+                      <td>{{ messageLog.sendAttempts }}</td>
+                      <td>{{ messageLog.sendAttemptsMax }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </portlet-tab>
+              <portlet-tab
+                id="m_tab_error_log_{{ receipt.messageId }}"
+                heading="Error Log"
+                icon="la la-exclamation-circle la-2x"
+                (selectTab)="handleSelectTab($event, receipt)"
+              >
+                <table
+                  *ngIf="errorLogs[receipt.messageId]"
+                  class="m-table m-table--default m-table--head-no-border table table-responsive"
+                >
+                  <thead class="table-head">
+                    <tr class="table-row">
+                      <th class="table-cell"><span>Message Id</span></th>
+                      <th class="table-cell"><span>AP Role</span></th>
+                      <th class="table-cell"><span>Error Code</span></th>
+                      <th class="table-cell"><span>Error Message</span></th>
+                      <th class="table-cell"><span>Timestamp</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let errorLog of errorLogs[receipt.messageId] | async">
+                      <td>{{ errorLog.messageInErrorId }}</td>
+                      <td>{{ errorLog.mshRole }}</td>
+                      <td>{{ errorLog.errorCode }}</td>
+                      <td>{{ errorLog.errorDetail }}</td>
+                      <td>{{ errorLog.timestamp | date : 'medium' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </portlet-tab>
+            </lt-portlet-body>
+          </lt-portlet>
+          <div *ngIf="!last" class="separator separator-dashed my-2"></div>
+        </div>
+      </div>
+    </div>
+    <app-audit-detail [audit]="submission"></app-audit-detail>
+  </div>
+</ng-container>

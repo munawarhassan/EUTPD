@@ -1,0 +1,6 @@
+<button type="button" (click)="serverValidate()" class="btn btn-primary">Validate</button>
+<div class="mt-10 border-dashed p-3 bg-gray-100 rounded border-2">
+  <div [ltScroll]="scrollOptions">
+    <pre><code>{{validationResponse | json}}</code></pre>
+  </div>
+</div>

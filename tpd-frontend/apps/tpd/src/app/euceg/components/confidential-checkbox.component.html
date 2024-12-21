@@ -1,0 +1,28 @@
+<div class="d-flex align-items-center flex-nowrap">
+  <div class="form-check form-check-custom form-check-lg form-check-solid">
+    <input
+      [id]="inputId"
+      class="form-check-input"
+      type="checkbox"
+      [disabled]="disabled"
+      (change)="handleChange($event)"
+      (focus)="touched = false"
+      (blur)="markAsTouched()"
+    />
+    <label class="form-check-label" [for]="inputId">
+      <span>{{ label }}</span>
+      <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4 ms-2" [ltTooltip]="info" placement="top"></i>
+    </label>
+  </div>
+  <div class="ms-2">
+    <app-confidential
+      (valueChange)="handleChangeConfidential($event)"
+      [disabled]="disabled"
+      [enforce-confidential]="enforceConfidential"
+    ></app-confidential>
+  </div>
+</div>
+<div class="form-text text-muted" [innerHTML]="helpText"></div>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('required')">{{ label }} is required.</span>
+</div>

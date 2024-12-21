@@ -1,0 +1,112 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    Affiliate <strong>{{ affiliate.Name }}</strong>
+  </h4>
+</div>
+<form *ngIf="affiliate" name="affiliateForm" #affiliateForm="ngForm">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <app-confidential
+          [(ngModel)]="affiliate.confidential"
+          name="Affiliate_Confidential"
+          label="Is Affiliate Confidential?"
+          [disabled]="readonly"
+        >
+        </app-confidential>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form-text
+          controlClass="form-control-solid"
+          label="Submitter ID"
+          name="Affiliate_submitterID"
+          [(ngModel)]="affiliate.submitterID"
+          [required]="true"
+          [disabled]="readonly"
+        ></form-text>
+      </div>
+      <div class="col-md-6">
+        <form-text
+          controlClass="form-control-solid"
+          label="Name"
+          name="Affiliate_Name"
+          [(ngModel)]="affiliate.Name"
+          [required]="true"
+          [disabled]="readonly"
+        ></form-text>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form-text
+          controlClass="form-control-solid"
+          label="Adresss"
+          name="Affiliate_Address"
+          [(ngModel)]="affiliate.Address"
+          [required]="true"
+          [disabled]="readonly"
+        ></form-text>
+      </div>
+      <div class="col-md-6">
+        <form-select
+          controlClass="form-select-solid"
+          label="Country"
+          name="Affiliate_Country"
+          [searchable]="true"
+          searchPlaceholder="Select Country..."
+          [options]="euceg.Countries"
+          optionValue="name"
+          optionText="value"
+          [(ngModel)]="affiliate.Country"
+          [required]="true"
+          [disabled]="readonly"
+        >
+        </form-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form-text
+          controlClass="form-control-solid"
+          label="Phone"
+          name="Affiliate_Phone"
+          [(ngModel)]="affiliate.PhoneNumber"
+          [required]="true"
+          pattern="([0-9\(\)\/\+ \-]*)"
+          [maxlength]="20"
+          [disabled]="readonly"
+        ></form-text>
+      </div>
+      <div class="col-md-6">
+        <form-text
+          controlClass="form-control-solid"
+          type="email"
+          label="E-mail"
+          name="Affiliate_Email"
+          [(ngModel)]="affiliate.Email"
+          [required]="true"
+          [email]="true"
+          [disabled]="readonly"
+        >
+        </form-text>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary btn-bold me-4"
+      (click)="close()"
+      translate="global.button.close"
+    ></button>
+    <a
+      *ngIf="!readonly"
+      href="#"
+      (click)="cancel()"
+      class="link link-primary me-4"
+      translate="global.button.cancel"
+    ></a>
+  </div>
+</form>

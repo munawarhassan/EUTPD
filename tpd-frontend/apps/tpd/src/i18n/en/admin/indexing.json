@@ -1,0 +1,15 @@
+{
+  "indexing": {
+    "title": "Re-Indexing",
+    "description": "The search index allows speed up search. If you are having troubles with search, you may need to rebuild the search index. Please note, rebuilding the search index can severely affect the performance of your instance - it can take hours for some large instances.",
+    "button": {
+      "reindex": "Re-Index",
+      "ack": "Acknoledge"
+    },
+    "modal": {
+      "title": "Please Wait...",
+      "message-start": "Starting Indexing...",
+      "message-end": "Indexing Database Complete"
+    }
+  }
+}

@@ -1,0 +1,131 @@
+<lt-toolbar></lt-toolbar>
+<form [formGroup]="formControl" #form="ngForm" (ngSubmit)="migration()" novalidate show-validation class="form">
+  <lt-portlet mode="bordered" id="m_portlet_migration">
+    <lt-portlet-head [icon]="svgIcons.Simple.devices.hardDrive" [title]="'database.migration.title' | translate">
+    </lt-portlet-head>
+
+    <lt-portlet-body>
+      <div class="row col-lg-6 offset-lg-1 mb-4">
+        <div
+          class="bg-light-primary border border-dashed border-primary d-flex align-items-baseline mb-9 p-6 rounded"
+          role="alert"
+        >
+          <span
+            class="svg-icon svg-icon-2tx svg-icon-primary me-4"
+            [inlineSVG]="svgIcons.Duotone.general.exclamationCircle"
+          ></span>
+          <div class="d-flex flex-stack flex-grow-1">
+            <p translate="database.migration.description"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row offset-lg-1 mb-4">
+        <form-select
+          class="col-lg-6"
+          [label]="'database.migration.fields.type' | translate"
+          controlClass="form-select-solid"
+          placeholder="Choose Database Type"
+          name="type"
+          formControlName="type"
+          [options]="databaseTypesObserver$"
+        ></form-select>
+      </div>
+      <div class="row separator separator-dashed my-4"></div>
+      <div class="row offset-lg-1 mb-4">
+        <form-text
+          class="col-lg-6"
+          type="text"
+          [label]="'database.migration.fields.hostname' | translate"
+          name="hostname"
+          controlClass="form-control-solid"
+          formControlName="hostname"
+          [helpText]="'database.migration.fields.hostname.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row offset-lg-1 mb-4">
+        <form-text
+          class="col-lg-4"
+          type="number"
+          [label]="'database.migration.fields.port' | translate"
+          name="port"
+          controlClass="form-control-solid"
+          formControlName="port"
+          [helpText]="'database.migration.fields.port.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row offset-lg-1 mb-4">
+        <form-text
+          class="col-lg-6"
+          type="text"
+          [label]="'database.migration.fields.name' | translate"
+          name="databaseName"
+          controlClass="form-control-solid"
+          formControlName="databaseName"
+          [helpText]="'database.migration.fields.name.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row offset-lg-1 mb-4">
+        <form-text
+          class="col-lg-6"
+          type="text"
+          [label]="'database.migration.fields.username' | translate"
+          name="username"
+          controlClass="form-control-solid"
+          formControlName="username"
+          [helpText]="'database.migration.fields.username.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row offset-lg-1 mb-4">
+        <form-text
+          class="col-lg-6"
+          type="password"
+          [label]="'database.migration.fields.password' | translate"
+          name="password"
+          controlClass="form-control-solid"
+          formControlName="password"
+          [helpText]="'database.migration.fields.password.help' | translate"
+        ></form-text>
+      </div>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="col-3 text-left">
+          <button
+            class="btn btn-success me-2"
+            (click)="test()"
+            id="m_migration_test"
+            [attr.data-lt-indicator]="testing"
+          >
+            <span class="indicator-label">
+              {{ 'database.migration.button.test' | translate }}
+            </span>
+            <span class="indicator-progress">
+              Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </button>
+          <span [ngSwitch]="testResult" class="ms-2">
+            <span *ngSwitchCase="'SUCCESS'">
+              <span class="text-success">Connection successful!</span>
+            </span>
+            <span *ngSwitchCase="'FAILED'">
+              <span class="text-danger">Connection failed.</span>
+            </span>
+          </span>
+        </div>
+        <div class="col">
+          <button type="submit" id="migrate_button" class="btn btn-primary btn-bold me-4">
+            {{ 'database.migration.button.start' | translate }}
+          </button>
+          <a
+            href="#"
+            (click)="goBack()"
+            class="link link-primary"
+            *ngIf="!testing"
+            translate="global.button.cancel"
+          ></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

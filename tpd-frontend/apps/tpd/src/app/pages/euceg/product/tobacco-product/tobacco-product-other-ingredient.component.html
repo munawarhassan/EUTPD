@@ -1,0 +1,664 @@
+<ng-container *ngIf="product">
+  <button *ngIf="!readonly" type="button" (click)="add()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Other Ingredient
+  </button>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Function(s)</th>
+          <th scope="col">CAS Number</th>
+          <th scope="col">FEMA Number</th>
+          <th scope="col">Additive Number</th>
+          <th scope="col">FL Number</th>
+          <th scope="col">EC Number</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let otherIngredient of dataRows.otherIngredient.content"
+          (click)="selected = otherIngredient"
+          class="row-selectable"
+          [ngClass]="{ active: dataRows.otherIngredient.isSelected(otherIngredient) }"
+        >
+          <td>{{ otherIngredient?.Name?.value }}</td>
+          <td>{{ euceg.getIngredientCategorie(otherIngredient.Category) }}</td>
+          <td>{{ euceg.getIngredientFunction(otherIngredient.Functions.Function) }}</td>
+          <td>{{ otherIngredient.CasNumber?.value }}</td>
+          <td>{{ otherIngredient.FemaNumber?.value }}</td>
+          <td>{{ otherIngredient.AdditiveNumber?.value }}</td>
+          <td>{{ otherIngredient.FlNumber?.value }}</td>
+          <td>{{ otherIngredient.EcNumber?.value }}</td>
+          <td class="text-center text-nowrap">
+            <button
+              [disabled]="readonly"
+              type="button"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              (click)="remove(otherIngredient)"
+              ltTooltip="Remove"
+              placement="top"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="9">
+          <lt-pagination
+            [page]="dataRows.otherIngredient"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="this.dataRows.otherIngredient.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+
+  <div *ngIf="selected">
+    <div class="separator separtor-dashed mb-8"></div>
+    <form name="otherIngredientForm">
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.Name"
+            name="Name"
+            label="Name"
+            placeholder="Name"
+            info="The chemical name of the ingredient"
+            [maxlength]="300"
+            [disabled]="readonly"
+            [required]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="Category"
+            [options]="ingredientCategories$"
+            label="Category"
+            info="The category of product component"
+            [(ngModel)]="selected.Category"
+            [disabled]="readonly"
+          ></app-confidential-select>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.CategoryOther"
+            name="CategoryOther"
+            info="The category of the product component if 'other'"
+            label="Category Other"
+            placeholder="Category Other"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <label class="form-label">CAS Number Exists</label>
+          <app-confidential-checkbox
+            label="CAS Number exits?"
+            info="Indicates whether the CAS (Chemical Abstracts Service) number exists."
+            name="CasNumberExists"
+            [(ngModel)]="selected.CasNumberExists"
+            [disabled]="readonly"
+          >
+          </app-confidential-checkbox>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.CasNumber"
+            name="CasNumber"
+            info="The CAS number."
+            label="Cas Number"
+            placeholder="Cas Number"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <label class="form-label"
+            >Additional CAS Number(s)
+            <i
+              class="bi bi-info-circle-fill text-info mx-1 fs-4"
+              ltTooltip="The additional CAS numbers if applicable and cannot be completed if the CAS number is empty."
+              placement="top"
+            ></i> </label
+          >&nbsp;
+          <a
+            *ngIf="!readonly"
+            href="#"
+            class="btn btn-circle btn-sm btn-icon btn-light btn-light-primary ms-2"
+            (click)="addToArray(selected, 'AdditionalCasNumbers.CasNumber')"
+          >
+            <i class="fa fa-plus"></i>
+          </a>
+          <div class="mt-2">
+            <div
+              class="d-flex flex-row align-items-center"
+              *ngFor="let a of selected.AdditionalCasNumbers?.CasNumber; index as $index"
+            >
+              <div class="flex-grow-1 mb-1">
+                <app-confidential-input
+                  [ngModel]="a"
+                  name="AdditionalCasNumbers[{{ $index }}]"
+                  placeholder="Additional Cas Number"
+                  [disabled]="readonly"
+                ></app-confidential-input>
+              </div>
+              <a
+                *ngIf="!readonly"
+                class="btn btn-circle btn-sm btn-icon btn-light btn-light-danger ms-2"
+                href="#"
+                (click)="removeFromArray(selected, 'AdditionalCasNumbers.CasNumber', a)"
+              >
+                <i class="fa fa-minus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.AdditiveNumber"
+            name="AdditiveNumber"
+            info="If the ingredient is a food additive, its food additive “E number” set out in Annexes II and III to Regulation (EC) No 1333/2008 of the European Parliament and of the Council."
+            label="Food Additive Number"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.FemaNumber"
+            name="FemaNumber"
+            info="The FEMA (Flavour and Extract Manufacturers Association) number if any."
+            label="Fema Number"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.FlNumber"
+            name="FlNumber"
+            info="The FL number, if any (European Flavouring number as set out in Annex I to Regulation (EC) No 1334/2008 of the European Parliament and of the Council)."
+            label="Fl Number"
+            [maxlength]="10"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.EcNumber"
+            name="EcNumber"
+            label="Ec Number"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.OtherNumber"
+            name="OtherNumber"
+            label="Other Number"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <label class="form-label">Quantity Fluctuates </label>
+          <app-confidential-checkbox
+            label="Quantity Fluctuates"
+            name="QuantityFluctuate"
+            [(ngModel)]="selected.QuantityFluctuate"
+            [disabled]="readonly"
+          >
+          </app-confidential-checkbox>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.RecipeQuantity"
+            name="RecipeQuantity"
+            label="Recipe Quantity"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.RecipeRangeMinLevel"
+            name="RecipeRangeMinLevel"
+            label="Recipe Range Min Level"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.RecipeRangeMaxLevel"
+            name="RecipeRangeMaxLevel"
+            label="Recipe Range Max Level"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.MeasuredMeanQuantity"
+            name="MeasuredMeanQuantity"
+            label="Measured Mean Quantity"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.MeasuredSd"
+            name="MeasuredSd"
+            label="Measured SD"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.MeasuredMinLevel"
+            name="MeasuredMinLevel"
+            label="Measured Min Level"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.MeasuredMaxLevel"
+            name="MeasuredMaxLevel"
+            label="Measured Max Level"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.MeasuredNumber"
+            name="MeasuredNumber"
+            label="Measured Number"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="ReachRegistration"
+            [options]="reachRegistrationOrNull$"
+            label="Reach Registration"
+            [(ngModel)]="selected.ReachRegistration"
+            [disabled]="readonly"
+          >
+          </app-confidential-select>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.ReachRegistrationNumber"
+            name="ReachRegistrationNumber"
+            label="Reach Registration Number"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <label class="form-label">Function(s)</label>
+          <a
+            *ngIf="!readonly"
+            href="#"
+            class="btn btn-circle btn-sm btn-icon btn-light btn-active-primary ms-2"
+            (click)="addToArray(selected, 'Functions.Function')"
+          >
+            <i class="fa fa-plus"></i>
+          </a>
+          <div class="mt-2">
+            <div
+              class="d-flex flex-row align-items-center"
+              *ngFor="let a of selected.Functions.Function; index as $index"
+            >
+              <div class="flex-grow-1 mb-1">
+                <app-confidential-select
+                  name="Function[{{ $index }}]"
+                  [options]="ingredientFunctions$"
+                  placeholder="Select Function..."
+                  [ngModel]="a"
+                  [disabled]="readonly"
+                >
+                </app-confidential-select>
+              </div>
+              <div>
+                <a
+                  *ngIf="!readonly"
+                  href="#"
+                  class="btn btn-circle btn-sm btn-icon btn-light btn-light-danger ms-2"
+                  (click)="removeFromArray(selected, 'Functions.Function', a)"
+                >
+                  <i class="fa fa-minus"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <app-confidential-input
+            [(ngModel)]="selected.FunctionOther"
+            name="FunctionOther"
+            [maxlength]="100"
+            label="Function Other"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="separator separtor-dashed my-4"></div>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <label class="form-label">Priority Additive </label>
+          <app-confidential-checkbox
+            label="Priority Additive"
+            info="Indicates whether the ingredient is part of the priority list established pursuant to Article 6 of Directive 2014/40/EU."
+            name="PriorityAdditive"
+            [(ngModel)]="selected.PriorityAdditive"
+            [disabled]="readonly"
+          ></app-confidential-checkbox>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <app-list-files
+            [(ngModel)]="selected.PriorityAdditiveFiles"
+            name="PriorityAdditiveFiles"
+            [disabled]="readonly"
+            label="Priority Additive File(s)"
+          ></app-list-files>
+        </div>
+      </div>
+      <div class="card card-bordered mb-3">
+        <div class="card-header bg-gray-100 py-2">
+          <div class="card-title">
+            <h4>CLP</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="CLP Whether Classification"
+                name="ClpWhetherClassification"
+                [(ngModel)]="selected.ClpWhetherClassification"
+                [disabled]="readonly"
+              >
+              </app-confidential-checkbox>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpAcuteToxOral"
+                name="ClpAcuteToxOral"
+                label="Acute Tox Oral"
+                [disabled]="readonly"
+              ></app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpAcuteToxDermal"
+                name="ClpAcuteToxDermal"
+                label="Acute Tox Dermal"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpAcuteToxInhalation"
+                name="ClpAcuteToxInhalation"
+                label="Acute Tox Inhalation"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpSkinCorrosiveIrritant"
+                name="ClpSkinCorrosiveIrritant"
+                label="Skin Corrosive/Irritant"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpEyeDamageIrritation"
+                name="ClpEyeDamageIrritation"
+                label="Eye Damage/Irritation"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpRespiratorySensitisation"
+                name="ClpRespiratorySensitisation"
+                label="Respiratory Sensitisation"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpSkinSensitisation"
+                name="ClpSkinSensitisation"
+                label="Skin Sensitisation"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpMutagenGenotox"
+                name="ClpMutagenGenotox"
+                label="Mutagen Genotox"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpCarcinogenicity"
+                name="ClpCarcinogenicity"
+                label="Carcinogenicity"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpReproductiveTox"
+                name="ClpReproductiveTox"
+                label="Reproductive Tox"
+                [disabled]="readonly"
+              >
+              </app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpStot"
+                name="ClpStot"
+                label="Stot"
+                [disabled]="readonly"
+              ></app-confidential-input>
+            </div>
+            <div class="col-sm-2">
+              <app-confidential-input
+                [(ngModel)]="selected.ClpAspirationTox"
+                name="ClpAspirationTox"
+                label="Aspiration Tox"
+                [disabled]="readonly"
+              ></app-confidential-input>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-12">
+              <app-confidential-textarea
+                label="Stot Description"
+                [(ngModel)]="selected.ClpStotDescription"
+                name="ClpStotDescription"
+                [disabled]="readonly"
+                [maxlength]="500"
+                [rows]="5"
+              ></app-confidential-textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-bordered mb-3">
+        <div class="card-header bg-gray-100 py-2">
+          <div class="card-title">
+            <h4>Tox</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <app-confidential-select
+                name="ToxicityStatus"
+                [options]="toxicityStatus$"
+                label="Toxicity Status"
+                info="Indication whether the ingredient (in unburnt/non-vaporised form) status is characterised by any known type of toxicity or has carcinogenic, mutagenic or toxic for reproduction properties."
+                [(ngModel)]="selected.ToxicityStatus"
+                [disabled]="readonly"
+                [required]="true"
+              >
+              </app-confidential-select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <app-confidential-select
+                name="ToxData"
+                [options]="toxicologicalDataAvailables$"
+                label="Tox Data"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxicologicalDataAvailable"
+                [disabled]="readonly"
+              ></app-confidential-select>
+            </div>
+          </div>
+          <div class="row mt-6 mb-3">
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="Has Tox Emission"
+                name="ToxEmission"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxEmission"
+                [disabled]="readonly"
+              >
+              </app-confidential-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="Has Tox CMR"
+                name="ToxCmr"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxCmr"
+                [disabled]="readonly"
+              >
+              </app-confidential-checkbox>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="Has Tox Addictive"
+                name="ToxAddictive"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxAddictive"
+                [disabled]="readonly"
+              >
+              </app-confidential-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="Has Tox Other"
+                name="ToxOther"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxOther"
+                [disabled]="readonly"
+              >
+              </app-confidential-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <app-confidential-checkbox
+                label="Has Tox Cardio Pulmonary"
+                name="ToxCardioPulmonary"
+                [(ngModel)]="selected.ToxicologicalDetails.ToxCardioPulmonary"
+                [disabled]="readonly"
+              ></app-confidential-checkbox>
+            </div>
+          </div>
+          <div class="separator separator-dashed my-4"></div>
+          <div class="row mb-3">
+            <div class="col-sm-4">
+              <app-list-files
+                [(ngModel)]="selected.ToxicologicalDetails.ToxEmissionFiles"
+                name="ToxEmissionFiles"
+                [disabled]="readonly"
+                label="Tox Emission File(s)"
+              ></app-list-files>
+            </div>
+            <div class="col-sm-4">
+              <app-list-files
+                [(ngModel)]="selected.ToxicologicalDetails.ToxCmrFiles"
+                name="ToxCmrFiles"
+                [disabled]="readonly"
+                label="Tox CMR File(s)"
+              ></app-list-files>
+            </div>
+            <div class="col-sm-4">
+              <app-list-files
+                [(ngModel)]="selected.ToxicologicalDetails.ToxCardioPulmonaryFiles"
+                name="ToxCardioPulmonaryFiles"
+                [disabled]="readonly"
+                label="Tox Cardio Pulmonary File(s)"
+              >
+              </app-list-files>
+            </div>
+          </div>
+          <div class="separator separator-dashed my-4"></div>
+          <div class="row mb-3">
+            <div class="col-sm-4">
+              <app-list-files
+                [(ngModel)]="selected.ToxicologicalDetails.ToxOtherFiles"
+                name="ToxOtherFiles"
+                [disabled]="readonly"
+                label="Tox Other File(s)"
+              ></app-list-files>
+            </div>
+            <div class="col-sm-4">
+              <app-list-files
+                [(ngModel)]="selected.ToxicologicalDetails.ToxAddictiveFiles"
+                name="ToxAddictiveFiles"
+                [disabled]="readonly"
+                label="Tox Addictive File(s)"
+              ></app-list-files>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

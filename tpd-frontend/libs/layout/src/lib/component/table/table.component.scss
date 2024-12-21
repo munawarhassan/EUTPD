@@ -1,0 +1,95 @@
+@import 'init';
+
+$base-color: $primary;
+$inverse-color: $primary-inverse;
+
+@mixin build-component--table-default-base() {
+    .table.table-default {
+        // .table-header--fixed & {
+        //     overflow: auto;
+
+        //     thead th {
+        //         position: sticky !important;
+        //         top: 0;
+        //         z-index: 1;
+        //         background-color: $body-bg;
+        //     }
+        // }
+
+        .sorting {
+            position: absolute;
+            bottom: 12px;
+            right: 8px;
+            display: block;
+            font-family: 'Font Awesome 5 free';
+            font-weight: 900;
+            opacity: 0.5;
+        }
+
+        .column-sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px;
+
+            &:after {
+                @extend .sorting;
+                opacity: 0.2;
+                content: '\f0dc';
+            }
+
+            &.column-sortable-asc:after {
+                content: '\f160';
+                opacity: 0.7;
+            }
+
+            &.column-sortable-desc:after {
+                content: '\f161';
+                opacity: 0.7;
+            }
+        }
+
+        td {
+            vertical-align: middle;
+
+            .truncate {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+
+        tbody {
+            td {
+                // hide bootstrap dropdown arrow globally
+                .dropdown-toggle::after {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+
+//== Component Skin
+@mixin build-component--table-default-skin($skin) {
+    .table.table-#{$skin} {
+        //== Base color
+        $base-color: lighten($base-color, 38.5%);
+        //== Row colors
+        $row-even: $base-color;
+        $row-hover: darken($base-color, 1%);
+        $row-active: darken($base-color, 4%);
+        $row-detail-expanded: darken($base-color, 4%);
+        //== Pagination colors
+        $page-default: darken($base-color, 4%);
+        $page-hover: darken($base-color, 8%);
+        $page-active: $base-color;
+        $page-disable: darken($base-color, 1%);
+        $page-active-font: $inverse-color;
+        //== Lock table shadow
+        $lock-shadow: 0px 0px 17px 5px rgba($base-color, 0.14);
+    }
+}
+
+//==== Generate Component ====//
+//== Component Base
+@include build-component--table-default-base();

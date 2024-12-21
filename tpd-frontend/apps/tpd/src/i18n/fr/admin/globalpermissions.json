@@ -1,0 +1,26 @@
+{
+  "globalpermissions": {
+    "title": "Autorisations Globales",
+    "usertitle": "Accès utilisateur",
+    "grouptitle": "Accès groupe",
+    "fields": {
+      "groupname": "Groupe",
+      "username": "Utilisateur"
+    },
+    "permission": {
+      "user": {
+        "description": "Peut se connecter à TPD et accéder aux produits et aux soumissions"
+      },
+      "admin": {
+        "description": "A accès à la plupart des paramètres requis pour administrer TPD quotidiennement. Peut ajouter de nouveaux utilisateurs, administrer des concours, des autorisations et modifier les paramètres généraux de l'application. Les administrateurs ont un accès complet aux produits et aux soumissions."
+      },
+      "sysadmin": {
+        "description": "A le contrôle complet sur TPD - peut modifier les propriétés de configuration du système et tous les paramètres d'application, et a un accès complet à toutes les opérations. Nous vous recommandons d'accorder cette autorisation au plus petit nombre d'utilisateurs possible."
+      }
+    },
+    "tooltip": {
+      "group.remove": "Supprime toutes les autorisations explicites pour ce groupe",
+      "user.remove": "Supprime toutes les autorisations explicites pour cet utilisateur"
+    }
+  }
+}

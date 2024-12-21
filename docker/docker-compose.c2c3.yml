@@ -1,0 +1,318 @@
+version: '3.9'
+
+services:
+  db-blue:
+    image: "mysql:${DOMIBUS_MYSQL_VERSION}"
+    command:
+      - "mysqld"
+      - "--default-authentication-plugin=mysql_native_password"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_bin"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+      labels:
+        - "traefik.enable=false"
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_USER=${DOMIBUS_DATABASE_USERNAME}"
+      - "MYSQL_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "MYSQL_DATABASE=domibus"
+    healthcheck:
+        test: ["CMD", "mysqladmin" , "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    configs:
+      - source: myql_config
+        target: /etc/mysql/conf.d/config-file.cnf
+    volumes:
+      - "db-blue:/var/lib/mysql"
+    networks:
+      - c2c3_backend
+  domibus-blue:
+    image: "${DOMIBUS_IMAGE}:${DOMIBUS_MAJOR_VERSION}"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 250s
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.domibus-blue-http.rule=HostRegexp(`domibus-blue.${DOMAIN}`,`domibus-blue-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.domibus-blue-http.entrypoints=http"
+        - "traefik.http.routers.domibus-blue-http.service=domibus-blue"
+        - "traefik.http.routers.domibus-blue-http.middlewares=https-redirect@file"
+#        - "traefik.http.routers.domibus-blue-https.middlewares=cors-api@file"
+        - "traefik.http.routers.domibus-blue-https.rule=HostRegexp(`domibus-blue.${DOMAIN}`,`domibus-blue-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.domibus-blue-https.tls.domains[0].main=domibus-blue.${DOMAIN}"
+        - "traefik.http.routers.domibus-blue-https.tls.domains[0].sans=domibus-blue-*.${DOMAIN}"
+        - "traefik.http.routers.domibus-blue-https.entrypoints=https"
+        - "traefik.http.routers.domibus-blue-https.service=domibus-blue"
+        - "traefik.http.routers.domibus-blue-https.tls=true"
+        - "traefik.http.services.domibus-blue.loadbalancer.server.port=8080"
+    environment:
+      - "DATABASE_SERVER=db-blue"
+      - "DATABASE_SCHEMA=domibus"
+      - "DATABASE_PORT=3306"
+      - "DATABASE_USERNAME=${DOMIBUS_DATABASE_USERNAME}"
+      - "DATABASE_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "CHECK_DEFAULT_PASSWORD=false"
+      - "CERT_ALIAS=${DOMIBUS_CERT_BLUE_ALIAS}"
+      - "DOMIBUS_PLUGINS=${DOMIBUS_PLUGINS}"
+      - "PASSWORD_EXPIRATION=0"
+      - "DEFAULT_PASSWORD_EXPIRATION=0"
+    entrypoint: ["dockerize", "-wait", "tcp://db-blue:3306", "-timeout", "60s", "/entrypoint.sh", "run" ]
+    configs:
+      - source: truststore
+        target: /usr/share/domibus/truststore/gateway_truststore.jks
+      - source: keystore
+        target: /usr/share/domibus/keystore/gateway_keystore.jks
+    volumes:
+      - "home-blue:/usr/share/domibus/home"
+    ports:
+      - "6262:61616"
+    networks:
+      - c2c3_backend
+      - discovery
+      - net
+  updater-blue:
+    image: "${DOMIBUS_UPDATER_IMAGE}:${DOMIBUS_MAJOR_VERSION}"
+    entrypoint:
+      - "dockerize"
+      - "-wait"
+      - "tcp://domibus-blue:8080"
+      - "-timeout"
+      - "500s"
+      - "/entrypoint.sh"
+      - "pmode"
+      - "--force"
+      - "--server=http://domibus-blue:8080"
+      - "--username=admin"
+      - "--password=123456"
+      - "--filename=/pmodes/pmode.xml"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: none
+      labels:
+        - "traefik.enable=false"
+    configs:
+      - source: pmode-blue
+        target: /pmodes/pmode.xml
+    networks:
+      - c2c3_backend
+  db-red:
+    image: "mysql:${DOMIBUS_MYSQL_VERSION}"
+    command:
+     - "mysqld"
+     - "--default-authentication-plugin=mysql_native_password"
+     - "--character-set-server=utf8mb4"
+     - "--collation-server=utf8mb4_bin"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 180s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+      labels:
+        - "traefik.enable=false"
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+      - "MYSQL_USER=${DOMIBUS_DATABASE_USERNAME}"
+      - "MYSQL_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "MYSQL_DATABASE=domibus"
+    healthcheck:
+        test: ["CMD", "mysqladmin" , "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    configs:
+      - source: myql_config
+        target: /etc/mysql/conf.d/config-file.cnf
+    volumes:
+      - "db-red:/var/lib/mysql"
+    networks:
+      - c2c3_backend
+  domibus-red:
+    image: "${DOMIBUS_IMAGE}:${DOMIBUS_MAJOR_VERSION}"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role == worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 250s
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.domibus-red-http.rule=HostRegexp(`domibus-red.${DOMAIN}`,`domibus-red-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.domibus-red-http.entrypoints=http"
+        - "traefik.http.routers.domibus-red-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.domibus-red-https.rule=HostRegexp(`domibus-red.${DOMAIN}`,`domibus-red-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.domibus-red-https.tls.domains[0].main=domibus-red.${DOMAIN}"
+        - "traefik.http.routers.domibus-red-https.tls.domains[0].sans=domibus-red-*.${DOMAIN}"
+        - "traefik.http.routers.domibus-red-https.entrypoints=https"
+        - "traefik.http.routers.domibus-red-https.tls=true"
+        - "traefik.http.services.domibus-red.loadbalancer.server.port=8080"
+
+    environment:
+      - "DATABASE_SERVER=db-red"
+      - "DATABASE_SCHEMA=domibus"
+      - "DATABASE_PORT=3306"
+      - "DATABASE_USERNAME=${DOMIBUS_DATABASE_USERNAME}"
+      - "DATABASE_PASSWORD=${DOMIBUS_DATABASE_PASSWORD}"
+      - "CHECK_DEFAULT_PASSWORD=false"
+      - "CERT_ALIAS=${DOMIBUS_CERT_RED_ALIAS}"
+#      - "DOMIBUS_MODE=test"
+      - "DOMIBUS_PLUGINS=${DOMIBUS_PLUGINS}"
+      - "PASSWORD_EXPIRATION=0"
+      - "DEFAULT_PASSWORD_EXPIRATION=0"
+    entrypoint: ["dockerize", "-wait", "tcp://db-red:3306", "-timeout", "60s", "/entrypoint.sh", "run" ]
+    configs:
+      - source: truststore
+        target: /usr/share/domibus/truststore/gateway_truststore.jks
+      - source: keystore
+        target: /usr/share/domibus/keystore/gateway_keystore.jks
+    volumes:
+      - "home-red:/usr/share/domibus/home"
+    ports:
+      - "6363:61616"
+    networks:
+      - c2c3_backend
+      - net
+      - discovery
+  updater-red:
+    image: "${DOMIBUS_UPDATER_IMAGE}:${DOMIBUS_MAJOR_VERSION}"
+    entrypoint:
+      - "dockerize"
+      - "-wait"
+      - "tcp://domibus-red:8080"
+      - "-timeout"
+      - "320s"
+      - "/entrypoint.sh"
+      - "pmode"
+      - "--force"
+      - "--server=http://domibus-red:8080"
+      - "--username=admin"
+      - "--password=123456"
+      - "--filename=/pmodes/pmode.xml"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: none
+      labels:
+        - "traefik.enable=false"
+    configs:
+      - source: pmode-red
+        target: /pmodes/pmode.xml
+    networks:
+      - c2c3_backend
+  receiver:
+    image: "${TPD_RECEIVER_IMAGE}:${TPD_TAG}"
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.rack
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+      labels:
+        - "traefik.enable=false"
+    environment:
+      - "APP_DOMIBUS_URL=http://domibus-red:8080"
+      - "APP_DOMIBUS_JMS_OPTIONS_URL=tcp://domibus-red:61616"
+    configs:
+      - source: keystore-receiver
+        target: /usr/share/receiver/conf/config/keystore-receiver.jks
+    networks:
+      - c2c3_backend
+volumes:
+  db-blue: {}
+  home-blue: {}
+  db-red: {}
+  home-red: {}
+networks:
+  c2c3_backend:
+  discovery:
+    external: true
+  net:
+    external: true
+configs:
+  myql_config:
+    file: ${PWD}/etc/mysql/conf.d/config-file.cnf
+  pmode-blue:
+    file: ${PWD}/etc/domibus/pmodes/tpd-pmode-blue.xml
+  pmode-red:
+    file: ${PWD}/etc/domibus/pmodes/tpd-pmode-red.xml
+  truststore:
+    file: ${PWD}/etc/domibus/truststore/tpd_gateway_truststore.jks
+  keystore:
+    file: ${PWD}/etc/domibus/keystore/tpd_gateway_keystore.jks
+  keystore-receiver:
+    file: ${PWD}/etc/receiver/keystore-receiver.jks

@@ -1,0 +1,33 @@
+<div *ngIf="product">
+  <div class="d-flex align-items-start">
+    <div class="w-100 ps-2">
+      <div class="d-flex justify-content-between align-items-center flex-nowrap">
+        <div class="title d-flex align-items-center mb-1">
+          <span class="label text-gray-700 fw-bold fs-5 me-2"
+            >{{ productType === 'TOBACCO' ? 'Tobacco Product' : 'Ecig Product' }}:
+          </span>
+          <span class="product-number fs-5 text-gray-600 me-3">{{ product.productNumber }}</span>
+          <app-pir-status [value]="product.pirStatus"></app-pir-status>
+        </div>
+        <div class="status">
+          <app-product-status [status]="product.status" size="sm"></app-product-status>
+          <div
+            class="ms-2"
+            submissionStatus
+            statusSize="sm"
+            *ngIf="product.status === 'SENT' && product.latestSubmissionStatus"
+            [status]="product.latestSubmissionStatus"
+          ></div>
+        </div>
+      </div>
+      <div class="info mb-1">
+        <div class="product-type text-truncate mw-400px">
+          {{ euceg.getProductType(product.type, product.productType) }}
+        </div>
+      </div>
+      <div class="subhead">
+        <app-market-symbol [countries]="getCountries(product.presentations)" [size]="5"></app-market-symbol>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+    <define name="log.level" class="com.pmi.tpd.web.logback.LogLevelPropertyDefiner" scope="context" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>[%p] %c - %m%n</Pattern>
+        </encoder>
+    </appender>
+    
+    <if condition='isDefined("log.level")'>
+        <then>
+            <root level="${log.level}">
+                <appender-ref ref="CONSOLE" />
+            </root>
+        </then>
+        <else>
+            <root level="WARN">
+                <appender-ref ref="CONSOLE" />
+            </root>
+        </else>
+    </if>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+</configuration>

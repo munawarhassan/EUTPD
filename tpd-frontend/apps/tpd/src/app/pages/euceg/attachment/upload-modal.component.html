@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h4 class="modal-title">Upload Attachment Files</h4>
+</div>
+<form name="form">
+  <div class="modal-body">
+    <form-dropzone
+      label="Selected File(s)"
+      [itemTemplate]="ItemTemplate"
+      [uploader]="uploader"
+      [multiple]="true"
+      (queueChanged)="handleQueueChanged()"
+    >
+    </form-dropzone>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary btn-bold me-4"
+      (click)="close()"
+      translate="global.button.close"
+    ></button>
+  </div>
+</form>
+<ng-template #ItemTemplate let-fileItem="fileItem" let-uploader="uploader" let-control="control">
+  <div class="dropzone-file">
+    <div class="dropzone-filename">
+      <span>{{ fileItem.file.name }}</span>
+      <strong class="ms-2" *ngIf="uploader.options.isHTML5"
+        >(<span
+          ><strong>{{ fileItem?.file?.size | bytes }}</strong></span
+        >)</strong
+      >
+    </div>
+    <div *ngIf="control.hasErrorResponse(fileItem)" class="dropzone-error">
+      <ul class="nav">
+        <li class="nav-item" *ngFor="let msg of control.getErrorResponse(fileItem)">{{ msg }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="dropzone-progress">
+    <div class="progress">
+      <div
+        class="progress-bar bg-primary"
+        role="progressbar"
+        [style.width]="fileItem.progress + '%'"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="fileItem.progress"
+      ></div>
+    </div>
+  </div>
+  <div class="dropzone-toolbar">
+    <span
+      *ngIf="fileItem.exists"
+      class="dropzone-start btn btn-icon bg-hover-light-primary text-hover-primary"
+      (click)="replace(fileItem)"
+      ltTooltip="Replace"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </span>
+    <span
+      *ngIf="fileItem.isUploading"
+      class="dropzone-cancel btn btn-icon bg-hover-light-danger text-hover-danger"
+      (click)="fileItem.cancel()"
+      ltTooltip="Cancel"
+    >
+      <i class="fas fa-times"></i>
+    </span>
+    <span
+      *ngIf="fileItem.exists && !fileItem.isUploading"
+      class="dropzone-delete btn btn-icon bg-hover-light-danger text-hover-danger"
+      (click)="control.handleRemoveFile(fileItem)"
+      ltTooltip="Remove"
+    >
+      <i class="fas fa-times"></i>
+    </span>
+  </div>
+</ng-template>

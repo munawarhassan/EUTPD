@@ -1,0 +1,31 @@
+*.classpath
+.settings
+.checkstyle
+.project
+target/
+
+# compile error file
+.args
+
+# generate code quality eclipse file
+*.pmd
+.pmdruleset.xml
+.pmd
+
+# exclude specific eclipse launch file
+*.launch
+*.log
+
+.clover
+.ruleset
+*.factorypath
+
+# exclude npm and node folder
+node_modules/
+node/
+
+# exclude auto-generated METAINF in war module
+**/webapp/META-INF/
+.cache
+.dccache
+.angular

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.pmi.tpd</groupId>
+    <artifactId>tpd.euceg.parent</artifactId>
+    <version>3.4.0</version>
+  </parent>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <artifactId>tpd.euceg.api</artifactId>
+
+  <properties>
+    <jaxb2-commons.version>1.11.1</jaxb2-commons.version>
+    <jaxb-basics.version>1.13.1</jaxb-basics.version>
+    <jaxb-fluent-api.version>2.1.8</jaxb-fluent-api.version>
+    <maven-jaxb-plugin.version>2.0.9</maven-jaxb-plugin.version>
+    <moxy.version>2.7.14</moxy.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.activation</groupId>
+      <artifactId>jakarta.activation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <!--
+    ================================================================================ -->
+    <!-- Jaxb2 Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
+      <artifactId>jaxb2-basics-tools</artifactId>
+      <version>${jaxb2-commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
+      <artifactId>jaxb2-basics-runtime</artifactId>
+      <version>${jaxb2-commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>org.eclipse.persistence.moxy</artifactId>
+      <version>${moxy.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>javax.mail-api</artifactId>
+      <version>${javax.mail.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!--
+    ================================================================================ -->
+    <!-- Lombok Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <version>${maven-jaxb-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>euceg-xsd</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <extension>true</extension>
+              <args>
+                <arg>-Xfluent-api</arg>
+                <arg>-Xcopyable</arg>
+                <arg>-Xequals</arg>
+                <arg>-XhashCode</arg>
+                <arg>-Xannotate</arg>
+              </args>
+              <generateDirectory>
+                ${project.build.directory}/generated-sources</generateDirectory>
+              <generatePackage>org.eu.ceg</generatePackage>
+              <includeSchemas>
+                <includeSchema>*.xsd</includeSchema>
+              </includeSchemas>
+              <schemaDirectory>src/main/resources/euceg</schemaDirectory>
+              <clearOutputDir>true</clearOutputDir>
+              <plugins>
+                <plugin>
+                  <groupId>net.java.dev.jaxb2-commons</groupId>
+                  <artifactId>jaxb-fluent-api</artifactId>
+                  <version>${jaxb-fluent-api.version}</version>
+                </plugin>
+                <dependency>
+                  <groupId>org.jvnet.jaxb2_commons</groupId>
+                  <artifactId>jaxb2-basics</artifactId>
+                  <version>${jaxb2-commons.version}</version>
+                </dependency>
+                <plugin>
+                  <groupId>org.jvnet.jaxb</groupId>
+                  <artifactId>jaxb-basics-annotate</artifactId>
+                  <version>${maven-jaxb-plugin.version}</version>
+                </plugin>
+                <dependency>
+                  <groupId>org.eclipse.persistence</groupId>
+                  <artifactId>org.eclipse.persistence.moxy</artifactId>
+                  <version>${moxy.version}</version>
+                </dependency>
+              </plugins>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

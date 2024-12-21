@@ -1,0 +1,44 @@
+<!--begin:: Main Portlet -->
+<div class="container">
+  <div class="row align-items-center vh-100">
+    <div class="col">
+      <lt-portlet>
+        <lt-portlet-head [title]="applicationInfo?.displayName + ' Setup'"> </lt-portlet-head>
+        <lt-portlet-body>
+          <lt-wizard
+            mode="aside"
+            [startStep]="startStep"
+            (changeStep)="handleChange()"
+            (completeWizard)="handleComplete()"
+            submitButtonText="Comfirm Complete"
+            [manualStepForward]="false"
+            [validateAtTheEnd]="false"
+          >
+            <lt-wizard-step #StepInfo title="General Information" icon="fas fa-globe fa-1x">
+              <app-setup-general [step]="StepInfo" [data]="data"></app-setup-general>
+            </lt-wizard-step>
+            <lt-wizard-step #StepDatabase title="Database Setup" icon="fa fa-database fa-1x">
+              <app-setup-database [step]="StepDatabase" [data]="data"></app-setup-database>
+            </lt-wizard-step>
+            <lt-wizard-step #StepMail title="Mail Setup" icon="fa fa-mail-bulk fa-1x" [forwardAccepted]="false">
+              <app-setup-mail [step]="StepMail" [data]="data"></app-setup-mail>
+            </lt-wizard-step>
+            <lt-wizard-step
+              #StepAdmin
+              title="Create Administrator"
+              icon="fa fa-address-card fa-1x"
+              [forwardAccepted]="false"
+            >
+              <app-setup-admin [step]="StepAdmin" [data]="data"></app-setup-admin>
+            </lt-wizard-step>
+            <lt-wizard-step #StepConfirm title="Confirmation" icon="fa fa-list fa-1x" [forwardAccepted]="false">
+              <app-setup-confirmation [step]="StepConfirm" [data]="data"></app-setup-confirmation>
+            </lt-wizard-step>
+          </lt-wizard>
+        </lt-portlet-body>
+        <!-- End::body Portlet-->
+      </lt-portlet>
+      <!-- End::Main Portlet-->
+    </div>
+  </div>
+</div>

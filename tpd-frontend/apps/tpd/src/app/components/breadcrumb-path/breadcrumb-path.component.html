@@ -1,0 +1,18 @@
+<!--begin::Folder path-->
+<div [ngClass]="badgeClass">
+  <div class="d-flex align-items-center flex-wrap">
+    <inline-svg class="me-3" [src]="svgIcons.Duotone.abstract.abs039" size="2" color="primary"></inline-svg>
+    <ng-container *ngIf="disabled">File Storage</ng-container>
+    <ng-container *ngIf="!disabled">
+      <a href="#" (click)="setPath([])">File Storage</a>
+    </ng-container>
+    <ng-container *ngFor="let folder of getPath(); first as isFirst; last as isLast; index as index">
+      <inline-svg class="mx-1" [src]="svgIcons.Duotone.arrows.chevronRight" size="2" color="primary"></inline-svg>
+      <ng-container *ngIf="(isLast && !lastLink) || disabled">{{ folder }}</ng-container>
+      <ng-container *ngIf="!(isLast && !lastLink) && !disabled">
+        <a href="#" (click)="setPath(getPath().slice(0, index + 1))">{{ folder }}</a>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+<!--end::Folder path-->

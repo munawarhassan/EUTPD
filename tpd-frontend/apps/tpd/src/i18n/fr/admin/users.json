@@ -1,0 +1,79 @@
+{
+  "users": {
+    "title": "Utilisateurs",
+    "button": {
+      "create": "Créer un Utilisateur"
+    },
+    "fields": {
+      "username": "Nom utilisateur",
+      "username.placeholder": "Nom utilisateur",
+      "displayname": "Nom Complet",
+      "displayname.placeholder": "Nom Complet",
+      "email": "Adresse email",
+      "email.placeholder": "Adresse email",
+      "email.link": "Envoyer par e-mail un lien à l'utilisateur pour définir son mot de passe",
+      "directory": "Répertoire",
+      "directory.placeholder": "Répertoire",
+      "active": "Actif",
+      "active.placeholder": "Actif",
+      "groups": "Groupes",
+      "groupname": "Nom du Groupe",
+      "action": "Action"
+    },
+    "create": {
+      "title": "Créer un Utilisateur",
+      "notify": {
+        "created": "L'utilisateur <b>{{user}}</b> a été crée."
+      },
+      "button": {
+        "create": "Créer l'Utilisateur"
+      }
+    },
+    "rename": {
+      "title": "Renomer <b>{{user}}</b>"
+    },
+    "changepassword": {
+      "title": "Changer le Mot de passe de <b>{{user}}</b>"
+    },
+    "search": {
+      "placeholder": "Rechercher Utilisateur..."
+    },
+    "view": {
+      "alert": {
+        "delete": {
+          "title": "Êtes-vous sûr ?",
+          "msg": "Êtes-vous sûr de vouloir effacer l'utilisateur <b>{{user}}</b> ?"
+        },
+        "deactivate": {
+          "title": "Êtes-vous sûr ?",
+          "msg": "Êtes-vous sûr de vouloir désactiver l'utilisateur <b>{{user}}</b>?"
+        }
+      },
+      "tooltip": {
+        "groupremove": "Enlève l'utilisateur de ce groupe"
+      },
+      "notify": {
+        "updated": "L'utilisateur <b>{{user}}</b> a été mis à jour.",
+        "deleted": "L'utilisateur <b>{{user}}</b> a été effacer.",
+        "removefromgroup": "L'utilisateur <b>{{user}}</b> a été enlevé du groupe <b>{{groupname}}</b>."
+      },
+      "button": {
+        "back": "Retourner à liste d'utilisateurs",
+        "edit": "Editer",
+        "changepassword": "Changer de mot de passe",
+        "rename": "Renomer",
+        "delete": "Supprimer",
+        "activate": "Activer",
+        "deactivate": "Désactiver"
+      },
+      "actions": {
+        "edit": "Editer...",
+        "changepassword": "Changer de mot de passe...",
+        "rename": "Renomer...",
+        "delete": "Supprimer...",
+        "activate": "Activer...",
+        "deactivate": "Désactiver..."
+      }
+    }
+  }
+}

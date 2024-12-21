@@ -1,0 +1,169 @@
+version: "3.9"
+services:
+  cadvisor:
+    image: google/cadvisor
+    deploy:
+      mode: global
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+      labels:
+        - "org.label-schema.group=monitoring"
+    command:
+      - "-logtostderr"
+      - "-docker_only"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/rootfs:ro
+      - /var/run:/var/run
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - net
+  node-exporter:
+    image: prom/node-exporter:v1.1.2
+    deploy:
+      mode: global
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+      labels:
+        - "org.label-schema.group=monitoring"
+    environment:
+      - NODE_ID={{.Node.ID}}
+    configs:
+      - source: node-exporter-entrypoint
+        target: /etc/node-exporter/entrypoint.sh
+        mode: 0772
+    user: root
+    privileged: true
+    entrypoint: "/etc/node-exporter/entrypoint.sh"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - "--collector.textfile.directory=/etc/node-exporter/"
+      - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$$$|/)"
+      - "--no-collector.ipvs"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+      - "/etc/hostname:/etc/nodename"
+    networks:
+      - net
+  prometheus:
+    image: prom/prometheus:v2.5.0
+    deploy:
+      mode: replicated
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      replicas: 1
+      placement:
+        constraints:
+          - "node.labels.manger.monitoring==true"
+          - "node.role==manager"
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 128M
+      labels:
+        - "org.label-schema.group=monitoring"
+        - "traefik.enable=true"
+        - "traefik.docker.network=discovery"
+        - "traefik.http.routers.prometheus-http.rule=HostRegexp(`prometheus.${DOMAIN}`,`prometheus-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.prometheus-http.entrypoints=http"
+        - "traefik.http.routers.prometheus-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.prometheus-https.rule=HostRegexp(`prometheus.${DOMAIN}`,`prometheus-{dashed-ip:.*}.${DOMAIN}`)"
+        - traefik.http.routers.prometheus-https.entrypoints=https
+        - traefik.http.routers.prometheus-https.tls=true
+        - traefik.http.services.prometheus.loadbalancer.server.port=9090
+        # - traefik.http.middlewares.prometheus-auth.basicauth.users=${ADMIN_USER}:${HASHED_PASSWORD}
+        # - traefik.http.routers.prometheus-https.middlewares=prometheus-auth
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention=${PROMETHEUS_RETENTION:-24h}"
+    configs:
+      - source: prometheus-node-rules
+        target: /etc/prometheus/node.rules.yml
+      - source: prometheus-task-rules
+        target: /etc/prometheus/task.rules.yml
+      - source: prometheus-config
+        target: /etc/prometheus/prometheus.yml
+    volumes:
+      - prometheus:/prometheus
+    networks:
+      - net
+      - discovery
+
+  grafana:
+    image: "grafana/grafana:${GRAFANA_TAG}"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+        constraints:
+          - "node.labels.manger.monitoring==true"
+          - "node.role==manager"
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 50M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.grafana-http.rule=HostRegexp(`grafana.${DOMAIN}`,`grafana-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.grafana-http.entrypoints=http"
+        - "traefik.http.routers.grafana-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.grafana-https.rule=HostRegexp(`grafana.${DOMAIN}`,`grafana-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.grafana-https.entrypoints=https"
+        - "traefik.http.routers.grafana-https.tls=true"
+        - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    # user: "472" # Grafana container using bind mounts
+    environment:
+      - "GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}"
+      - "GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP}"
+      - "GF_INSTALL_PLUGINS=${GF_INSTALL_PLUGINS}"
+    networks:
+      - net
+      - discovery
+    # Fix docker-compose config depends_on to be compliant to v3 and v2
+    # see https://github.com/docker/compose/pull/8054
+    # depends_on:
+    #   - graphite
+    volumes:
+      - "grafanadata:/var/lib/grafana"
+      - "${CONFIGURATION_PATH}/grafana:/etc/grafana/provisioning"
+    labels:
+      org.label-schema.group: "monitoring"
+
+networks:
+  net:
+    external: true
+  discovery:
+    external: true
+volumes:
+  grafanadata: {}
+  prometheus: {}
+  provisioning:
+    external: true
+configs:
+  prometheus-node-rules:
+    file: ${PWD}/etc/prometheus/rules/node.rules.yml
+  prometheus-task-rules:
+    file: ${PWD}/etc/prometheus/rules/task.rules.yml
+  prometheus-config:
+    file: ${PWD}/etc/prometheus/config/prometheus.yml
+  node-exporter-entrypoint:
+    file: ${PWD}/etc/node-exporter/entrypoint.sh

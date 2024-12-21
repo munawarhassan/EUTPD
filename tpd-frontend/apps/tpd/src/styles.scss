@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import './assets/vendors/googlefonts/woff.css';
+@import './assets/vendors/googlefonts/woff2.css';
+/* You can add global styles to this file, and also import other style files */
+@import 'style';
+@import 'plugins';
+// Replace above style with this SCSS file to enable dark mode styles
+//@import "./sass/style.dark";
+
+// Angular vendors
+@import '~socicon/css/socicon.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '~line-awesome/dist/line-awesome/css/line-awesome.css';
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import '~animate.css/animate.css';

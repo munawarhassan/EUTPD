@@ -1,0 +1,87 @@
+<lt-portlet id="m-portlet_account_settings">
+  <lt-portlet-head
+    [title]="'account.settings.title' | translate"
+    [description]="'account.settings.description' | translate"
+  >
+  </lt-portlet-head>
+  <lt-portlet-body>
+    <div class="row">
+      <div class="offset-lg-2">
+        <form [formGroup]="formControl" #form="ngForm">
+          <div class="row">
+            <label class="col-xl-3 col-lg-3 col-form-label">Language</label>
+            <div class="col-lg-9 col-xl-6">
+              <app-select-language [lang]="langKey.value" (changed)="languageChanged($event)"> </app-select-language>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-5 col-lg-5">
+              <div class="separator separator-dashed my-4"></div>
+            </div>
+          </div>
+          <div class="row align-items-baseline mb-6">
+            <div class="col-xl-3 col-lg-3">
+              <h5>Avatar Option</h5>
+            </div>
+            <div class="col-lg-9 col-xl-6">
+              <button
+                *ngIf="isLocalAvatar"
+                class="btn btn-bold btn-light-danger btn-outline-danger btn-sm"
+                (click)="removeAvatar()"
+              >
+                Delete Avatar
+              </button>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <label class="col-xl-3 col-lg-3 col-form-label">Use your photo</label>
+            <div class="col-lg-9 col-xl-6 d-flex align-items-center">
+              <div class="form-check form-switch form-check-custom form-check-solid">
+                <input
+                  class="form-check-input"
+                  id="avatarSourceDisable"
+                  type="radio"
+                  name="avatarSource"
+                  value="Disable"
+                  [formControl]="avatarSource"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <label class="col-xl-3 col-lg-3 col-form-label">Use Gravatar</label>
+            <div class="col-lg-9 col-xl-6 d-flex align-items-center">
+              <div class="form-check form-switch form-check-custom form-check-solid">
+                <input
+                  class="form-check-input"
+                  id="avatarSourceDisable"
+                  type="radio"
+                  name="avatarSource"
+                  value="Gravatar"
+                  [formControl]="avatarSource"
+                  [attr.disabled]="isLocalAvatar"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <label class="col-xl-3 col-lg-3 col-form-label">Use Outlook Picture</label>
+            <div class="col-lg-9 col-xl-6 d-flex align-items-center">
+              <div class="form-check form-switch form-check-custom form-check-solid">
+                <input
+                  class="form-check-input"
+                  id="avatarSourceDisable"
+                  type="radio"
+                  name="avatarSource"
+                  value="Outlook"
+                  [formControl]="avatarSource"
+                  [attr.disabled]="isLocalAvatar"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </lt-portlet-body>
+</lt-portlet>

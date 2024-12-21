@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    elementFormDefault="qualified">
+
+    <xs:include schemaLocation="common.xsd" />
+
+    <xs:element name="Attachment">
+        <xs:annotation>
+            <xs:documentation>Defines an attachment.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AttachmentID" type="AttachmentID">
+                    <xs:annotation>
+                        <xs:documentation>The unique identifier of the attachment.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Filename" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The filename of the attachment.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- [devacfr] Added expectedContentTypes attribute to add streaming feature -->
+                <xs:element name="Content" type="xs:base64Binary"
+                    xmime:expectedContentTypes="application/octet-stream">
+                    <xs:annotation>
+                        <xs:documentation>The Base64-encoded binary data of the attachment.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="ContentType" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>The content type of the attachment.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Confidential" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the attachment is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="action" type="AttachmentAction" default="CREATE">
+                <xs:annotation>
+                    <xs:documentation>Indicates the action to perform. If the attribute is not present, the default
+                        value is "CREATE".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="AttachmentAction">
+        <xs:annotation>
+            <xs:documentation>The list of attachment actions.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="CREATE">
+                <xs:annotation>
+                    <xs:documentation>Create a new attachment.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UPDATE">
+                <xs:annotation>
+                    <xs:documentation>Update an existing attachment.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="AttachmentResponse">
+        <xs:annotation>
+            <xs:documentation>Defines the attachment response returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AbstractAppResponse">
+                    <xs:sequence>
+                        <xs:element name="AttachmentID" type="AttachmentID">
+                            <xs:annotation>
+                                <xs:documentation>The unique identifier of the attachment.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="AttachmentRef">
+        <xs:annotation>
+            <xs:documentation>Defines a reference to an attachment already uploaded in the system.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="attachmentID" type="AttachmentID" use="required">
+            <xs:annotation>
+                <xs:documentation>The unique identifier of the attachment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="AttachmentID">
+        <xs:annotation>
+            <xs:documentation>Defines the format of the attachment ID.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="UUID" />
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <div class="spinner-border text-primary"><span class="visually-hidden">Loading...</span></div>
+  <h4 class="modal-title" id="modal-title">
+    <span class="ms-2">{{ title }}</span>
+  </h4>
+</div>
+<div class="modal-body" id="modal-body">
+  <lt-progress-bar [progress]="progress" [color]="progressType" size="sm"></lt-progress-bar>
+  <div class="d-flex justify-content-center mt-4">
+    <button id="m_report_progress_cancel" type="button" class="btn btn-primary" (click)="cancel()">
+      {{ 'global.button.cancel' | translate }}
+    </button>
+  </div>
+</div>

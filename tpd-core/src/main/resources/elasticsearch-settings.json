@@ -1,0 +1,13 @@
+{
+	"analysis": {
+		"analyzer": {
+			"lowercase_hyphen": {
+				"type": "custom",
+				"tokenizer": "keyword",
+				"filter": [
+					"lowercase"
+				]
+			}
+		}
+	}
+}

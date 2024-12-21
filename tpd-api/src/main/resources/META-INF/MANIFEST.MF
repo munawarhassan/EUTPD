@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Product-Fullname: ${application.title}
+Product-Prefix: ${application.prefix}
+Product-Name: ${application.title}
+Product-ClusterName: ${application.cluster.name}
+inceptionYear: ${project.inceptionYear}
+

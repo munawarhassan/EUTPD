@@ -1,0 +1,48 @@
+{
+  "submitters": {
+    "title": "Submitters",
+    "button": {
+      "create": "Create Submitter"
+    },
+    "list": {
+      "fields": {
+        "submitterId": "Submitter ID",
+        "name": "Name",
+        "status": "Status",
+        "sme": "SME",
+        "vat": "VAT",
+        "address": "Address",
+        "country": "Country",
+        "phone": "Phone",
+        "email": "Email",
+        "action": "Action"
+      }
+    },
+    "view": {
+      "title": "Submitters",
+      "description": "Modify submitter details and submit"
+    },
+    "search": {
+      "placeholder": "Search Submitter..."
+    },
+    "revision": {
+      "fields": {
+        "check": "Select",
+        "version": "Version",
+        "submitterId": "Submitter ID",
+        "name": "Name",
+        "country": "Country",
+        "modifiedDate": "Modified",
+        "modifiedBy": "By"
+      },
+      "title": "Submitter - {{submitterId}} - {{name}}",
+      "description": "View submitter revisions"
+    },
+    "alert": {
+      "delete": {
+        "title": "Are you sure?",
+        "msg": "Are you sure that you want to delete submitter <b>{{submitterId}}</b>?"
+      }
+    }
+  }
+}

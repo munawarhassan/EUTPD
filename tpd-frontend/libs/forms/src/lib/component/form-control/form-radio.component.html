@@ -1,0 +1,17 @@
+<div [class]="controlClass">
+  <input
+    #Input
+    [id]="inputId"
+    [name]="name"
+    class="form-check-input"
+    type="radio"
+    [disabled]="disabled"
+    (change)="handleChange()"
+    (focus)="touched = false"
+    (blur)="markAsTouched()"
+  />
+  <label class="form-check-label" [for]="inputId">
+    <span>{{ label }}</span>
+    <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+  </label>
+</div>

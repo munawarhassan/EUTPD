@@ -1,0 +1,50 @@
+{
+  "name": "bootstrap",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/bootstrap/src",
+  "prefix": "lt",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": [
+        "{workspaceRoot}/dist/libs/bootstrap"
+      ],
+      "options": {
+        "project": "libs/bootstrap/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/bootstrap/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/bootstrap/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/bootstrap"
+      ],
+      "options": {
+        "jestConfig": "libs/bootstrap/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/bootstrap/src/**/*.ts",
+          "libs/bootstrap/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": [
+    "shared-styles"
+  ]
+}

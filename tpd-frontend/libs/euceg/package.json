@@ -1,0 +1,8 @@
+{
+  "name": "@devacfr/euceg",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~16",
+    "@angular/core": "~16"
+  }
+}

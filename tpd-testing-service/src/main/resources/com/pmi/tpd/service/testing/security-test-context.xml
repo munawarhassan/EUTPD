@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans.xsd
+                                 http://www.springframework.org/schema/security
+                                 http://www.springframework.org/schema/security/spring-security.xsd">
+  <sec:authentication-manager>
+    <sec:authentication-provider ref="authenticationProvider"/>
+  </sec:authentication-manager>
+  <sec:global-method-security pre-post-annotations="enabled" metadata-source-ref="mds"  proxy-target-class="true">
+    <sec:expression-handler ref="expressionHandler" />
+  </sec:global-method-security>
+
+  <bean id="authenticationProvider" class="com.pmi.tpd.service.testing.mock.MockAuthenticationProvider"/>
+  <bean id="expressionHandler" class="com.pmi.tpd.service.testing.mock.MockMethodSecurityExpressionHandler"/>
+  <bean id="mds" class="com.pmi.tpd.service.testing.mock.MockMethodSecurityMetadataSource">
+    <constructor-arg ref="expressionHandler" />
+  </bean>
+</beans>

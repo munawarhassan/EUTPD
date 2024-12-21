@@ -1,0 +1,28 @@
+<a
+  class="btn cursor-pointer px-0 text-white"
+  data-lt-menu-trigger="click"
+  data-lt-menu-placement="bottom-end"
+  data-lt-menu-flip="top-end"
+>
+  <span class="bg-light fs-8 px-3 py-2 rounded text-gray-800 top-50">
+    {{ currentLanguage?.country }}{{ ' ' }}
+    <img class="w-15px h-15px rounded-1 ms-2" [src]="currentLanguage?.flag" />
+  </span>
+</a>
+<div
+  ltMenu
+  class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold fs-6 w-175px py-4"
+>
+  <div
+    *ngFor="let language of languages"
+    class="menu-item px-3 cursor-pointer"
+    (click)="setLanguage($event, language.lang)"
+  >
+    <a class="menu-link d-flex px-5" [class.active]="language.active">
+      <span class="symbol symbol-20px me-4">
+        <img class="rounded-1" [src]="language.flag" />
+      </span>
+      {{ language.country }}
+    </a>
+  </div>
+</div>

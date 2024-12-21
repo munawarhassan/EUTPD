@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.hazelcast.com/schema/config
+           http://www.hazelcast.com/schema/config/hazelcast-config-4.0.xsd">
+
+  <cache name="*">
+    <statistics-enabled>false</statistics-enabled>
+    <management-enabled>false</management-enabled>
+    <eviction size="100" max-size-policy="ENTRY_COUNT" eviction-policy="LFU" />
+  </cache>
+
+</hazelcast>

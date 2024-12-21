@@ -1,0 +1,118 @@
+<ng-container *ngFor="let item of items">
+  <ng-container
+    *ngIf="menuType === 'dropdown' || (menuType === 'accordion' && item.type === 'root' && !item.items)"
+    [ngTemplateOutlet]="menuItemTemplate"
+    [ngTemplateOutletContext]="{ item: item }"
+  >
+  </ng-container>
+  <ng-container
+    *ngIf="(menuType === 'accordion' && item.type === 'root' && item.items) || item.type === 'separator'"
+    [ngTemplateOutlet]="accordionRootTemplate"
+    [ngTemplateOutletContext]="{ item: item }"
+  >
+  </ng-container>
+</ng-container>
+
+<ng-template #itemsTemplate let-item="item">
+  <div class="menu-sub" [ngClass]="getSubMenuClasses(item)" [attr.data-lt-menu-dismiss]="item.dismiss">
+    <ng-container *ngFor="let subItem of item.items">
+      <!-- sub menu item-->
+      <ng-container *ngIf="subItem.items">
+        <ng-container
+          [ngTemplateOutlet]="menuItemTemplate"
+          [ngTemplateOutletContext]="{ item: subItem }"
+        ></ng-container>
+      </ng-container>
+      <!-- inner menu item -->
+      <ng-container *ngIf="!subItem.items">
+        <div class="menu-item" [ngClass]="getMenuItemClasses(item)" [attr.data-lt-menu-placement]="item.placement">
+          <ng-container
+            [ngTemplateOutlet]="innerMenuItemTemplate"
+            [ngTemplateOutletContext]="{ item: subItem }"
+          ></ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #menuItemTemplate let-item="item">
+  <ng-container *preAuthorized="item.permission">
+    <div
+      *ngIf="item.type !== 'separator' && !item.disabled"
+      class="menu-item"
+      [ngClass]="getMenuItemClasses(item)"
+      [attr.data-lt-menu-trigger]="getTrigger(item)"
+      [attr.data-lt-menu-placement]="item.placement"
+    >
+      <ng-container *ngIf="item.items">
+        <span *ngIf="item.items" class="menu-link" [ngClass]="getLinkClasses(item)">
+          <ng-container
+            [ngTemplateOutlet]="columnMenuItemTemplate"
+            [ngTemplateOutletContext]="{ item: item }"
+          ></ng-container>
+          <span *ngIf="item.type === 'item'" class="menu-arrow"> </span>
+        </span>
+        <ng-container [ngTemplateOutlet]="itemsTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngIf="!item.items"
+        [ngTemplateOutlet]="innerMenuItemTemplate"
+        [ngTemplateOutletContext]="{ item: item }"
+      ></ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #accordionRootTemplate let-item="item">
+  <ng-container *ngIf="item.type === 'root'">
+    <div class="menu-content pt-8 pb-2">
+      <span class="menu-section text-muted text-uppercase fs-8 ls-1" [innerHTML]="getTitle(item)"></span>
+    </div>
+    <ng-container *ngFor="let item of item.items">
+      <ng-container [ngTemplateOutlet]="menuItemTemplate" [ngTemplateOutletContext]="{ item: item }"> </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container
+    *ngIf="item.type === 'separator'"
+    [ngTemplateOutlet]="separatorTemplate"
+    [ngTemplateOutletContext]="{ item: item }"
+  ></ng-container>
+</ng-template>
+
+<ng-template #innerMenuItemTemplate let-item="item">
+  <a
+    class="menu-link"
+    [ngClass]="getLinkClasses(item)"
+    [routerLinkActive]="getLinkActive(item)"
+    [routerLink]="[item.url]"
+    [relativeTo]="activedRoute.parent"
+    [routerLinkActiveOptions]="item.routerLinkActiveOptions ? item.routerLinkActiveOptions : { exact: true }"
+  >
+    <ng-container [ngTemplateOutlet]="columnMenuItemTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+  </a>
+</ng-template>
+
+<ng-template #columnMenuItemTemplate let-item="item">
+  <ng-container *ngIf="item.type === 'item'">
+    <span *ngIf="getBulletClass(item)" class="menu-bullet">
+      <span class="bullet bullet-dot" [ngClass]="getBulletClass(item)"> </span>
+    </span>
+  </ng-container>
+  <span *ngIf="item.icon && useSVG(item)" class="menu-icon">
+    <span class="svg-icon" [ngClass]="item.iconClass" [inlineSVG]="item.icon"></span>
+  </span>
+  <span *ngIf="item.icon && !useSVG(item)" class="menu-icon">
+    <i [class]="item.icon"></i>
+  </span>
+  <span class="menu-title" [innerHTML]="getTitle(item)"></span>
+</ng-template>
+
+<ng-template #separatorTemplate let-item="item">
+  <div class="menu-item">
+    <div class="menu-content">
+      <div class="separator" [ngClass]="item.class"></div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.pmi.tpd</groupId>
+    <artifactId>tpd.parent</artifactId>
+    <version>3.4.0</version>
+  </parent>
+
+  <artifactId>tpd.testing.service</artifactId>
+  <packaging>jar</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>TPD service testing module</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.testing.junit5</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast</artifactId>
+      <version>${hazelcast.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast-spring</artifactId>
+      <version>${hazelcast.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast</artifactId>
+      <version>${hazelcast.version}</version>
+      <classifier>tests</classifier>
+    </dependency>
+    <!-- Used exclusively for hazelcast dependency, used in mocks -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+          <minimizeJar>true</minimizeJar>
+          <artifactSet>
+            <includes>
+              <include>com.hazelcast:hazelcast:tests</include>
+            </includes>
+          </artifactSet>
+          <relocations>
+            <relocation>
+              <pattern>com.hazelcast.internal.server</pattern>
+              <shadedPattern>com.pmi.tpd.service.testing.shaded.hazelcast.internal.server</shadedPattern>
+              <excludes>
+                <exclude>com.hazelcast.internal.server.ServerContext</exclude>
+                <exclude>com.hazelcast.internal.server.Server</exclude>
+                <exclude>com.hazelcast.internal.server.ServerConnectionManager</exclude>
+                <exclude>com.hazelcast.internal.server.ServerConnection</exclude>
+                <exclude>com.hazelcast.internal.server.NetworkStats</exclude>
+                <exclude>com.hazelcast.internal.server.tcp.ServerSocketRegistry</exclude>
+                <exclude>com.hazelcast.internal.server.tcp.LocalAddressRegistry</exclude>
+                <exclude>com.hazelcast.internal.server.tcp.TcpServerContext</exclude>
+                <exclude>com.hazelcast.internal.server.tcp.LinkedAddresses</exclude>
+              </excludes>
+            </relocation>
+            <relocation>
+              <pattern>com.hazelcast.internal.nio.tcp</pattern>
+              <shadedPattern>com.pmi.tpd.service.testing.shaded.hazelcast.internal.nio.tcp</shadedPattern>              
+            </relocation>
+            <relocation>
+              <pattern>com.hazelcast.test</pattern>
+              <shadedPattern>com.pmi.tpd.service.testing.shaded.hazelcast</shadedPattern>
+            </relocation>
+          </relocations>
+          <filters>
+            <filter>
+              <artifact>com.hazelcast:hazelcast:*</artifact>
+              <includes>
+                <include>com/hazelcast/internal/nio/tcp/**</include>
+                <include>com/hazelcast/test/**</include>
+                <include>com/hazelcast/internal/server/**</include>
+              </includes>
+            </filter>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

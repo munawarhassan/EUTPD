@@ -1,0 +1,57 @@
+{
+  "database": {
+    "title": "Base de données",
+    "button": {
+      "migrate": "Migrer la Base de Données"
+    },
+    "fields": {
+      "type": "Type Base de données",
+      "url": "JDBC URL",
+      "username": "Utilisateur Base de données",
+      "password": "Mot de Passe Base de données"
+    },
+    "alert": {
+      "recommended": "Nous vous recommandons de migrer vers une base de données externe pour une utilisation en production!"
+    },
+    "migration": {
+      "title": "Migration de la Base de Données",
+      "description": "L'application ne sera plus disponible pour les utilisateurs lorsqu'une migration sera en cours.",
+      "button": {
+        "test": "Tester",
+        "start": "Démarrer la Migration"
+      },
+      "fields": {
+        "type": "Type de base de données",
+        "hostname": "Nom d'hôte",
+        "hostname.help": "Nom du serveur de la base de données.",
+        "port": "Port",
+        "port.help": "Numéro du port TCP pour le serveur de base de données.",
+        "name": "Nom Base de Données",
+        "name.help": "Nom de la base de données.",
+        "username": "Nom Utilisateur",
+        "username.help": "Nom utilisateur de la base de données.",
+        "password": "Mot de Passe",
+        "password.help": "Mot de passe de la base de données."
+      },
+      "validate": {
+        "hostname": {
+          "required": "Veuillez entrer un nom d'hôte non vide inférieure à 255 caractères."
+        },
+        "port": {
+          "required": "Veuillez entrer une valeur non nulle."
+        },
+        "databasename": {
+          "required": "Veuillez entrer le nom d'une base de données non vide inférieure à 255 caractères."
+        },
+        "username": {
+          "required": "Veuillez entrer un nom d'utilisateur non vide inférieure à 255 caractères."
+        }
+      },
+      "modal": {
+        "title": "Attendez, s'il vous plait...",
+        "message-start": "Démarrage de la migration...",
+        "message-end": "La migration de la base de donnée est terminée"
+      }
+    }
+  }
+}

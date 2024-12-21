@@ -1,0 +1,50 @@
+<div *ngIf="title" class="portlet-head-label">
+  <span *ngIf="icon && !useSVG(icon)" class="portlet-head-icon"><i [class]="icon" [ngClass]="iconCLass"></i></span>
+  <span
+    class="portlet-head-icon me-2 svg-icon"
+    *ngIf="icon && useSVG(icon)"
+    [inlineSVG]="icon"
+    [ngClass]="iconCLass"
+  ></span>
+
+  <h3 class="portlet-head-title">
+    <span [innerHtml]="sanitized.bypassSecurityTrustHtml(title)"></span>
+    <small *ngIf="description" [innerHtml]="sanitized.bypassSecurityTrustHtml(description)"></small>
+  </h3>
+</div>
+<div *ngIf="parent" class="portlet-head-toolbar">
+  <ul
+    *ngIf="parent.tabset && parent.tabset.length"
+    class="nav nav-line-tabs nav-line-tabs-2x nav-stretch border-transparent"
+    [ngClass]="tabClass"
+    role="tablist"
+  >
+    <li class="nav-item" *ngFor="let tab of parent.tabset">
+      <a
+        class="nav-link text-active-primary fw-bolder"
+        href="#"
+        (click)="tab.active = true"
+        [attr.id]="tab.id + '_link'"
+        [attr.disabled]="tab.disabled ? '' : null"
+        [ngClass]="{ active: tab.active }"
+      >
+        <i *ngIf="tab.icon && !useSVG(tab.icon)" class="me-2" [ngClass]="tab.icon"></i>
+        <span
+          class="me-2 svg-icon"
+          *ngIf="tab.icon && useSVG(tab.icon)"
+          [inlineSVG]="tab.icon"
+          [ngClass]="tab.iconCLass"
+        ></span>
+        <span>{{ tab.heading }}</span>
+      </a>
+    </li>
+  </ul>
+  <ng-content></ng-content>
+  <div class="portlet-head-actions">
+    <ng-content select="lt-portlet-nav-item,lt-portlet-nav-dropdown-item"></ng-content>
+  </div>
+  <div *ngIf="tools && tools.length > 0" class="portlet-head-group ps-1 ms-3">
+    <inline-svg color="gray-400" size="7" [src]="svgIcons.Simple.general.otherVertical"></inline-svg>
+    <ng-content select="lt-portlet-tool"></ng-content>
+  </div>
+</div>

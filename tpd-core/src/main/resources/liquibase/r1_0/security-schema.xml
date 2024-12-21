@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="security-1-schema">
+    <createTable tableName="t_persistent_token">
+      <column name="series" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_used" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="token_value" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="username" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="remote_address" type="VARCHAR(150)" />
+      <column name="remote_host" type="VARCHAR(150)" />
+      <column name="user_agent" type="VARCHAR(150)" />
+    </createTable>
+    <addPrimaryKey columnNames="series" constraintName="t_persistent_token_pk" tableName="t_persistent_token" />
+  </changeSet>
+</databaseChangeLog>

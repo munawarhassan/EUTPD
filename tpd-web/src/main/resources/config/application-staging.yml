@@ -1,0 +1,31 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# The app.home configuration must be set and specifies the directory in which application will store its data files.
+# This must be set to an absolute path. Relative paths are not allowed.
+# Ensure that only one application instance uses the selected Home foled.
+#
+###########################
+# Note for Windows Users
+###########################
+#
+# NOTE : If you are using Windows, you will need to use double \ characters, for example c:\app-home should be written
+# as c:\\app-home
+#
+# You can also use Unix like paths which Java/Portal can handle. eg c:/app-home
+#-----------------------------------------------------------------------------------------------------------------------
+app:
+    home: 
+    dev.mode: false
+    auto-setup: true
+    log:
+        # log level : (DEBUG|TRACE|INFO|WARN|ERROR)
+        loglevel: INFO
+        fullStackTraces: true
+
+database:
+    liquibase:
+        contexts: test,production
+
+jpa:
+    show_sql: true
+
+

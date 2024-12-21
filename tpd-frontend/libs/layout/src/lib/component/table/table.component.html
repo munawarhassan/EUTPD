@@ -1,0 +1,91 @@
+<ng-container *ngIf="currentPage">
+  <ng-container *ngIf="options.pagination === 'infinite'; else table">
+    <ng-scrollbar
+      #scrollbar
+      #autoResize="ltAutoResize"
+      [ltAutoResize]="autoResizeOptions"
+      class="scrollbar-md pb-2"
+      [sensorDebounce]="1"
+      [minThumbSize]="options.minThumbSize ?? 20"
+      [track]="options.scrollTrack ?? 'all'"
+      [autoHeightDisabled]="autoResize.options?.activate === true && autoResize.options?.height !== undefined"
+      [visibility]="'hover'"
+    >
+      <div
+        scrollViewport
+        infiniteScroll
+        [scrollWindow]="false"
+        [infiniteScrollDistance]="options.infiniteScrollDistance ?? 2"
+        [infiniteScrollThrottle]="options.infiniteScrollThrottle ?? 50"
+        (scrolled)="onInfiniteScroll()"
+        [infiniteScrollContainer]="scrollbar.viewport.nativeElement"
+      >
+        <ng-container [ngTemplateOutlet]="table"></ng-container>
+      </div>
+    </ng-scrollbar>
+  </ng-container>
+
+  <ng-container *ngIf="options.pagination === undefined || options.pagination === 'fixed'">
+    <lt-pagination
+      class="mt-5"
+      [page]="currentPage"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      (pageChanged)="handleChanged($event)"
+    >
+    </lt-pagination>
+  </ng-container>
+</ng-container>
+<ng-template #table>
+  <div scrollViewport [class]="responsiveClass">
+    <table
+      *ngIf="layer === 'line'"
+      class="table table-default table-row-dashed align-middle mb-5"
+      [ngClass]="tableClass"
+    >
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th *ngIf="options.checkedRow">
+            <div class="form-check form-check-custom form-check-solid">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="all_checkbox"
+                #checkbox
+                (click)="allCheckedChange.emit(checkbox.checked)"
+                [(ngModel)]="allChecked"
+                [disabled]="totalElements < 1"
+              />
+            </div>
+          </th>
+          <th
+            *ngFor="let column of options.columns"
+            [class]="getColumnClass(column)"
+            (click)="handleSortClick($event)"
+            [attr.data-column]="column.name"
+          >
+            <span>{{ getColumnTitle(column) | translate }}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let entry of fetchedPages | keyvalue; trackBy: trackPage">
+          <ng-container
+            [ngTemplateOutlet]="lineTemplate || defaultContent"
+            [ngTemplateOutletContext]="{ page: entry.value }"
+          ></ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <ng-container *ngIf="cardTemplate && layer === 'card'; else defaultContent">
+    <ng-container *ngFor="let entry of fetchedPages | keyvalue; trackBy: trackPage">
+      <ng-container [ngTemplateOutlet]="cardTemplate" [ngTemplateOutletContext]="{ page: entry.value }"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #defaultContent let-page="page">
+  <ng-content></ng-content>
+</ng-template>

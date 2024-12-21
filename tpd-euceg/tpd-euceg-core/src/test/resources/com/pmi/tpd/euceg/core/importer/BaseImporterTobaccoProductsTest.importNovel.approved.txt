@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Product xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TobaccoProduct">
+   <ProductID confidential="false">00000-00-00000</ProductID>
+   <OtherProductsExist confidential="true">false</OtherProductsExist>
+   <SameCompositionProductsExist confidential="true">true</SameCompositionProductsExist>
+   <SameCompositionProducts>
+      <ProductIdentification confidential="true" type="TEXT">other EU markets</ProductIdentification>
+   </SameCompositionProducts>
+   <Manufacturers>
+      <Manufacturer confidential="false">
+         <Name>Philip Morris Manufacturing &amp; Technology Bologna S.p.A.</Name>
+         <Address>Piazza Belgioioso, 2 - 20121 Milano</Address>
+         <Country>IT</Country>
+         <PhoneNumber>+39 051 3517865</PhoneNumber>
+         <Email>philipmorrisbolognia@pec.it</Email>
+         <ProductionSiteAddresses>
+            <ProductionSiteAddress confidential="false">
+               <Address>Via Fratelli Rosselli, 4 - 40069 Predosa (BO)</Address>
+               <Country>IT</Country>
+            </ProductionSiteAddress>
+         </ProductionSiteAddresses>
+      </Manufacturer>
+   </Manufacturers>
+   <MarketResearchFiles>
+      <Attachment attachmentID="Product_Market_Research_File.pdf"/>
+   </MarketResearchFiles>
+   <ProductType confidential="false">11</ProductType>
+   <Weight confidential="false">801.1</Weight>
+   <TobaccoWeight confidential="false">306.03</TobaccoWeight>
+   <Filter confidential="false">false</Filter>
+   <TechnicalFiles>
+      <Attachment attachmentID="Product_Technical_File.pdf"/>
+   </TechnicalFiles>
+   <Presentations>
+      <Presentation>
+         <NationalMarket confidential="false">GB</NationalMarket>
+         <BrandName confidential="false">iQOS - Marlboro Smooth</BrandName>
+         <BrandSubtypeNameExists confidential="false">true</BrandSubtypeNameExists>
+         <BrandSubtypeName confidential="false">Hard Pack - 20 Heaststicks</BrandSubtypeName>
+         <LaunchDate confidential="false">2016-05-20</LaunchDate>
+         <WithdrawalIndication confidential="false">false</WithdrawalIndication>
+         <ProductNumberType confidential="false">SUBMITTER</ProductNumberType>
+         <ProductNumber confidential="false">POM.135640</ProductNumber>
+         <PackageType confidential="false">14</PackageType>
+         <PackageNetWeight confidential="false">6.1</PackageNetWeight>
+         <HasOtherMarketData confidential="true">true</HasOtherMarketData>
+      </Presentation>
+   </Presentations>
+   <TobaccoIngredients>
+      <TobaccoIngredient>
+         <PartType confidential="true">1</PartType>
+         <LeafType confidential="true">1</LeafType>
+         <LeafCureMethod confidential="true">5</LeafCureMethod>
+         <Quantity confidential="true">500</Quantity>
+      </TobaccoIngredient>
+      <TobaccoIngredient>
+         <PartType confidential="true">1</PartType>
+         <LeafType confidential="true">2</LeafType>
+         <LeafCureMethod confidential="true">5</LeafCureMethod>
+         <Quantity confidential="true">500</Quantity>
+      </TobaccoIngredient>
+      <TobaccoIngredient>
+         <PartType confidential="true">1</PartType>
+         <LeafType confidential="true">3</LeafType>
+         <LeafCureMethod confidential="true">5</LeafCureMethod>
+         <Quantity confidential="true">500</Quantity>
+      </TobaccoIngredient>
+      <TobaccoIngredient>
+         <PartType confidential="true">2</PartType>
+         <LeafType confidential="true">1</LeafType>
+         <LeafCureMethod confidential="true">5</LeafCureMethod>
+         <Quantity confidential="true">500</Quantity>
+         <Suppliers>
+            <Supplier confidential="true">
+               <Name>Philip Morris ČR a.s.</Name>
+               <Address>Vítězná 1, 284 03 Kutná Hora</Address>
+               <Country>CZ</Country>
+               <PhoneNumber>00420 2 6670 2111</PhoneNumber>
+               <Email>philipmorris.cz@pmi.com</Email>
+            </Supplier>
+            <Supplier confidential="true">
+               <Name>Philip Morris Lietuva</Name>
+               <Address>Vilniaus plentas 16, 94104 Klaipeda</Address>
+               <Country>LT</Country>
+               <PhoneNumber>00370 46 484 444</PhoneNumber>
+               <Email>admin.klaipeda@pmi.com</Email>
+            </Supplier>
+            <Supplier confidential="true">
+               <Name>Philip Morris Operations A.D. NIS</Name>
+               <Address>Blvd. 12. February 74, 18000 Nis</Address>
+               <Country>RS</Country>
+               <PhoneNumber>00381 18 55 44 33</PhoneNumber>
+               <Email>ProductInformationReporting.PIR@pmi.com</Email>
+            </Supplier>
+         </Suppliers>
+      </TobaccoIngredient>
+      <TobaccoIngredient>
+         <PartType confidential="true">3</PartType>
+         <LeafType confidential="true">2</LeafType>
+         <LeafCureMethod confidential="true">5</LeafCureMethod>
+         <Quantity confidential="true">500</Quantity>
+         <Suppliers>
+            <Supplier confidential="true">
+               <Name>Philip Morris Polska Spolka Akcyjna</Name>
+               <Address>Al. Jana Pawla II 196, 31-982 Krakow</Address>
+               <Country>PL</Country>
+               <PhoneNumber>0048 2264 646 46</PhoneNumber>
+               <Email>PMPLBiuroPrasowe@pmi.com</Email>
+            </Supplier>
+            <Supplier confidential="true">
+               <Name>Philip Morris Romania S.R.L.</Name>
+               <Address>Horia Closca si Crisan Str.83-105, 75100 Otopeni</Address>
+               <Country>RO</Country>
+               <PhoneNumber>0040 21 227 3400</PhoneNumber>
+               <Email>ProductInformationReporting.PIR@pmi.com</Email>
+            </Supplier>
+            <Supplier confidential="true">
+               <Name>Tabaqueira - Empresa Industrial De Tabacos, S.A.</Name>
+               <Address>Av. Alfredo da Silva 35, 2635-101 Albarraque Rio de Mouro</Address>
+               <Country>PT</Country>
+               <PhoneNumber>00351 21 915 7700</PhoneNumber>
+               <Email>tabaqueira@pmi.com</Email>
+            </Supplier>
+         </Suppliers>
+      </TobaccoIngredient>
+   </TobaccoIngredients>
+   <OtherIngredientsExist confidential="false">true</OtherIngredientsExist>
+   <OtherIngredients>
+      <Ingredient>
+         <Name confidential="false">glycerol</Name>
+         <CasNumberExists confidential="false">true</CasNumberExists>
+         <CasNumber confidential="false">55-82-5</CasNumber>
+         <RecipeQuantity confidential="false">52.3</RecipeQuantity>
+         <Functions>
+            <Function confidential="false">13</Function>
+         </Functions>
+         <ToxicityStatus confidential="false">0</ToxicityStatus>
+         <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+         <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+         <ToxicologicalDetails>
+            <ToxicologicalDataAvailable confidential="false">3</ToxicologicalDataAvailable>
+            <ToxEmission confidential="false">true</ToxEmission>
+            <ToxCmr confidential="false">true</ToxCmr>
+            <ToxCardioPulmonary confidential="false">true</ToxCardioPulmonary>
+            <ToxAddictive confidential="false">false</ToxAddictive>
+            <ToxOther confidential="false">true</ToxOther>
+            <ToxEmissionFiles>
+               <Attachment attachmentID="Ingredient_Tox_Emission_File.pdf"/>
+            </ToxEmissionFiles>
+            <ToxCmrFiles>
+               <Attachment attachmentID="Ingredient_Tox_CMR_File.pdf"/>
+            </ToxCmrFiles>
+            <ToxCardioPulmonaryFiles>
+               <Attachment attachmentID="Ingredient_Tox_CardioPulmonary_File.pdf"/>
+            </ToxCardioPulmonaryFiles>
+            <ToxOtherFiles>
+               <Attachment attachmentID="Ingredient_Tox_Other_File.pdf"/>
+            </ToxOtherFiles>
+         </ToxicologicalDetails>
+         <Category confidential="false">2</Category>
+         <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+         <PriorityAdditive confidential="false">true</PriorityAdditive>
+         <PriorityAdditiveFiles>
+            <Attachment attachmentID="Ingredient_Priority_Additive_Files.pdf"/>
+            <Attachment attachmentID="Ingredient_Priority_Additive_Files.1.pdf"/>
+         </PriorityAdditiveFiles>
+      </Ingredient>
+      <Ingredient>
+         <Name confidential="false">water</Name>
+         <CasNumberExists confidential="false">true</CasNumberExists>
+         <CasNumber confidential="false">7732-28-5</CasNumber>
+         <AdditionalCasNumbers>
+            <CasNumber confidential="false">7440-50-8</CasNumber>
+            <CasNumber confidential="false">7440-66-6</CasNumber>
+         </AdditionalCasNumbers>
+         <RecipeQuantity confidential="false">36.1</RecipeQuantity>
+         <Functions>
+            <Function confidential="false">17</Function>
+         </Functions>
+         <ToxicityStatus confidential="false">0</ToxicityStatus>
+         <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+         <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+         <ToxicologicalDetails>
+            <ToxicologicalDataAvailable confidential="false">1</ToxicologicalDataAvailable>
+            <ToxEmission confidential="false">false</ToxEmission>
+            <ToxCmr confidential="false">false</ToxCmr>
+            <ToxCardioPulmonary confidential="false">false</ToxCardioPulmonary>
+            <ToxAddictive confidential="false">false</ToxAddictive>
+            <ToxOther confidential="false">false</ToxOther>
+         </ToxicologicalDetails>
+         <Category confidential="false">2</Category>
+         <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+         <PriorityAdditive confidential="false">false</PriorityAdditive>
+      </Ingredient>
+   </OtherIngredients>
+   <OtherEmissionsAvailable confidential="false">false</OtherEmissionsAvailable>
+   <NovelSpecific>
+      <DetailsDescriptionFile attachmentID="Novel_Details_Description_File.pdf"/>
+      <UseInstructionsFile attachmentID="Novel_Use_Instructions_File.pdf"/>
+      <RiskBenefitFile attachmentID="Novel_Risk_Benefit_File.pdf"/>
+      <StudyFiles>
+         <Attachment attachmentID="Novel_Study.pdf"/>
+      </StudyFiles>
+   </NovelSpecific>
+</Product>

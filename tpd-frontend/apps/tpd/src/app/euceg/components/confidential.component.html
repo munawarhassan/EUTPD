@@ -1,0 +1,7 @@
+<label class="form-label m-0" [ltTooltip]="text" placement="top">
+  <span>
+    <inline-svg class="icon-uncheck" [src]="svgIcons.Simple.general.visible"></inline-svg>
+    <inline-svg class="icon-check" [src]="svgIcons.Simple.general.hidden"></inline-svg>
+  </span>
+  <span *ngIf="label" class="ms-2" [class.required]="required">{{ label }}</span>
+</label>

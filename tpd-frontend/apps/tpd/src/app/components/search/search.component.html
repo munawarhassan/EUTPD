@@ -1,0 +1,25 @@
+<form [formGroup]="formControl" #form="ngForm" (ngSubmit)="handleSearch()">
+  <div class="position-relative me-md-2" [ngClass]="width">
+    <span
+      class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6"
+      [inlineSVG]="svgIcons.Duotone.general.search"
+    ></span>
+    <span
+      *ngIf="searchTerm.value"
+      class="cursor-pointer svg-icon svg-icon-3 svg-icon-primary position-absolute top-50 translate-middle end-0"
+      [inlineSVG]="svgIcons.Simple.code.backspace"
+      (click)="handleClear()"
+    ></span>
+    <!--end::Svg Icon-->
+    <input
+      type="text"
+      class="form-control px-10"
+      [ngClass]="inputClass"
+      name="searchTerm"
+      formControlName="searchTerm"
+      [placeholder]="placeholder"
+      autocomplete="off"
+      (keyup.enter)="handleSearch()"
+    />
+  </div>
+</form>

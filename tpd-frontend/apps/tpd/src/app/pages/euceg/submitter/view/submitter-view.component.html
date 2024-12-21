@@ -1,0 +1,533 @@
+<lt-toolbar [sticky]="true">
+  <a href="#" class="btn btn-light-dark bg-hover-dark text-hover-inverse-dark me-2" (click)="goToRevisions()">
+    <inline-svg [src]="svgIcons.Simple.code.git4"></inline-svg>
+    Revisions</a
+  >
+  <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<ng-container *ngIf="submitter">
+  <form name="editForm" #editForm="ngForm" class="m-form" novalidate show-validation>
+    <lt-portlet [mode]="['bordered-semi']" id="m_portlet_submitter">
+      <lt-portlet-body>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <app-confidential
+              [(ngModel)]="submitter.submitter.confidential"
+              name="submitter_confidential"
+              label="is Submitter Confidential?"
+              [disabled]="readonly"
+            >
+            </app-confidential>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              label="Submitter ID"
+              info="Submitter ID is the identification number attributed pursuant to Article 4."
+              name="submitterid"
+              [(ngModel)]="submitter.submitterId"
+              [disabled]="isNewSubmitter"
+              [required]="true"
+              [disabled]="readonly"
+            >
+            </form-text>
+          </div>
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              label="Name"
+              name="Name"
+              [(ngModel)]="submitter.details.Name"
+              [required]="true"
+              [disabled]="readonly"
+            ></form-text>
+          </div>
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              label="Phone Number"
+              name="Phone"
+              [(ngModel)]="submitter.details.PhoneNumber"
+              [required]="true"
+              pattern="([0-9\(\)/\+ \-]*)"
+              [maxlength]="20"
+              [disabled]="readonly"
+            ></form-text>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <form-select
+              controlClass="form-select-solid"
+              label="Country"
+              name="Country"
+              [searchable]="true"
+              searchPlaceholder="Select Country..."
+              [options]="euceg.Countries"
+              optionValue="name"
+              optionText="value"
+              [(ngModel)]="submitter.details.Country"
+              [required]="true"
+              [disabled]="readonly"
+            >
+            </form-select>
+          </div>
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              label="Address"
+              name="Address"
+              [(ngModel)]="submitter.details.Address"
+              [required]="true"
+              [disabled]="readonly"
+            >
+            </form-text>
+          </div>
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              type="email"
+              label="E-mail"
+              name="Email"
+              [(ngModel)]="submitter.details.Email"
+              [required]="true"
+              [email]="true"
+              [disabled]="readonly"
+            >
+            </form-text>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <form-select
+              controlClass="form-select-solid"
+              label="Submitter Type"
+              name="SubmitterType"
+              [(ngModel)]="submitter.submitter.SubmitterType"
+              [required]="true"
+              [options]="euceg.SubmitterTypes"
+              [disabled]="readonly"
+            ></form-select>
+          </div>
+          <div class="col-md-4">
+            <form-text
+              controlClass="form-control-solid"
+              label="VAT"
+              info="Likely to be made up of a combination of country code, letters and digits e.g. 'BG9999999999' or 'FRXX 999999999'."
+              name="vat"
+              [(ngModel)]="submitter.details.VatNumber"
+              [disabled]="readonly"
+            ></form-text>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="m-checkbox-list">
+              <form-checkbox
+                controlClass="form-check-solid"
+                label="SME"
+                name="sme"
+                info="Indication whether the submitter, or its parent company if it exists, is an SME as defined in Commission Recommendation 2003/361/EC."
+                [(ngModel)]="submitter.details.Sme"
+                [disabled]="readonly"
+              ></form-checkbox>
+            </div>
+          </div>
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+    <lt-portlet id="m_portlet_sumitter_sections">
+      <lt-portlet-head></lt-portlet-head>
+      <lt-portlet-body>
+        <portlet-tab id="m_submitter-tab-parent" heading="Parent Company">
+          <div class="m-section">
+            <div class="m-section__content">
+              <button
+                *ngIf="!readonly && !submitter.submitter.HasParent"
+                type="button"
+                (click)="addParent()"
+                class="btn btn-light-primary btn-sm"
+              >
+                <i class="fa fa-plus-circle"></i>Add Parent
+              </button>
+              <ng-container *ngIf="submitter.submitter.HasParent">
+                <div class="row mb-4">
+                  <div class="col-md-4">
+                    <app-confidential
+                      [(ngModel)]="submitter.submitter.Parent.confidential"
+                      name="Parent_confidential"
+                      label="is Parent Submitter Confidential?"
+                      [disabled]="readonly"
+                    >
+                    </app-confidential>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-md-4">
+                    <form-text
+                      controlClass="form-control-solid"
+                      label="Submitter ID"
+                      name="Parent_submitterID"
+                      [(ngModel)]="submitter.submitter.Parent.submitterID"
+                      [disabled]="readonly"
+                    ></form-text>
+                  </div>
+                  <div class="col-md-4">
+                    <form-text
+                      controlClass="form-control-solid"
+                      label="Name"
+                      name="Parent_Name"
+                      [(ngModel)]="submitter.submitter.Parent.Name"
+                      [required]="true"
+                      [disabled]="readonly"
+                    ></form-text>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-md-4">
+                    <form-text
+                      controlClass="form-control-solid"
+                      label="Address"
+                      name="Parent_Address"
+                      [(ngModel)]="submitter.submitter.Parent.Address"
+                      [required]="true"
+                      [disabled]="readonly"
+                    >
+                    </form-text>
+                  </div>
+                  <div class="col-md-4">
+                    <form-select
+                      controlClass="form-select-solid"
+                      label="Country"
+                      name="Parent_Country"
+                      [searchable]="true"
+                      searchPlaceholder="Select Country..."
+                      [options]="euceg.Countries"
+                      optionValue="name"
+                      optionText="value"
+                      [(ngModel)]="submitter.submitter.Parent.Country"
+                      [required]="true"
+                      [disabled]="readonly"
+                    >
+                    </form-select>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-md-4">
+                    <form-text
+                      controlClass="form-control-solid"
+                      label="Phone"
+                      name="Parent_Phone"
+                      [(ngModel)]="submitter.submitter.Parent.PhoneNumber"
+                      [required]="true"
+                      pattern="([0-9\(\)\/\+ \-]*)"
+                      [maxlength]="20"
+                      [disabled]="readonly"
+                    ></form-text>
+                  </div>
+                  <div class="col-md-4">
+                    <form-text
+                      controlClass="form-control-solid"
+                      type="email"
+                      label="E-mail"
+                      name="Parent_Email"
+                      [(ngModel)]="submitter.submitter.Parent.Email"
+                      [required]="true"
+                      [email]="true"
+                      [disabled]="readonly"
+                    >
+                    </form-text>
+                  </div>
+                </div>
+                <button *ngIf="!readonly" type="button" (click)="removeParent()" class="btn btn-light-danger btn-sm">
+                  <i class="fa fa-minus-circle fa-fw"></i>Remove Parent
+                </button>
+              </ng-container>
+            </div>
+            <!-- end : content section -->
+          </div>
+          <!-- end : section -->
+        </portlet-tab>
+        <portlet-tab id="m_submitter-tab-affiliate" heading="Affiliate(s) Company">
+          <button *ngIf="!readonly" type="button" (click)="addAffiliate()" class="btn btn-light-primary btn-sm">
+            <i class="fa fa-plus-circle fa-fw"></i>Add Affiliate
+          </button>
+          <div class="table-responsive mx-10">
+            <table class="table table table-row-bordered align-baseline">
+              <thead>
+                <tr class="fw-bolder text-muted">
+                  <th scope="col" class="w-100px">Submitter ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col" class="text-center">Country</th>
+                  <th scope="col" class="w-150px">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let affiliate of dataRows.affiliate.content; index as $index">
+                  <td>{{ affiliate.submitterID }}</td>
+                  <td>
+                    <a href="#" class="m-link" (click)="openAffiliateModal(affiliate)">{{ affiliate.Name }}</a>
+                  </td>
+                  <td class="text-center">
+                    <span
+                      class="symbol symbol-25px me-1 mb-1"
+                      [ltTooltip]="euceg.getCountry(affiliate.Country)"
+                      placement="top"
+                    >
+                      <img [src]="'./assets/media/flags/' + affiliate.Country + '.svg'" alt="image" />
+                    </span>
+                  </td>
+                  <td class="text-end">
+                    <div class="d-flex justify-content-end flex-shrink-0">
+                      <a
+                        href="#"
+                        (click)="openAffiliateModal(affiliate)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                      >
+                        <inline-svg size="3" [src]="svgIcons.Duotone.art.pencil"></inline-svg>
+                      </a>
+                      <a
+                        *ngIf="!readonly"
+                        href="#"
+                        (click)="removeAffiliate(affiliate)"
+                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                      >
+                        <inline-svg size="3" [src]="svgIcons.Duotone.general.trash"></inline-svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <td colspan="4">
+                  <lt-pagination
+                    [page]="dataRows.affiliate"
+                    [maxSize]="5"
+                    [boundaryLinks]="true"
+                    (pageChanged)="onPaginationChanged($event)"
+                  >
+                  </lt-pagination>
+                </td>
+              </tfoot>
+            </table>
+          </div>
+        </portlet-tab>
+        <portlet-tab id="m_submitter-tab-enterer" heading="Enterer Company">
+          <button
+            *ngIf="!readonly && !submitter.submitter.HasEnterer"
+            type="button"
+            (click)="addEnterer()"
+            class="btn btn-light-primary btn-sm"
+          >
+            <i class="fa fa-plus-circle fa-fw"></i>Add Enterer
+          </button>
+          <ng-container *ngIf="submitter.submitter.HasEnterer">
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <app-confidential
+                  [(ngModel)]="submitter.submitter.Enterer.confidential"
+                  name="Enterer_confidential"
+                  label="is Enterer Submitter Confidential?"
+                  [disabled]="readonly"
+                >
+                </app-confidential>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Submitter ID"
+                  name="Enterer_submitterID"
+                  [(ngModel)]="submitter.submitter.Enterer.submitterID"
+                  [disabled]="readonly"
+                ></form-text>
+              </div>
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Name"
+                  name="Enterer_Name"
+                  [(ngModel)]="submitter.submitter.Enterer.Name"
+                  [required]="true"
+                  [disabled]="readonly"
+                ></form-text>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Address"
+                  name="Enterer_Address"
+                  [(ngModel)]="submitter.submitter.Enterer.Address"
+                  [required]="true"
+                  [disabled]="readonly"
+                >
+                </form-text>
+              </div>
+              <div class="col-md-4">
+                <form-select
+                  controlClass="form-select-solid"
+                  label="Country"
+                  name="Enterer_Country"
+                  [searchable]="true"
+                  searchPlaceholder="Select Country..."
+                  [options]="euceg.Countries"
+                  optionValue="name"
+                  optionText="value"
+                  [(ngModel)]="submitter.submitter.Enterer.Country"
+                  [required]="true"
+                  [disabled]="readonly"
+                >
+                </form-select>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Phone"
+                  name="Enterer_Phone"
+                  [(ngModel)]="submitter.submitter.Enterer.PhoneNumber"
+                  [required]="true"
+                  pattern="([0-9\(\)\/\+ \-]*)"
+                  [maxlength]="20"
+                  [disabled]="readonly"
+                ></form-text>
+              </div>
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  type="email"
+                  label="E-mail"
+                  name="Enterer_Email"
+                  [(ngModel)]="submitter.submitter.Enterer.Email"
+                  [required]="true"
+                  [email]="true"
+                  [disabled]="readonly"
+                >
+                </form-text>
+              </div>
+            </div>
+            <button *ngIf="!readonly" type="button" (click)="removeEnterer()" class="btn btn-light-danger btn-sm">
+              <i class="fa fa-minus-circle fa-fw"></i>Remove Enterer
+            </button>
+          </ng-container>
+        </portlet-tab>
+        <portlet-tab id="m_submitter-tab-legal-representative" heading="Natural Legal Representative">
+          <button
+            *ngIf="!readonly && !submitter.submitter?.HasNaturalLegalRepresentative?.value"
+            type="button"
+            (click)="addNaturalLegalRepresentative()"
+            class="btn btn-light-primary btn-sm"
+          >
+            <i class="fa fa-plus-circle"></i>Add NaturalLegalRepresentative
+          </button>
+          <ng-container *ngIf="submitter.submitter?.HasNaturalLegalRepresentative?.value">
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <app-confidential
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.confidential"
+                  name="NaturalLegalRepresentative_confidential"
+                  label="is NaturalLegalRepresentative Submitter Confidential?"
+                  [disabled]="readonly"
+                >
+                </app-confidential>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Submitter ID"
+                  name="NaturalLegalRepresentative_submitterID"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.submitterID"
+                  [disabled]="readonly"
+                >
+                </form-text>
+              </div>
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Name"
+                  name="NaturalLegalRepresentative_Name"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.Name"
+                  [required]="true"
+                  [disabled]="readonly"
+                ></form-text>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Address"
+                  name="NaturalLegalRepresentative_Address"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.Address"
+                  [required]="true"
+                  [disabled]="readonly"
+                >
+                </form-text>
+              </div>
+              <div class="col-md-4">
+                <form-select
+                  controlClass="form-select-solid"
+                  label="Country"
+                  name="NaturalLegalRepresentative_Country"
+                  [searchable]="true"
+                  searchPlaceholder="Select Country..."
+                  [options]="euceg.Countries"
+                  optionValue="name"
+                  optionText="value"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.Country"
+                  [required]="true"
+                  [disabled]="readonly"
+                >
+                </form-select>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  label="Phone"
+                  name="NaturalLegalRepresentative_Phone"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.PhoneNumber"
+                  [required]="true"
+                  pattern="([0-9\(\)\/\+ \-]*)"
+                  [maxlength]="20"
+                  [disabled]="readonly"
+                ></form-text>
+              </div>
+              <div class="col-md-4">
+                <form-text
+                  controlClass="form-control-solid"
+                  type="email"
+                  label="E-mail"
+                  name="NaturalLegalRepresentative_Email"
+                  [(ngModel)]="submitter.submitter.NaturalLegalRepresentative.Email"
+                  [required]="true"
+                  [email]="true"
+                  [disabled]="readonly"
+                >
+                </form-text>
+              </div>
+            </div>
+            <button
+              *ngIf="!readonly"
+              type="button"
+              (click)="removeNaturalLegalRepresentative()"
+              class="btn btn-light-danger btn-sm"
+            >
+              <i class="fa fa-minus-circle fa-fw"></i>Remove NaturalLegalRepresentative
+            </button>
+          </ng-container>
+        </portlet-tab>
+      </lt-portlet-body>
+    </lt-portlet>
+    <app-audit-detail [audit]="submitter"></app-audit-detail>
+  </form>
+</ng-container>

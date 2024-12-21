@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+  <!-- ChangeSets for Release 1.0 -->
+  <include file="liquibase/r1_0/user-schema.xml" />
+  <include file="liquibase/r1_0/upgrade-schema.xml" />
+  <include file="liquibase/r1_0/property-set-schema.xml" />
+  <include file="liquibase/r1_0/audit-event-schema.xml" />
+  <include file="liquibase/r1_0/security-schema.xml" />
+
+  <include file="liquibase/r1_0/submission-schema.xml" />
+
+  <include file="liquibase/r1_0/increase-length-submitter-blob.xml" />
+  <include file="liquibase/r1_0/add_user_directory.xml" />
+
+
+  <include file="liquibase/r1_0/tpd-60-add-product-table.xml" />
+  <include file="liquibase/r1_0/tpd-60-add-multiplicity-submission.xml" />
+  <include file="liquibase/r1_0/increase-response-clob-size.xml" />
+
+  <!-- ChangeSets for Release 1.1 -->
+  <include file="liquibase/r1_1/tpd-74-add-message-id-response.xml" />
+  <include file="liquibase/r1_1/tpd-95-replace-attachment-flag-send-by-status.xml" />
+
+  <!-- ChangeSets for Release 1.3 -->
+  <include file="liquibase/r1_3/tpd-110-bulk-send-of-new-product.xml" />
+
+  <!-- ChangeSets for Release 1.4 -->
+  <include file="liquibase/r1_4/tpd-117-create-payload-table.xml" />
+
+  <!-- ChangeSets for Release 1.7 -->
+  <include file="liquibase/r1_7/tpd-144-add-previous-product-number.xml" />
+
+  <!-- ChangeSets for Release 2.0 -->
+  <include file="liquibase/r2_0/remove-booking-range-table.xml" />
+  <include file="liquibase/r2_0/permission-schema.xml" />
+
+  <!-- ChangeSets for Release 2.2 -->
+  <include file="liquibase/r2_2/add-attachment-file-size.xml" />
+
+  <!-- ChangeSets for Release 2.4 -->
+  <include file="liquibase/r2_4/add-user-display-name-column.xml" />
+  <include file="liquibase/r2_4/add-user-slug-column.xml" />
+  <include file="liquibase/r2_4/update-constraints.xml" />
+  <include file="liquibase/r2_4/add-source-file-name.xml" />
+  <include file="liquibase/r2_4/add_revision_table.xml" />
+  <include file="liquibase/r2_4/update_audit_table.xml" />
+
+  <!-- ChangeSets for Release 2.5 -->
+  <include file="liquibase/r2_5/add-submitter-status.xml" />
+  <include file="liquibase/r2_5/add-foreignkey-revision.xml" />
+  <include file="liquibase/r2_5/add-pir-status.xml" />
+  <include file="liquibase/r2_5/add-internal-product-number.xml" />
+
+  <!-- ChangeSets for Release 3.0 -->
+  <include file="liquibase/r3_0/remove-size-attachment.xml" />
+  <include file="liquibase/r3_0/add-product-attachment.xml" />
+  <include file="liquibase/r3_0/add-sent-by-column.xml" />
+  <include file="liquibase/r3_0/add-pir-status-column.xml" />
+  <include file="liquibase/r3_0/increase-data-audit-size.xml" />
+  <include file="liquibase/r3_0/add-type-column.xml" />
+  <include file="liquibase/r3_0/update-submission-send-type.xml" />
+  <include file="liquibase/r3_0/add-internal-number.xml" />
+
+  <!-- ChangeSets for Release 3.4 -->
+  <include file="liquibase/r3_4/change-attachment-column-name.xml" />
+
+  <!-- Add test data -->
+  <include file="liquibase/test-data.xml" />
+
+
+
+
+</databaseChangeLog>

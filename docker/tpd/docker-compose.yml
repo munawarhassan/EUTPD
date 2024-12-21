@@ -1,0 +1,161 @@
+version: "3.9"
+
+services:
+
+  postgresql:
+    image: "postgres:${POSTGRES_TAG}"
+    hostname: postgresql
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    environment:
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+      start_period: 10s
+
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_TAG}"
+    hostname: elasticsearch
+    user: elasticsearch
+    environment:
+      - "cluster.initial_master_nodes=elasticsearch"
+      - "node.name=elasticsearch"
+      - "cluster.name=${ELASTICSEARCH_CLUSTERNAME}"
+      - "cluster.routing.allocation.disk.watermark.low=2gb"
+      - "cluster.routing.allocation.disk.watermark.high=1gb"
+      - "cluster.routing.allocation.disk.watermark.flood_stage=500mb"
+      - "cluster.info.update.interval=1m"
+      - "xpack.monitoring.enabled=false"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "bootstrap.memory_lock=true"
+      - "network.tcp.keep_alive=true"
+      - "http.cors.enabled=true"
+      - "http.cors.allow-origin=*"
+      - "http.cors.allow-methods=OPTIONS, HEAD, GET, POST, PUT, DELETE"
+      - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+      - "http.cors.allow-credentials=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 128M
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+      - "eslog:/usr/share/elasticsearch/logs"
+    networks:
+      - backend
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "curl --silent --fail localhost:9200/_cluster/health || exit 1"
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  tpd-frontend:
+    image: "tpd/frontend:${TPD_TAG}"
+    hostname: tpd
+    user: node
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 50M
+        reservations:
+          memory: 10M
+    environment:
+      - "MIDDLEWARE_TARGET=http://tpd-backend:8080"
+      - "PUBLIC_HOSTNAME=localhost"
+      - "CHECK_PUBLIC_HOSTNAME=false"
+      # "production" | "development" | "none"
+      - "NODE_ENV=${TPD_NODE_ENV:-production}"
+    labels:
+      - "com.pmi.tpd.description=TPD Submission Tool Frontend"
+      - "com.pmi.tpd.frontent"
+    networks:
+      - backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - tpd-backend
+  tpd-backend:
+    hostname: tpd-backend
+    image: "tpd/backend:${TPD_TAG}"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      resources:
+        limits:
+          memory: 800M
+        reservations:
+          memory: 256M
+    command: dockerize -wait tcp://postgresql:5432 -wait tcp://elasticsearch:9200 -timeout 60s catalina.sh run
+    environment:
+      - "APP_LOG_LOGLEVEL=${TPD_LOGLEVEL}"
+      # database configuration
+      - "DATABASE_JDBC_USERNAME=${POSTGRES_USER}"
+      - "DATABASE_JDBC_PASSWORD=${POSTGRES_PASSWORD}"
+      - "DATABASE_JDBC_DRIVERCLASSNAME=org.postgresql.Driver"
+      - "DATABASE_JDBC_URL=jdbc:postgresql://postgresql:5432/${POSTGRES_DB}"
+      # set deployment mode
+      - "TPD_PROFILES=${TPD_PROFILES:-production}"
+      # elastic search configuration
+      - "APP_ELASTICSEARCH_USEEMBEDDED=false"
+      - "APP_ELASTICSEARCH_CLUSTERNODES=elasticsearch:9200"
+      # domibus configuration
+      - "APP_DOMIBUS_URL=${TPD_DOMIBUS_URL:-http://domibus-blue:8080}"
+      - "APP_DOMIBUS_JMS_OPTIONS_URL=${TPD_DOMIBUS_JMS_URL:-tcp://domibus-blue:61616}"
+    labels:
+      - "com.pmi.tpd.description=TPD Submission Tool Backend"
+      - "com.pmi.tpd.backend"
+    depends_on:
+      - postgresql
+      - elasticsearch
+    networks:
+      - backend
+      - net
+    volumes:
+      - "home:/usr/share/tpd/home"
+
+
+networks:
+  backend:
+  net:
+    external: true
+volumes:
+  dbdata: {}
+  home: {}
+  esdata: {}
+  eslog: {}
+

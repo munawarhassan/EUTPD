@@ -1,0 +1,422 @@
+<lt-toolbar>
+  <a
+    href="#"
+    class="btn btn-icon btn-light-dark"
+    (click)="ActivityDrawer.toggle()"
+    ltTooltip="Activity Log"
+    placement="top"
+  >
+    <inline-svg [src]="svgIcons.Duotone.general.histogram" size="2"> </inline-svg>
+  </a>
+</lt-toolbar>
+<div class="card card-flush">
+  <!--begin::Card header-->
+  <div class="card-header pt-8">
+    <div class="card-title">
+      <app-search (search)="search($event)" placeholder="Search Attachment"></app-search>
+    </div>
+    <!--begin::Card toolbar-->
+    <div class="card-toolbar">
+      <!--begin::Toolbar-->
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-light-primary me-3" (click)="openModal(newFolderModal)">
+          <inline-svg [src]="svgIcons.Duotone.files.folderPlus" size="2"></inline-svg>
+          New Folder
+        </button>
+        <button type="button" class="btn btn-primary" (click)="openUploadModal()">
+          <inline-svg [src]="svgIcons.Duotone.files.folderUpload" size="2"></inline-svg>
+          Upload Files
+        </button>
+      </div>
+      <!--end::Toolbar-->
+      <!--begin::Group actions-->
+      <div class="d-flex justify-content-end align-items-center d-none">
+        <div class="fw-bolder me-5"><span class="me-2"></span>Selected</div>
+        <button type="button" class="btn btn-danger">Delete Selected</button>
+      </div>
+      <!--end::Group actions-->
+    </div>
+    <!--end::Card toolbar-->
+  </div>
+  <!--end::Card header-->
+  <!--begin::Card body-->
+  <div class="card-body">
+    <!--begin::Table header-->
+    <div class="d-flex flex-stack">
+      <app-breadcrumb-path [path]="path" (pathChange)="setPath($event)"></app-breadcrumb-path>
+      <!--begin::Folder Stats-->
+      <div class="badge badge-lg badge-light-dark">
+        <span>{{ totalItems }} items</span>
+      </div>
+      <!--end::Folder Stats-->
+    </div>
+    <!--end::Table header-->
+    <div
+      ltFileDrop
+      class="drop-box mt-3"
+      (fileOver)="handleFileOverBase($event)"
+      (fileDrop)="handleFileDrop()"
+      [ngClass]="{ 'drag-over': hasBaseDropZoneOver }"
+      [uploader]="uploader"
+    >
+      <div class="drop-box-content">
+        <!--begin::Table-->
+        <lt-table
+          id="m_attachments_list"
+          [page]="page"
+          [pageable]="currentPageable"
+          [autoResizeOptions]="{
+            activate: true,
+            height: 'auto',
+            minHeight: '300px',
+            dependencies: '#lt_header,#lt_footer'
+          }"
+          [options]="tableOptions"
+          [lineTemplate]="lineTemplate"
+        >
+        </lt-table>
+      </div>
+      <!--end::Table-->
+    </div>
+  </div>
+  <!--end::Card body-->
+</div>
+
+<div
+  #ActivityDrawer="ltDrawer"
+  [ltDrawer]="{
+    name: 'activities',
+    width: { default: '450px', lg: '900px' }
+  }"
+  id="m_drawer_activity_log"
+  class="bg-white"
+>
+  <app-audit-timeline
+    class="w-100 rounded-0"
+    *ngIf="ActivityDrawer.shown"
+    title="Activity Logs"
+    [channels]="channels"
+    (closeAudit)="ActivityDrawer.hide()"
+  ></app-audit-timeline>
+</div>
+
+<div
+  #WhereUsedDrawer="ltDrawer"
+  [ltDrawer]="{
+    name: 'whereused',
+    width: { default: '390px', lg: '500px' }
+  }"
+  id="m_drawer_where_used"
+  class="bg-white"
+>
+  <app-where-used [selected]="selectedWhereUsed"></app-where-used>
+</div>
+
+<ng-template #lineTemplate let-page="page">
+  <tr class="text-gray-700" *ngFor="let item of page.content">
+    <ng-container [ngSwitch]="item.type">
+      <ng-container
+        *ngSwitchCase="'file'"
+        [ngTemplateOutlet]="fileItemTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      ></ng-container>
+      <ng-container
+        *ngSwitchCase="'directory'"
+        [ngTemplateOutlet]="directoryItemTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      ></ng-container>
+    </ng-container>
+  </tr>
+</ng-template>
+
+<ng-template #fileItemTemplate let-item>
+  <ng-container *ngIf="item.metadata">
+    <td data-header="name" [attr.data-entity-id]="item.name">
+      <a id="m_attachment_{{ item.metadata.attachmentId }}" [routerLink]="['view', item.metadata.attachmentId]">
+        <inline-svg-file class="me-3" [extension]="svgIcons.getExtension(item.name)"></inline-svg-file>
+        {{ item.name }}
+      </a>
+      <ng-container *ngIf="(item.heathly$ | async) !== undefined; else loading">
+        <a *ngIf="(item.heathly$ | async) === false" href="#" (click)="fixIntegrity(item.name)">
+          <span class="mx-1 badge badge-bold badge-sm badge-light-danger text-uppercase">corrupted</span>
+        </a>
+      </ng-container>
+
+      <app-breadcrumb-path
+        class="d-block mt-2"
+        *ngIf="searchEnable"
+        [path]="item.parentPath"
+        (pathChange)="setPath($event)"
+        [lastLink]="true"
+        color="dark"
+        size="sm"
+      ></app-breadcrumb-path>
+    </td>
+    <td class="text-center d-none d-xl-table-cell" data-header="confidential">
+      <app-confidential [disabled]="true" [ngModel]="item.metadata.confidential"> </app-confidential>
+    </td>
+    <td class="text-center d-none d-xl-table-cell" data-header="sendStatus">
+      <span
+        class="badge badge-bold badge-sm"
+        *ngIf="item.metadata.sendStatus"
+        [ngClass]="{
+          'badge-light-success': item.metadata.sendStatus === 'SENT',
+          'badge-light-primary': item.metadata.sendStatus === 'SENDING'
+        }"
+        >{{ item.metadata.sendStatus }}</span
+      >
+    </td>
+    <td class="text-left d-none d-xl-table-cell">
+      {{ item.size | bytes }}
+    </td>
+    <td class="text-left d-none d-xl-table-cell">
+      {{ item.metadata.lastModifiedDate | date : 'medium' }}
+    </td>
+    <td class="text-end">
+      <div class="d-flex justify-content-end">
+        <div class="ms-2">
+          <button
+            type="button"
+            (click)="preview(item.metadata)"
+            class="btn btn-sm btn-icon btn-light btn-active-light-primary"
+            ltTooltip="Preview"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+          </button>
+        </div>
+        <div class="ms-2">
+          <button
+            type="button"
+            (click)="setWhereUsed(item.metadata, WhereUsedDrawer)"
+            class="btn btn-sm btn-icon btn-light btn-active-light-primary"
+            ltTooltip="Where Used"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Duotone.coding.link" size="1"></inline-svg>
+          </button>
+        </div>
+        <div class="ms-2">
+          <!--begin::Button Options-->
+          <button
+            type="button"
+            class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2 show menu-dropdown"
+            data-lt-menu-trigger="click"
+            data-lt-menu-placement="bottom-end"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Duotone.general.otherHorizontal" size="1"></inline-svg>
+          </button>
+          <!--begin::Menu-->
+          <div
+            ltMenu
+            class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+          >
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" [routerLink]="['view', item.metadata.attachmentId]" class="menu-link px-3">
+                <span class="menu-icon">
+                  <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+                </span>
+                <span class="menu-title">Edit</span>
+              </a>
+            </div>
+            <!--end::Menu item-->
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" [routerLink]="['rev', item.metadata.attachmentId]" class="menu-link px-3">
+                <span class="menu-icon">
+                  <inline-svg [src]="svgIcons.Simple.code.git4" size="1"></inline-svg>
+                </span>
+                <span class="menu-title">Revision</span></a
+              >
+            </div>
+            <!--end::Menu item-->
+            <div class="separator my-3"></div>
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" (click)="openSelectFolderModal(item)" class="menu-link px-3">
+                <span class="menu-icon">
+                  <inline-svg [src]="svgIcons.Duotone.arrows.inside" size="1"></inline-svg>
+                </span>
+                <span class="menu-title">Move to Folder...</span>
+              </a>
+            </div>
+            <!--end::Menu item-->
+            <ng-container
+              *ngIf="(permissionService.isAdminUser(userToken) | async) === true && item.metadata.deletable"
+            >
+              <div class="separator my-3"></div>
+              <!--begin::Menu item-->
+              <div class="menu-item px-3">
+                <a href="#" (click)="deleteAttachement(item.metadata)" class="menu-link px-3">
+                  <span class="menu-icon">
+                    <inline-svg [src]="svgIcons.Duotone.general.trash" size="1"></inline-svg>
+                  </span>
+                  <span class="menu-title text-danger">Delete</span>
+                </a>
+              </div>
+            </ng-container>
+            <!--end::Menu item-->
+          </div>
+          <!--end::Menu-->
+          <!--end::Button Options-->
+        </div>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container *ngIf="item.metadata === null">
+    <td colspan="5" data-header="name" [attr.data-entity-id]="item.name">
+      <inline-svg-file class="me-3" [extension]="svgIcons.getExtension(item.name)"></inline-svg-file>
+      <span>{{ item.name }}</span>
+      <span class="badge badge-bold badge-sm badge-warning ms-5">ORPHAN</span>
+    </td>
+    <td class="text-end">
+      <div class="d-flex justify-content-end">
+        <div class="ms-2">
+          <!--begin::Button Options-->
+          <button
+            type="button"
+            class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2 show menu-dropdown"
+            data-lt-menu-trigger="click"
+            data-lt-menu-placement="bottom-end"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Duotone.general.otherHorizontal" size="1"></inline-svg>
+          </button>
+          <!--begin::Menu-->
+          <div
+            ltMenu
+            class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+          >
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" (click)="deletePhysicalFile(item)" class="menu-link px-3">
+                <span class="menu-icon"> </span>
+                <span class="menu-title text-danger">Delete</span>
+              </a>
+            </div>
+            <!--end::Menu item-->
+          </div>
+          <!--end::Menu-->
+          <!--end::Button Options-->
+        </div>
+      </div>
+    </td>
+  </ng-container>
+</ng-template>
+
+<ng-template #directoryItemTemplate let-item>
+  <td data-header="name" [attr.data-entity-id]="item.name">
+    <a href="#" (click)="setPath(item.path)">
+      <inline-svg color="primary" size="3x" [src]="svgIcons.Duotone.files.folder"></inline-svg>
+      {{ item.name }}
+    </a>
+  </td>
+  <td class="text-center d-none d-xl-table-cell">-</td>
+  <td class="text-center d-none d-xl-table-cell">-</td>
+  <td class="text-left d-none d-xl-table-cell">-</td>
+  <td class="text-left d-none d-xl-table-cell">-</td>
+  <td class="text-end">
+    <div class="d-flex justify-content-end">
+      <div class="ms-2">
+        <button
+          type="button"
+          (click)="setPath(item.path)"
+          class="btn btn-sm btn-icon btn-light btn-active-light-primary"
+          ltTooltip="View"
+        >
+          <inline-svg class="m-0" [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+        </button>
+      </div>
+
+      <div class="ms-2">
+        <!--begin::Button Options-->
+        <button
+          type="button"
+          class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2 show menu-dropdown"
+          data-lt-menu-trigger="click"
+          data-lt-menu-placement="bottom-end"
+        >
+          <inline-svg class="m-0" [src]="svgIcons.Duotone.general.otherHorizontal" size="1"></inline-svg>
+        </button>
+        <!--begin::Menu-->
+        <div
+          ltMenu
+          class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+        >
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a
+              href="#"
+              (click)="openModal(renameFolderModal, { path: item.path, name: item.name })"
+              class="menu-link px-3"
+            >
+              <span class="menu-icon">
+                <inline-svg class="m-0" [src]="svgIcons.Duotone.general.edit" size="1"></inline-svg>
+              </span>
+              <span class="menu-title">Rename</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-3">
+            <a href="#" (click)="openSelectFolderModal(item)" class="menu-link px-3">
+              <span class="menu-icon">
+                <inline-svg [src]="svgIcons.Duotone.arrows.inside" size="1"></inline-svg>
+              </span>
+              <span class="menu-title">Move to Folder...</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <ng-container *ngIf="item.empty && (permissionService.isAdminUser(userToken) | async) === true">
+            <div class="separator my-3"></div>
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" class="menu-link px-3" (click)="deleteDirectory(item)">
+                <span class="menu-icon"> </span>
+                <span class="menu-title text-danger">Delete</span>
+              </a>
+            </div>
+          </ng-container>
+          <!--end::Menu item-->
+        </div>
+        <!--end::Menu-->
+        <!--end::Button Options-->
+      </div>
+    </div>
+  </td>
+</ng-template>
+
+<ng-template #newFolderModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Folder</h4>
+  </div>
+  <form [formGroup]="folderForm" (ngSubmit)="addNewFolder()">
+    <div class="modal-body">
+      <form-text
+        label="New Folder"
+        controlClass="form-control-solid"
+        placeholder="Folder Name"
+        formControlName="name"
+      ></form-text>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" translate="global.button.save" class="btn btn-primary me-3"></button>
+      <a href="#" translate="global.button.cancel" class="link-primary me-3" (click)="modalRef?.hide()"></a>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #renameFolderModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Rename Folder</h4>
+  </div>
+  <form [formGroup]="folderForm" (ngSubmit)="renameFolder()">
+    <div class="modal-body">
+      <form-text label="Folder Name" controlClass="form-control-solid" formControlName="name"></form-text>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" translate="global.button.save" class="btn btn-primary me-3"></button>
+      <a href="#" translate="global.button.cancel" class="link-primary me-3" (click)="modalRef?.hide()"></a>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #loading><span class="spinner-border spinner-border-sm align-middle ms-2"></span></ng-template>

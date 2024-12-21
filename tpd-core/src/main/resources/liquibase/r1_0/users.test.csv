@@ -1,0 +1,4 @@
+id;login;encoded_password;first_name;last_name;email;activated;created_by
+1;system;$2a$10$alnnrHos5.UgjEAkUg0h.uQJ1tIeeLpcguc6il/yP35HtW72JEpcu;System;System;tpd-sysadmin@pmi.com;TRUE;system
+2;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;tpd-admin@pmi.com;TRUE;system
+3;user;$2a$10$xJxYIgeFRpDrUGNFL61ruucJm689zsDi/FZOuv1lv5PSYUGSSCa5u;User;User;tpd-user@pmi.com;TRUE;system

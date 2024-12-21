@@ -1,0 +1,114 @@
+<lt-toolbar [sticky]="true">
+  <a href="#" (click)="goBack($event)" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<div class="card" [ngClass]="{ 'd-none': diff }">
+  <!--begin::Card head-->
+  <div class="card-header">
+    <!--begin::Title-->
+    <div class="card-title d-flex align-items-center"></div>
+    <!--end::Title-->
+    <!--begin::Toolbar-->
+    <div class="card-toolbar m-0">
+      <button
+        id="m_user_edit_details"
+        (click)="onCompare()"
+        type="button"
+        [disabled]="!isCompareActivated() ? 'disabled' : null"
+        class="btn btn-light-success btn-bold me-2"
+      >
+        <span>
+          <i class="flaticon2-list-1"></i>
+          <span>{{ selectText }}</span>
+        </span>
+      </button>
+      <!-- begin:separator -->
+      <span class="d-none bg-gray-300 h-25px mx-2 rounded-2 w-1px"></span>
+      <!-- end:separator -->
+      <lt-button-rangepicker class="d-none" [(range)]="range"></lt-button-rangepicker>
+    </div>
+    <!--end::Toolbar-->
+  </div>
+  <!--begin::Card body-->
+  <div class="card-body">
+    <lt-table
+      id="m_submitter_revisions_list"
+      [pageable]="currentPageable"
+      [page]="page"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+    >
+    </lt-table>
+  </div>
+  <!--end::Card body-->
+  <!--begin::Card footer-->
+  <div class="card-footer"></div>
+  <!--end::Card footer-->
+</div>
+<lt-portlet #portletDiff="portlet" [ngClass]="{ 'd-none': !diff }">
+  <lt-portlet-head title="Submitter Comparison" [description]="getDiffDescription()">
+    <lt-portlet-tool type="remove" (action)="onCloseDiff()"></lt-portlet-tool>
+    <div class="d-flex flex-wrap flex-stack">
+      <div class="d-flex flex-wrap">
+        <!--begin::Tab nav-->
+        <ul class="nav nav-pills">
+          <li class="nav-item m-0">
+            <a
+              ltTooltip="Line by Line"
+              placement="bottom"
+              class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-light-primary me-3"
+              [class.active]="diffOutputFormat === 'line-by-line'"
+              (click)="diffOutputFormat = 'line-by-line'"
+            >
+              <inline-svg [src]="svgIcons.Duotone.general.layerHorizontal" size="2"></inline-svg>
+            </a>
+          </li>
+          <li class="nav-item m-0">
+            <a
+              ltTooltip="Side by Side"
+              placement="bottom"
+              class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-light-primary"
+              [class.active]="diffOutputFormat === 'side-by-side'"
+              (click)="diffOutputFormat = 'side-by-side'"
+            >
+              <inline-svg [src]="svgIcons.Duotone.general.layerVertical" size="2"></inline-svg>
+            </a>
+          </li>
+        </ul>
+        <!--end::Tab nav-->
+        <!--begin::Actions-->
+        <div class="d-flex my-0"></div>
+        <!--end::Actions-->
+      </div>
+    </div>
+  </lt-portlet-head>
+  <lt-portlet-body>
+    <app-diff-html [diff]="diff?.patch" [fileSummary]="false" [outputFormat]="diffOutputFormat"> </app-diff-html>
+  </lt-portlet-body>
+</lt-portlet>
+
+<ng-template #lineTemplate let-page="page">
+  <ng-container [formGroup]="form">
+    <tr *ngFor="let revision of page.content; let i = index">
+      <td data-header="check" class="text-center text-nowrap">
+        <div formArrayName="checkboxes" class="form-check form-check-custom form-check-solid">
+          <input class="form-check-input" type="checkbox" [formControlName]="i" (change)="onCheckboxClick($event)" />
+        </div>
+      </td>
+      <td data-header="version">
+        {{ revision.version }}
+        <div *ngIf="latest && revision.id === latest.id" class="btn btn-bold btn-sm btn-font-sm btn-label-primary ms-3">
+          CURRENT
+        </div>
+      </td>
+      <td data-header="pirStatus">
+        <app-pir-status [product]="revision"></app-pir-status>
+      </td>
+      <td data-header="productNumber">{{ revision.productNumber }}</td>
+      <td data-header="status" class="text-center">
+        <app-product-status [status]="revision.status"></app-product-status>
+      </td>
+      <td data-header="modifiedDate">{{ revision.modifiedDate | date : 'short' }}</td>
+      <td data-header="modifiedBy">{{ revision.modifiedBy }}</td>
+    </tr>
+  </ng-container>
+</ng-template>

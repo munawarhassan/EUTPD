@@ -1,0 +1,32 @@
+log:
+  level: DEBUG
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+  metrics:
+    address: ":8082"
+
+providers:
+  file:
+    filename: /etc/traefik/traefik.config.yml
+    watch: true
+  docker:
+    network: discovery
+    endpoint: unix:///var/run/docker.sock
+    watch: true
+    swarmMode: true
+    swarmModeRefreshSeconds: "30"
+    exposedByDefault: false
+    defaultRule: "HostRegexp(`{{ index .Labels \"com.docker.compose.service\"}}.traefik.me`,`{{ index .Labels \"com.docker.compose.service\"}}-{dashed-ip:.*}.traefik.me`)"
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    entryPoint: metrics

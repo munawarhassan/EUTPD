@@ -1,0 +1,57 @@
+{
+  "database": {
+    "title": "Database",
+    "button": {
+      "migrate": "Migrate Database"
+    },
+    "fields": {
+      "type": "Database Type",
+      "url": "JDBC URL",
+      "username": "Database Username",
+      "password": "Database Password"
+    },
+    "alert": {
+      "recommended": "We recommend migrating to an external database for production use!"
+    },
+    "migration": {
+      "title": "Migrate Database",
+      "description": "Application will be unavailable to users while a migration is in progress.",
+      "button": {
+        "test": "Test",
+        "start": "Start Migration"
+      },
+      "fields": {
+        "type": "Database Type",
+        "hostname": "Host Name",
+        "hostname.help": "Database server name.",
+        "port": "Port",
+        "port.help": "TCP port number for Database server.",
+        "name": "Database Name",
+        "name.help": "Database name.",
+        "username": "User Name",
+        "username.help": "Database user name.",
+        "password": "Password",
+        "password.help": "Database password."
+      },
+      "validate": {
+        "hostname": {
+          "required": "Please enter a non-empty value less than 255 characters."
+        },
+        "port": {
+          "required": "Please enter a non-null value"
+        },
+        "databasename": {
+          "required": "Please enter a non-empty value less than 255 characters"
+        },
+        "username": {
+          "required": "Please enter a non-empty value less than 255 characters"
+        }
+      },
+      "modal": {
+        "title": "Please Wait...",
+        "message-start": "Starting migration...",
+        "message-end": "Migration Database Complete"
+      }
+    }
+  }
+}

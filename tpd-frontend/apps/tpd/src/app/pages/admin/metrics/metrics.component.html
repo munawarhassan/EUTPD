@@ -1,0 +1,42 @@
+<lt-toolbar></lt-toolbar>
+<!-- begin : content -->
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_console">
+  <lt-portlet-head title="&nbsp;">
+    <lt-portlet-tool type="fullscreen"></lt-portlet-tool>
+  </lt-portlet-head>
+  <lt-portlet-body>
+    <portlet-tab
+      id="m_portlet_general"
+      heading="General"
+      [icon]="svgIcons.Simple.shopping.chartBar1"
+      (selectTab)="handleSelectTab($event)"
+    >
+      <!-- begin: memory portlet -->
+      <app-metrics-memory></app-metrics-memory>
+      <!-- end : memory portlet-->
+      <!-- begin : Processor portlet-->
+      <app-metrics-processor></app-metrics-processor>
+      <!-- end : Processor portlet-->
+    </portlet-tab>
+    <portlet-tab
+      id="m_portlet_thread"
+      heading="Threads"
+      [icon]="svgIcons.Simple.shopping.chartBar2"
+      (selectTab)="handleSelectTab($event)"
+    >
+      <!-- begin : Thread portlet-->
+      <app-metrics-threads></app-metrics-threads>
+      <!-- end : Thread portlet-->
+      <app-metrics-threaddump></app-metrics-threaddump>
+    </portlet-tab>
+    <portlet-tab
+      id="m_portlet_network"
+      heading="Network"
+      [icon]="svgIcons.Simple.shopping.chartBar3"
+      (selectTab)="handleSelectTab($event)"
+    >
+      <app-metrics-network></app-metrics-network>
+    </portlet-tab>
+  </lt-portlet-body>
+</lt-portlet>
+<!-- end content -->

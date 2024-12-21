@@ -1,0 +1,30 @@
+{
+  "login": {
+    "title": "Se Connecter à TPD Submission Tools",
+    "forgetpassword": "Oublié votre mot de passe ?",
+    "rememberme": "Se souvenir de moi",
+    "button": "Se Connecter",
+    "welcome": "Rejoins Nous",
+    "slogan": "Ton talent est notre passion.",
+    "messages": {
+      "error": {
+        "fail": "Identifiant ou mot de passe incorrect. Veuillez réessayer."
+      }
+    }
+  },
+  "signup": {
+    "title": "Inscrivez-vous",
+    "description": "Entrez vos coordonnées pour créer votre compte",
+    "label": "Vous n'avez pas encore de compte ?",
+    "button": "S'inscrire"
+  },
+  "forgotpassword": {
+    "title": "Oublié votre mot de passe ?",
+    "description": "Entrez votre identifiant pour réinitialiser votre mot de passe",
+    "button": "Demande de réinitialiser"
+  },
+  "resetpassword": {
+    "title": "Réinitialiser votre mot de passe",
+    "button": "Réinitialiser"
+  }
+}

@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Add External Group</h4>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="row mb-4">
+    <div class="row mb-4">
+      <label class="form-label">Selected Groups</label>
+      <app-tagify-group [groups]="findGroups.bind(this)" [(value)]="selectedGroups"></app-tagify-group>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" (click)="addGroups()" class="btn btn-primary me-3" translate="global.button.save"></button>
+  <a
+    href="#"
+    id="change-password-cancel"
+    class="link-primary"
+    (click)="bsModalRef.hide()"
+    translate="global.button.cancel"
+  ></a>
+</div>

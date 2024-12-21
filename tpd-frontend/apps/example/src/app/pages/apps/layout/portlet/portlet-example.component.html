@@ -1,0 +1,309 @@
+<div class="row">
+  <div class="col">
+    <lt-portlet>
+      <lt-portlet-head title="Basic  Style  " description="With description helpful">
+        <lt-portlet-nav-item>
+          <div class="dropdown">
+            <a
+              href="#"
+              class="btn btn-clean btn-sm btn-icon btn-icon-md"
+              data-bs-toggle="dropdown"
+              id="dropdownMenuButton1"
+              aria-expanded="false"
+            >
+              <inline-svg
+                src="icons/duotune/general/gen024.svg"
+                placement="right"
+                ltTooltip="Avatar Options..."
+              ></inline-svg>
+            </a>
+            <div id="dp1" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <div class="px-7 py-5">
+                <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+              </div>
+              <div class="separator border-gray-200"></div>
+
+              <div class="px-7 py-5">
+                <div class="mb-10">
+                  <label class="form-label fw-bold">Status:</label>
+                  <select
+                    class="form-select form-select-solid"
+                    select2
+                    placeholder="Select option"
+                    [allowClear]="true"
+                    dropdownParent="#dp1"
+                  >
+                    <option></option>
+                    <option selected value="1">Approved</option>
+                    <option value="2">Pending</option>
+                    <option value="3">In Process</option>
+                    <option value="4">Rejected</option>
+                  </select>
+                </div>
+
+                <div class="mb-10">
+                  <label class="form-label fw-bold">Member Type:</label>
+
+                  <div class="d-flex">
+                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                      <input class="form-check-input" type="checkbox" value="1" />
+                      <span class="form-check-label">Author</span>
+                    </label>
+
+                    <label class="form-check form-check-sm form-check-custom form-check-solid">
+                      <input class="form-check-input" type="checkbox" value="2" defaultChecked="{true}" />
+                      <span class="form-check-label">Customer</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="mb-10">
+                  <label class="form-label fw-bold">Notifications:</label>
+
+                  <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      name="notifications"
+                      defaultChecked="{true}"
+                    />
+                    <label class="form-check-label">Enabled</label>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button
+                    type="reset"
+                    class="btn btn-sm btn-white btn-active-light-primary me-2"
+                    data-lt-menu-dismiss="true"
+                  >
+                    Reset
+                  </button>
+
+                  <button type="submit" class="btn btn-sm btn-primary" data-lt-menu-dismiss="true">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </lt-portlet-nav-item>
+      </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="col">
+    <lt-portlet [mode]="['bordered']">
+      <lt-portlet-head title="Portlet Footer" icon="fas fa-angle-double-down"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+      <lt-portlet-foot [mode]="['solid']">
+        <div class="row align-items-center">
+          <div class="col-lg-6 align-middle">Portlet footer:</div>
+          <div class="col-lg-6 align-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <span class="ms-10">or <a href="#" class="fw-bold">Cancel</a></span>
+          </div>
+        </div>
+      </lt-portlet-foot>
+    </lt-portlet>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <lt-portlet [mode]="['bordered']">
+      <lt-portlet-head title="Bordered Style" description="With description helpful"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="col">
+    <lt-portlet [mode]="['bordered']">
+      <lt-portlet-head title="Scrollable Content"> </lt-portlet-head>
+      <lt-portlet-body>
+        <div
+          class="scroll-y me-n5 pe-5 h-100px"
+          [ltScroll]="{
+            activate: true,
+            maxHeight: 'auto',
+            offset: '0px'
+          }"
+        >
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <lt-portlet [mode]="['bordered-semi']">
+      <lt-portlet-head title="Semi Bordered Style" description="With description helpful"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="col">
+    <lt-portlet>
+      <lt-portlet-head title="Portlet Action Icons">
+        <lt-portlet-nav-item>
+          <a href="#" class="bg-hover-light-primary btn btn-hover-rise">
+            <i class="fas fa-plus"></i>
+          </a>
+        </lt-portlet-nav-item>
+        <lt-portlet-nav-item>
+          <a href="#" class="bg-hover-light-primary btn btn-hover-rise">
+            <i class="fas fa-power-off"></i>
+          </a>
+        </lt-portlet-nav-item>
+        <lt-portlet-nav-item>
+          <a href="#" class="bg-hover-light-primary btn btn-hover-rise">
+            <i class="fas fa-map-marked"></i>
+          </a>
+        </lt-portlet-nav-item>
+      </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <lt-portlet [mode]="['head-lg', 'mobile']">
+      <lt-portlet-head title="Portlet Head Sizing" description="large head"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="col">
+    <lt-portlet [mode]="['solid-danger']">
+      <lt-portlet-head title="Solid Skin"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+      <lt-portlet-foot [mode]="['sm']" class="d-flex justify-content-end">
+        <a href="#" class="btn btn-outline-light fw-light">Dismiss</a>
+        <a href="#" class="btn btn-outline-light fw-light">Clean</a>
+      </lt-portlet-foot>
+    </lt-portlet>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <lt-portlet>
+      <lt-portlet-head title="Portlet Dropdown Tool">
+        <lt-portlet-nav-dropdown-item icon="fas fa-cog">
+          <a class="dropdown-item" href="#">Dropdown link</a>
+          <a class="dropdown-item" href="#">Dropdown link</a>
+          <a class="dropdown-item" href="#">Dropdown link</a>
+        </lt-portlet-nav-dropdown-item>
+      </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="col">
+    <lt-portlet [mode]="['height-fluid']">
+      <lt-portlet-head title="Same Height Portlet"> </lt-portlet-head>
+      <lt-portlet-body>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+        Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <div class="row">
+    <div class="col">
+      <lt-portlet>
+        <lt-portlet-head title="Tabbed Portlets"> </lt-portlet-head>
+        <lt-portlet-body>
+          <portlet-tab id="m_portlet_admin_logs" heading="Admin Log">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled. Lorem
+          </portlet-tab>
+          <portlet-tab id="m_portlet_auth" heading="Authentication">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+            the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled.
+          </portlet-tab>
+        </lt-portlet-body>
+      </lt-portlet>
+    </div>
+    <div class="col">
+      <lt-portlet>
+        <lt-portlet-head title="Portlet Tools">
+          <lt-portlet-tool type="toggle"></lt-portlet-tool>
+          <lt-portlet-tool type="reload"></lt-portlet-tool>
+          <lt-portlet-tool type="fullscreen"></lt-portlet-tool>
+          <lt-portlet-tool type="remove"></lt-portlet-tool>
+        </lt-portlet-head>
+        <lt-portlet-body>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem
+          Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+        </lt-portlet-body>
+      </lt-portlet>
+    </div>
+  </div>
+</div>

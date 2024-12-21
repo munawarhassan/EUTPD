@@ -1,0 +1,20 @@
+<div class="panel">
+  <label *ngIf="label" class="form-label" [class.required]="required">{{ label }}</label>
+  <i *ngIf="tooltip" class="fa fa-info-circle text-primary fa-fw" [ltTooltip]="tooltip" placement="top"></i>
+  <select
+    select2
+    class="form-select form-select-solid"
+    [placeholder]="label || placeholder"
+    [datasource]="options$"
+    optionValue="attachmentId"
+    optionText="filename"
+    [hideSearch]="false"
+    [allowClear]="true"
+    [disabled]="disabled"
+    [required]="required"
+    [value]="value"
+    (valueChange)="handleSelectValueChange($event)"
+    (blur)="markAsTouched()"
+    (focus)="touched = false"
+  ></select>
+</div>

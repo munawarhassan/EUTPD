@@ -1,0 +1,115 @@
+<lt-toolbar></lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_console">
+  <lt-portlet-head title="&nbsp;" tabClass="fs-5 fw-bolder"> </lt-portlet-head>
+  <lt-portlet-body>
+    <portlet-tab
+      id="m_portlet_logs"
+      [heading]="'console.tabs.log' | translate"
+      icon="fas fa-comment me-2"
+      (selectTab)="handleSelectTab($event)"
+    >
+      <ng-scrollbar
+        [ltAutoResize]="{
+          height: 'auto',
+          dependencies: '#lt_header,#lt_footer'
+        }"
+        class="scrollbar-md font-monospace rounded"
+        [visibility]="'hover'"
+        [minThumbSize]="200"
+        style="background-color: #dcdcdc"
+      >
+        <div *ngFor="let event of logs">
+          <span class="text-dark">{{ event.timestamp | date : 'yyyy-MM-dd H:mm:ss' }}</span>
+          [<span class="mx-1 fw-bolder" [ngClass]="textDecorator(event)">{{ event.level }}</span
+          >]
+          <span class="text-gray-700" [innerHTML]="format(event.message)"></span>
+          <div>
+            <span [innerHTML]="event.throwable"></span>
+          </div>
+        </div>
+      </ng-scrollbar>
+    </portlet-tab>
+    <portlet-tab
+      id="m_portlet_settings"
+      [heading]="'console.tabs.setting' | translate"
+      icon="fa fa-cogs me-2"
+      (selectTab)="handleSelectTab($event)"
+    >
+      <form name="consoleSearch" class="form-inline my-2 my-lg-0">
+        <div class="d-flex align-items-center position-relative my-1">
+          <inline-svg class="position-absolute ms-6" [src]="svgIcons.Simple.general.search" size="1"></inline-svg>
+          <input
+            [(ngModel)]="filter"
+            name="filter"
+            class="form-control form-control-solid w-250px ps-15"
+            type="search"
+            aria-label="Search"
+            id="inputFilter"
+            placeholder="Filter"
+            autocomplete="off"
+          />
+        </div>
+      </form>
+
+      <table class="table table-default table-row-bordered mt-5">
+        <thead class="table-light">
+          <tr title="click to order">
+            <th class="column-sortable" [ngClass]="sortClass('name')" (click)="predicate = 'name'; reverse = !reverse">
+              <span class="ms-3">{{ 'console.table.name' | translate }}</span>
+            </th>
+            <th
+              class="column-sortable"
+              [ngClass]="sortClass('level')"
+              (click)="predicate = 'level'; reverse = !reverse"
+            >
+              <span class="ms-3">{{ 'console.table.level' | translate }}</span>
+            </th>
+          </tr>
+        </thead>
+
+        <tr *ngFor="let logger of loggers | filter : 'name' : filter | orderBy : predicate : reverse">
+          <td>{{ logger.name | characters : 140 }}</td>
+          <td class="text-nowrap">
+            <button
+              (click)="changeLevel(logger.name, 'TRACE')"
+              [ngClass]="logger.level === 'TRACE' ? 'btn-danger' : 'btn-default'"
+              class="btn btn-sm mx-1"
+            >
+              TRACE
+            </button>
+            <button
+              (click)="changeLevel(logger.name, 'DEBUG')"
+              [ngClass]="logger.level === 'DEBUG' ? 'btn-warning' : 'btn-default'"
+              class="btn btn-sm mx-1"
+            >
+              DEBUG
+            </button>
+            <button
+              (click)="changeLevel(logger.name, 'INFO')"
+              [ngClass]="logger.level === 'INFO' ? 'btn-info' : 'btn-default'"
+              class="btn btn-sm mx-1"
+            >
+              INFO
+            </button>
+            <button
+              (click)="changeLevel(logger.name, 'WARN')"
+              [ngClass]="logger.level === 'WARN' ? 'btn-success' : 'btn-default'"
+              class="btn btn-sm mx-1"
+            >
+              WARN
+            </button>
+            <button
+              (click)="changeLevel(logger.name, 'ERROR')"
+              [ngClass]="logger.level === 'ERROR' ? 'btn-primary' : 'btn-default'"
+              class="btn btn-sm mx-1"
+            >
+              ERROR
+            </button>
+          </td>
+        </tr>
+      </table>
+
+      <p>{{ 'console.nbloggers' | translate : { total: loggers.length } }}</p>
+    </portlet-tab>
+  </lt-portlet-body>
+</lt-portlet>

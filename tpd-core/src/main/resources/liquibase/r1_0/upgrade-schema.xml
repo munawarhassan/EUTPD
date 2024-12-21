@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" id="upgrade-schema-1-create-table" context="production">
+    <createTable tableName="t_upgrade_history">
+      <column name="id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="build_number" type="VARCHAR(50)" />
+      <column name="target_build_number" type="VARCHAR(50)" />
+      <column name="upgrade_class" type="VARCHAR(1024)" />
+    </createTable>
+    <createTable tableName="t_upgrade_history_version">
+      <column name="target_build_number" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="target_version" type="VARCHAR(50)" />
+      <column name="time_performed" type="timestamp" />
+    </createTable>
+    <addPrimaryKey columnNames="id" constraintName="upgrade_history_pk" tableName="t_upgrade_history" />
+    <addPrimaryKey columnNames="target_build_number" constraintName="upgrade_history_version_pk"
+      tableName="t_upgrade_history_version" />
+  </changeSet>
+
+
+</databaseChangeLog>
+
+

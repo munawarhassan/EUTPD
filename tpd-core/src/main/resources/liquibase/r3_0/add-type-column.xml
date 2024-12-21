@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+  <changeSet author="devacfr" context="production"
+    id="1682328328202-13">
+    <addColumn tableName="t_product">
+      <column name="type" type="integer">
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production"
+    id="1682328328202-14">
+    <customChange
+      class="com.pmi.tpd.core.liquibase.upgrade.SetProductType" />
+  </changeSet>
+  <changeSet author="devacfr" context="production"
+    id="1682328328202-15">
+    <addNotNullConstraint columnDataType="integer"
+      columnName="type" tableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production"
+    id="1682328328202-16">
+    <addColumn tableName="t_product_aud">
+      <column name="type" type="integer" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production"
+    id="1682328328202-18">    
+    <comment>Fix no update of product type</comment>
+    <customChange
+      class="com.pmi.tpd.core.liquibase.upgrade.SetProductType" />
+  </changeSet>
+
+</databaseChangeLog>

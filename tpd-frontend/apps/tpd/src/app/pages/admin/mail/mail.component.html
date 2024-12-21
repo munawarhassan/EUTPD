@@ -1,0 +1,122 @@
+<lt-toolbar></lt-toolbar>
+<form [formGroup]="formControl" #form="ngForm" (ngSubmit)="save()" novalidate autocomplete="false" class="form">
+  <lt-portlet mode="bordered" id="m_portlet_mail">
+    <lt-portlet-body>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="text"
+          class="col-lg-6"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.hostname' | translate"
+          name="hostname"
+          formControlName="hostname"
+          [helpText]="'mail.fields.hostname.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="number"
+          class="col-lg-2"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.port' | translate"
+          name="port"
+          formControlName="port"
+          [helpText]="'mail.fields.port.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="text"
+          class="col-lg-6"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.username' | translate"
+          name="username"
+          formControlName="username"
+          [helpText]="'mail.fields.username.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="password"
+          class="col-lg-6"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.password' | translate"
+          name="password"
+          formControlName="password"
+          [helpText]="'mail.fields.password.help' | translate"
+        ></form-text>
+      </div>
+      <div class="row mb-4 offset-lg-1">
+        <form-checkbox
+          class="col-lg-6"
+          controlClass="form-check-solid"
+          [label]="'mail.fields.tls' | translate"
+          name="tls"
+          formControlName="tls"
+          [helpText]="'mail.fields.tls.help' | translate"
+        ></form-checkbox>
+      </div>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="email"
+          class="col-lg-6"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.emailFrom' | translate"
+          name="emailFrom"
+          formControlName="emailFrom"
+          [helpText]="'mail.fields.emailFrom.help' | translate"
+        ></form-text>
+      </div>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="offset-md-3 col align-right">
+          <button type="submit" class="btn btn-primary btn-bold me-4">{{ 'global.button.save' | translate }}</button>
+          <a href="#" (click)="goBack()" class="link link-primary" translate="global.button.cancel"></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>
+
+<form [formGroup]="testControl" #form="ngForm" (ngSubmit)="test()" novalidate autocomplete="false" class="form">
+  <lt-portlet mode="bordered" id="m_portlet_mail">
+    <lt-portlet-head [title]="'mail.title.test' | translate" [icon]="svgIcons.Duotone.communication.envelopOpen">
+    </lt-portlet-head>
+    <lt-portlet-body>
+      <div class="row mb-4 offset-lg-1">
+        <form-text
+          type="email"
+          class="col-lg-6"
+          controlClass="form-control-solid"
+          [label]="'mail.fields.recipient' | translate"
+          name="recipient"
+          formControlName="recipient"
+          [helpText]="'mail.fields.recipient.help' | translate"
+        ></form-text>
+      </div>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="offset-md-3 col align-right">
+          <button type="submit" id="m_mail_test" class="btn btn-success me-2" [attr.data-lt-indicator]="testing">
+            <span class="indicator-label">
+              {{ 'global.button.test' | translate }}
+            </span>
+            <span class="indicator-progress">
+              Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </button>
+          <span [ngSwitch]="testResult" class="ms-2">
+            <span *ngSwitchCase="'SUCCESS'">
+              <span class="text-success">Connection successful!</span>
+            </span>
+            <span *ngSwitchCase="'FAILED'">
+              <span class="text-danger">Connection failed.</span>
+            </span>
+          </span>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

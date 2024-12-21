@@ -1,0 +1,59 @@
+<lt-toolbar></lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_database" *ngIf="data$ | async as data">
+  <lt-portlet-body>
+    <form class="form">
+      <div class="row offset-lg-1">
+        <label class="col-3 col-form-label" translate="database.fields.type"></label>
+        <div class="col-9">
+          <input type="text" id="database-type" readonly class="form-control-plaintext" [value]="data.database.name" />
+        </div>
+      </div>
+      <div class="row offset-lg-1 col-6" *ngIf="data.database.internal">
+        <div
+          class="bg-light-primary border border-dashed border-primary d-flex align-items-baseline mb-9 p-6 rounded"
+          role="alert"
+        >
+          <span
+            class="svg-icon svg-icon-2tx svg-icon-primary me-4"
+            [inlineSVG]="svgIcons.Duotone.general.exclamationCircle"
+          ></span>
+          <div class="d-flex flex-stack flex-grow-1">
+            <p translate="database.alert.recommended"></p>
+          </div>
+        </div>
+      </div>
+      <div class="row offset-lg-1">
+        <label class="col-3 col-form-label" translate="database.fields.url"></label>
+        <div class="col-9">
+          <input type="text" readonly class="form-control-plaintext" [value]="data.connection.url" />
+        </div>
+      </div>
+      <div class="row offset-lg-1">
+        <label class="col-3 col-form-label" translate="database.fields.username"></label>
+        <div class="col-9">
+          <input type="text" readonly class="form-control-plaintext" [value]="data.connection.user" />
+        </div>
+      </div>
+      <div class="row offset-lg-1">
+        <label class="col-3 col-form-label" translate="database.fields.password"></label>
+        <div class="col-9">
+          <input type="password" readonly class="form-control-plaintext" [value]="data.connection.password" />
+        </div>
+      </div>
+    </form>
+  </lt-portlet-body>
+  <lt-portlet-foot>
+    <div class="row align-items-center">
+      <div class="offset-md-3 col align-right">
+        <button
+          type="button"
+          id="m_btn_migration_database"
+          class="btn btn-primary btn-bold me-4"
+          routerLink="migration"
+          translate="database.button.migrate"
+        ></button>
+        <a href="#" (click)="goBack()" class="link link-primary" translate="global.button.cancel"></a>
+      </div>
+    </div>
+  </lt-portlet-foot>
+</lt-portlet>

@@ -1,0 +1,91 @@
+<ng-container *ngIf="supplier">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Supplier <strong>{{ supplier.Name }}</strong>
+    </h4>
+  </div>
+  <form name="supplierForm" [formGroup]="formControl" (ngSubmit)="onClose()">
+    <div class="modal-body">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-confidential
+            formControlName="confidential"
+            label="Supplier is Confidential ?"
+            name="Supplier_Confidential"
+            [enforce-confidential]="true"
+          >
+          </app-confidential>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <form-text
+            name="submitterid"
+            label="Submitter ID"
+            controlClass="form-control-solid"
+            formControlName="submitterID"
+          >
+          </form-text>
+        </div>
+        <div class="col-md-6">
+          <form-text name="Supplier_Name" label="Name" controlClass="form-control-solid" formControlName="Name">
+          </form-text>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <form-text
+            name="Supplier_Address"
+            label="Address"
+            controlClass="form-control-solid"
+            formControlName="Address"
+          >
+          </form-text>
+        </div>
+        <div class="col-md-6">
+          <form-select
+            name="Supplier_Country"
+            controlClass="form-select-solid"
+            label="Country"
+            [options]="euceg.Countries"
+            [searchable]="true"
+            searchPlaceholder="Select Country..."
+            optionValue="name"
+            optionText="value"
+            formControlName="Country"
+          >
+          </form-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <form-text
+            name="Supplier_PhoneNumber"
+            label="Phone Number"
+            controlClass="form-control-solid"
+            formControlName="PhoneNumber"
+          ></form-text>
+        </div>
+        <div class="col-md-6">
+          <form-text
+            type="email"
+            name="Supplier_Email"
+            label="E-mail"
+            controlClass="form-control-solid"
+            formControlName="Email"
+          ></form-text>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        *ngIf="!readonly"
+        type="submit"
+        class="btn btn-primary btn-bold me-4"
+        translate="global.button.close"
+      ></button>
+      <a href="#" (click)="onCancel()" class="link link-primary me-4" translate="global.button.cancel"></a>
+    </div>
+  </form>
+</ng-container>

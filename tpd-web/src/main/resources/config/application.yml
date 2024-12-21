@@ -1,0 +1,608 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# The app.home configuration must be set and specifies the directory in which application will store its data files.
+# This must be set to an absolute path. Relative paths are not allowed.
+# Ensure that only one application instance uses the selected Home folder.
+#
+###########################
+# Note for Windows Users
+###########################
+#
+# NOTE : If you are using Windows, you will need to use double \ characters, for example c:\app-home should be written
+# as c:\\app-home
+#
+# You can also use Unix like paths which Java/Portal can handle. eg c:/app-home
+#-----------------------------------------------------------------------------------------------------------------------
+app:
+  home:
+  dev.mode: false
+  auto-setup: false
+  upgrade:
+    minimum-upgradable:
+      build-number: 0
+      version: 0.0.1
+  mail:
+    host: secure.smtp.pmi
+    port: 25
+    user:
+    password:
+    protocol: smtp
+    tls: false
+    auth: false
+    from: noreply@tpd.app.pmi
+  log:
+    loglevel: WARN
+    fullStackTraces: false
+  messageSource:
+    cacheSeconds: 1
+  i18n:
+    encoding: UTF-8
+    characterset: UTF-8
+    # default National support language
+    default.locale: en
+
+  # Domibus Configuration
+  #-----------------------------------------------------------------------------------------------------------------------
+  domibus:
+    enable: false
+    # select type of connection: Jms,Ws,WsPlugin
+    connectionType: WsPlugin
+    url:
+    tlsInsecure: false
+    action: SubmitRequest
+    serviceType: "e-delivery"
+    service: "http://ec.europa.eu/e-delivery/services/tobacco-ecig-reporting"
+    originalSender: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C1
+    finalRecipient: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C4
+    partyIdType: urn:oasis:names:tc:ebcore:partyid-type:unregistered:EUCEG
+    fromPartyId: ACC-EUCEG-99962-AS4
+    toPartyId: EUCEG_EC
+    keyPairAlias: acc-euceg-99962-as4
+    trustedCertificateAlias: euceg_ec
+    username:
+    password:
+    options:   
+      # The interval in second to check payloads to send
+      sendInterval: 5
+      # Controls the number of elements to treat.
+      sendBatchSize: 10
+      # The minimum time interval between runs
+      bulkInterval: 10
+      # The interval in hour to verify if exist old pending submissions to cancel
+      cancelInterval: 24h
+      # The number of days await before cancel pending submission
+      awaitBeforeCancel : 30d
+    jmsOptions:
+      receiveTimeout: 10
+      concurrency: "1-1"
+      username: "domibus"
+      password: "changeit"
+    wsOptions:
+      # The interval in second that backend service should poll pending message in Domibus
+      pendingInterval: 10
+      authorizationType: BASIC
+
+  elasticsearch:
+    # indicate use a embedded elasticsearch node.
+    useEmbedded: true
+    # To connect to Elasticsearch, you must provide the address of one or more cluster nodes
+    # to a comma-separated host:port list.
+    clusterNodes: localhost:9200
+    # A node can only join a cluster when it shares its clusterName with all the other nodes in the cluster.
+    # The default name is elasticsearch, but you should change it to an appropriate
+    # name which describes the purpose of the cluster.
+    clusterName: elasticsearch
+    # Set to true to ignore cluster name validation of connected nodes.
+    ignoreClusterName: false
+    #  If, for instance, you initially connect to a master node, after sniffing,
+    # no further requests will go to that master node, but rather to any data nodes instead.
+    # The reason the transport client excludes non-data nodes is to avoid sending search traffic to master only nodes.
+    transportSniff: true
+    # How often to sample / ping the nodes listed and connected. Defaults to 5s.
+    nodesSamplerInterval: 5s
+    # The time to wait for a ping response from a node. Defaults to 5s.
+    clientPingTimeout: 5s
+    # Elasticsearch performs poorly when the system is swapping the memory.
+    # It is vitally important to the health of your node that none of the JVM is ever swapped out to disk.
+    enableMemoryLock: true
+  security:
+    keystore:
+      defaultLocation:
+      location: file:${app.home}/shared/cert/keystore.jks
+      password: "xkc]8Ae#cmP3NDbZz^p{xN9G8p`bNP5@](3__u$MY(>X+2dp[m[-"
+      notification:
+        contact:
+        expiration:
+          enable: false
+          # Controls how frequently the job to check expiration is run.
+          # Value is in DAYS.
+          interval: 2
+          # period before send notification. Value is in DAYS
+          threshold: 30
+          # period to remind expiration
+          reminder: 7
+
+# security configuration (this key should be unique for your application, and kept secret)
+security:
+  # Controls how long a password reset token remains valid for. Default period is 72 hours.
+  #
+  # This value is in **minutes**.
+  password.reset.validity.period: 4320
+  authentication:
+    jwt:
+      # security configuration (this key should be unique for your application, and kept secret)
+      secret: my-secret-token-to-change-in-production
+      # Token is valid 24 hours
+      token-validity-in-seconds: 86400
+      token-validity-in-seconds-for-remember-me: 2592000
+  synchronization:
+    group:
+      check:
+        # check deleted group
+        deleted:
+          job:
+            # Controls how frequently the job to check deleted users is run.
+            # Value is in MINUTES.
+            interval: 10
+            # Controls the number of group to load in memory.
+            # Value is in MINUTES.
+            batch.size: 100
+
+########################################################################################################################
+# Auditing
+########################################################################################################################
+
+# These properties control the auditing feature, determining the number of audit entries logged, or stored in the
+# database, and the size of those entries. Changing these settings will only affect new audit entries.
+#
+# Increasing the amount of auditing done may have an adverse effect on performance.
+
+# Defines the lowest priority audit events that will be logged.
+#
+# Setting the value to `HIGH` will result in only `HIGH` level events being logged
+# `NONE` will cause no events to be logged. `MEDIUM` will log events with `MEDIUM` or `HIGH` priority.
+#
+# This does not affect events displayed in the Audit log screens for projects and repositories.
+#
+# Valid values are: `HIGH`, `MEDIUM`, `LOW` or `NONE`.
+audit:
+  highest.priority.to.log: HIGH
+  # Defines the number of _characters_ that can be can stored as details in a single audit entry
+  details.max.length: 1024
+  # When trimming the audit entries table this is the maximum number of rows that will be trimmed in one transaction.
+  # Reduce this size if you are having issues with long running transactions.
+  #
+  # This does not affect the data stored in the logs.
+  cleanup.batch.size: 1000
+  # How often the audit tables will be checked to see if they need to be trimmed (in hours).
+  #
+  # This does not affect the data stored in the logs.
+  cleanup.run.interval: 24
+
+########################################################################################################################
+# Service
+########################################################################################################################
+
+service:
+  admin:
+    user:
+      # User Cleanup
+      cleanup.job:
+        # Controls the number of deleted users to load in memory.
+        batch.size: 100
+        # Controls the minimum delay that is used between a user being deleted and it being cleaned up.
+        # Value is in MINUTES.
+        delay: 10080
+        # Controls how frequently the job to clean up deleted users is run.
+        # Value is in MINUTES.
+        interval: 360
+    group:
+        # Group cleanup
+        cleanup.job:
+          # Controls the number of deleted groups to load in memory.
+          batch.size: 100
+          # Controls the minimum delay that is used between a group being deleted and it being cleaned up.
+          # Value is in MINUTES.
+          delay: 10080
+          # Controls how frequently the job to clean up deleted groups is run.
+          # Value is in MINUTES.
+          interval: 360
+
+
+
+
+
+########################################################################################################################
+# Server busy banners
+########################################################################################################################
+
+server:
+  busy:
+    # Controls how long a warning banner is displayed in the UI after a request is rejected due to excessive load.
+    #
+    # This value is in **minutes**. Using 0, or a negative value, disables displaying the banner.
+    ticket.rejected.within: 5
+    # Controls how long requests need to be queued before they cause a warning banner to appear.
+    #
+    # This value is in **seconds**. Using 0, or a negative value, disables displaying the banner.
+    queue.time: 60
+
+
+########################################################################################################################
+# Executor
+########################################################################################################################
+
+# Controls the thread pool that is made available to plugins for asynchronous processing.
+
+# Controls the maximum number of threads allowed in the common `ExecutorService`. This `ExecutorService` is used by
+# application (mainly for background tasks), and is also available for plugin developers to use.
+# When more threads are required than the configured maximum, the thread attempting to schedule an asynchronous
+# task to be executed will block until a thread in the pool becomes available. In general this pool should scale with
+# the number of throttle.resource.scm-command.
+# This default scales with the number of reported CPU cores.
+# Note: application enforces a minimum of four for this property, setting the value of this property any lower than four
+# will result in a value of four being used
+executor.max.threads: cpu
+
+
+########################################################################################################################
+# JMX
+########################################################################################################################
+
+# See [Enabling JMX counters for performance monitoring]
+# Controls whether registers its management interfaces and those of its libraries with JMX.
+# Note: Some libraries used by application may register themselves with JMX regardless of this setting.
+
+jmx.enabled: false
+
+
+database:
+    pool:
+      # **DEPRECATED** Defines the number of helper threads which will be used by the pool to cleanup and release
+      # connections back into the pool. Setting a value of 0 disables this feature, which means the executing thread
+      # will perform cleanup and release itself. A non-zero value results in a pool of helpers which process
+      # connections out of a holding queue. When a thread "closes" a connection, that thread is allowed to continue
+      # executing and the connection is placed in the queue. One of the helper threads then performs final cleanup
+      # to prepare the connection to be returned to the pool.
+      threads: 2
+      # Defines the amount of time the system will wait when attempting to open a new connection before throwing an exception.
+      # The system may hang, during startup, for the configured number of seconds if the database is unavailable. As a result,
+      # the timeout configured here should *not* be generous.
+      #
+      # This value is in **seconds**.
+      connection.timeout: 15
+      # Defines the number of connections to open in a batch when open connections are almost exhausted for a given partition
+      acquireIncrement: 2
+      cache:
+        # Defines the number of statements to cache _per connection_.
+        # Statement caching should be configured conservatively. On some databases (especially Oracle),
+        # these cached statements can consume a significant amount of memory. Note that this cache is _not_
+        # cleared when a connection is returned to the pool, so when a high limit is applied it can grow to that limit over the
+        # course of many different transactions. However, that also means that a very low value is likely to have little benefit
+        # because the statement cache will simply continuously cycle out old statements to cache new ones.
+        statements: 10
+      partition:
+        # Defines the number of different connection partitions to use. This value is used to decrease lock contention, because
+        # each partition locks individually. The recommended setting is 3 or 4, but in servers with heavy load and many short-
+        # lived requests, performance may be improved by using a higher value.
+        count: 4
+        connection:
+          # Defines the threshold _as a percentage of the maximum connections_ that each partition will attempt to keep available
+          # at all times. If the number of available connections drops **to or below** the threshold, `acquireIncrement`
+          # connections will be opened until the partition is above it again.
+          #
+          # **Warning**:
+          # Be careful to take this number into account when setting the minimum and maximum counts. For example, if
+          # the maximum is 30 and the minimum is 5 and the threshold is 20 (20%), 5 is not 20% of 30, so immediately after it is
+          # created the partition will open additional connections to get above the threshold. Effectively, that would mean that
+          # the "minimum" per partition is 10 (5 + 5 `acquireIncrement`), or 40 connections at all times.
+          threshold: 10
+          # Defines the maximum number of connections that may be open in a given partition
+          maximum: 20
+          # Defines the minimum number of connections open for a given partition. Each partition will open this many connections
+          # on startup. That means
+          # `db.pool.partition.connection.minimum` * `database.pool.partition.count` = initial connection count.
+          minimum: 3
+      idle:
+        testInterval: 10
+        # Defines the maximum period of time a connection may be idle before it is closed. Generous values should be used here
+        # to prevent creating and destroying many short-lived database connections (which defeats the purpose of pooling)
+        #
+        # This value is in **minutes**.
+        maxAge: 30
+    ignoreunsupported: true
+    # default configuration (normally, this is a 'internal' configuration).
+    jdbc:
+        driverClassName: ${maven.datasource.driverClass}
+        url: ${maven.datasource.url}
+        username: ${maven.datasource.username}
+        password: ${maven.datasource.password}
+    liquibase:
+        # The maximum number of changes executed against a particular Liquibase database before a commit operation is performed.
+        # Very large values may cause DBMS to use excessive amounts of memory when operating within transaction boundaries.
+        # If the value of this property is less than one, then changes will not be committed until the end of the change set.
+        commit.block.size: 10000
+        contexts: production
+    migration.drain.timeout: 90
+    migration.drain.force.timeout: 30
+    # The timeout duration in seconds that the database migration process will use when attempting to obtain JDBC
+    # connections to the target database during the validation stage. Note that this timeout value does *not* apply
+    # during the main processing stage of the migration, since is it assumed that the validation step has already
+    # determined that the target database can be accessed. This time value does *not* apply to general application start-up
+    # either.
+    # Value is in SECONDS.
+    migration.test.connect.timeout: 6
+    backup.drain.timeout: 90
+    backup.drain.force.timeout: 30
+jpa:
+    show_sql: false
+    generate-ddl: false
+    hibernate:
+        ddl-auto: none
+        naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+        generate_statistics: false
+        cache:
+            use_second_level_cache: true
+            use_query_cache: false            
+            provider: com.hazelcast.cache.HazelcastCachingProvider
+            uri: classpath:hazelcast.xml
+            region:
+                factory_class: jcache
+            
+
+
+thymeleaf:
+    mode: XHTML
+    cache: false
+
+
+# Scheduling
+#-----------------------------------------------------------------------------------------------------------------------
+scheduler:
+  # The grace period in milliseconds the the scheduling will allow for triggering a job after its scheduled time. This
+  # usually comes into affect when the scheduler is paused due to backup. The default is 1 hour.
+  misfire.threshold: 3600000
+  # The number of seconds to wait for running jobs to end after calling 'shutdown' on the scheduler service.
+  shutdown.timeout: 15
+
+
+# Cache hazelcast Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+hazelcast:
+  executor:
+    # Number of threads per node for the Hazelcast IExecutorService
+    max.threads: 4
+    # Queue capacity for the Hazelcast IExecutorService; 0 means effectively unbounded
+    queue.size: 0
+  # PendingRepositories map for commit indexing
+  map.repositories.pending.indexing: app.hz.map.PendingRepositories
+  # The number of milliseconds hazelcast should wait before timing out a remote operation.
+  # WARNING: As of Hazelcast 3.3.1, setting this value too low may cause Hazelcast to send excessive CallTimeoutExceptions
+  #          and retries. Be very careful before changing this value.
+  operation.call.timeout: 600000
+  # The number of seconds the cluster will wait for a node to produce a heartbeat before assuming it is dead
+  max.no.heartbeat: 60
+  # The interval in minutes hazelcast should use to sync backup versions
+  backup.sync.interval: 15
+  # The number of seconds to wait for a graceful shutdown
+  graceful.shutdown.max.wait: 60
+  # Enable/Disable hazelcast phone check on startup
+  phone.home.enabled: false
+
+  health:
+    # The level at which Hazelcast should print out health monitoring information
+    # When SILENT, logs are printed only when values exceed some predefined threshold (70% usage of memory, process CPU or system CPU).
+    # When NOISY, logs are always printed periodically. Set OFF to turn off completely.
+    monitoring.level: "OFF"
+    # How often (in seconds) the Hazelcast health monitor should print out to the log file
+    monitoring.delay: 300
+  partition:
+    drain:
+      timeout: 30
+  cluster:
+    # Specifies the cluster group the instance should join. This can be used, for example, to partition development and
+    # production clusters.
+    name: tpd
+  # Specifies how HTTP sessions should be managed.
+  #
+  # The following values are supported:
+  #
+  # -  `local`
+  #
+  #     HTTP sessions are managed per node. When used in a cluster, the load balancer MUST have sticky
+  #     sessions enabled. If a node fails or is shut down, users that were assigned to that node need to log
+  #     in again.
+  #
+  #
+  # -  `sticky`
+  #
+  #     HTTP sessions are distributed across the cluster with a load balancer configured to use sticky sessions.
+  #     If a node fails or is shut down, users do not have to log in again. In this configuration, session
+  #     management is optimized for sticky sessions and will not perform certain cleanup tasks for better
+  #     performance.
+  #
+  #
+  # -  `replicated`
+  #
+  #     HTTP sessions are distributed across the cluster. The load balancer does not need to be configured for
+  #     sticky sessions.
+  #
+  #
+  # `local` is the recommended setting for standalone installations. For clustered installations `local` is the most
+  # performant option, followed by `sticky` and `replicated`.
+  http.sessions: local
+  network:
+    # The network port where Hazelcast will listen for cluster members. If multiple instances are run on the same server
+    # Hazelcast will automatically increment this value for additional nodes.
+    port: 5701
+    # A `boolean` flag to indicate whether Hazelcast has multicasting enabled.
+    # Default is true (which also requires a clustering license to take effect) in normal environments. But to avoid
+    # spurious clustering-related messages in plugin development, the default is false in atlassian.dev.mode.
+    multicast: false
+    # A `boolean` flag to indicate whether Hazelcast has TCP/IP enabled.
+    tcpip: false
+    # List of members that Hazelcast nodes should connect to when TCP/IP is enabled. These nodes function as root nodes,
+    # allowing cluster nodes to discover each other. This comma-separated list does _not_ need to include every node in
+    # the cluster. When new nodes join they will use the connected node to find the other cluster nodes.
+    tcpip.members: localhost:5701,localhost:5702
+    # A `boolean` flag to indicate whether Hazelcast has AWS EC2 Auto Discovery enabled.
+    # When setting this property to `true`, `hazelcast.network.aws.access.key` and `hazelcast.network.aws.secret.key` become
+    # required properties.
+    aws:
+      # A `boolean` flag to indicate whether Hazelcast has AWS EC2 Auto Discovery enabled.
+      # When setting this property to `true`, `hazelcast.network.aws.access.key` and `hazelcast.network.aws.secret.key` become
+      # required properties.
+      enabled: false
+      # If `hazelcast.network.aws` is `true`, then you must set this property to your AWS account access key, in
+      # order for application to discover your cluster node instances via the AWS EC2 API.
+      access.key:
+      # If `hazelcast.network.aws` is `true`, then you must set this property to your AWS account secret key, in
+      # order for application to discover your cluster node instances via the AWS EC2 API.
+      secret.key:
+      # The AWS region to query.  If empty, Hazelcast's default ("us-east-1") is used.  If set, it will override any value
+      # for "hazelcast.network.aws.host.header" (see below).
+      region:
+      # The Host: header to use when querying the AWS EC2 API.  If empty, then Hazelcast's default ("ec2.amazonaws.com") is
+      # used.  If set, then "hazelcast.network.aws.region" shouldn't be set as it will override this property.
+      host.header:
+      # There are 2 mechanisms for filtering out AWS instances and these mechanisms can be combined (AND).
+      #
+      #   - If `hazelcast.network.aws.security.group.name` is set, only instances within that security group will be selected.
+      #
+      #   - If `hazelcast.network.aws.tag.key` and `hazelcast.network.aws.tag.value` are set, only instances with that tag
+      #       key/value will be selected.
+      security.group.name:
+      tag.key:
+      tag.value:
+      # Connection timeout for AWS EC2 Auto Discovery, in seconds. If negative, then Hazelcast's default (5) is used.
+      # Increasing this value is recommended by Hazelcast if you have many IP's listed and members can not properly build up
+      # the cluster.
+      connection.timeout.seconds: -1
+  cache:
+    uri: classpath:hazelcast.xml
+    provider: com.hazelcast.cache.HazelcastCachingProvider  
+    ########################################################################################################################
+    # Permissions caching
+    ########################################################################################################################
+    permissions:
+      # These properties control how many granted permissions are kept in memory. The defined limits control the amount of
+      # used memory only indirectly. Each group or user may have zero to many granted permissions associated.
+      # For an average of 10 granted permissions per group/user, a value of 1000 would require about 10*1000 long values
+      # + overhead ~ 100 kb. 2500 corresponds roughly to 250 kb.
+      
+      # Controls the maximum number of groups for which the permissions are cached in memory.
+      groups.max: 2500
+      # Controls the maximum number of users for which the permissions are cached in memory.
+      users.max: 5000
+
+
+         
+
+
+# Metrics Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+metrics:
+    jmx.enabled: false
+    # the minimum disk space that should be available (in bytes, binary format -> B,KiB,MiB,GiB  Systeme International -> B,KB,MB,GB)
+    thresholdDiskspace: 1 GiB
+    spark:
+        enabled: false
+        host: spark
+        port: 9999
+    graphite:
+        # PlainText,Pickle,Amqp (default Pickle),
+        type: Pickle
+        enabled: false
+        # the amount of time between polls (in seconds)
+        polling: 30
+        host: graphite
+        # 2003 plaintext,2004 pickle
+        port: 2004
+        prefix: tpd
+
+
+# Swagger Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+swagger:
+    apiVersion: 1.0
+    resource:
+        path: swagger/rest
+        package: com.pmi.tpd.web.rest.rsrc.api
+
+########################################################################################################################
+# Avatars
+########################################################################################################################
+
+avatar:
+  ## Disable, Gravatar, Outlook
+  source: Gravatar
+  max:
+    # The fallback URL for Gravatar avatars when a user does not have an acceptable avatar configured. This may be a URL
+    # resource, or a Gravatar provided default set.
+    #
+    # Controls the max height _and_ width for an avatar image. Even if the avatar is within the acceptable file size, if
+    # its dimensions exceed this value for height _or_ width, it will be rejected.
+    # When an avatar is loaded by the server for processing, images with large dimensions may expand from as small as a
+    # few kilobytes on disk to consume a substantially larger amount of memory, depending on how well the image data was
+    # compressed. Increasing this limit can _substantially_ increase the amount of heap used while processing avatars and
+    # may result in OutOfMemoryErrors.
+    #
+    # This value is in **pixels**.
+    dimension: 1024
+    # Controls how large an avatar is allowed to be. Avatars larger than this are rejected and cannot be uploaded to
+    # the server, to prevent excessive disk usage.
+    #
+    # This value is in **bytes**.
+    size: 1048576
+  outlook:
+    format:
+      https: https://outlook.office.com/owa/service.svc/s/GetPersonaPhoto?email=%1$s&UA=0&size=%2$s
+  gravatar:
+    # Defines the fallback URL to be formatted into the "avatar.gravatar.format.http" or "avatar.gravatar.format.https" URL format
+    # for use when a user does not have an acceptable avatar configured. This value may be a URL or, if using Gravatar,
+    # it may be the identifier for one of Gravatar's default avatars.
+    default: mm
+    format:
+        # Defines the default URL format for retrieving user avatars over HTTP. This default uses any G-rated avatar provided
+      # by the [Gravatar service](http://www.gravatar.com)
+      #
+      # The following format parameters are available:
+      #
+      # -  %1$s
+      #
+      #    The user's e-mail address, MD5 hashed, or "00000000000000000000000000000000" if the user has no e-mail.
+      #
+      # -  %2$d
+      #
+      #    The requested avatar size.
+      #
+      # -  %3$s
+      #
+      #    The fallback URL, URL-encoded, which may be defined using "avatar.gravatar.default".
+      #
+      # -  %4$s
+      #
+      #    The user's e-mail address, not hashed, or an empty string if the user has no e-mail.
+      http: http://www.gravatar.com/avatar/%1$s.jpg?s=%2$d&d=%3$s
+
+      # Defines the default URL format for retrieving user avatars over HTTPS. This default uses any G-rated avatar provided
+      # by the [Gravatar service](http://www.gravatar.com)
+      #
+      # The following format parameters are available:
+      #
+      # -  %1$s
+      #
+      #    The user's e-mail address, MD5 hashed, or "00000000000000000000000000000000" if the user has no e-mail.
+      #
+      # -  %2$d
+      #
+      #    The requested avatar size.
+      #
+      # -  %3$s
+      #
+      #    The fallback URL, URL-encoded, which may be defined using "avatar.url.default".
+      #
+      # -  %4$s
+      #
+      #    The user's e-mail address, not hashed, or an empty string if the user has no e-mail.
+      https: https://secure.gravatar.com/avatar/%1$s.jpg?s=%2$d&d=%3$s
+

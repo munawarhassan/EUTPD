@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="devacfr" context="production" id="1587557552550-12">
+    <addColumn tableName="t_user">
+      <column name="slug" type="varchar(255)">
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587557552550-13">
+    <sql>UPDATE t_user SET slug = login</sql>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587557552550-14">
+    <comment>
+            Update any t_user rows where the name is not an appropriate slug, ensuring a valid
+            slug (computed from the name) is set.
+        </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.SetUserSlugChange" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587660824401-1">
+    <addNotNullConstraint columnDataType="varchar(255)" columnName="slug" tableName="t_user"
+      validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587660824401-12">
+    <addUniqueConstraint columnNames="slug" constraintName="UC_T_USERSLUG_COL" tableName="t_user" />
+  </changeSet>  
+</databaseChangeLog>

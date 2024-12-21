@@ -1,0 +1,29 @@
+<form role="form" [formGroup]="form" novalidate show-validation>
+  <h3 class="mb-4">Create System Administrator</h3>
+  <form-text
+    class="mb-3"
+    controlClass="form-control-solid"
+    label="Login"
+    name="login"
+    formControlName="login"
+    helpText="Administrator login."
+  ></form-text>
+  <form-text
+    type="password"
+    class="mb-3"
+    controlClass="form-control-solid"
+    label="Password"
+    name="password"
+    formControlName="password"
+    helpText="Administrator password."
+  ></form-text>
+  <form-text
+    class="mb-3"
+    controlClass="form-control-solid"
+    type="email"
+    label="E-mail"
+    name="email"
+    formControlName="email"
+    helpText="Administrator email (for example: administrator@company.com)."
+  ></form-text>
+</form>

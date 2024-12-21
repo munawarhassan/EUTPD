@@ -1,0 +1,336 @@
+<lt-toolbar></lt-toolbar>
+<form role="form" name="ldapForm" #ldapForm="ngForm" novalidate (ngSubmit)="save(ldapForm)" class="form">
+  <lt-portlet id="m_portlet_ldap">
+    <lt-portlet-body>
+      <p class="fs-5 text-gray-600">
+        The settings below configure an LDAP directory which will be regularly synchronised with TPD. Contact your
+        server administrator to find out the required settings for your LDAP server.
+      </p>
+      <h4>Server Settings</h4>
+      <div class="row mb-3">
+        <form-text
+          class="col-4"
+          label="Name"
+          name="name"
+          controlClass="form-control-solid"
+          [(ngModel)]="data.name"
+          [required]="true"
+          helpText="The name of Ldap instance."
+        ></form-text>
+      </div>
+      <div class="row mb-3">
+        <form-select
+          class="col-4"
+          controlClass="form-select-solid"
+          label="Directory Type"
+          [(ngModel)]="data.directoryType"
+          name="directoryType"
+          [required]="true"
+          placeholder="Please select a directory type"
+          (ngModelChange)="onDirectoryTypeChanged()"
+          helpText="Making a selection will automatically enter default values for several
+          options below."
+        >
+          <option></option>
+          <option value="ActiveDirectory">Microsoft Active Directory</option>
+          <option value="InternalActiveDirectory">Delegated LDAP Authentication With Microsoft Active Directory</option>
+          <option value="Ldap">LDAP Directory</option>
+          <option value="InternalLdap">Delegated LDAP Authentication With LDAP server</option>
+        </form-select>
+      </div>
+      <div class="row mb-3">
+        <form-text
+          *ngIf="data.directoryType === 'ActiveDirectory' || data.directoryType === 'InternalActiveDirectory'"
+          class="col-md-3"
+          controlClass="form-control-solid"
+          label="Domain Name"
+          name="domain"
+          [(ngModel)]="data.domain"
+          [required]="true"
+          helpText="Domain use produce the User-Principal-Name. Example:
+        username@domain"
+        ></form-text>
+        <form-text
+          class="col-md-3"
+          controlClass="form-control-solid"
+          label="Hostname"
+          name="hostname"
+          [(ngModel)]="data.hostname"
+          [required]="true"
+          helpText="Hostname of the server running LDAP. Example: ldap.example.com"
+        ></form-text>
+        <form-text
+          class="col-2"
+          controlClass="form-control-solid"
+          type="number"
+          label="Port"
+          name="port"
+          [(ngModel)]="data.port"
+          [required]="true"
+          helpText="Port of the server running LDAP."
+        ></form-text>
+      </div>
+      <div class="row mb-3">
+        <form-text
+          class="col-md-3"
+          controlClass="form-control-solid"
+          label="Username"
+          name="username"
+          [(ngModel)]="data.username"
+          helpText="User to log in to LDAP. Examples: user@domain.name or
+        cn=user,dc=domain,dc=name."
+        ></form-text>
+        <form-text
+          class="col-md-3"
+          controlClass="form-control-solid"
+          type="password"
+          label="Password"
+          name="password"
+          [(ngModel)]="data.password"
+        >
+        </form-text>
+      </div>
+      <div class="separator separator-dashed my-4"></div>
+      <h4>LDAP Schema</h4>
+      <div class="row mb-3">
+        <form-text
+          class="col-md-3"
+          controlClass="form-control-solid"
+          label="Base DN"
+          name="baseDn"
+          [(ngModel)]="data.baseDn"
+          [required]="true"
+          helpText="User to log in to LDAP. Examples: user@domain.name or
+        cn=user,dc=domain,dc=name."
+        ></form-text>
+        <form-text
+          class="col-md-3"
+          controlClass="form-control-solid"
+          label="Additional User DN"
+          name="additionalUserDn"
+          [(ngModel)]="data.additionalUserDn"
+          helpText="Prepended to the base DN to limit the scope when searching for
+        users."
+        ></form-text>
+        <ng-container *ngIf="!data.authenticationOnly">
+          <form-text
+            class="col-md-3"
+            controlClass="form-control-solid"
+            label="Additional Group DN"
+            name="additionalGroupDn"
+            [(ngModel)]="data.additionalGroupDn"
+            helpText="Prepended to the base DN to limit the scope when searching for
+        groups."
+          ></form-text>
+        </ng-container>
+      </div>
+      <div class="separator separator-dashed my-4"></div>
+      <lt-accordion
+        [closeOthers]="oneAtATime"
+        [mode]="['icon-toggle', 'borderless']"
+        togglePosition="left"
+        class="py-2"
+      >
+        <lt-accordion-item headerClass="ps-4 py-3" [icon]="svgIcons.Simple.general.user" heading="User Schema Settings">
+          <div class="row mb-3">
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Object Class"
+              name="userObjectClass"
+              [(ngModel)]="data.userObjectClass"
+              [required]="true"
+              helpText="The LDAP user object class type to use when loading users."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Object Filter"
+              name="userObjectFilter"
+              [(ngModel)]="data.userObjectFilter"
+              [required]="true"
+              helpText="The filter to use when searching user objects."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Name Attribute"
+              name="userNameAttribute"
+              [(ngModel)]="data.userNameAttribute"
+              [required]="true"
+              helpText="The attribute field to use on the user object. Examples: cn, sAMAccountName."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Name RDN Attribute"
+              name="userNameRdnAttribute"
+              [(ngModel)]="data.userNameRdnAttribute"
+              helpText="The RDN to use when loading the user username.Example: cn."
+            ></form-text>
+          </div>
+          <div class="row mb-3">
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Display Name Attribute"
+              name="userDisplayNameAttribute"
+              [(ngModel)]="data.userDisplayNameAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the user full name."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Email Attribute"
+              name="userEmailAttribute"
+              [(ngModel)]="data.userEmailAttribute"
+              [required]="true"
+              label="The attribute field to use when loading the user email."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User First Name Attribute"
+              name="userFirstNameAttribute"
+              [(ngModel)]="data.userFirstNameAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the user first name."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Last Name Attribute"
+              name="userLastNameAttribute"
+              [(ngModel)]="data.userLastNameAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the user last name."
+            ></form-text>
+          </div>
+          <div class="row mb-3">
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Password Attribute"
+              name="userPasswordAttribute"
+              [(ngModel)]="data.userPasswordAttribute"
+              [required]="true"
+              helpText="The attribute field to use when manipulating a user password."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Unique ID Attribute"
+              name="userUniqueIDAttribute"
+              [(ngModel)]="data.userUniqueIDAttribute"
+              helpText="The attribute field to use for tracking user identity across user renames."
+            ></form-text>
+          </div>
+        </lt-accordion-item>
+        <lt-accordion-item
+          headerClass="ps-4 py-3"
+          [icon]="svgIcons.Simple.communication.group"
+          [displayed]="!data.authenticationOnly"
+          heading="Group Schema Settings"
+        >
+          <div class="row mb-3">
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="Group Object Class"
+              name="groupObjectClass"
+              [(ngModel)]="data.groupObjectClass"
+              [required]="true"
+              helpText="LDAP attribute objectClass value to search for when loading groups."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="Group Object Filter"
+              name="groupObjectFilter"
+              [(ngModel)]="data.groupObjectFilter"
+              [required]="true"
+              helpText="The filter to use when searching group objects."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="Group Name Attribute"
+              name="groupNameAttribute"
+              [(ngModel)]="data.groupNameAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the group name."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="Group Description Attribute"
+              name="groupDescriptionAttribute"
+              [(ngModel)]="data.groupDescriptionAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the group description."
+            ></form-text>
+          </div>
+        </lt-accordion-item>
+        <lt-accordion-item
+          headerClass="ps-4 py-3"
+          [icon]="svgIcons.Simple.communication.addressBookCard"
+          [displayed]="!data.authenticationOnly"
+          heading="Membership Schema Settings"
+        >
+          <div class="row mb-3">
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="Group Members Attribute"
+              name="groupMembersAttribute"
+              [(ngModel)]="data.groupMembersAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading the group members from the group."
+            ></form-text>
+            <form-text
+              class="col-md-3"
+              controlClass="form-control-solid"
+              label="User Membership Attribute"
+              name="userMembersAttribute"
+              [(ngModel)]="data.userMembersAttribute"
+              [required]="true"
+              helpText="The attribute field to use when loading a user's groups."
+            ></form-text>
+          </div>
+        </lt-accordion-item>
+      </lt-accordion>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="col-3 text-left">
+          <button
+            class="btn btn-success me-2"
+            type="button"
+            (click)="test(ldapForm)"
+            [ngClass]="{ 'm-spinner m-spinner--right m-spinner--md m-spinner--light': testConnection }"
+          >
+            Quick Test
+          </button>
+          <span style="width: 100px" *ngIf="testConnection">
+            <i class="fa fa-refresh fa-spin fa-fw me-3"></i>Testing Connection...
+          </span>
+          <span [ngSwitch]="testResult">
+            <span *ngSwitchCase="'SUCCESS'">
+              <span class="fa fa-thumbs-up text-success" aria-hidden="true"></span>
+              <span class="text-success">Connection successful!</span>
+            </span>
+            <span *ngSwitchCase="'FAILED'">
+              <span class="fa fa-thumbs-down text-danger fa-fw me-3" aria-hidden="true"></span>
+              <span class="text-danger">Connection failed.</span>
+            </span>
+          </span>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary btn-bold me-3" translate="global.button.save"></button>
+          <a href="#" class="link link-primary" (click)="goBack()" translate="global.button.cancel"></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

@@ -1,0 +1,1656 @@
+{
+    "annotations": {
+      "enable": false,
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Graphite Carbon Cache Metrics",
+    "editable": true,
+    "gnetId": 947,
+    "graphTooltip": 1,
+    "id": 7,
+    "iteration": 1629962483233,
+    "links": [],
+    "panels": [
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "rgba(71, 212, 59, 0.4)",
+          "rgba(245, 150, 40, 0.73)",
+          "rgba(225, 40, 40, 0.59)"
+        ],
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "id": 19,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": " per min",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": true
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "hide": false,
+            "refId": "A",
+            "target": "sumSeries(carbon.agents.*.metricsReceived)"
+          }
+        ],
+        "thresholds": "",
+        "title": "Metrics Received (current)",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "rgba(71, 212, 59, 0.4)",
+          "rgba(245, 150, 40, 0.73)",
+          "rgba(225, 40, 40, 0.59)"
+        ],
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 6,
+          "x": 6,
+          "y": 0
+        },
+        "id": 22,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": " per min",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(22, 250, 2)",
+          "show": true
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "hide": false,
+            "refId": "A",
+            "target": "sumSeries(carbon.agents.*.creates)"
+          }
+        ],
+        "thresholds": "",
+        "title": "Metrics Created (Avg)",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "rgba(71, 212, 59, 0.4)",
+          "rgba(245, 150, 40, 0.73)",
+          "rgba(225, 40, 40, 0.59)"
+        ],
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "format": "ms",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 6,
+          "x": 12,
+          "y": 0
+        },
+        "id": 17,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(17, 212, 164, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": true
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "hide": false,
+            "refId": "A",
+            "target": "scale(averageSeries(carbon.agents.*.avgUpdateTime), 1000)"
+          }
+        ],
+        "thresholds": "",
+        "title": "Metric Update Time (Avg)",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "avg"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "rgba(71, 212, 59, 0.4)",
+          "rgba(245, 150, 40, 0.73)",
+          "rgba(225, 40, 40, 0.59)"
+        ],
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "format": "none",
+        "gauge": {
+          "maxValue": 100,
+          "minValue": 0,
+          "show": false,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 3,
+          "w": 6,
+          "x": 18,
+          "y": 0
+        },
+        "id": 16,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": " %",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(243, 104, 5, 0.18)",
+          "full": false,
+          "lineColor": "rgb(232, 39, 12)",
+          "show": true
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "refId": "A",
+            "target": "sumSeries(carbon.*.*.cpuUsage)"
+          }
+        ],
+        "thresholds": "",
+        "title": "Total Graphite CPU (current)",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "aliasColors": {
+          "Committed Points": "#70DBED"
+        },
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 3
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 6,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sortDesc": false,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Metrics Receieved",
+            "lines": false
+          },
+          {
+            "alias": "Committed Points",
+            "bars": false,
+            "yaxis": 2
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "alias(sumSeries(carbon.agents.*.metricsReceived), 'Receieved')"
+          },
+          {
+            "refId": "B",
+            "target": "alias(sumSeries(carbon.agents.*.committedPoints), 'Committed Points')"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Total Metrics Received vs Commited Points",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "metics/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "commited/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Creates": "#F9934E",
+          "Updates": "#70DBED"
+        },
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 3
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 29,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": false,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sort": "min",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Updates",
+            "bars": false
+          },
+          {
+            "alias": "Creates",
+            "lines": false,
+            "yaxis": 2
+          },
+          {
+            "alias": "CPU",
+            "bars": false,
+            "color": "#BF1B00",
+            "yaxis": 2
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "alias(sumSeries(carbon.agents.*.updateOperations), 'Updates')"
+          },
+          {
+            "refId": "B",
+            "target": "alias(sumSeries(carbon.agents.*.creates), 'Creates')"
+          },
+          {
+            "refId": "C",
+            "target": "alias(averageSeries(carbon.agents.*.cpuUsage), 'CPU')"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Update Operations vs. Creates & CPU",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Updates",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "Creates",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "annotate": {
+          "enable": false
+        },
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 10
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 4,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": false,
+          "max": true,
+          "min": true,
+          "rightSide": false,
+          "show": true,
+          "sort": null,
+          "sortDesc": null,
+          "total": false,
+          "values": true
+        },
+        "lines": false,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "resolution": 100,
+        "scale": 1,
+        "seriesOverrides": [
+          {
+            "alias": "CPU",
+            "yaxis": 2
+          },
+          {
+            "alias": "CPU",
+            "bars": false,
+            "lines": true
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "alias(sumSeries(carbon.agents.*.metricsReceived), 'Received')"
+          },
+          {
+            "refId": "B",
+            "target": "alias(sumSeries(carbon.*.*.cpuUsage), 'CPU')"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Metrics Received vs CPU Load Avg",
+        "tooltip": {
+          "msResolution": false,
+          "query_as_alias": true,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "none",
+            "label": "Received/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "percent",
+            "label": "% CPU",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        },
+        "zerofill": true
+      },
+      {
+        "aliasColors": {},
+        "annotate": {
+          "enable": false
+        },
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 10,
+          "x": 12,
+          "y": 10
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 20,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": false,
+          "max": true,
+          "min": true,
+          "rightSide": false,
+          "show": true,
+          "sort": null,
+          "sortDesc": null,
+          "total": false,
+          "values": true
+        },
+        "lines": false,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "resolution": 100,
+        "scale": 1,
+        "seriesOverrides": [
+          {
+            "alias": "Committed Points",
+            "yaxis": 2
+          },
+          {
+            "alias": "Committed Points",
+            "bars": false,
+            "lines": true
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "alias(sumSeries(carbon.agents.*.creates), 'Created')"
+          },
+          {
+            "refId": "B",
+            "target": "alias(sumSeries(carbon.agents.*.committedPoints), 'Committed Points')"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Metrics Created vs Metrics Committed",
+        "tooltip": {
+          "msResolution": false,
+          "query_as_alias": true,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "none",
+            "label": "created/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "committed/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        },
+        "zerofill": true
+      },
+      {
+        "aliasColors": {
+          "Committed Points": "#70DBED"
+        },
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 0,
+          "y": 17
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 24,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sortDesc": false,
+          "total": false,
+          "values": true
+        },
+        "lines": false,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "aliasByNode(carbon.agents.$Cache.metricsReceived, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Metrics Received (per cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "metics/min",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Committed Points": "#70DBED"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 8,
+          "y": 17
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 23,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sortDesc": false,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "aliasByNode(scale(carbon.agents.$Cache.avgUpdateTime, 1000), 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Average Update Time (per cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "ms",
+            "label": "Update Time",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Committed Points": "#70DBED"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 16,
+          "y": 17
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 30,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sortDesc": false,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "aliasByNode(carbon.agents.$Cache.pointsPerUpdate, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Points per Update (per Cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "points",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Creates": "#F9934E",
+          "Queries": "#F9BA8F",
+          "Queues": "#C15C17",
+          "Size": "#614D93",
+          "Updates": "#70DBED"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 6,
+          "x": 0,
+          "y": 24
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 25,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": false,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sort": "min",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "hide": false,
+            "refId": "B",
+            "target": "aliasByNode(carbon.agents.$Cache.cache.queries, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Queries (per Cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Cache Queries",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 3,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 6,
+          "x": 6,
+          "y": 24
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 26,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": false,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": false,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "aliasByNode(carbon.agents.$Cache.cpuUsage, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "CPU Usage (per Cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percent",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 6,
+          "x": 12,
+          "y": 24
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 27,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": true,
+        "steppedLine": true,
+        "targets": [
+          {
+            "refId": "A",
+            "target": "aliasByNode(carbon.agents.$Cache.memUsage, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Memory Usage (per Cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "bytes",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Creates": "#F9934E",
+          "Queries": "#F9BA8F",
+          "Queues": "#C15C17",
+          "Size": "#614D93",
+          "Updates": "#70DBED"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Graphite",
+        "editable": true,
+        "error": false,
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 2,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 6,
+          "x": 18,
+          "y": 24
+        },
+        "height": "250px",
+        "hiddenSeries": false,
+        "id": 28,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": false,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": false,
+          "sort": "min",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.7",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "hide": true,
+            "refId": "A",
+            "target": "alias(sumSeries(carbon.agents.*.cache.size), 'Total Size')"
+          },
+          {
+            "hide": false,
+            "refId": "B",
+            "target": "aliasByNode(carbon.agents.$Cache.cache.size, 2, 3)"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Cache Size (per Cache)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Cache Datapoints",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": 0,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 27,
+    "style": "dark",
+    "tags": [
+      "Graphite"
+    ],
+    "templating": {
+      "list": [
+        {
+          "allFormat": "glob",
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Graphite",
+          "definition": "",
+          "description": null,
+          "error": null,
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": true,
+          "multiFormat": "glob",
+          "name": "Cache",
+          "options": [],
+          "query": "carbon.agents.*",
+          "refresh": 1,
+          "refresh_on_load": false,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "now": true,
+      "to": "now"
+    },
+    "timepicker": {
+      "collapse": false,
+      "enable": true,
+      "notice": false,
+      "now": true,
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "type": "timepicker"
+    },
+    "timezone": "browser",
+    "title": "Graphite Server (Carbon Metrics)",
+    "uid": "eGzuf3nnz",
+    "version": 2
+  }

@@ -1,0 +1,13 @@
+@import '~diff2html/bundles/css/diff2html.min.css';
+
+// fix when use perfect scrollbar
+.d2h-code-side-linenumber,
+.d2h-code-linenumber {
+    position: unset;
+    display: table-cell;
+}
+
+.d2h-code-side-line,
+.d2h-code-line {
+    padding: 0 0;
+}

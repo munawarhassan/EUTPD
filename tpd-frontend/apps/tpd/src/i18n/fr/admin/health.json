@@ -1,0 +1,27 @@
+{
+  "health": {
+    "title": "Diagnostics",
+    "refresh.button": "Rafraichir",
+    "indicator": {
+      "database": "Base de données de Climbing Club Competition",
+      "diskSpace": "Espace disque",
+      "mail": "Courrier",
+      "smtp": "Protocole Simple de Transfert de Courrier",
+      "rest": "RESTful Web Service",
+      "threadlock": "Thread Lock",
+      "domibus.ws": "Domibus Backend Web Service"
+    },
+    "stacktrace": "Stacktrace",
+    "table": {
+      "service": "Nom du service",
+      "product": "Produit",
+      "type": "Type",
+      "status": "Etat"
+    },
+    "status": {
+      "UP": "DISPONIBLE",
+      "DOWN": "INDISPONIBLE",
+      "OUT_OF_SERVICE": "HORS SERVICE"
+    }
+  }
+}

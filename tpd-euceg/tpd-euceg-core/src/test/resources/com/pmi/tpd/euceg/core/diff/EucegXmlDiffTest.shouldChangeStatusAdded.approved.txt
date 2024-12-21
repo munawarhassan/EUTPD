@@ -1,0 +1,10 @@
+diff --git a/POM.number b/POM.number
+new file mode 100644
+--- /dev/null
++++ b/POM.number
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<Product xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TobaccoProduct">
++   <Filter confidential="false">true</Filter>
++   <FilterLength confidential="false">20</FilterLength>
++</Product>

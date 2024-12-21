@@ -1,0 +1,80 @@
+<div class="startup d-flex flex-center flex-column vh-100">
+  <div class="startup-section py-15 px-20 border border-gray-300 rounded-1 text-center bg-gray-200 text-center w-600px">
+    <div
+      class="
+        startup-header
+        d-flex
+        justify-content-center
+        flex-column
+        border-bottom border-bottom-2 border-gray-300
+        pb-6
+        mb-6
+      "
+    >
+      <div class="l-wrapper mb-10">
+        <svg
+          width="120"
+          height="120"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <symbol id="s--circle">
+            <circle r="10" cx="20" cy="20"></circle>
+          </symbol>
+          <g class="g-circles g-circles--v2">
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+            <g class="g--circle">
+              <use xlink:href="#s--circle" class="u--circle" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <h1 class="fs-2hx fw-light text-gray-600">
+        {{ applicationInfo.displayName }}
+        is starting up
+      </h1>
+    </div>
+
+    <lt-progress-bar [striped]="progressWaiting" [progress]="progress" [color]="progressType" [size]="5">
+    </lt-progress-bar>
+  </div>
+  <footer class="mt-10">
+    <a href="https://devacfr.github.io/" target="_blank" class="text-decoration-none fs-3 text-gray-700"
+      >Copyright &copy; 2016-{{ year }} Philip Morris</a
+    >
+  </footer>
+</div>

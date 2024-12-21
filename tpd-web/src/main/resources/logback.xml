@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+  <!-- Properties used elsewhere in configuration -->
+
+  <define name="accesslog.format" class="com.pmi.tpd.web.logback.AccessLogFormatPropertyDefiner" scope="context" />
+  <define name="home.dir" class="com.pmi.tpd.web.logback.HomeDirectoryPropertyDefiner" scope="context" />
+  <define name="log.format" class="com.pmi.tpd.web.logback.LogFormatPropertyDefiner" scope="context" />
+  <define name="log.level" class="com.pmi.tpd.web.logback.LogLevelPropertyDefiner" scope="context" />
+  <define name="profilelog.format" class="com.pmi.tpd.web.logback.ProfileLogFormatPropertyDefiner"
+    scope="context" />
+  <define name="console.enabled" class="com.pmi.tpd.web.logback.ConsoleEnabledPropertyDefiner" scope="context" />
+
+  <!-- Logging appenders -->
+
+  <if condition='isDefined("home.dir")'>
+    <then>
+      <define name="log.dir" class="com.pmi.tpd.web.logback.LogDirectoryPropertyDefiner" scope="context" />
+
+      <!-- If the home.dir property is defined, it means we have a valid home. Set up appenders that will produce logging 
+        in the configured directory and add them appropriately. -->
+
+      <appender name="tpd.application" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+          <charset>UTF-8</charset>
+          <pattern>${log.format}</pattern>
+        </encoder>
+        <file>${log.dir}/tpd.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${log.dir}/tpd-%d.log</fileNamePattern>
+          <maxHistory>31</maxHistory>
+        </rollingPolicy>
+      </appender>
+
+      <appender name="tpd.profiler" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+          <charset>UTF-8</charset>
+          <pattern>${profilelog.format}</pattern>
+        </encoder>
+        <file>${log.dir}/tpd-profiler.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${log.dir}/tpd-profiler-%d.%i.log</fileNamePattern>
+          <maxHistory>3</maxHistory>
+          <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>25MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+      </appender>
+
+      <appender name="tpd.accesslog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+          <charset>UTF-8</charset>
+          <pattern>${accesslog.format}</pattern>
+        </encoder>
+        <file>${log.dir}/tpd-access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${log.dir}/tpd-access-%d.%i.log</fileNamePattern>
+          <maxHistory>10</maxHistory>
+          <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>25MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+      </appender>
+
+      <appender name="tpd.auditlog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+          <charset>UTF-8</charset>
+          <pattern>%m%n</pattern>
+        </encoder>
+        <file>${log.dir}/audit/tpd-audit.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${log.dir}/audit/tpd-audit-%d.%i.log.gz</fileNamePattern>
+          <maxHistory>100</maxHistory>
+          <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>25MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+      </appender>
+
+      <appender name="tpd.maillog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+          <charset>UTF-8</charset>
+          <pattern>${log.format}</pattern>
+        </encoder>
+        <file>${log.dir}/tpd-mail.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <fileNamePattern>${log.dir}/tpd-mail-%d.%i.log</fileNamePattern>
+          <maxHistory>10</maxHistory>
+          <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>25MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+      </appender>
+
+      <!-- Do not set levels here, only add appenders -->
+      <root>
+        <appender-ref ref="tpd.application" />
+      </root>
+
+      <!-- Enable Profiling and direct it to its own separate appender -->
+      <logger name="com.pmi.tpd.util.profiling" level="DEBUG" additivity="false">
+        <appender-ref ref="tpd.profiler" />
+      </logger>
+
+      <!-- Enable access logs and direct it to its own separate appender -->
+      <logger name="tpd.access-log" level="INFO" additivity="false">
+        <appender-ref ref="tpd.accesslog" />
+      </logger>
+
+      <!-- Enable audit logs and direct it to its own separate appender -->
+      <logger name="tpd.audit-log" level="DEBUG" additivity="false">
+        <appender-ref ref="tpd.auditlog" />
+      </logger>
+
+      <!-- Enable mail logs and direct it to its own separate appender -->
+      <logger name="tpd.mail-log" level="INFO" additivity="false">
+        <appender-ref ref="tpd.maillog" />
+      </logger>
+
+      <!-- Lastly, give customers the ability to define *their own* logback.xml which will be processed in addition to this 
+        one, giving them the ability to modify logging levels at will without forcing them to modify files directly. WARNING: Do 
+        not use ${home.dir}-style property replacement here. Because the returned String is compiled into Java code by Janino internally, 
+        doing so causes backslashes to be removed on Windows and results in logback.xml not being included even if it is present. 
+        Calling property("home.dir") returns the same value but does so in a way that is safe to be compiled. -->
+      <if condition='isDefined("console.enabled")'>
+        <then>
+          <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+              <pattern>${log.format}</pattern>
+            </encoder>
+          </appender>
+
+          <!-- Do not set levels here, only add appenders -->
+          <root>
+            <appender-ref ref="console" />
+          </root>
+        </then>
+      </if>
+    </then>
+    <else>
+      <!-- If the log.dir property is not defined, it means there is no home directory. We still want to have our logging 
+        visible, so add it to the console instead. -->
+      <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+          <pattern>${log.format}</pattern>
+        </encoder>
+      </appender>
+
+      <!-- Do not set levels here, only add appenders -->
+      <root>
+        <appender-ref ref="console" />
+      </root>
+    </else>
+  </if>
+
+  <!-- Following is configuration for different logging levels. Please do *not* setup appenders here. That work should be 
+    done above, inside the <if/> directive, so that the correct appenders are added in all cases. -->
+
+
+  <!-- Configuration for the root logger -->
+
+  <root level="${log.level}" />
+
+
+  <logger name="com.pmi.tpd" level="${log.level}" />
+
+  <logger name="javax.activation" level="WARN" />
+  <logger name="javax.mail" level="WARN" />
+  <logger name="javax.xml.bind" level="WARN" />
+  <logger name="ch.qos.logback" level="WARN" />
+  <logger name="com.codahale.metrics" level="WARN" />
+  <logger name="com.ryantenney" level="WARN" />
+  <logger name="com.sun.xml.internal.bind" level="WARN" />
+  <logger name="org.hibernate.validator" level="WARN" />
+  <logger name="org.hibernate.engine.jdbc.spi" level="ERROR" />
+  <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
+  <logger name="org.springframework" level="WARN" />
+  <logger name="org.springframework.web" level="WARN" />
+  <logger name="org.springframework.security" level="WARN" />
+  <logger name="org.springframework.cache" level="WARN" />
+  <logger name="liquibase" level="INFO" />
+  <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="FATAL"/>
+  <logger name="sun.rmi.transport" level="WARN" />
+  <logger name="org.apache.cxf" level="ERROR"/>
+
+  <appender name="CYCLIC" class="ch.qos.logback.core.read.CyclicBufferAppender">
+    <encoder>
+      <charset>UTF-8</charset>
+      <pattern>${log.format}</pattern>
+    </encoder>
+    <MaxSize>512</MaxSize>
+  </appender>
+
+  <root>
+    <appender-ref ref="CYCLIC" />
+  </root>
+
+</configuration>

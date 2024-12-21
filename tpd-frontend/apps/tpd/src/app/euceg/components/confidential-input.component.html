@@ -1,0 +1,38 @@
+<label *ngIf="label" class="form-label">
+  <span [class.required]="required">{{ label }} </span>
+  <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+</label>
+<div class="d-flex align-items-center flex-nowrap">
+  <div class="flex-grow-1">
+    <div class="position-relative">
+      <input
+        [type]="type"
+        [class]="controlClass"
+        [placeholder]="label || placeholder"
+        [disabled]="disabled"
+        (input)="handleInput($event)"
+        (focus)="touched = false"
+        (blur)="markAsTouched()"
+        [autocomplete]="autocomplete ? 'on' : 'off'"
+      />
+      <app-confidential
+        class="position-absolute translate-middle-y top-50 end-0 me-3"
+        (valueChange)="handleChangeCheckbox($event)"
+        [disabled]="disabled"
+        [enforce-confidential]="enforceConfidential"
+      ></app-confidential>
+    </div>
+  </div>
+</div>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('required')">{{ label }} is required. </span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('maxlength')">
+    {{ label }} cannot be longer than {{ ngControl.errors?.maxlength.requiredLength }} characters.
+  </span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('minlength')">
+    {{ label }} is required to be at least {{ ngControl.errors?.minlength.requiredLength }} characters.
+  </span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('pattern')">
+    {{ label }} does not match required pattern.
+  </span>
+</div>

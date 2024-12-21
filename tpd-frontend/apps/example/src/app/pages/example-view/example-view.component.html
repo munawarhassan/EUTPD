@@ -1,0 +1,46 @@
+<lt-layout>
+  <app-topbar ltTopbar></app-topbar>
+  <lt-aside [ltDrawer]="asideDrawerOptions">
+    <lt-aside-menu [menu]="menu"></lt-aside-menu>
+    <lt-aside-footer>
+      <a
+        target="_blank"
+        class="btn btn-custom btn-primary w-100"
+        [href]="appPreviewDocsUrl"
+        data-bs-toggle="tooltip"
+        data-bs-trigger="hover"
+        data-bs-dismiss-="click"
+        ngbDropdown="Check out the complete documentation with over 100 components"
+      >
+        <span class="btn-label">Docs & Components</span>
+        <span [inlineSVG]="'icons/duotune/general/gen005.svg'" class="svg-icon btn-icon svg-icon-2"></span>
+      </a>
+    </lt-aside-footer>
+  </lt-aside>
+  <lt-toolbar id="l_toolbar"></lt-toolbar>
+  <lt-content width="fluid">
+    <router-outlet></router-outlet>
+  </lt-content>
+  <lt-footer>
+    <!-- begin::Copyright  -->
+    <div class="text-dark order-2 order-md-1">
+      <span class="text-muted fw-bold me-2">{{ currentDateStr }} &copy;</span>
+      <a class="text-gray-800 text-hover-primary cursor-pointer"> Devacfr </a>
+    </div>
+    <!-- end::Copyright  -->
+
+    <!-- begin::Nav  -->
+    <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
+      <li class="menu-item">
+        <a class="menu-link ps-0 pe-2 cursor-pointer"> About </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link pe-0 pe-2 cursor-pointer"> Contact </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link pe-0 cursor-pointer"> Purchase </a>
+      </li>
+    </ul>
+    <!-- end::Nav  -->
+  </lt-footer>
+</lt-layout>

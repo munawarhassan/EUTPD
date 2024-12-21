@@ -1,0 +1,27 @@
+app:
+  keystore: 
+    location: classpath:config/keystore-receiver.jks
+    password: test123
+  domibus:
+    enable: true
+    connectionType: Ws
+    url: http://localhost:8080
+    tlsInsecure: false
+    action: SubmitResponse
+    service: http://ec.europa.eu/e-delivery/services/tobacco-ecig-reporting
+    serviceType: e-delivery
+    originalSender: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C4
+    finalRecipient: urn:oasis:names:tc:ebcore:partyid-type:unregistered:C1
+    partyIdType: urn:oasis:names:tc:ebcore:partyid-type:unregistered:EUCEG
+    fromPartyId: EUCEG_EC
+    toPartyId: ACC-EUCEG-99962-AS4
+    keyPairAlias: EUCEG_EC
+    trustedCertificateAlias: ACC-EUCEG-99962-AS4
+    username: admin
+    password: 123456
+    jmsOptions:
+      url: tcp://localhost:61616
+      receiveTimeout: 10
+      concurrency: "1-1"
+      username: "domibus"
+      password: "changeit"

@@ -1,0 +1,94 @@
+<ng-container *ngIf="uploader">
+  <input
+    #InputFile
+    type="file"
+    [name]="inputName"
+    ng2FileSelect
+    [uploader]="uploader"
+    class="d-none"
+    (focus)="touched = false"
+    (blur)="markAsTouched()"
+  />
+  <label class="form-label" [ngClass]="{ required: required }">{{ label }}</label>
+  <div
+    class="dropzone dropzone-multi border rounded border-dashed pt-3"
+    ltFileDrop
+    [uploader]="uploader"
+    [ngClass]="{
+      'dropzone-file-over border-primary bg-light-primary': hasDropZoneOver,
+      'border-transparent': !hasDropZoneOver
+    }"
+    (fileOver)="fileOverBase($event)"
+  >
+    <div class="dropzone-wrapper">
+      <div class="dropzone-panel">
+        <a class="dropzone-select btn btn-light-primary btn-bold btn-sm me-3" (click)="openFileDialog()">
+          <i class="bi bi-file-earmark-arrow-up fs-1"></i>
+          Attach files
+        </a>
+        <a
+          *ngIf="uploader.queue.length"
+          class="dropzone-remove-all btn btn-light-danger btn-bold btn-sm"
+          (click)="handleRemoveAllFiles()"
+          >Remove All</a
+        >
+      </div>
+      <div class="dropzone-items">
+        <div
+          class="dropzone-item"
+          *ngFor="let fileItem of uploader.queue"
+          [ngClass]="{ 'dropzone-error': fileItem.isError }"
+        >
+          <ng-container
+            [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+            [ngTemplateOutletContext]="{ fileItem: fileItem, uploader: uploader, control: this }"
+          ></ng-container>
+        </div>
+      </div>
+      <div class="dz-default dz-message">
+        <button class="dz-button" type="button">Drop files here to upload</button>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="helpText" class="form-text text-muted">{{ helpText }}</p>
+  <div *ngIf="(form?.submitted || ngControl?.touched) && ngControl?.invalid">
+    <p class="invalid-feedback" *ngIf="ngControl?.hasError('required')">{{ label }} is required</p>
+  </div>
+</ng-container>
+
+<ng-template #defaultItemTemplate let-fileItem="fileItem" let-uploader="uploader" let-control="control">
+  <div class="dropzone-file">
+    <div class="dropzone-filename">
+      <span>{{ fileItem.file.name }}</span>
+      <strong class="ms-2" *ngIf="uploader.options.isHTML5"
+        >(<span
+          ><strong>{{ fileItem?.file?.size | bytes }}</strong></span
+        >)</strong
+      >
+    </div>
+    <div *ngIf="hasErrorResponse(fileItem)" class="dropzone-error">
+      <ul class="nav">
+        <li class="nav-item" *ngFor="let msg of getErrorResponse(fileItem)">{{ msg }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="dropzone-progress">
+    <div class="progress">
+      <div
+        class="progress-bar bg-primary"
+        role="progressbar"
+        [ngStyle]="{ width: fileItem.progress + '%' }"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="fileItem.progress"
+      ></div>
+    </div>
+  </div>
+  <div class="dropzone-toolbar">
+    <span
+      class="dropzone-delete btn btn-icon bg-hover-light-danger text-hover-danger"
+      (click)="handleRemoveFile(fileItem)"
+      ><i class="fas fa-times fa-1x"></i
+    ></span>
+  </div>
+</ng-template>

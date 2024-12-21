@@ -1,0 +1,1510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+           jaxb:version="2.1">
+
+    <xs:include schemaLocation="attachments.xsd"/>
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="Product" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract product.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ProductID" type="ProductNumber">
+                <xs:annotation>
+                    <xs:documentation>Product ID is the identification number of the product used in the system in the format "Submitter
+                        ID-Year-Product number" (NNNNN-NN-NNNNN), where: - "Submitter ID" is the ID number of the submitter. - "Year" is the
+                        year within which data on the product were submitted for the first time (2 digits). - "Product number" is the number
+                        attributed by the submitter to the product when submitting data for the first time.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PreviousProductID" type="ProductNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>In the case of substantial modification to an already notified product (entailing a new Product ID),
+                        indication of the previous Product ID of the product.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OtherProductsExist" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter is aware of other product(s) with the same design and composition
+                        that is marketed in the EU using a different Product ID.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OtherProducts" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>List Product ID of the product(s) with same design and composition. If Product ID of the product(s) is
+                        not known to the submitter, full brand and subtype name(s) as well as Member State(s) where product(s) is placed on
+                        the market shall at least be provided.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ProductIdentification" type="ProductIdentification" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>The other product identification.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SameCompositionProductsExist" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the submitter is aware of other product(s) with the same composition of e-liquid,
+                        but different design.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SameCompositionProducts" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The Product ID of the other product(s) with the same proportion of ingredients in the tobacco blends
+                        composition known to the submitter.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ProductIdentification" type="ProductIdentification" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>The same composition product identification.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Manufacturers" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>If the Submitter is not the manufacturer, the official company name of the manufacturer of the product
+                        including its company details (multiple entries possible if the product is manufactured by multiple companies).
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Manufacturer" type="Manufacturer" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="MarketResearchFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The internal and external studies on market research and preferences of various consumer groups,
+                        including young people and current smokers, relating to ingredients and emissions, available to submitter as well as
+                        executive summaries of any market surveys carried out when launching new products. To be updated in case new data
+                        become available.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>                        
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ProductNumber">
+        <xs:annotation>
+            <xs:documentation>Defines the product ID (TP-ID or EC-ID).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ProductNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the product ID is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ProductNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines the product ID (TP-ID or EC-ID).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{5}-\d{2}-\d{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ProductIdentification">
+        <xs:annotation>
+            <xs:documentation>Defines a product identification.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String1000">
+                <xs:attribute name="type" type="ProductIdentificationType" use="required">
+                    <xs:annotation>
+                        <xs:documentation>The type of the product identification.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ProductIdentificationType">
+        <xs:annotation>
+            <xs:documentation>The list of product identifications.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="PRODUCT_ID">
+                <xs:annotation>
+                    <xs:documentation>The product identification value is a product ID.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TEXT">
+                <xs:annotation>
+                    <xs:documentation>The product identification value is a free text.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Manufacturer">
+        <xs:annotation>
+            <xs:documentation>Defines a manufacturer of a product.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Company">
+                <xs:sequence>
+                    <xs:element name="ProductionSiteAddresses">
+                        <xs:annotation>
+                            <xs:documentation>For the manufacturer, address(es) of the site(s) where production is completed.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="ProductionSiteAddress" type="ProductionSiteAddress" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ProductionSiteAddress">
+        <xs:annotation>
+            <xs:documentation>Define a production site address.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Address" type="String300Value">
+                <xs:annotation>
+                    <xs:documentation>The address of the production site.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Country" type="CountryValue">
+                <xs:annotation>
+                    <xs:documentation>The country of the production site.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PhoneNumber" type="PhoneNumberValue" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The business phone of the production site.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Email" type="EmailAddressValue" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The email address of the production site.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="confidential" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Indicates whether or not the production site address is confidential.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="Presentation" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract product presentation details.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NationalMarket" type="NationalMarket">
+                <xs:annotation>
+                    <xs:documentation>The Member State to which the product information below is being provided.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NationalComment" type="String1000" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The national comment.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BrandName" type="String100">
+                <xs:annotation>
+                    <xs:documentation>The brand name under which the product is marketed in the Member State(s) to which information is
+                        being submitted.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BrandSubtypeNameExists" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>Indicates if the product "subtype name" exists.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BrandSubtypeName" type="String100" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The product "subtype name" (if any) as marketed in the Member State to which the product information
+                        is being submitted.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LaunchDate" type="Date">
+                <xs:annotation>
+                    <xs:documentation>The date on which the Submitter plans to launch/launched the product on the market.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WithdrawalIndication" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>Indicates if the Submitter plans to withdraw/withdrew the product from the market.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WithdrawalDate" type="Date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The date on which the Submitter plans to withdraw/withdrew the product from the market.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductNumberType" type="PresentationNumberType">
+                <xs:annotation>
+                    <xs:documentation>The identifier number of the product presentation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductNumber" type="String40">
+                <xs:annotation>
+                    <xs:documentation>The identifier number of the product presentation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PresentationNumberType">
+        <xs:annotation>
+            <xs:documentation>Defines a presentation number type.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="PresentationNumberTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the presentation number type is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="PresentationNumberTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The list of presentation number types.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="SUBMITTER">
+                <xs:annotation>
+                    <xs:documentation>The identifier number used internally by the submitter.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UPC">
+                <xs:annotation>
+                    <xs:documentation>The UPC-12 (Universal Product Code) of the product.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EAN">
+                <xs:annotation>
+                    <xs:documentation>The EAN-13 or EAN-8, (European Article Number) of the product.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GTIN">
+                <xs:annotation>
+                    <xs:documentation>GTIN (Global Trade Identification Number) of the product.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SKU">
+                <xs:annotation>
+                    <xs:documentation>SKU (Stock Keeping Unit) number(s) of the product.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AnnualSalesData" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract annual sales data.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Year" type="Year">
+                <xs:annotation>
+                    <xs:documentation>The year of the annual sales volume.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SalesVolume" type="Double">
+                <xs:annotation>
+                    <xs:documentation>The information on annual sales volume of the product per Member State to be reported annually.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Ingredient" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract ingredient.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="TemplateID" type="UUID" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient template if used.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TemplateIDUpdate" type="Date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Last refresh from template repository</xs:documentation>
+                </xs:annotation>
+            </xs:element>            
+            <xs:element name="Name" type="String300">
+                <xs:annotation>
+                    <xs:documentation>The chemical name of the ingredient.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CasNumberExists" type="BooleanNullable" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indicates if the CAS (Chemical Abstracts Service) number exists.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CasNumber" type="CasNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The CAS number.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalCasNumbers" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The additional CAS numbers if applicable and cannot be completed if the CAS number is empty.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CasNumber" type="CasNumber" maxOccurs="10"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FemaNumber" type="FemaNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The FEMA (Flavour and Extract Manufacturers Association) number if any.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditiveNumber" type="AdditiveNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>If the ingredient is a food additive, its food additive “E number” set out in Annexes II and III to
+                        Regulation (EC) No 1333/2008 of the European Parliament and of the Council.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FlNumber" type="FlNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The FL number, if any (European Flavouring number as set out in Annex I to Regulation (EC) No
+                        1334/2008 of the European Parliament and of the Council).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EcNumber" type="EcNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The European Community (EC) number, if any.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OtherNumber" type="String40" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ID number used internally by the submitter.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RecipeQuantity" type="Double">
+                <xs:annotation>
+                    <xs:documentation>The standard weight of the ingredient included in one product unit in mg according to recipe.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Functions" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The functions of the ingredient.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Function" type="IngredientFunction" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FunctionOther" type="String100" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The function of the ingredient if "Other".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxicityStatus" type="ToxicityStatus">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the ingredient (in unburnt/non-vaporised form) status is characterised by any known
+                        type of toxicity or has carcinogenic, mutagenic or toxic for reproduction properties..
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:element name="ReachRegistration" type="ReachRegistration" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Indication whether the REACH registration number might be not available for substances.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="ReachRegistrationNumber" type="String40" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The registration number pursuant to Regulation (EC) No 1907/2006 of the European Parliament and of
+                            the Council, if any.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="ClpWhetherClassification" type="BooleanNullable" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indicates if the ingredient has been classified under Regulation (EC) No 1272/2008 of the European
+                        Parliament and of the Council and is in the classification and minOccurs="0" labelling inventory.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpAcuteToxOral" type="AcuteToxOralCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to acute oral toxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpAcuteToxDermal" type="AcuteToxDermalCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to acute dermal toxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpAcuteToxInhalation" type="AcuteToxInhalationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to acute inhalation toxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpSkinCorrosiveIrritant" type="SkinCorrosiveIrritantCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification as a skin corrosive/irritant based on Regulation (EC) No 1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpEyeDamageIrritation" type="EyeDamageIrritationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification as responsible for eye damage/irritation based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpRespiratorySensitisation" type="RespiratorySensitisationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to respiratory sensitisation based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpSkinSensitisation" type="SkinSensitisationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to skin sensitisation based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpMutagenGenotox" type="MutagenGenotoxCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards mutagenicity/genotoxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpCarcinogenicity" type="CarcinogenicityCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to its carcinogenicity based onRegulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpReproductiveTox" type="ReproductiveToxCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to its reproductive toxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpStot" type="StotCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient classification with regards to its specific target organ toxicity based on Regulation
+                        (EC) No 1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpStotDescription" type="String500" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The reference to the specific organ(s) affected based on the above classification.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ClpAspirationTox" type="AspirationToxCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The ingredient Classification with regards to aspiration toxicity based on Regulation (EC) No
+                        1272/2008.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxicologicalDetails" type="ToxicologicalDetails">
+                <xs:annotation>
+                    <xs:documentation>The toxicological details of the ingredient.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CasNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a CAS number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="CasNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the CAS number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="CasNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines a CAS number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{2,7}-\d{2}-\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="FemaNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a FEMA number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="FemaNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the FEMA number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="FemaNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines a FEMA number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AdditiveNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a food additive number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="AdditiveNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the food additive number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="AdditiveNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines a food additive number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="FlNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a FL number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="FlNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the FL number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="FlNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines a FL number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="EcNumber">
+        <xs:annotation>
+            <xs:documentation>Defines an EC number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EcNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the EC number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EcNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines an EC number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{3}-\d{3}-\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="IngredientFunction">
+        <xs:annotation>
+            <xs:documentation>Defines an ingredient function.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="IngredientFunctionEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the function of the ingredient is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="IngredientFunctionEnum">
+        <xs:annotation>
+            <xs:documentation>The list of ingredient functions.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Addictive Enhancer</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ADDICTIVE_ENHANCER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Adhesive</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ADHESIVE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Binder</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="BINDER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>Carrier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CARRIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>Colour</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="COLOUR"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>Combustion Modifier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="COMBUSTION_MODIFIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>Casing</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CASING"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+                <xs:annotation>
+                    <xs:documentation>Fibre</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FIBRE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+                <xs:annotation>
+                    <xs:documentation>Filler</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILLER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+                <xs:annotation>
+                    <xs:documentation>Filter Component</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILTER_COMPONENT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>Filtration Material</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILTRATION_MATERIAL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>Flavour and/or Taste Enhancer</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FLAVOUR_ENHANCER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+                <xs:annotation>
+                    <xs:documentation>Humectant</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="HUMECTANT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+                <xs:annotation>
+                    <xs:documentation>pH Modifier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PH_MODIFIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+                <xs:annotation>
+                    <xs:documentation>Plasticiser</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PLASTICIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+                <xs:annotation>
+                    <xs:documentation>Preservative</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PRESERVATIVE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+                <xs:annotation>
+                    <xs:documentation>Solvent - Processing Aid</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SOLVANT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+                <xs:annotation>
+                    <xs:documentation>Reduced Ignition Propensity Agent</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="REDUCE_IGNITION_PROPENSITY_AGENT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="19">
+                <xs:annotation>
+                    <xs:documentation>Sizing Agent</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SIZING_AGENT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+                <xs:annotation>
+                    <xs:documentation>Smoke Enhancer</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SMOKE_ENHANCER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="21">
+                <xs:annotation>
+                    <xs:documentation>Smoke Colour Modifier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SMOKE_COLOUR_MODIFIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+                <xs:annotation>
+                    <xs:documentation>Smoke Odour Modifier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SMOKE_ODOUR_MODIFIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="23">
+                <xs:annotation>
+                    <xs:documentation>Wrapper</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="WRAPPER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+                <xs:annotation>
+                    <xs:documentation>Water-Wetting Agents</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="WATER_WETTING_AGENTS"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="25">
+                <xs:annotation>
+                    <xs:documentation>Viscosity Modifier</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="VISCOSITY_MODIFIER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="26">
+                <xs:annotation>
+                    <xs:documentation>Other</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="OTHER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ToxicityStatus">
+        <xs:annotation>
+            <xs:documentation>Defines the unburnt status of the ingredient.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ToxicityStatusEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the ingredient toxicity is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ToxicityStatusEnum">
+        <xs:annotation>
+            <xs:documentation>The list of ingredient toxicity status.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>No available information on the ingredient’s toxicity.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NOT_AVAILABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Not toxic and without CMR properties.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NOT_TOXIC"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Identified as toxic and or with CMR properties.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TOXIC"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ReachRegistration">
+        <xs:annotation>
+            <xs:documentation>Defines the REACH registration of the ingredient.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ReachRegistrationEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the REACH registration is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ReachRegistrationEnum">
+        <xs:annotation>
+            <xs:documentation>REACH registration.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="NOT_YET_REGISTERED"/>
+            <xs:enumeration value="EXEMPTED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AcuteToxOralCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="AcuteToxOralCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="AcuteToxOralCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AcuteToxDermalCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="AcuteToxDermalCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="AcuteToxDermalCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AcuteToxInhalationCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="AcuteToxInhalationCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="AcuteToxInhalationCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="SkinCorrosiveIrritantCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="SkinCorrosiveIrritantCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="SkinCorrosiveIrritantCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1A"/>
+            <xs:enumeration value="1B"/>
+            <xs:enumeration value="1C"/>
+            <xs:enumeration value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="EyeDamageIrritationCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EyeDamageIrritationCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EyeDamageIrritationCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RespiratorySensitisationCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="RespiratorySensitisationCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="RespiratorySensitisationCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="SkinSensitisationCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="SkinSensitisationCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="SkinSensitisationCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="1A"/>
+            <xs:enumeration value="1B"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="MutagenGenotoxCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="MutagenGenotoxCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="MutagenGenotoxCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1A"/>
+            <xs:enumeration value="1B"/>
+            <xs:enumeration value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="CarcinogenicityCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="CarcinogenicityCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="CarcinogenicityCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1A"/>
+            <xs:enumeration value="1B"/>
+            <xs:enumeration value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ReproductiveToxCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ReproductiveToxCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ReproductiveToxCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1A"/>
+            <xs:enumeration value="1B"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="lact"/>
+            <xs:enumeration value="1A_lact"/>
+            <xs:enumeration value="1B_lact"/>
+            <xs:enumeration value="2_lact"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="StotCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="StotCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="StotCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AspirationToxCode">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="AspirationToxCodeValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicity code is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="AspirationToxCodeValue">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicity code.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ToxicologicalDetails">
+        <xs:annotation>
+            <xs:documentation>Defines a toxicological details.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ToxicologicalDataAvailable" type="ToxicologicalDataAvailable">
+                <xs:annotation>
+                    <xs:documentation>Availability of toxicological data, concerning a substance, either in isolation or as part of a
+                        mixture.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxEmission" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>The existence of studies that indicate the chemistry and/or toxicity of emissions.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxCmr" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>The existence of any study relating to the carcinogenicity, mutagenicity or toxicity for reproduction
+                        of the ingredient.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxCardioPulmonary" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>The existence of In vitro and in vivo assays to evaluate the toxicological effects of the ingredient
+                        on the heart, blood vessels or respiratory tract.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxAddictive" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>The existence of an analysis of the possible addictive properties of the ingredient.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxOther" type="Boolean">
+                <xs:annotation>
+                    <xs:documentation>The existence of any other toxicological data not stated above.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ToxEmissionFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upload available studies indicated in the ingredient tox emission field. (Guidance: studies should
+                        refer in particular to effects on the health of consumers and take into account, inter alia, any addictive effects.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ToxCmrFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upload available studies indicated in the ingredient tox cmr field. (Guidance: studies should
+                        refer in particular to effects on the health of consumers and take into account, inter alia, any addictive effects.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ToxCardioPulmonaryFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upload available studies indicated in the ingredient tox cardiopulmonary field. (Guidance: studies
+                        should refer in particular to effects on the health of consumers and take into account, inter alia, any addictive
+                        effects.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ToxAddictiveFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upload available studies indicated in the ingredient tox addictive field. (Guidance: studies
+                        should refer in particular to effects on the health of consumers and take into account, inter alia, any addictive
+                        effects.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ToxOtherFiles" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upload available studies indicated in the ingredient tox other field. (Guidance: studies should
+                        refer in particular to effects on the health of consumers and take into account, inter alia, any addictive effects.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ToxicologicalDataAvailable">
+        <xs:annotation>
+            <xs:documentation>Defines the availability of toxicological data.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ToxicologicalDataAvailableEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the toxicological data availability is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="ToxicologicalDataAvailableEnum">
+        <xs:annotation>
+            <xs:documentation>The list of toxicological data availability values.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>No toxicological data available.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NO_DATA_AVAILABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Toxicological data is available but not new.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="DATA_AVAILABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>New toxicological data has been obtained since the last reporting period.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NEW_DATA_AVAILABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Emission" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract product emission.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="CasNumber" type="CasNumber" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The CAS (Chemical Abstracts Service) number of the other emissions.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IupacName" type="String100" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The IUPAC (International Union of Pure and Applied Chemistry) name of the other emissions, should a
+                        CAS number not exist.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Quantity" type="Double">
+                <xs:annotation>
+                    <xs:documentation>The quantity of the other emissions produced during the process of using the product, based on the
+                        measurement method used.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Unit" type="String40">
+                <xs:annotation>
+                    <xs:documentation>The unit in which the other emission is measured.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MethodsFile">
+                <xs:annotation>
+                    <xs:documentation>The description of the measurement methods used to assess the other emissions. (Guidance: The file
+                        should contain substantial information for the regulator to understand and duplicate if necessary the emission test
+                        and also include where the emission testing took place.)
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

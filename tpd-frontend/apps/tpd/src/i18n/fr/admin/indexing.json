@@ -1,0 +1,15 @@
+{
+  "indexing": {
+    "title": "Réindexation",
+    "description": "L'index de recherche permet d'accelérer la recherche. Si vous rencontrez des problèmes avec la recherche, vous devrez peut-être reconstruire l'index de recherche. Notez que la reconstruction de l'index de recherche peut gravement affecter les performances de votre instance. Cela peut prendre un certain temps pour certaines instances importantes.",
+    "button": {
+      "reindex": "Réindexation",
+      "ack": "Accuser réception"
+    },
+    "modal": {
+      "title": "Attendez, s'il vous plait...",
+      "message-start": "Démarrage de l'indexation...",
+      "message-end": "L'indexation est terminée"
+    }
+  }
+}

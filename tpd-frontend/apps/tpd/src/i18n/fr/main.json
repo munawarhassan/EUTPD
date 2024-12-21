@@ -1,0 +1,8 @@
+{
+  "main": {
+    "title": "Bienvenue, {{name}}",
+    "logged": {
+      "message": "Vous êtes connecté en tant que \"{{username}}\"."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<input
+  tagify
+  type="text"
+  class="form-control form-control-solid form-control-lg"
+  name="tagGroups"
+  tagTextProp="displayName"
+  [dropdown]="{
+    closeOnSelect: false,
+    enabled: 2,
+    classname: 'groups-list',
+    searchKeys: ['displayName']
+  }"
+  [whitelist]="groups"
+  [blacklist]="blacklist"
+  [enforceWhitelist]="true"
+  [tagTemplate]="tagTemplate"
+  [dropdownItemTemplate]="dropdownItemTemplate"
+  (showDropdown)="onDropdownShow($event)"
+  (updatedDropdown)="onDropdownShow($event)"
+  (selectDropdown)="onSelectSuggestion($event)"
+  [(value)]="value"
+/>

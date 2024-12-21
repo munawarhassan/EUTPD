@@ -1,0 +1,80 @@
+dn: ou=groups,dc=company,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=subgroups,ou=groups,dc=company,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: subgroups
+
+dn: ou=user,dc=company,dc=com
+objectclass: top
+objectclass: organizationalUnit
+ou: user
+
+
+dn: cn=joe,ou=user,dc=company,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectClass: groupOfNames
+cn: joe
+sn: Smeth
+givenName: Joe
+displayName: Joe Smeth
+mail: joe.smeth@company.com
+userPassword: joespassword
+member: cn=group app users,ou=groups,dc=company,dc=com
+
+dn: cn=bob,ou=user,dc=company,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectClass: groupOfNames
+cn: bob
+sn: Hamilton
+userPassword: bobspassword
+member: cn=group app developers,ou=groups,dc=company,dc=com
+
+dn: cn=ben,ou=user,dc=company,dc=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+objectClass: groupOfNames
+cn: ben
+sn: Alex
+givenName: Ben
+displayName: Ben Alex
+mail: ben.alex@company.com
+userPassword: {SHA}nFCebWjxfaLbHHG1Qk5UU4trbvQ=
+member: cn=group app developers,ou=groups,dc=company,dc=com
+member: cn=group app administrators,ou=groups,dc=company,dc=com
+
+dn: cn=group app users,ou=groups,dc=company,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: group app users
+description: user of Company
+ou: user
+uniqueMember: cn=joe,ou=user,dc=company,dc=com
+
+
+dn: cn=group app developers,ou=groups,dc=company,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: group app developers
+description: developer of Company
+ou: developer
+uniqueMember: cn=ben,ou=people,dc=company,dc=com
+uniqueMember: cn=bob,ou=people,dc=company,dc=com
+
+dn: cn=group app administrators,ou=groups,dc=company,dc=com
+objectclass: top
+objectclass: groupOfUniqueNames
+cn: group app administrators
+description: administrator of Company
+ou: administrator
+uniqueMember: cn=ben,ou=people,dc=company,dc=com

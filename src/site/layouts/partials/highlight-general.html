@@ -1,0 +1,74 @@
+{{< layout class="highlight highlight-general py-5" >}}
+
+{{< layout class="container" >}}
+
+{{< card-group type="deck" >}}
+
+{{< column >}}
+
+{{% card horizontal="true" class="h-100" %}}
+
+<card-image>
+  #include( "src/site/svg/upload-folder.svg" )
+</card-image>
+<card-body>
+  <h5 class="card-title text-secondary">Documentation</h5>
+  <p class="card-text">Read latest TPD Submission Tool Documentation.</p>
+  <ul class="list-unstyled">
+    <li>
+      <p class="card-text">User Guide Documentation <a href="doc/user-guide.html">inline</a>, <a
+          href="doc/user-guide.pdf">pdf</a>.
+      </p>
+    </li>
+    <li>
+      <p class="card-text">Installation Guide Documentation <a href="doc/installation-guide.html">inline</a>, <a
+          href="doc/installation-guide.pdf">pdf</a>.
+      </p>
+    </li>
+    <li>
+      <p class="card-text">Administration Guide Documentation <a href="doc/installation-guide.html">inline</a>, <a
+          href="doc/administration-guide.pdf">pdf</a>.
+      </p>
+    </li>
+  </ul>
+</card-body>
+
+{{% /card %}}
+
+{{< /column >}}
+
+{{< column >}}
+
+{{% card horizontal="true" class="h-100" %}}
+
+<card-image>
+  #include( "src/site/svg/code-github.svg" )
+</card-image>
+<card-body>
+  <h4 class="card-title text-secondary">Contribute</h4>
+  <ul class="list-unstyled">
+    <li>
+      <a href="dev-documentation.html">Getting Started Documentation</a> , learn how install development environment
+      on your computer.
+    </li>
+    <li>
+      <a href="dev-documentation.html#dev-contribution-guidelines">Contribution Guidelines</a> provide a
+      introduction to the process of contributing in project.
+    </li>
+    <li>
+      <a href="dev-documentation.html#dev-release-management">Release Management</a> describes the release process,
+      releasing a
+      version publish the site and main maven command to use.
+    </li>
+  </ul>
+</card-body>
+
+{{% /card %}}
+
+{{< /column >}}
+
+{{< /card-group >}}
+
+{{< /layout >}}
+
+{{< /layout >}}

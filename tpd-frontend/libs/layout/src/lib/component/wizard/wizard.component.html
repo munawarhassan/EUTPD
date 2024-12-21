@@ -1,0 +1,164 @@
+<div [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'tab'" [ngTemplateOutlet]="wizardTemplateTab"> </ng-container>
+  <ng-container *ngSwitchCase="'aside'" [ngTemplateOutlet]="wizardTemplateAside"> </ng-container>
+  <ng-container *ngSwitchCase="'linear'" [ngTemplateOutlet]="wizardTemplateLinear"> </ng-container>
+</div>
+
+<ng-template #wizardTemplateTab>
+  <div #wizard class="wizard-tab d-flex flex-column" [attr.data-wizard-state]="state">
+    <div class="wizard-tab-nav">
+      <div class="nav-items row g-0">
+        <a
+          class="nav-item col"
+          href="#"
+          *ngFor="let step of $steps | async; index as i"
+          [attr.data-wizard-state]="getWizardNavigatorState(i)"
+          data-wizard-type="step"
+          (click)="handleNavSelect($event, i + 1)"
+        >
+          <div class="nav-body">
+            <div class="nav-number">{{ i + 1 }}</div>
+            <div class="nav-label">
+              <div class="nav-label-title">{{ step.title }}</div>
+              <div class="nav-label-desc">{{ step.description }}</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!--begin: Form Wizard Form-->
+    <div class="card card-flush">
+      <div class="card-body">
+        <div class="d-flex flex-center wizard-tab-wrapper">
+          <div class="w-lg-75 w-md-100">
+            <ng-container [ngTemplateOutlet]="contentSteps"></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <ng-container [ngTemplateOutlet]="formActionsTemplate"></ng-container>
+      </div>
+    </div>
+    <!--end: Form Wizard Form-->
+  </div>
+  <!--end: Form Wizard Nav -->
+</ng-template>
+
+<ng-template #wizardTemplateAside>
+  <div #wizard class="wizard-aside wizard-aside--white" [attr.data-wizard-state]="state">
+    <div class="wizard-aside__aside d-flex min-w-300px py-15 px-6">
+      <!--begin: Form Wizard Nav -->
+      <div class="wizard-aside__nav w-100">
+        <div class="nav-items d-flex flex-column justify-content-center">
+          <a
+            class="nav-item"
+            href="#"
+            *ngFor="let step of $steps | async; index as i"
+            [attr.data-wizard-state]="getWizardNavigatorState(i)"
+            data-wizard-type="step"
+            (click)="handleNavSelect($event, i + 1)"
+          >
+            <div class="nav-body">
+              <div class="nav-icon">
+                <i *ngIf="!useSVG(step)" [class]="step.icon"></i>
+                <inline-svg *ngIf="useSVG(step)" [src]="step.icon" size="1"></inline-svg>
+              </div>
+              <div class="nav-label">
+                <div class="nav-label-title">{{ step.title }}</div>
+                <div class="nav-label-desc">{{ step.description }}</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--begin: Form Wizard Form-->
+    <div class="card card-flush flex-grow-1">
+      <div class="card-body p-1">
+        <div class="d-flex flex-center wizard-aside-wrapper">
+          <div class="w-lg-75 w-md-100">
+            <ng-container [ngTemplateOutlet]="contentSteps"></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex flex-center wizard-aside-wrapper">
+          <div class="w-lg-75 w-md-100">
+            <ng-container [ngTemplateOutlet]="formActionsTemplate"></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end: Form Wizard Form-->
+  </div>
+  <!--end: Form Wizard Nav -->
+</ng-template>
+
+<ng-template #wizardTemplateLinear>
+  <div #wizard class="wizard-linear wizard-linear--white d-flex flex-column" [attr.data-wizard-state]="state">
+    <div class="wizard-linear__nav">
+      <div class="nav-items row g-0">
+        <a
+          class="nav-item col"
+          href="#"
+          *ngFor="let step of $steps | async; index as i"
+          [attr.data-wizard-state]="getWizardNavigatorState(i)"
+          data-wizard-type="step"
+          (click)="handleNavSelect($event, i + 1)"
+        >
+          <div class="nav-body">
+            <div class="nav-label">
+              <span>{{ i + 1 }}</span
+              >{{ step.title }}
+            </div>
+            <div class="nav-bar"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!--end: Form Wizard Nav -->
+    <!--begin: Form Wizard Form-->
+    <div class="card card-flush">
+      <div class="card-body">
+        <div class="d-flex flex-center wizard-linear-wrapper">
+          <div class="w-lg-75 w-md-100">
+            <ng-container [ngTemplateOutlet]="contentSteps"></ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <ng-container [ngTemplateOutlet]="formActionsTemplate"></ng-container>
+      </div>
+    </div>
+    <!--end: Form Wizard Form-->
+  </div>
+  <!--end: Form Wizard Nav -->
+</ng-template>
+
+<ng-template #contentSteps>
+  <ng-content></ng-content>
+</ng-template>
+
+<ng-template #formActionsTemplate>
+  <div class="wizard-actions d-flex flex-row justify-content-between">
+    <div
+      *ngIf="activeStep && activeStep.forwardAccepted"
+      (click)="previous()"
+      class="btn btn-secondary fw-bold text-uppercase"
+      data-wizard-type="action-prev"
+    >
+      {{ previousButtonText }}
+    </div>
+    <div (click)="submit()" class="btn btn-success fw-bold text-uppercase" data-wizard-type="action-submit">
+      {{ submitButtonText }}
+    </div>
+    <div
+      (click)="next()"
+      class="btn btn-primary fw-bold text-uppercase"
+      [ngClass]="{ disabled: activeStep && !activeStep.isValid }"
+      data-wizard-type="action-next"
+    >
+      {{ nextButtonText }}
+    </div>
+  </div>
+</ng-template>

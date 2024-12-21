@@ -1,0 +1,99 @@
+<form [formGroup]="form" role="form" novalidate show-validation>
+  <h3 class="mb-4">Mail Configuration</h3>
+  <fieldset [formGroup]="mailForm">
+    <form-text
+      class="mb-3"
+      controlClass="form-control-solid"
+      label="Hostname"
+      name="hostname"
+      formControlName="hostname"
+      helpText="The hostname of the mail server (for exemple 'localhost' or '192.168.1.15')."
+    ></form-text>
+
+    <form-text
+      class="mb-3"
+      controlClass="form-control-solid"
+      type="number"
+      label="Port"
+      name="port"
+      formControlName="port"
+      helpText="The port of the mail server (if unspecified, the port 25 will be used)."
+    ></form-text>
+    <form-text
+      class="mb-3"
+      controlClass="form-control-solid"
+      label="Username"
+      name="username"
+      formControlName="username"
+      helpText="The username to use to connect to the mail server."
+    ></form-text>
+
+    <form-text
+      class="mb-3"
+      type="password"
+      controlClass="form-control-solid"
+      label="Password"
+      name="password"
+      formControlName="password"
+      helpText="The password to use to connect to the mail server."
+    ></form-text>
+
+    <form-checkbox
+      class="mb-3"
+      controlClass="form-check-solid"
+      label="Use TLS"
+      name="tls"
+      formControlName="tls"
+      helpText="Tick if the SMTP server you are connecting to uses TLS."
+    ></form-checkbox>
+
+    <form-text
+      class="mb-3"
+      controlClass="form-control-solid"
+      type="email"
+      name="emailFrom"
+      label="Email From"
+      formControlName="emailFrom"
+      helpText="Specifies the From: header in notification emails (for example: noreply@company.com)."
+    ></form-text>
+  </fieldset>
+  <!-- first section: END -->
+  <div class="separator separator-dashed my-4"></div>
+  <h3 class="mb-4">Send a test email</h3>
+
+  <fieldset formGroupName="test">
+    <form-text
+      class="mb-3"
+      controlClass="form-control-solid"
+      type="email"
+      label="Recipient"
+      name="recipient"
+      formControlName="recipient"
+      helpText="The email address to send the test message to."
+    ></form-text>
+
+    <button
+      type="button"
+      class="btn btn-success me-2 mt-3"
+      id="m_test_connection_btn"
+      (click)="test()"
+      [attr.data-lt-indicator]="testing"
+      [disabled]="form.invalid"
+    >
+      <span class="indicator-label">
+        {{ 'database.migration.button.test' | translate }}
+      </span>
+      <span class="indicator-progress">
+        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </button>
+    <span [ngSwitch]="testResult">
+      <span *ngSwitchCase="'SUCCESS'" class="ms-2">
+        <span class="text-success">Connection successful!</span>
+      </span>
+      <span *ngSwitchCase="'FAILED'" class="ms-2">
+        <span class="text-danger">Connection failed.</span>
+      </span>
+    </span>
+  </fieldset>
+</form>

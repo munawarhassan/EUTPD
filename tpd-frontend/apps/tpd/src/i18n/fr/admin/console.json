@@ -1,0 +1,15 @@
+{
+  "console": {
+    "title": "Console",
+    "tabs": {
+      "log": "Logs",
+      "setting": "Configuration"
+    },
+    "nbloggers": "Total de {{ total }} \"loggers\".",
+    "filter": "Filtrer",
+    "table": {
+      "name": "Nom",
+      "level": "Niveau"
+    }
+  }
+}

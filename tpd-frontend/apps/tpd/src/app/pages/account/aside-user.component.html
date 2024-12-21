@@ -1,0 +1,45 @@
+<lt-aside [ltDrawer]="asideDrawerOptions">
+  <div class="card">
+    <div class="card-body">
+      <app-profile-card [user]="user">
+        <div id="lt_aside_account_wrapper" class="hover-scroll-overlay-y my-5 pe-4">
+          <div id="lt_aside_account">
+            <a
+              [routerLink]="['profile']"
+              [relativeTo]="activedRoute.parent"
+              routerLinkActive="active"
+              class="card-user-item"
+            >
+              <span class="section">
+                <inline-svg [src]="svgIcons.Duotone.communication.user" size="1"> </inline-svg>
+                <span class="desc" translate="account.profile.title"></span>
+              </span>
+            </a>
+            <a
+              [routerLink]="['settings']"
+              [relativeTo]="activedRoute.parent"
+              routerLinkActive="active"
+              class="card-user-item"
+            >
+              <span class="section">
+                <inline-svg [src]="svgIcons.Duotone.coding.setting" size="1"> </inline-svg>
+                <span class="desc" translate="account.settings.title"></span>
+              </span>
+            </a>
+            <a
+              [routerLink]="['change-password']"
+              [relativeTo]="activedRoute.parent"
+              routerLinkActive="active"
+              class="card-user-item"
+            >
+              <span class="section">
+                <inline-svg [src]="svgIcons.Duotone.general.shieldUser" size="1"> </inline-svg>
+                <span class="desc" translate="account.password.title"></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </app-profile-card>
+    </div>
+  </div>
+</lt-aside>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="TPD Submission Tool"
+  xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 http://maven.apache.org/xsd/site-2.0.0.xsd">
+
+  <bannerLeft>
+    <name>
+      <![CDATA[
+     TPD Submission <span class="color-highlight">Tool</span>
+      ]]>
+    </name>
+    <src>images/tpd-logo.svg</src>
+    <width>144</width>
+    <height>144</height>
+    <alt>TPD Submission Tools</alt>
+    <href>${this.site.url}</href>
+  </bannerLeft>
+
+  <publishDate position="bottom" format="yyyy-MM-dd" />
+  <version position="bottom" />
+  <edit>${project.scm.url}</edit>
+
+  <skin>
+    <groupId>io.github.devacfr.maven.skins</groupId>
+    <artifactId>reflow-maven-skin</artifactId>
+    <version>${this.maven-reflow-plugin.version}</version>
+  </skin>
+  <custom>
+    <reflowSkin>
+      <absoluteResourceURL>${this.site.url}</absoluteResourceURL>
+      <smoothScroll>true</smoothScroll>
+      <theme>bootswatch-${this.reflowTheme}</theme>
+      <highlightJs>true</highlightJs>
+      <highlightJsTheme>${this.highlightTheme}</highlightJsTheme>
+      <localResources>true</localResources>
+      <brand>
+        <!-- Brand text in top-left part of the site -->
+        <name>
+          <![CDATA[
+          TPD Submission <span class="color-highlight">Tool</span>
+          ]]>
+        </name>
+        <href>${this.site.url}</href>
+      </brand>
+      <slogan>Tobacco Products Directive Submission</slogan>
+      <titleTemplate>%2$s | %1$s</titleTemplate>
+      <toc level="3" autoExpandable="false" expanded="true">sidebar</toc>
+      <header enabled="true" background="dark" />
+      <navbar
+        filterMenu="Project Documentation|Developer Documentation|reports"
+        theme="dark" background="dark" center="false" alignMenu="left">
+        <image src="$resourcePath/images/tpd-logo.svg" />
+      </navbar>
+      <footer theme="dark" background="dark" cssClass="py-5" />
+      <!-- Split menus in the bottom navigation -->
+      <bottomNav>
+        <column>Main</column>
+        <column>Project Documentation|Developer Documentation</column>
+        <column>reports</column>
+      </bottomNav>
+      <bottomDescription quote="false">
+        <![CDATA[
+        <ul class="nav flex-column nav-list bg-info text-dark" style="border-radius: 5px;border-color: #04519b;border-width: 1px;border-style: solid;width:20rem">
+          <li class="nav-header">NEWS</li>
+          <li class="nav-item ">
+            <time datetime="2020-11-13" class="xsmall d-block">13 November 2020</time>
+            <a href="$resourcePath/release-notes/release-notes.2.4.html" class="nav-link">TPD Submission Tool 2.4 Release</a>
+          </li>
+          <li class="nav-item ">
+            <time datetime="2019-10-03" class="xsmall d-block">03 October 2019</time>
+            <a href="$resourcePath/release-notes/release-notes.2.3.html" class="nav-link">TPD Submission Tool 2.3 Release</a>
+          </li>
+          <li class="nav-item">
+            <div>
+              <a href="https://twitter.com/devacfr" class="d-inline-block p-1 text-secondary" target="_blank" rel="noopener">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="mailto:devacfr@mac.com" class="p-1 text-secondary"><i class="fas fa-envelope"></i></a>
+            </div>
+          </li>
+        </ul>
+        ]]>
+      </bottomDescription>
+      <pages>
+        <index type="body" project="tpd-parent"></index>
+        <download>
+          <toc>false</toc>
+        </download>
+        <contribute>
+          <breadcrumbs>false</breadcrumbs>
+        </contribute>
+        <release-notes>
+          <toc>false</toc>
+        </release-notes>
+        <!-- Disable source highlighting for Maven reports -->
+        <team>
+          <toc>false</toc>
+        </team>
+        <modules>
+          <toc>false</toc>
+        </modules>
+        <plugins>
+          <toc>false</toc>
+        </plugins>
+        <ci-management>
+          <toc>false</toc>
+        </ci-management>
+        <scm>
+          <toc>false</toc>
+        </scm>
+        <distribution-management>
+          <toc>false</toc>
+        </distribution-management>
+        <summary>
+          <toc>false</toc>
+        </summary>
+        <issue-management>
+          <highlightJs>false</highlightJs>
+          <toc>false</toc>
+        </issue-management>
+        <dev-documentation type="doc">
+          <menu name="Development Documentation"
+            selectFirstOnExpand="true">
+            <item name="Get Started" href="dev/get-started.html" />
+            <item name="Introduction and Basics">
+              <item name="Set up Maven" href="dev/setup-maven.html" />
+              <item name="Set up the Eclipse"
+                href="dev/setup-eclipse.html" />
+            </item>
+            <item name="Contribution Guidelines"
+              href="dev/contribution-guidelines.html" />
+            <item name="Code Conventions"
+              href="dev/code-conventions.html" />
+            <item name="Release Management"
+              href="dev/release-management.html" />
+            <item name="Build from Source"
+              href="dev/build-from-source.html" />
+            <item name="Learning">
+              <item name="Working with Maven"
+                href="dev/working-with-maven.html" />
+              <item name="Database Comparison"
+                href="dev/database-comparison.html" />
+              <item name="I18n property naming convention"
+                href="dev/i18n-property-naming-convention.html" />
+            </item>
+          </menu>
+        </dev-documentation>
+        <spotbugs>
+          <toc>false</toc>
+        </spotbugs>
+      </pages>
+    </reflowSkin>
+  </custom>
+
+  <body>
+    <head>
+      <![CDATA[
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			]]>
+    </head>
+    <links>
+      <item name="R&amp;D project" href="${this.scm.url}" />
+      <item name="Download" href="download.html" />
+    </links>
+
+    <breadcrumbs>
+      <item name="TPD Submission Tool" href="/index.html" />
+    </breadcrumbs>
+
+    <menu name="Main" inherit="top">
+      <item name="Home" href="./index.html" />
+      <item name="R&amp;D project" href="${this.scm.url}" />
+      <item name="Download" href="download.html" />
+      <item name="Release notes" href="release-notes.html" />
+    </menu>
+    <menu name="Project Documentation" inherit="top">
+      <item name="Installation Guide"
+        href="doc/installation-guide.html" />
+      <item name="Administration Guide"
+        href="doc/administration-guide.html" />
+    </menu>
+    <menu name="Developer Documentation" inherit="bottom">
+      <item name="Getting Started"
+        href="dev-documentation.html#dev-get-started" />
+      <item name="Contribution Guideline"
+        href="dev-documentation.html#dev-contribution-guidelines" />
+      <item name="Release Management"
+        href="dev-documentation.html#dev-release-management" />
+    </menu>
+    <menu name="Maven Documentation" ref="reports" inherit="bottom" />
+  </body>
+</project>

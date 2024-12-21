@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="add-send-status-1">
+    <comment>Add send status to replace send flag.</comment>
+    <addColumn tableName="t_status_attachment">
+      <column name="send_status" type="varchar(25)" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-status-2">
+    <validCheckSum>7:8271361d73b6d09332214d84c3afff31</validCheckSum>
+    <comment>Set status as NO_SEND for no send attachment.</comment>
+    <update tableName="t_status_attachment">
+      <column name="send_status" type="varchar(255)" value="NO_SEND" />
+      <where>ATT_SENT = false</where>
+    </update>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-status-3">
+    <validCheckSum>7:b891023ac72c6bf0d61be4754194b82c</validCheckSum>
+    <comment>Set status as SENT for sent attachment.</comment>
+    <update tableName="t_status_attachment">
+      <column name="send_status" type="varchar(255)" value="SENT" />
+      <where>ATT_SENT = true</where>
+    </update>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-status-4">
+    <validCheckSum>7:064d5d5ac2a34ef843963e2e4f074d4e</validCheckSum>
+    <comment>Remove send flag.</comment>
+    <dropColumn columnName="att_sent" tableName="t_status_attachment" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-status-5">
+    <addNotNullConstraint columnDataType="varchar(25)" columnName="send_status" tableName="t_status_attachment" />
+  </changeSet>
+</databaseChangeLog>

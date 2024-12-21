@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": "./",
+    "useDefineForClassFields": false,
+    "paths": {
+      "@devacfr/auth": ["libs/auth/src/public-api.ts"],
+      "@devacfr/bootstrap": ["libs/bootstrap/src/public-api.ts"],
+      "@devacfr/core": ["libs/core/src/public-api.ts"],
+      "@devacfr/euceg": ["libs/euceg/src/public-api.ts"],
+      "@devacfr/forms": ["libs/forms/src/public-api.ts"],
+      "@devacfr/layout": ["libs/layout/src/public-api.ts"],
+      "@devacfr/proxy-config": ["packages/proxy-config/src/index.ts"],
+      "@devacfr/shared-styles": ["libs/shared/styles/src/index.ts"],
+      "@devacfr/util": ["libs/util/src/public-api.ts"],
+      "@tpd/*": ["apps/tpd/src/*"]
+    },
+    "newLine": "LF"
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,85 @@
+@import 'init';
+
+$confidential: (
+    //
+    link:
+        (
+            //
+            icon:
+                (
+                    //
+                    font-color:
+                        (
+                            //
+                            default: $gray-800,
+                            disabled: $gray-500,
+                            enforce: $danger,
+                            checked: $primary,
+                            hover: $primary //
+                        )
+                        //
+                ),
+            //
+        )
+        //
+);
+
+::ng-deep {
+    .confidential-check {
+        .icon-check {
+            display: none;
+        }
+
+        .icon-uncheck {
+            display: inline;
+        }
+
+        &:not(.disabled) {
+            cursor: pointer;
+        }
+
+        &.disabled {
+            .svg-icon {
+                @include svg-icon-color(get($confidential, link, icon, font-color, disabled));
+            }
+        }
+
+        &.enforce {
+            .svg-icon {
+                @include svg-icon-color(get($confidential, link, icon, font-color, enforce), true);
+            }
+        }
+
+        &.checked {
+            .icon-check {
+                display: inline !important;
+            }
+
+            .icon-uncheck {
+                display: none !important;
+            }
+        }
+
+        &.checked:not(.disabled) {
+            .svg-icon {
+                @include svg-icon-color(get($confidential, link, icon, font-color, checked));
+            }
+        }
+
+        &:not(.disabled):hover {
+            .svg-icon {
+                @include svg-icon-color(get($confidential, link, icon, font-color, hover));
+            }
+        }
+
+        .svg-icon {
+            @include svg-icon-size(24px);
+        }
+
+        &:not(.checked, .disabled) {
+            .svg-icon {
+                @include svg-icon-color(get($confidential, link, icon, font-color, default));
+            }
+        }
+    }
+}

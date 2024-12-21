@@ -1,0 +1,67 @@
+<ng-container *ngIf="product && tobaccoProduct.TncoEmission">
+  <form name="tncoForm">
+    <div class="row mb-3">
+      <div class="col-sm-2">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.TncoEmission.Tar"
+          name="Tar"
+          label="Tar"
+          [disabled]="readonly"
+        ></app-confidential-input>
+      </div>
+      <div class="col-sm-2">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.TncoEmission.Nicotine"
+          name="Nicotine"
+          label="Nicotine"
+          [disabled]="readonly"
+        ></app-confidential-input>
+      </div>
+      <div class="col-sm-2">
+        <app-confidential-input [(ngModel)]="tobaccoProduct.TncoEmission.Co" name="Co" label="Co" [disabled]="readonly">
+        </app-confidential-input>
+      </div>
+    </div>
+    <div class="separator separtor-dashed my-4"></div>
+    <div class="row mb-3">
+      <div class="col-sm-12">
+        <label class="form-label">Laboratory(ies)</label>&nbsp;
+        <a
+          *ngIf="!readonly"
+          href="#"
+          class="btn btn-circle btn-sm btn-icon btn-light btn-light-primary ms-2"
+          (click)="addToArray(product, 'product.TncoEmission.Laboratories.Laboratory')"
+        >
+          <i class="fa fa-plus"></i>
+        </a>
+        <div *ngIf="tobaccoProduct.TncoEmission?.Laboratories?.Laboratory" class="d-flex flex-column">
+          <div
+            class="d-flex flex-row align-items-center"
+            *ngFor="let a of tobaccoProduct.TncoEmission?.Laboratories?.Laboratory; index as $index"
+          >
+            <div class="flex-grow-1">
+              <app-confidential-textarea
+                name="Laboratory[{{ $index }}]"
+                [ngModel]="a"
+                [maxlength]="500"
+                [rows]="3"
+                [disabled]="readonly"
+              >
+              </app-confidential-textarea>
+            </div>
+            <div>
+              <a
+                *ngIf="!readonly"
+                href="#"
+                class="btn btn-circle btn-sm btn-icon btn-light btn-light-danger ms-2"
+                (click)="removeFromArray(product, 'product.TncoEmission.Laboratories.Laboratory', a)"
+              >
+                <i class="fa fa-minus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

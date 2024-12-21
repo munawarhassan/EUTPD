@@ -1,0 +1,18 @@
+{
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
+    },
+    "editor.rulers": [120],
+    "maven.view": "flat",
+    "java.format.settings.url": "eclispe/java-code-style-formatter.xml",
+    "java.compile.nullAnalysis.mode": "automatic"
+}

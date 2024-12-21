@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+  <changeSet author="devacfr" context="production" id="add-send-type-column-1">
+    <comment>add send_type column to t_submission table.</comment>
+    <addColumn tableName="t_submission">
+      <column name="send_type" type="varchar(25)" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-2">
+    <comment>set send_type column with default value 'IMMEDIAT'.</comment>
+    <update tableName="t_submission">
+      <column name="send_type" type="varchar(25)" value="IMMEDIAT" />
+    </update>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-3">
+    <comment>add not null constraint to send_type column.</comment>
+    <addNotNullConstraint columnDataType="varchar(25)" columnName="send_type" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-4">
+    <comment>add error column in t_transmit_receipt table.</comment>
+    <addColumn tableName="t_transmit_receipt">
+      <column name="response_error" type="boolean" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-5">
+    <comment>Set error column of t_transmit_receipt table </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_110_SetErrorColumn" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-6">
+    <comment>add submission_status column in t_submission table.</comment>
+    <addColumn tableName="t_submission">
+      <column name="submission_status" type="varchar(25)">
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-7">
+    <comment>Set submission status to t_submission table </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_110_SetSubmissionStatus" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-8">
+    <addNotNullConstraint columnDataType="varchar(25)" columnName="submission_status" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-9">
+    <addColumn tableName="t_submission">
+      <column name="submission_type" type="int" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-10">
+    <comment>Set submission type to t_submission table </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_110_SetSubmissionType" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-11">
+    <comment>add not null constraint to submission_type column.</comment>
+    <addNotNullConstraint columnDataType="int" columnName="submission_type" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-12">
+    <comment>add index to column last_modified_date of table t_submission.</comment>
+    <createIndex indexName="idx_submission_modified_date" tableName="t_submission" unique="false">
+      <column name="last_modified_date" type="timestamp" />
+    </createIndex>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-send-type-column-13">
+    <comment>add index to column last_modified_date of table t_product.</comment>
+    <createIndex indexName="idx_product_modified_date" tableName="t_product" unique="false">
+      <column name="last_modified_date" type="timestamp" />
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

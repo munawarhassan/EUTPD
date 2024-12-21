@@ -1,0 +1,35 @@
+<jaxb:bindings version="2.0"
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+               jaxb:extensionBindingPrefixes="xjc">
+
+
+    <!-- XSD types packages customization -->
+    <jaxb:bindings schemaLocation="../wsdl/webservicePlugin-header.xsd" node="/xsd:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="eu.domibus.plugin.ws.message"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../wsdl/webservicePlugin-body.xsd" node="/xsd:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="eu.domibus.plugin.ws.message"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="../wsdl/xmlmime.xsd" node="/xs:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="eu.domibus.plugin.ws.message"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+
+    <!-- Used for the test SendSOAPMessageIT -->
+    <jaxb:bindings schemaLocation="../wsdl/envelope.xsd" node="/xs:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="eu.domibus.plugin.ws.schema"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+
+</jaxb:bindings>

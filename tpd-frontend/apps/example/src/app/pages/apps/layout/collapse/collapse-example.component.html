@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-6 pe-md-10 mb-10 mb-md-0">
+    <div class="m-0">
+      <!--begin::Heading-->
+      <!-- add collapsible and toggle classes (toggle-off,toggle-on) to toggle icon-->
+      <div
+        class="d-flex align-items-center toggle collapsible py-3 mb-0"
+        (click)="collapse.toggle()"
+        [ngClass]="{ collapsed: collapse.collapsed }"
+      >
+        <!--begin::Icon-->
+        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+          <!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
+          <span class="svg-icon svg-icon-primary svg-icon-1 toggle-on" inlineSVG="icons/duotune/general/gen036.svg">
+          </span>
+          <!--end::Svg Icon-->
+          <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+          <span class="svg-icon svg-icon-1 toggle-off" inlineSVG="icons/duotune/general/gen035.svg"> </span>
+          <!--end::Svg Icon-->
+        </div>
+        <!--end::Icon-->
+        <!--begin::Title-->
+        <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">How does it work?</h4>
+        <!--end::Title-->
+      </div>
+      <!--end::Heading-->
+      <!--begin::Body-->
+      <div #collapse="ltCollapse" class="fs-6 ms-1" [ltCollapse]="true">
+        <!--begin::Text-->
+        <div class="mb-4 text-gray-600 fw-bold fs-6 ps-10">
+          First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even
+          if you can type eighty words as per minute and your writing skills are sharp.
+        </div>
+        <!--end::Text-->
+      </div>
+      <!--end::Content-->
+      <!--begin::Separator-->
+      <div class="separator separator-dashed"></div>
+      <!--end::Separator-->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="product-filter-result mb-3">
+  <span
+    *ngFor="let filter of filters; index as $index"
+    class="badge badge-sm d-inline-flex align-items-center me-1"
+    [ngClass]="getLabelClass(filter)"
+  >
+    <span
+      *ngIf="typeOf(filter.not) !== 'undefined'"
+      class="not-check"
+      [ngClass]="{ checked: filter.not, readonly: filter.readonly }"
+      (click)="handleNotCheck($index, filter)"
+    >
+      <inline-svg class="icon-uncheck" [src]="svgIcons.Simple.general.visible" ltTooltip="equal"></inline-svg>
+      <inline-svg class="icon-check" [src]="svgIcons.Simple.general.hidden" ltTooltip="not equal"></inline-svg>
+    </span>
+
+    <inline-svg
+      class="product-filter__icon me-1"
+      size="1"
+      [color]="getColor(filter)"
+      [src]="svgIcons.Simple.shopping.price2"
+    ></inline-svg>
+    <b class="me-1">{{ filter.name }}</b> :
+    <span class="d-inline-flex text-truncate ms-1 mw-250px">{{ filter.value }}</span>
+    <a
+      *ngIf="!filter.readonly"
+      href="#"
+      class="product-filter__remove-button text-hover-danger"
+      (click)="removeTag.emit($index)"
+      ><i class="fa fa-times fa-fw" aria-hidden="true"></i
+    ></a>
+  </span>
+  <a
+    *ngIf="filters.length > 0"
+    href="#"
+    (click)="cleared.emit()"
+    class="product-filter__clear-all btn btn-light-danger btn-sm mx-2 p-2"
+    ltTooltip="Clear All"
+    placement="bottom"
+  >
+    <inline-svg size="1" [src]="svgIcons.Duotone.general.crossCircle"></inline-svg>
+    Clear All
+  </a>
+</div>

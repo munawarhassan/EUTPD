@@ -1,0 +1,177 @@
+<ng-container *ngIf="product">
+  <button *ngIf="!readonly" type="button" (click)="add()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Presentation
+  </button>
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Brand Name</th>
+          <th scope="col">Launch Date</th>
+          <th scope="col" class="text-center">National Market</th>
+          <th scope="col">Number Type</th>
+          <th scope="col">Number</th>
+          <th scope="col">Package Units</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let presentation of dataRows.presentation.content"
+          (click)="selected = presentation"
+          class="row-selectable"
+          [ngClass]="{ active: dataRows.presentation.isSelected(presentation) }"
+        >
+          <td scope="row">{{ presentation.BrandName?.value }}</td>
+          <td>{{ presentation?.LaunchDate?.value }}</td>
+          <td class="text-center">
+            <app-market-symbol
+              [countries]="getCountry(presentation.NationalMarket.value)"
+              [size]="5"
+            ></app-market-symbol>
+          </td>
+          <td>
+            {{ presentation.ProductNumberType ? euceg.getProductNumberType(presentation.ProductNumberType.value) : '' }}
+          </td>
+          <td>{{ presentation.ProductNumber?.value }}</td>
+          <td>{{ presentation.PackageUnits?.value }}</td>
+          <td class="text-center text-nowrap">
+            <button
+              [disabled]="readonly"
+              type="button"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              (click)="remove(presentation)"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="7">
+          <lt-pagination
+            [page]="dataRows.presentation"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="this.dataRows.presentation.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+  <ng-container *ngIf="selected">
+    <div class="separator separtor-dashed mb-8"></div>
+    <form name="presentationForm">
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="NationalMarket"
+            [options]="nationalMarkets$"
+            label="National Market"
+            [searchable]="true"
+            [(ngModel)]="selected.NationalMarket"
+            [disabled]="readonly"
+            [required]="true"
+          >
+          </app-confidential-select>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.BrandName"
+            name="BrandName"
+            label="Brand Name"
+            [disabled]="readonly"
+            [required]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.BrandSubtypeName"
+            name="BrandSubtypeName"
+            label="Brand Subtype Name"
+            [disabled]="readonly"
+            [required]="true"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-date
+            [(ngModel)]="selected.LaunchDate"
+            name="LaunchDate"
+            label="Launch Date"
+            [required]="true"
+            [disabled]="readonly"
+          >
+          </app-confidential-date>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-date
+            [(ngModel)]="selected.WithdrawalDate"
+            name="WithdrawalDate"
+            label="Withdrawal Date"
+            [disabled]="readonly"
+          >
+          </app-confidential-date>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <app-confidential-select
+            name="ProductNumberType"
+            [options]="productNumberTypes$"
+            label="Product Number Type"
+            [(ngModel)]="selected.ProductNumberType"
+            [disabled]="readonly"
+            [required]="true"
+          ></app-confidential-select>
+        </div>
+        <div class="col-sm-3">
+          <app-confidential-input
+            [(ngModel)]="selected.ProductNumber"
+            name="ProductNumber"
+            label="Product Number"
+            [disabled]="readonly"
+            [required]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-3">
+          <app-confidential-input
+            [(ngModel)]="selected.PackageUnits"
+            name="PackageUnits"
+            label="Package Units"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="separator separator-dashed my-6"></div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <app-one-file
+            name="UnitPacketPictureFile"
+            [(ngModel)]="selected.UnitPacketPictureFile"
+            [disabled]="readonly"
+            label="Unit Packet Picture File"
+          ></app-one-file>
+        </div>
+      </div>
+      <div class="separator separator-dashed my-6"></div>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <app-confidential-textarea
+            label="National Comment"
+            [(ngModel)]="selected.NationalComment"
+            name="NationalComment"
+            [disabled]="readonly"
+            [maxlength]="1000"
+            [rows]="5"
+          ></app-confidential-textarea>
+        </div>
+      </div>
+      <app-ecig-product-saledata [presentation]="selected" [readonly]="false"> </app-ecig-product-saledata>
+    </form>
+  </ng-container>
+</ng-container>

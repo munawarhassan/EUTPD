@@ -1,0 +1,164 @@
+<app-layout-view width="fluid">
+  <ng-container *ngIf="info$ | async as info">
+    <div class="card card-flush bg-dark">
+      <div class="card-header">
+        <div class="card-title d-flex align-items-center flex-root">
+          <h3
+            class="text-inverse-dark flex-grow-1"
+            [innerText]="'main.title' | translate: { name: 'global.title' | translate }"
+          ></h3>
+          <span class="d-flex flex-center text-inverse-dark">
+            <span class="badge badge-info ms-3">
+              <inline-svg [src]="svgIcons.Simple.code.git4" class="me-2" mode="sm"></inline-svg>
+              {{ info.buildUtilsInfo?.currentLongVersion }}
+            </span>
+            <span class="badge badge-white mx-3">
+              <inline-svg [src]="svgIcons.Simple.code.compiling" class="me-2" mode="sm"></inline-svg>
+              {{ info.environment }}
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="card-body text-inverse-dark"></div>
+    </div>
+  </ng-container>
+  <div class="row g-5 g-xl-8 mt-5">
+    <div class="col-xl-3">
+      <a
+        [routerLink]="['/', 'product', 'submissions']"
+        id="m_card_submission_count"
+        class="card bg-primary hoverable card-xl-stretch mb-xl-8"
+      >
+        <!--begin::Body-->
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div *ngIf="countSubmission$ | async as countSubmission" class="flex-grow-1">
+              <inline-svg class="ms-n1" [src]="svgIcons.Duotone.general.send" color="white" size="3x"></inline-svg>
+              <div class="text-white fw-bolder fs-2hx mb-2 mt-5" [countUp]="countSubmission.count">0</div>
+            </div>
+            <div>
+              <apx-chart
+                #submissionChart
+                [series]="submissionChartOptions.series"
+                [colors]="submissionChartOptions.colors"
+                [chart]="submissionChartOptions.chart"
+                [fill]="submissionChartOptions.fill"
+                [labels]="submissionChartOptions.labels"
+                [legend]="submissionChartOptions.legend"
+                [dataLabels]="submissionChartOptions.dataLabels"
+              ></apx-chart>
+            </div>
+          </div>
+          <div class="fs-1 fw-bold text-gray-100">Submission</div>
+        </div>
+        <!--end::Body-->
+      </a>
+    </div>
+    <div class="col-xl-3">
+      <a
+        id="m_card_tobacco_count"
+        [routerLink]="['/', 'product', 'tobacco-products']"
+        class="card bg-dark hoverable card-xl-stretch mb-xl-8"
+      >
+        <!--begin::Body-->
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div *ngIf="countTobacco$ | async as countTobacco" class="flex-grow-1">
+              <inline-svg class="ms-n1" [src]="svgIcons.Simple.shopping.box2" color="white" size="3x"></inline-svg>
+              <div class="text-gray-100 fw-bolder fs-2hx mb-2 mt-5" [countUp]="countTobacco.count">0</div>
+            </div>
+            <div>
+              <apx-chart
+                #tobaccoChart
+                [series]="tobaccoChartOptions.series"
+                [colors]="tobaccoChartOptions.colors"
+                [chart]="tobaccoChartOptions.chart"
+                [fill]="tobaccoChartOptions.fill"
+                [labels]="tobaccoChartOptions.labels"
+                [legend]="tobaccoChartOptions.legend"
+                [dataLabels]="tobaccoChartOptions.dataLabels"
+              ></apx-chart>
+            </div>
+          </div>
+          <div class="fs-1 fw-bold text-gray-100">Tobacco Product</div>
+        </div>
+        <!--end::Body-->
+      </a>
+    </div>
+    <div class="col-xl-3">
+      <a
+        id="m_card_ecig_count"
+        [routerLink]="['/', 'product', 'ecig-products']"
+        class="card bg-gray-600 hoverable card-xl-stretch mb-xl-8"
+      >
+        <!--begin::Body-->
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div *ngIf="countEcig$ | async as countEcig" class="flex-grow-1">
+              <inline-svg class="ms-n1" [src]="svgIcons.Simple.shopping.box2" color="white" size="3x"></inline-svg>
+              <div class="text-white fw-bolder fs-2hx mb-2 mt-5" [countUp]="countEcig.count">0</div>
+            </div>
+            <div>
+              <apx-chart
+                #ecigChart
+                [series]="ecigChartOptions.series"
+                [colors]="ecigChartOptions.colors"
+                [chart]="ecigChartOptions.chart"
+                [fill]="ecigChartOptions.fill"
+                [labels]="ecigChartOptions.labels"
+                [legend]="ecigChartOptions.legend"
+                [dataLabels]="ecigChartOptions.dataLabels"
+              ></apx-chart>
+            </div>
+          </div>
+          <div class="fs-1 fw-bold text-white">Ecig Product</div>
+        </div>
+        <!--end::Body-->
+      </a>
+    </div>
+    <div class="col-xl-3">
+      <a
+        id="m_card_attachment_count"
+        [routerLink]="['/', 'product', 'attachments']"
+        class="card bg-white hoverable card-xl-stretch mb-5 mb-xl-8"
+      >
+        <!--begin::Body-->
+        <div class="card-body">
+          <div class="d-flex flex-row">
+            <div *ngIf="countAttachment$ | async as countAttachment" class="flex-grow-1">
+              <inline-svg class="ms-n1" [src]="svgIcons.Simple.files.selectedFile" color="dark" size="3x"></inline-svg>
+              <div class="text-gray-900 fw-bolder fs-2hx mb-2 mt-5" [countUp]="countAttachment.count">0</div>
+            </div>
+            <div>
+              <apx-chart
+                #attachmentChart
+                [series]="attachmentOptions.series"
+                [colors]="attachmentOptions.colors"
+                [chart]="attachmentOptions.chart"
+                [fill]="attachmentOptions.fill"
+                [labels]="attachmentOptions.labels"
+                [legend]="attachmentOptions.legend"
+                [dataLabels]="attachmentOptions.dataLabels"
+              ></apx-chart>
+            </div>
+          </div>
+          <div class="fs-1 fw-bold text-gray-400">Attachment</div>
+        </div>
+        <!--end::Body-->
+      </a>
+    </div>
+  </div>
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-6">
+      <app-chart-recent></app-chart-recent>
+    </div>
+    <div class="col-xl-6">
+      <app-audit-timeline
+        class="card-xl-stretch mb-xl-8 h-600px"
+        title="Activities"
+        [range]="defaultRangeActivities"
+        [channels]="channels"
+      ></app-audit-timeline>
+    </div>
+  </div>
+</app-layout-view>

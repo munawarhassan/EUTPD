@@ -1,0 +1,81 @@
+<ng-container *ngIf="page">
+  <ul class="pagination">
+    <li
+      class="page-item first"
+      *ngIf="boundaryLinks"
+      [class.disabled]="!page.hasPrevious() || disabled"
+      [ngClass]="{ 'bg-gray-100 rounded-1': !page.hasPrevious() || disabled }"
+    >
+      <a
+        href
+        class="page-link"
+        (click)="handleSelectPage(page.firstPageable(), $event)"
+        [attr.disabled]="!page.hasPrevious() || disabled ? 'true' : null"
+      >
+        <span inlineSVG="icons/duotune/arrows/arr021.svg" class="svg-icon"></span>
+      </a>
+    </li>
+    <li
+      class="page-item previous"
+      *ngIf="directionLinks"
+      [class.disabled]="!page.hasPrevious() || disabled"
+      [ngClass]="{ 'bg-gray-100 rounded-1': !page.hasPrevious() || disabled }"
+    >
+      <a
+        href
+        class="page-link"
+        (click)="handleSelectPage(page.previousPageable(), $event)"
+        [attr.disabled]="!page.hasPrevious() || disabled ? 'true' : null"
+        ><span inlineSVG="icons/duotune/arrows/arr022.svg" class="svg-icon"></span>
+      </a>
+    </li>
+    <li *ngFor="let pg of pages" class="page-item" [class.active]="pg.active" [class.disabled]="disabled && !pg.active">
+      <a
+        class="page-link"
+        href
+        (click)="handleSelectPage(pg.number, $event)"
+        [attr.disabled]="disabled && !pg.active ? 'true' : null"
+        >{{ pg.text }}</a
+      >
+    </li>
+    <li class="page-item next" *ngIf="directionLinks" [class.disabled]="!page.hasNext() || disabled">
+      <a
+        class="page-link"
+        href
+        (click)="handleSelectPage(page.nextPageable(), $event)"
+        [attr.disabled]="!page.hasNext() || disabled ? 'true' : null"
+        [ngClass]="{ 'bg-gray-100 rounded-1': !page.hasNext() || disabled }"
+      >
+        <span inlineSVG="icons/duotune/arrows/arr023.svg" class="svg-icon"></span>
+      </a>
+    </li>
+    <li class="page-item last" *ngIf="boundaryLinks" [class.disabled]="!page.hasNext() || disabled">
+      <a
+        class="page-link"
+        href
+        (click)="handleSelectPage(page.lastPageable(), $event)"
+        [attr.disabled]="!page.hasNext() || disabled ? 'true' : null"
+        [ngClass]="{ 'bg-gray-100 rounded-1': !page.hasNext() || disabled }"
+      >
+        <span inlineSVG="icons/duotune/arrows/arr024.svg" class="svg-icon"></span>
+      </a>
+    </li>
+  </ul>
+  <div class="toolbar">
+    <div class="mx-4">
+      <select
+        select2
+        class="form-select form-select-sm form-select-solid"
+        [(ngModel)]="pageSize"
+        (ngModelChange)="handleChangeSize()"
+      >
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+    <span class="fs-4 text-gray-600"
+      >Displaying {{ page.number + 1 }} - {{ page.totalPages }} of {{ page.totalElements }} records</span
+    >
+  </div>
+</ng-container>

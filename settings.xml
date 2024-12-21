@@ -1,0 +1,156 @@
+<settings>
+
+  <servers>
+
+    <!-- Internal release libraries repository -->
+    <server>
+      <id>libs-release</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal snapshot libraries repository -->
+    <server>
+      <id>libs-snapshot</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal release plugins repository -->
+    <server>
+      <id>plugins-release</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal snapshot plugins repository -->
+    <server>
+      <id>plugins-snapshot</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal release plugins repository -->
+    <server>
+      <id>plugins-release-local</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal snapshot plugins repository -->
+    <server>
+      <id>plugins-snapshot-local</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- Internal third party libraries repository (not distributable) -->
+    <server>
+      <id>thirdparty</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+    <!-- specific server id for npm repository if you use the plugin com.github.eirslett:frontend-maven-plugin -->
+    <!-- http://rd-artifactory.app.pmi/artifactory/api/npm/npm-registry/npm/-/ -->
+    <server>
+      <id>npm-registry-server</id>
+      <username>artifactory_ro</username>
+      <password>AP3U1Et3NZN4L8wt56Lry64Uj6m</password>
+    </server>
+  </servers>
+  <!-- <mirrors> -->
+  <!-- <mirror> -->
+  <!-- <id>central</id> -->
+  <!-- <mirrorOf>central</mirrorOf> -->
+  <!-- <name>central</name> -->
+  <!-- <url>http://rd-artifactory.app.pmi/artifactory/maven-virtual</url> -->
+  <!-- </mirror> -->
+  <!-- </mirrors> -->
+  <profiles>
+    <profile>
+      <id>artifactory</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>libs-release</id>
+          <name>libs-release</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/libs-release</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+        </repository>
+        <repository>
+          <id>libs-snapshot</id>
+          <name>libs-snapshot</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/libs-snapshot</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>thirdparty</id>
+          <name>rd-artifactory.app.pmi-thirdparty</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/ThirdParty</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>plugins-release</id>
+          <name>plugins-release</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/plugins-release</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+        </pluginRepository>
+        <pluginRepository>
+          <id>plugins-snapshot</id>
+          <name>plugins-snapshot</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/plugins-snapshot</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+          <id>plugins-release-local</id>
+          <name>plugins-release-local</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/plugins-release-local</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>plugins-snapshot-local</id>
+          <name>plugins-snapshot-local</name>
+          <url>http://rd-artifactory.app.pmi/artifactory/plugins-snapshot-local</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <!-- activeProfiles | List of profiles that are active for all builds. -->
+  <activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+  </activeProfiles>
+</settings>

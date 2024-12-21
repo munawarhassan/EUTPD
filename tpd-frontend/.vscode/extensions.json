@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "angular.ng-template",
+    "nrwl.angular-console",
+    "esbenp.prettier-vscode",
+    "firsttris.vscode-jest-runner",
+    "dbaeumer.vscode-eslint",
+    "johnpapa.angular2",
+    "editorconfig.editorconfig",
+    "nepaul.editorconfiggenerator",
+    "anderseandersen.html-class-suggestions",
+    "eg2.vscode-npm-script",
+    "christian-kohler.npm-intellisense",
+    "eternalphane.tsfmt-vscode",
+    "rvest.vs-code-prettier-eslint"
+  ]
+}

@@ -1,0 +1,21 @@
+<div class="accordion" id="${snippet.id}">
+#*  *##set($index = 1)##
+#*      *##foreach( $card in ${snippet.cards} )##
+  <div class="card">
+    <div class="card-header" id="heading${index}">
+      <h5>
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse${index}" aria-expanded="true" aria-controls="collapse${index}">
+           #render_html( ${card.get("card-header")} )
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse${index}" class="collapse#if( ${index} == 1 ) show#end" aria-labelledby="heading${index}" data-parent="#${snippet.id}">
+      <div class="card_body">
+        #render_html( ${card.get("card-body")} )
+      </div>
+    </div>
+  </div>
+</div>
+#*      *##set( $index = $index + 1)##
+#*  *##end##

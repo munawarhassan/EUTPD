@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="devacfr" context="production" id="1587481381230-16">
+    <mergeColumns column1Name="first_name" column2Name="last_name" finalColumnName="display_name"
+      finalColumnType="varchar(250)" joinString=" " tableName="t_user" />
+  </changeSet>
+  <changeSet author="devacfr" context="dev" id="1587481381230-16-2">
+    <update tableName="t_user">
+      <column name="display_name" value="User"></column>
+      <where>login = 'user'</where>
+    </update>
+    <update tableName="t_user">
+      <column name="display_name" value="Administrator"></column>
+      <where>login = 'admin'</where>
+    </update>
+    <update tableName="t_user">
+      <column name="display_name" value="System Administrator"></column>
+      <where>login = 'system'</where>
+    </update>
+  </changeSet>
+</databaseChangeLog>
+

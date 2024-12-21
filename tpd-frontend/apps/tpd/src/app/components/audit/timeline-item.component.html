@@ -1,0 +1,46 @@
+<!--begin::Timeline line-->
+<div class="timeline-line w-40px"></div>
+<!--end::Timeline line-->
+<!--begin::Timeline icon-->
+<div class="timeline-icon symbol symbol-circle symbol-40px me-4">
+  <div *ngIf="icon" class="symbol-label bg-light">
+    <inline-svg [src]="icon" [color]="color" size="2"></inline-svg>
+  </div>
+</div>
+<!--end::Timeline icon-->
+<!--begin::Timeline content-->
+<div class="timeline-content mb-10 mt-n1">
+  <!--begin::Timeline heading-->
+  <div class="pe-3 mb-5">
+    <div class="d-flex flex-row">
+      <!--begin::Title-->
+      <div class="fs-5 mb-2">
+        <ng-content select="timeline-title"></ng-content>
+      </div>
+      <!--end::Title-->
+      <div *ngIf="state" class="min-w-125px ms-10">
+        <span class="badge text-uppercase" [ngClass]="'badge-light-' + color">{{ state }}</span>
+      </div>
+    </div>
+
+    <!--begin::Description-->
+    <div *ngIf="audit" class="d-flex align-items-center mt-1 fs-6">
+      <!--begin::Info-->
+      <div class="text-muted me-2 fs-7">Executed at {{ audit.timestamp | date: 'medium' }} by</div>
+      <!--end::Info-->
+      <!--begin::User-->
+      <div class="symbol symbol-circle symbol-25px" [ltTooltip]="audit.principal" placement="top">
+        <img [avatarUrl]="audit.principal" [size]="32" />
+      </div>
+      <!--end::User-->
+    </div>
+    <!--end::Description-->
+  </div>
+  <!--end::Timeline heading-->
+  <!--begin::Timeline detail-->
+  <div class="overflow-auto pb-5">
+    <ng-content select="timeline-details"></ng-content>
+  </div>
+  <!--end::Timeline detail-->
+</div>
+<!--end::Timeline content-->

@@ -1,0 +1,75 @@
+<div class="card card-bordered card-stretch h-100 card-py-0">
+  <div class="card-header bg-gray-100 py-2">
+    <div class="card-title">
+      <span class="fw-bold fs-5 text-gray-800">{{ label }}</span>
+      <i *ngIf="tooltip" class="fa fa-info-circle text-primary fa-fw" [ltTooltip]="tooltip" placement="top"></i>
+    </div>
+    <div class="card-toolbar">
+      <button
+        *ngIf="!disabled"
+        type="button"
+        class="btn btn-circle btn-icon btn-light-primary btn-sm ms-2"
+        ltTooltip="Add"
+        placement="top"
+        (click)="openModal(addAttachmentModal)"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body px-6 py-2">
+    <div
+      class="fw-bold fs-5 text-gray-800 d-flex flex-center my-3"
+      *ngIf="!value || !value.Attachment || value.Attachment.length === 0"
+    >
+      No Files
+    </div>
+    <div
+      class="align-items-center rounded d-flex flex-row px-3 py-2"
+      *ngFor="let attachment of attachments$ | async; trackBy: trackAttachment"
+    >
+      <div class="flex-grow-1 flex-nowrap d-flex flex-row align-items-center">
+        <span
+          *ngIf="attachment.contentType === 'application/pdf'"
+          class="svg-original me-3"
+          [inlineSVG]="svgIcons.Files.pdf"
+        ></span>
+        <div class="fw-bold text-gray-800">{{ attachment.filename }}</div>
+      </div>
+      <button
+        *ngIf="!disabled"
+        type="button"
+        class="btn btn-circle btn-icon btn-light-primary btn-sm ms-2"
+        ltTooltip="Remove"
+        placement="top"
+        (click)="removeAttachment(attachment)"
+      >
+        <i class="fa fa-minus"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #addAttachmentModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Attachment</h4>
+  </div>
+  <form [formGroup]="formControl" (ngSubmit)="addAttachment()">
+    <div class="modal-body">
+      <form-select
+        controlClass="form-select-solid"
+        label="Attachment"
+        placeholder="Select Attachment..."
+        [options]="options$"
+        optionValue="attachmentId"
+        optionText="filename"
+        formControlName="attachment"
+        [searchable]="true"
+        [allowClear]="true"
+      ></form-select>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" translate="global.button.save" class="btn btn-primary me-3">Save</button
+      ><a href="#" translate="global.button.cancel" class="link-primary" (click)="modalRef?.hide()">Cancel</a>
+    </div>
+  </form>
+</ng-template>

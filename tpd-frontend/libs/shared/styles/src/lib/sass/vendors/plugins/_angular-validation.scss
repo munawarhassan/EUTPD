@@ -1,0 +1,28 @@
+$invalid-border-color: lighten($danger, 0.5);
+$invalid-background-color: theme-light-color(danger);
+
+.ng-invalid:not(form) {
+    .ng-submitted &,
+    &.ng-touched,
+    &.ng-dirty {
+        &.form-control,
+        &.form-select {
+            border-color: $invalid-border-color;
+            background-color: $invalid-background-color;
+        }
+
+        &.form-control-solid,
+        &.form-control-transparent,
+        &.form-select-transparent,
+        &.form-select-solid {
+            border-color: $invalid-background-color;
+            background-color: $invalid-background-color;
+        }
+    }
+}
+
+// enforce visibility of bootstrap invalid feeback
+.invalid-feedback,
+.valid-feedback {
+    display: block;
+}

@@ -1,0 +1,28 @@
+<label *ngIf="label" class="form-label">
+  <span [class.required]="required">{{ label }} </span>
+  <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+</label>
+<div class="d-flex align-items-center flex-nowrap">
+  <div class="flex-grow-1">
+    <input
+      ltFlatpickr
+      [altFormat]="altDateFormat"
+      [dateFormat]="dateInputFormat"
+      class="form-control form-control-solid"
+      [placeholder]="placeholder || label"
+      (valueChange)="handleInput($event)"
+      (focus)="touched = false"
+      (blur)="markAsTouched()"
+    />
+  </div>
+  <div class="ms-2">
+    <app-confidential
+      (valueChange)="handleChangeCheckbox($event)"
+      [enforce-confidential]="enforceConfidential"
+      [disabled]="disabled"
+    ></app-confidential>
+  </div>
+</div>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('required')">{{ label }} is required. </span>
+</div>

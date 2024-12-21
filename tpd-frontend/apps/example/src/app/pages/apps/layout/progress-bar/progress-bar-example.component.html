@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-5">
+        <lt-progress-bar [progress]="{ percentage: 10 }"></lt-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <lt-progress-bar [progress]="{ message: 'Profile Compleation', percentage: 30 }"></lt-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <lt-progress-bar
+          [striped]="true"
+          [size]="5"
+          color="success"
+          [progress]="{ message: 'Profile Compleation', percentage: 50 }"
+        ></lt-progress-bar>
+      </div>
+    </div>
+  </div>
+</div>

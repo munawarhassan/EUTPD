@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+  <changeSet author="devacfr" context="production" id="1618810274848-1">
+    <addColumn tableName="t_product">
+      <column name="product_pir_status" type="varchar(50)">
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-2">
+    <addColumn tableName="t_product_aud">
+      <column name="product_pir_status" type="varchar(50)" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-3">
+    <comment>Set 'AWAITING' PIR status by default</comment>
+    <sql>UPDATE t_product SET product_pir_status='AWAITING' WHERE product_pir_status is NULL</sql>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-4">
+    <addNotNullConstraint columnDataType="varchar(50)" columnName="product_pir_status"
+      tableName="t_product" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-5">
+    <comment>all submitted products are ACTIVE</comment>
+    <sql>UPDATE t_product SET product_pir_status='ACTIVE' WHERE product_number in (SELECT distinct p.product_number FROM
+      t_product p, t_submission s WHERE p.product_number = s.product_number and s.submission_status = 'SUBMITTED')</sql>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-6">
+    <comment>all replaced products are INACTIVE</comment>
+    <sql>UPDATE t_product SET product_pir_status='INACTIVE' WHERE product_number in (SELECT distinct
+      p.previous_product_number FROM t_product p WHERE p.previous_product_number is not null)</sql>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1618810274848-7">
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_286_SetProductPirStatus" />
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.pmi.tpd</groupId>
+    <artifactId>tpd.euceg.parent</artifactId>
+    <version>3.4.0</version>
+  </parent>
+  <artifactId>tpd.euceg.core</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>TPD Euceg core Module.</description>
+  <properties>
+    <diff4j.version>1.3</diff4j.version>
+    <commons-jxpath.version>1.3</commons-jxpath.version>
+    <poi.version>5.0.0</poi.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.euceg.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.backend.core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.database</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.cluster</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.spring</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.scheduler</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>${plexus-utils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- Log dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- POI Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${poi.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>stax</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis-ext</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.woodstox</groupId>
+          <artifactId>woodstox-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- JDiff Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>com.cloudbees</groupId>
+      <artifactId>diff4j</artifactId>
+      <version>${diff4j.version}</version>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- jxpath Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>commons-jxpath</groupId>
+      <artifactId>commons-jxpath</artifactId>
+      <version>${commons-jxpath.version}</version>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- Lombok Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- Querydsl -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-collections</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>ecj</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jdt.core.compiler</groupId>
+      <artifactId>ecj</artifactId>
+      <version>${ecj.version}</version>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- Jackson Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
+    <!--
+    ================================================================================ -->
+    <!-- Test Dependencies -->
+    <!--
+    ================================================================================ -->
+    <dependency>
+      <groupId>com.pmi.tpd</groupId>
+      <artifactId>tpd.testing.junit5</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>${buddy.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.xls</exclude>
+          <exclude>**/*.xlsx</exclude>
+        </excludes>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**/*.xls</include>
+          <include>**/*.xlsx</include>
+        </includes>
+        <filtering>false</filtering>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,5 @@
+[mysqld]
+max_allowed_packet=512M
+innodb_log_file_size=5120M
+default-time-zone='+00:00'
+log_error_suppression_list='MY-013360'

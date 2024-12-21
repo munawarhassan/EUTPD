@@ -1,0 +1,7 @@
+.table-item {
+    &:hover,
+    &.table-item__selected {
+        transition: all 0.3s ease;
+        background-color: #f2f3f7;
+    }
+}

@@ -1,0 +1,12 @@
+<ng-container *ngIf="audit">
+  <span class="text-muted">
+    Created {{ audit.createdDate | date: 'full' }} by
+    <span class="symbol symbol-circle symbol-25px mx-2" [ltTooltip]="audit.createdBy" placement="top">
+      <img [avatarUrl]="audit.createdBy" />
+    </span>
+    , Last update {{ audit.lastModifiedDate | date: 'full' }} by
+    <span class="symbol symbol-circle symbol-25px mx-2" [ltTooltip]="audit.lastModifiedBy" placement="top">
+      <img [avatarUrl]="audit.lastModifiedBy" />
+    </span>
+  </span>
+</ng-container>

@@ -1,0 +1,209 @@
+<button *ngIf="!readonly" type="button" (click)="addManufacturer()" class="btn btn-light-primary btn-sm mb-3">
+  <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+  Add Manufacturer
+</button>
+<div class="table-responsive">
+  <table class="table table-hover table-row-dashed align-middle g-1">
+    <thead>
+      <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+        <th scope="col">Submitter ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Country</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Email</th>
+        <th scope="col" class="text-center min-w-100px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let manufacturer of dataRows.manufacturer.content"
+        (click)="selected = manufacturer"
+        class="row-selectable"
+        [ngClass]="{ active: dataRows.manufacturer.isSelected(manufacturer) }"
+      >
+        <td scope="row">{{ manufacturer.submitterID }}</td>
+        <td>{{ manufacturer.Name }}</td>
+        <td>{{ manufacturer.Address }}</td>
+        <td>{{ euceg.getCountry(manufacturer.Country) }}</td>
+        <td>{{ manufacturer.PhoneNumber }}</td>
+        <td>{{ manufacturer.Email }}</td>
+        <td class="text-center text-nowrap" style="width: 10rem">
+          <button
+            [disabled]="readonly"
+            type="button"
+            (click)="removeManufacturer(manufacturer)"
+            class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+            ltTooltip="Remove"
+            placement="top"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <td colspan="7">
+        <lt-pagination
+          [page]="dataRows.manufacturer"
+          [maxSize]="5"
+          [boundaryLinks]="true"
+          (pageChanged)="this.dataRows.manufacturer.pageable = $event.pageable"
+        >
+        </lt-pagination>
+      </td>
+    </tfoot>
+  </table>
+</div>
+<!-- end section -->
+<ng-container *ngIf="selected">
+  <div class="separator separtor-dashed mb-8"></div>
+  <form name="manufacturerForm">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-confidential
+          name="Manufacturer_confidential"
+          [(ngModel)]="selected.confidential"
+          label="Manufacturer is Confidential ?"
+          [disabled]="readonly"
+        >
+        </app-confidential>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <form-text
+          name="Manufacturer_submitterID"
+          controlClass="form-control-solid"
+          label="Submitter ID"
+          [(ngModel)]="selected.submitterID"
+          [disabled]="readonly"
+        ></form-text>
+      </div>
+      <div class="col-md-4">
+        <form-text
+          name="Manufacturer_Name"
+          controlClass="form-control-solid"
+          label="Name"
+          [(ngModel)]="selected.Name"
+          [disabled]="readonly"
+          [required]="true"
+        ></form-text>
+      </div>
+      <div class="col-md-4">
+        <form-text
+          name="Manufacturer_Address"
+          controlClass="form-control-solid"
+          label="Adresss"
+          [(ngModel)]="selected.Address"
+          [disabled]="readonly"
+          [required]="true"
+        ></form-text>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <form-select
+          name="Manufacturer_Country"
+          [(ngModel)]="selected.Country"
+          controlClass="form-select-solid"
+          label="Country"
+          [disabled]="readonly"
+          [required]="true"
+          [options]="euceg.Countries"
+          [searchable]="true"
+          optionValue="name"
+          optionText="value"
+        ></form-select>
+      </div>
+      <div class="col-md-4">
+        <form-text
+          name="Manufacturer_Phone"
+          controlClass="form-control-solid"
+          label="Phone Number"
+          [(ngModel)]="selected.PhoneNumber"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </form-text>
+      </div>
+      <div class="col-md-4">
+        <form-text
+          name="Manufacturer_Email"
+          controlClass="form-control-solid"
+          label="E-mail Address"
+          [(ngModel)]="selected.Email"
+          [disabled]="readonly"
+          [required]="true"
+        ></form-text>
+      </div>
+    </div>
+  </form>
+  <div class="separator separator-dashed py-4"></div>
+  <h4 class="my-4">Address ManuFacturer</h4>
+  <button *ngIf="!readonly" type="button" (click)="addAddressManufacturer()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Site
+  </button>
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed table-sm align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Address</th>
+          <th scope="col">Country</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Email</th>
+          <th class="text-center" scope="col">Confidential</th>
+          <th class="text-center min-w-100px" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let address of dataRows.address.content; index as $index; trackBy: trackAddress">
+          <td scope="row">
+            <a href="#" class="m-link" (click)="updateAddressManufacturer(address)">{{ address.Address }}</a>
+          </td>
+          <td>{{ euceg.getCountry(address.Country) }}</td>
+          <td>{{ address.PhoneNumber }}</td>
+          <td>{{ address.Email }}</td>
+          <td class="text-center">
+            <app-confidential [value]="address.confidential" [disabled]="true"> </app-confidential>
+          </td>
+          <td class="text-end">
+            <div class="d-flex justify-content-end">
+              <div>
+                <button
+                  type="button"
+                  (click)="updateAddressManufacturer(address)"
+                  class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2"
+                >
+                  <inline-svg class="m-0" [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+                </button>
+                <button
+                  [disabled]="readonly"
+                  type="button"
+                  (click)="removeAddressManufacturer(address)"
+                  class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+                  ltTooltip="Remove"
+                  placement="top"
+                >
+                  <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="6">
+          <lt-pagination
+            [page]="dataRows.address"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="dataRows.address.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+</ng-container>

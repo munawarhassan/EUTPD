@@ -1,0 +1,95 @@
+<lt-toolbar [sticky]="true">
+  <!--begin::Action menu-->
+  <a
+    href="#"
+    class="btn btn-dark"
+    data-lt-menu-trigger="click"
+    data-lt-menu-attach="parent"
+    data-lt-menu-placement="bottom-end"
+    >{{ 'groups.button.create' | translate }}
+    <span class="svg-icon svg-icon-2 me-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+  </a>
+  <!--begin::Menu-->
+  <div
+    ltMenu
+    class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold py-4 w-250px fs-6"
+  >
+    <!--begin::Menu item-->
+    <div class="menu-item px-5">
+      <a href="#" class="menu-link" id="m_group_create_button" (click)="openDialogCreateGroupModal()">
+        <span class="menu-icon svg-icon svg-icon-1" [inlineSVG]="svgIcons.Simple.code.plusCircle"></span>
+        <span class="menu-title">Create Internal Group</span>
+      </a>
+    </div>
+    <!--end::Menu item-->
+    <!--begin::Menu item-->
+    <div class="menu-item px-5">
+      <a href="#" class="menu-link" id="m_group_externa_create_button" (click)="openDialogAddExternalGroupModal()">
+        <span class="menu-icon svg-icon svg-icon-1" [inlineSVG]="svgIcons.Simple.communication.group"></span>
+        <span class="menu-title">Add External Group</span>
+      </a>
+    </div>
+    <!--end::Menu item-->
+  </div>
+</lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']" id="m_portlet_groups">
+  <lt-portlet-body>
+    <div class="d-flex align-items-center mb-3">
+      <app-search
+        (search)="search($event)"
+        (cleared)="clearFilter()"
+        [placeholder]="'groups.search.placeholder' | translate"
+      ></app-search>
+    </div>
+    <lt-table
+      class="fs-6"
+      id="m_groups_list"
+      [page]="page"
+      [pageable]="currentPageable"
+      [lineTemplate]="lineTemplate"
+      [options]="tableOptions"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let group of page.content; trackBy: trackGroup">
+    <td data-header="name">
+      <div class="d-flex flex-row align-items-center">
+        <span class="svg-icon svg-icon-1 me-2" [inlineSVG]="svgIcons.Simple.communication.group"></span>
+        <a class="link fw-bold me-5" [routerLink]="['view', group.name]">
+          <span>{{ group.name }}</span>
+        </a>
+        <app-user-symbol [users]="findUsersInGroup(group)" [size]="5"></app-user-symbol>
+      </div>
+    </td>
+    <td class="text-end">
+      <a
+        href="#"
+        class="btn btn-sm btn-light btn-active-light-primary"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-2 me-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        [options]="{ overflow: false }"
+        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+      >
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" class="menu-link px-3" [routerLink]="['view', group.name]">View</a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3" *ngIf="group.deletable">
+          <a href="#" class="menu-link px-3" (click)="deleteGroup(group)">Delete...</a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+    </td>
+  </tr>
+</ng-template>

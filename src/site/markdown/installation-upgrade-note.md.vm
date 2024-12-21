@@ -1,0 +1,280 @@
+title: Installation & Upgrade Guide
+author: Christophe Friederich
+email: devacfr@mac.com
+
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+
+$h1 $context.get("application.title") Installation & Upgrade Guide
+
+This page describes how to install or update $context.get("application.title") installation to the latest version in PMI environment.
+
+* [**Archive Distribution Installation**](#archive-installation), how to manually install $context.get("application.title") from an archive file.
+* [**Archive Distribution Upgrade**](#archive-upgrade), how to manually upgrade existing $context.get("application.title") installation from an archive file.
+
+$h2 Archive Distribution Installation
+
+This section describes how to manually install $context.get("application.title") from an archive file.
+
+Download latest $context.get("application.title") from the download site [SDLC Distribution Repository][sdlc-distribution]. Extract the downloaded file to an install location (without spaces in the path). The path to the extracted directory is referred to as the `<$context.get("application.title") installation directory>` in these instructions.
+
+1. **Using a 32-bit version of Window**, replace the 64-bit Tomcat binaries with their 32-bit counterparts in the `<$context.get("application.title") installation directory>/bin` directory:
+	
+	```bash
+	$ cd<TPD-INST/bin>
+	$ rename tomcat${context.get("tomcat.major.version")}.exe tomcat${context.get("tomcat.major.version")}.exe.x64
+	$ rename tcnative-1.dll tcnative-1.dll.x64	
+	$ rename tomcat${context.get("tomcat.major.version")}.exe.x86 tomcat${context.get("tomcat.major.version")}.exe
+	$ rename tcnative-1.dll.x86 tcnative-1.dll
+	```
+	
+2. **Set up environment (optional)**, allows to pre-configure the application with default setup values according to the used environment (development, integration, staging, qa, production), production is default. Edit the existing `TPD_PROFILES` variable in `<$context.get("application.title") installation directory>/bin/service.bat`. Here's an example of what that could look like:
+	
+	```
+	$ set TPD_PROFILES=qa
+	```
+3. Create a $context.get("application.title") home directory, and then indicate to $context.get("application.title") where the directory is located by setting a `TPD_HOME` environment variable, as follows.
+   1. Go to **Start**, search for "sys env" and choose **Edit the system environment variables**.
+   2. Click **Environment Variables**, and then **New** under System variables.
+   3. Enter `TPD_HOME` as the **Variable name**, and the absolute path to the $context.get("application.title") home directory as the **Variable value**. Don't use a trailing backslash.
+
+    The local dedicated user account should has read, write and execute access to the $context.get("application.title") home directory and the `<$context.get("application.title") installation directory>`.
+4. First start $context.get("application.title") from a command prompt, by changing directory to the `<$context.get("application.title") installation directory>` and running the following command:
+	
+	```bash
+	$ bin\start-tpd.bat
+	```
+5. Now, in a browser, go to http://localhost:7880 and run through the Setup Wizard. In the Setup Wizard:
+	1. Specify the default language for $context.get("application.title").
+	2. Select Internal (for test only) or external database type.
+	3. Set up an administrator account
+	4. Set up the mail server
+6. When the wizard is complete, stop the server; running the following command:
+	
+	```
+	$ bin\stop-tpd.bat
+	```
+7. Move `server.xml` located in `<$context.get("application.title") directory>/conf` to the $context.get("application.title") home shared directory `<$context.get("application.title") home directory>/shared`. And configure the Tomcat Connector.
+8. For this, edit `<$context.get("application.title") home directory>/shared/server.xml` and, at the bottom, before the `</Service>` tag, add this section (or uncomment this if it already exists):
+	
+	```xml
+	<Connector port="7880"
+		protocol="HTTP/1.1"
+		connectionTimeout="20000" useBodyEncodingForURI="true"
+		redirectPort="8443"
+		compression="on" compressableMimeType="text/html,text/xml,text/plain,
+		text/css,application/json, application/javascript,application/x-javascript"
+		scheme="http"
+		="mycompany.com"
+		="80" />
+	```
+	Instead of mycompany.com, set the proxyName attribute to the domain name that IIS will be
+configured to serve.
+9. **Configure IIS Reverse Proxy**, create a URL forwading in IIS, execute following step:
+	1. **Add** web site $context.get("application.title").
+	2. Create a `web.config` file in root of site and add this section. Instead of mycompany.com, set the pattern input attribute to the domain name that IIS will be configured to serve.
+		
+		```xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<configuration>
+			<system.webServer>
+					<rewrite>
+						<rules>
+							<rule name="Rewrite to www - http" patternSyntax="ECMAScript" stopProcessing="true">
+								<match url="(.*)" />
+								<conditions>
+									<add input="{HTTP_HOST}" pattern="^mycompany\.com(.*)" />
+								</conditions>
+								<action type="Rewrite" url="http://localhost:7880/{R:1}" />
+							</rule>
+						</rules>
+					</rewrite>
+			</system.webServer>
+		</configuration>
+		```
+	
+10. run 'cmd.exe' as an administrator (e.g. by right-clicking on 'cmd.exe' and choosing Run as
+administrator).
+11. **Set up $context.get("application.title") as a Windows service**, change directory to the $context.get("application.title") installation directory and then into the bin subdirectory. Run the following commands:
+	
+	```bash
+	$ service.bat install TPD
+	$ tomcat${context.get("tomcat.major.version")} //US//TPD --Startup auto
+	```
+	
+12. Start the service
+	
+	```bash
+	$ net start TPD
+	```
+13. Select the dedicated user under which a service will run, then restart the service.
+14. Verify that all services are available, execute following command:
+	
+	```bash
+	$ curl http://localhost:7880/rest/endpoint/health
+	```
+	This command returns a json representation of all state sevirces as:
+	
+	```json
+	{
+	  "status": "UP",
+	  "database.embedded": {
+	    "status": "UP",
+	    "type": "database",
+	    "product": "Apache Derby",
+	    "hello": "1"
+	  },
+	  "threadlock": {
+	    "status": "UP",
+	    "type": "thread",
+	    "product": "java"
+	  },
+	  "smtp": {
+	    "status": "UP",
+	    "type": "server mail",
+	    "product": "smtp.app.pmi"
+	  }
+	}
+	```
+	
+	Or open a web browser or `Postman` open  the following url `http://localhost:7880/rest/endpoint/health`.
+
+$h2 <span id="archive-upgrade" />Archive Distribution Upgrade
+
+We strongly recommend that you update $context.get("application.title") by performing the steps below.
+
+Note that:
+
+* This update process does not perform an in-place upgrade, but installs the new version of $context.get("application.title") into a fresh installation directory. The new $context.get("application.title") uses your existing $context.get("application.title") home directory.
+* You can update from any previous version to the latest version of $context.get("application.title").
+* For production environments we recommend that you test the $context.get("application.title") update on a QA server before deploying to production.
+
+$h3 1. Review the upgrade notes
+
+There are specific [upgrade notes](#version-specific) further down this page for each version of $context.get("application.title"). 
+
+You should read the relevant sections for each version between your current version of $context.get("application.title") and the version you are upgrading to.
+
+Note that you can update from any previous version to the latest version of $context.get("application.title").
+
+$h3 2. Stop $context.get("application.title")
+
+1. Stop $context.get("application.title") manually by changing directory to the `<$context.get("application.title") installation directory>` and running the following command:
+	
+	```bash
+	$ bin\stop-tpd.bat
+	```
+2. Remove the Windows Service.
+	
+	```bash
+	$ bin\service.bat remove TPD
+	```
+
+$h3 3. Back up your $context.get("application.title") data
+
+Create a backup copy of $context.get("application.title") home directory. Any backup strategy while $context.get("application.title") is still available to users would run the risk that the backed up home directory might be corrupted or that the data in the database doesn't reflect the data state on disk.
+
+$h3 4. Install $context.get("application.title")
+
+Check that you have all the system requirements for the new version of $context.get("application.title"). Follow the instructions at Installing $context.get("application.title") from an archive.
+
+**Use an archive file to update your $context.get("application.title") installation**
+
+Download the latest $context.get("application.title") from the download site [SDLC Distribution Repository][sdlc-distribution]. Extract the downloaded file to an install location (without spaces in the path). The path to the extracted directory is referred to as the `<$context.get("application.title") installation directory>` in these instructions.
+
+**Using a 32-bit version of Window**, replace the 64-bit Tomcat binaries with their 32-bit counterparts in the `<$context.get("application.title") installation directory>/bin` directory:
+    
+```bash
+$ cd<TPD-INST/bin>
+$ rename tomcat${context.get("tomcat.major.version")}.exe tomcat${context.get("tomcat.major.version")}.exe.x64
+$ rename tcnative-1.dll tcnative-1.dll.x64  
+$ rename tomcat${context.get("tomcat.major.version")}.exe.x86 tomcat${context.get("tomcat.major.version")}.exe
+$ rename tcnative-1.dll.x86 tcnative-1.dll
+```
+
+$h3 6. Start $context.get("application.title")
+
+1. run 'cmd.exe' as an administrator (e.g. by right-clicking on 'cmd.exe' and choosing Run as
+administrator).
+2. **Set up $context.get("application.title") as a Windows service**, change directory to the $context.get("application.title") installation directory and then into the bin subdirectory. Run the following commands:
+	
+	```bash
+	$ service.bat install TPD
+	$ tomcat${context.get("tomcat.major.version")} //US//TPD--Startup auto
+	```
+3. Start the service
+	
+	```bash
+	$ net start TPD
+	```
+4. Select the dedicated user under which a service will run, then restart the service.
+
+
+$h3 <span id="version-specific" />Version-specific update notes
+
+This section provides specific update notes for each version of $context.get("application.title"). These notes supplement the primary update guide above.
+
+$h3 <span id="upgrade-note_1_4" />Upgrade Note for release 1.4
+
+Before installation, check version of Java, in a terminal or command prompt, run this:
+    
+```bash
+$ java -version
+```
+
+The version of 64-bit Oracle Java should be 1.8.
+    
+This release introduce the indexing of entities. After the first run of $context.get("application.title"), the administrator must execute the re-indexing manually, use the following steps:
+
+1. Go to part **Settings** in Administration section.
+2. Click on **Indexing** button,
+3. And click on button **Re-Index**. Stay on the current page until complete indexing (take a while).
+
+
+$h3 <span id="upgrade-note_1_0" />Upgrade Note for release 1.0
+
+For reason of time, a temporary version has been put in production using the WAR deployment and in `development` mode. The `development` profile creates default users (admin and user) and disable certain important features.
+
+Here is the the list of tasks to do before install the version 1.0.0.
+
+* Remove pre-configured log file
+* Flag application as setup.
+* Remove current wrong and duplicates submission.
+
+to resolve these problems, follow above instructions:
+
+1. **Stop** the server [see Starting and stopping $context.get("application.title")](doc/installation-guide.html#start-stop)
+2. **Create** a backup of home `<$context.get("application.title") home directory>` directory as a single tar/zip file.
+2. **Find** the default configuration log file `logback.xml` to the the `<$context.get("application.title") home directory>\conf` directory and **remove it**.
+3. **Download** [Squirrel SQL](http://squirrel-sql.sourceforge.net/#installation) and unzip it.
+4.  Start **Squirrel SQL**. **Create** a alias for the Derby database locate to `<$context.get("application.title") home directory>\data\db` as screenshot above.
+	
+	![Add alias](installation-upgrade-squirrel-add-alias.png)
+	
+5. **Connect** to the Derby database and **execute** following sql instruction in SQL view to flag application as setup:
+	
+	```sql
+	SQL> INSERT INTO sa.OS_PROPERTYENTRY  
+	(ENTITY_ID,ENTITTY_NAME,ENTITY_KEY,KEY_TYPE,BOOLEAN_VALUE,DATE_VALUE,DOUBLE_VALUE, 
+	INT_VALUE,LONG_VALUE,STRING_VALUE,DATA_VALUE) VALUES  (1,'app.properties','app.setup',5,null,null,null,null,null,'true',null)
+	```
+	
+6. **Excecute** following sql instruction in SQL view to remove current wrong and duplicates submission:
+	
+	```sql
+	SQL> DELETE FROM sa.T_SUBMISSION_EXPORTED_ATT att WHERE att.PRODUCTID in (
+		SELECT sub.PRODUCT_ID FROM sa.T_SUBMISSION sub where sub.PRODUCT_NUMBER in 
+		('POM.044361', 'POM.044362', 'POM.043500', 'POM.XXXXXX')
+		);
+	Expected Log: 0 Row(s) Deleted
+	SQL> DELETE FROM sa.T_SUBMISSION s WHERE s.PRODUCT_NUMBER in 
+		('POM.044361', 'POM.044362', 'POM.043500', 'POM.XXXXXX');
+	Expected Log: 6 Row(s) Deleted
+	```
+		
+After installation of version 1.0.0, You must change the password of *admin* account and deactivate the *user* account, see [Administration Guide - Users and Groups](doc/administration-guide.html#users-groups) for information.
+
+[sdlc-distribution]: ${site.distribution.url}

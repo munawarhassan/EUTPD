@@ -1,0 +1,16 @@
+*/target
+tpd-test/*
+tpd-distribution/*
+tpd-doc/*
+tpd-site/*
+
+tpd-web/node/*
+tpd-web/node_modules/*
+
+*.md
+*.log
+.*
+mvnw*
+checkers
+docker
+eclipse

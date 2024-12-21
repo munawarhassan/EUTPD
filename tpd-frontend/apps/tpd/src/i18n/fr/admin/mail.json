@@ -1,0 +1,33 @@
+{
+  "mail": {
+    "title": "Configuration du Serveur de Messagerie",
+    "title.test": "Envoyer un e-mail de test",
+    "fields": {
+      "hostname": "Nom d'hôte",
+      "hostname.help": "Le nom d'hôte du serveur de messagerie (par exemple \"localhost\" ou \"192.168.1.15\").",
+      "port": "Port",
+      "port.help": "Le port du serveur de messagerie (s'il n'est pas spécifié, le port 25 sera utilisé).",
+      "username": "Utilisateur",
+      "username.help": "Le nom d'utilisateur à utiliser pour se connecter au serveur de messagerie.",
+      "password": "Mot de Passe",
+      "password.help": "Le mot de passe à utiliser pour se connecter au serveur de messagerie.",
+      "tls": "TLS",
+      "tls.help": "Cochez si le serveur SMTP auquel vous vous connectez utilise TLS.",
+      "emailfrom": "Email de",
+      "emailfrom.help": "Spécifie l'en-tête From: dans les e-mails de notification (par exemple: pasrepondre@compagnie.com).",
+      "recipient": "Bénéficiaire",
+      "recipient.help": "L'adresse e-mail à laquelle est envoyé le message de test."
+    },
+    "validate": {
+      "hostname.required": "Nom d'hôte est requis",
+      "port.required": "Port est requis",
+      "email.required": "Email est requis",
+      "email.email": "Email est invalide",
+      "recipient.required": "Bénéficiaire est requis",
+      "recipient.email": "Bénéficiaire est requis"
+    },
+    "notify": {
+      "updated": "La configuration du serveur mail a été mise à jour."
+    }
+  }
+}

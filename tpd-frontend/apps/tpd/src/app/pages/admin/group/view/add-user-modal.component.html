@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">
+    Add Users to
+    <span class="badge badge-light-primary badge-sm">
+      <inline-svg class="me-2" [src]="svgIcons.Simple.communication.group"></inline-svg>
+      <span>{{ group.name }}</span>
+    </span>
+    group
+  </h4>
+</div>
+
+<div class="modal-body" id="modal-body">
+  <div class="row mb-4">
+    <label class="form-label">Selected Users</label>
+    <app-tagify-user [users]="findUsersNotInGroup.bind(this)" [(value)]="selectedUsers"></app-tagify-user>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" (click)="addUsers()" class="btn btn-primary me-3" translate="global.button.save"></button>
+  <a
+    href="#"
+    id="change-password-cancel"
+    class="link-primary"
+    (click)="bsModalRef.hide()"
+    translate="global.button.cancel"
+  ></a>
+</div>

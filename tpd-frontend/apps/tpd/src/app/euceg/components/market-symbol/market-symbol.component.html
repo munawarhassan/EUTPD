@@ -1,0 +1,12 @@
+<ng-container *ngIf="countries$">
+  <ng-container *ngFor="let country of countries$ | async">
+    <div class="symbol symbol-25px" [ltTooltip]="country.countryName" placement="top">
+      <img [src]="'./assets/media/flags/' + country.iso + '.svg'" [attr.alt]="country.countryName" />
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="nextTotal > 0">
+  <div class="symbol symbol-35px symbol-circle">
+    <span class="bg-light-primary fs-8 fw-bolder symbol-label text-primary">+{{ nextTotal }}</span>
+  </div>
+</ng-container>

@@ -1,0 +1,45 @@
+@import 'init';
+
+$select-lang-icon-size: 42px;
+
+.select-lang {
+    display: flex;
+    align-items: stretch;
+    margin: 0 0.25rem;
+
+    .select-lang__toggle {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        .select-lang__icon {
+            display: flex;
+            align-items: center;
+            align-self: center;
+            justify-content: center;
+            height: $select-lang-icon-size;
+            width: $select-lang-icon-size;
+            cursor: pointer;
+            background: transparent;
+            transition: $transition-input;
+
+            border-radius: $border-radius;
+
+            img {
+                border-radius: 0.2rem;
+                width: 22px;
+            }
+        }
+    }
+
+    .dropdown-menu {
+        .nav__link-icon {
+            padding-right: 10px;
+
+            img {
+                border-radius: 0.2rem;
+                width: 22px;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+title: $context.get("application.title") - Support End of Life Policy
+author: Christophe Friederich
+email: devacfr@mac.com
+
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+
+# Support End of Life Policy
+

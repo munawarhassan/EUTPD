@@ -1,0 +1,37 @@
+<!--begin::Container-->
+<div class="d-flex flex-stack" [ngClass]="containerClass">
+  <!-- begin::Aside mobile toggle -->
+  <ng-container>
+    <div class="aside-mobile-toggle align-items-center ms-n3 me-1" title="Show aside menu">
+      <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="lt_aside_mobile_toggle">
+        <span [inlineSVG]="'icons/duotune/abstract/abs015.svg'" class="svg-icon svg-icon-2x mt-1"></span>
+      </div>
+    </div>
+  </ng-container>
+  <!-- end::Aside mobile toggle -->
+
+  <!--begin::Logo-->
+  <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+    <a routerLink="/">
+      <img [src]="logo" class="h-30px" />
+    </a>
+  </div>
+  <!--end::Logo-->
+  <!--begin::Nav-->
+  <div class="d-flex justify-content-between align-items-center flex-lg-grow-1">
+    <lt-menu-header></lt-menu-header>
+
+    <!--begin::Topbar-->
+    <ng-content></ng-content>
+    <!--end::Topbar-->
+    <div class="header-menu-mobile-toggle align-items-center ms-2 me-n3" title="Show header menu">
+      <div
+        class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+        id="lt_header_menu_mobile_toggle"
+      >
+        <span [inlineSVG]="'icons/duotune/text/txt001.svg'" class="svg-icon svg-icon-1"></span>
+      </div>
+    </div>
+  </div>
+  <!--end::Container-->
+</div>

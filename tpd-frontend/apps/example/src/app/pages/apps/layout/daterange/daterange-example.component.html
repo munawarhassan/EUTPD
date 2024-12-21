@@ -1,0 +1,198 @@
+<form name="theForm" class="mt-3 needs-validation" novalidate>
+  <div class="row">
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr Date</label>
+      <input
+        ltFlatpickr
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_input_date"
+        [(ngModel)]="input_date"
+        required
+      />
+    </div>
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr String Date</label>
+      <input
+        ltFlatpickr
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_string_date"
+        [(ngModel)]="string_date"
+        required
+      />
+    </div>
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr disabled</label>
+      <input
+        ltFlatpickr
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_string_date_disabled"
+        [(ngModel)]="string_date"
+        disabled
+        required
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr Range Date</label>
+      <input
+        ltFlatpickr
+        mode="range"
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_range_date"
+        [(ngModel)]="range_date"
+        required
+      />
+    </div>
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr Range String</label>
+      <input
+        ltFlatpickr
+        mode="range"
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_range_string_date"
+        [ngModel]="range_string_date"
+        (ngModelChange)="updateStringDate($event)"
+        required
+      />
+    </div>
+    <div class="col-3 mb-6">
+      <label class="form-label required">Flatpickr disabled</label>
+      <input
+        ltFlatpickr
+        mode="range"
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        class="form-control form-control-transparent fw-bolder pe-5"
+        placeholder="Select date"
+        name="Flatpickr_range_string_date_disabled"
+        [ngModel]="range_string_date"
+        (ngModelChange)="updateStringDate($event)"
+        required
+        disabled
+      />
+    </div>
+    <div class="row">
+      <div class="col-3 mb-6">
+        <label class="form-label required">DateRangePickr Date</label>
+        <input
+          ltDateRangePickr
+          [locale]="{ format: 'MMMM D, YYYY' }"
+          class="form-control form-control-transparent fw-bolder pe-5"
+          placeholder="Select date"
+          name="DateRangePickr_input_date"
+          [(ngModel)]="input_date"
+          required
+        />
+      </div>
+      <div class="col-3 mb-6">
+        <label class="form-label required">DateRangePickr String Date</label>
+        <input
+          ltDateRangePickr
+          [locale]="{ format: 'MMMM D, YYYY' }"
+          class="form-control form-control-transparent fw-bolder pe-5"
+          placeholder="Select date"
+          name="DateRangePickr_string_date"
+          [(ngModel)]="string_date"
+          required
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3 mb-6">
+        <label class="form-label required">DateRangePickr Range String Date</label>
+        <input
+          ltDateRangePickr
+          mode="range"
+          [locale]="{ format: 'MMMM D, YYYY' }"
+          class="form-control form-control-transparent fw-bolder pe-5"
+          placeholder="Select date"
+          name="DateRangePickr_range_date"
+          [(ngModel)]="range_date"
+          required
+        />
+      </div>
+      <div class="col-3 mb-6">
+        <label class="form-label required">DateRangePickr Range String Date</label>
+        <input
+          ltDateRangePickr
+          mode="range"
+          [autoApply]="true"
+          [locale]="{ format: 'DD/MM/YYYY' }"
+          class="form-control form-control-transparent fw-bolder pe-5"
+          placeholder="Select date"
+          name="DateRangePickr_range_string_date"
+          [ngModel]="range_string_date"
+          (ngModelChange)="updateStringDate($event)"
+          required
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 my-6">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="card my-4">
+  <div class="card-body">
+    <a
+      class="btn btn-light-twitter btn-icon-primary"
+      ltDateRangePickr
+      [range]="buttonRange"
+      [defaultRanges]="true"
+      mode="range"
+      (changedRange)="adaptButton($event)"
+    >
+      <i class="far fa-calendar-alt"></i>
+      <span class="me-2">{{ rangeText }}</span>
+    </a>
+  </div>
+</div>
+
+<div class="card my-4">
+  <div class="card-body">
+    <div class="fv-row mb-8">
+      <div class="col-4">
+        <!--begin::Label-->
+        <label class="required fs-6 fw-bold mb-2">Release Date</label>
+        <!--end::Label-->
+        <!--begin::Wrapper-->
+        <div class="position-relative d-flex align-items-center">
+          <!--begin::Icon-->
+          <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+          <span class="svg-icon svg-icon-2 position-absolute mx-4" inlineSVG="icons/duotune/general/gen014.svg"> </span>
+          <!--end::Svg Icon-->
+          <!--end::Icon-->
+          <!--begin::Input-->
+          <input
+            ltFlatpickr
+            dateFormat="Y-m-d"
+            class="form-control form-control-solid ps-12"
+            placeholder="Pick date range"
+            name="settings_release_date"
+            type="text"
+            readonly="readonly"
+          />
+          <!--end::Input-->
+        </div>
+        <!--end::Wrapper-->
+      </div>
+    </div>
+  </div>
+</div>

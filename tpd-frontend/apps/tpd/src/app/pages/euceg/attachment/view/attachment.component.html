@@ -1,0 +1,135 @@
+<ng-container *ngIf="attachment">
+  <lt-toolbar>
+    <!--begin::Button Tools-->
+    <a href="#" class="btn btn-light-dark me-2" data-lt-menu-trigger="click" data-lt-menu-placement="bottom-start">
+      <inline-svg size="2" [src]="svgIcons.Duotone.coding.setting"></inline-svg>
+      <span>Tools</span>
+      <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+    </a>
+    <!--begin::Menu-->
+    <div
+      ltMenu
+      class="
+        menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary menu-state
+        fw-bold
+        fs-7
+        w-200px
+        py-4
+      "
+    >
+      <!--begin::Menu item-->
+      <ng-container>
+        <div class="menu-item px-3">
+          <a href="#" (click)="setWhereUsed(attachment, WhereUsedDrawer)" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Duotone.coding.link" size="2"></inline-svg>
+            </span>
+            <span class="menu-title">Where Used...</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <div class="separator my-3"></div>
+      </ng-container>
+      <!--begin::Menu item-->
+      <div class="menu-item px-3">
+        <a href="#" (click)="goToRevisions(attachment)" class="menu-link px-3">
+          <span class="menu-icon">
+            <inline-svg [src]="svgIcons.Simple.code.git4" size="2"></inline-svg>
+          </span>
+          <span class="menu-title">Revisions</span>
+        </a>
+      </div>
+      <!--end::Menu item-->
+    </div>
+    <!--end::Menu-->
+    <!--end::Button Tools-->
+
+    <a href="#" class="btn btn-light-dark bg-hover-dark text-hover-inverse-dark me-2" (click)="preview(attachment)">
+      <inline-svg [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+      Preview</a
+    >
+    <!--begin::Separator-->
+    <span class="h-25px border-gray-300 border-start mx-4"></span>
+    <!--end::Separator-->
+    <a href="#" *ngIf="attachment.deletable" class="btn btn-light-danger me-2" (click)="delete(attachment)">
+      Delete...</a
+    >
+    <a (click)="save()" class="btn btn-primary btn-bold me-2">Save</a>
+    <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+  </lt-toolbar>
+  <form role="form" name="attachmentForm" [formGroup]="formControl" #form="ngForm" (ngSubmit)="save()" novalidate>
+    <lt-portlet [mode]="['bordered-semi']" id="m_portlet_attachment_view">
+      <lt-portlet-body class="py-15">
+        <div class="row offset-md-2 mb-4">
+          <form-text
+            class="col-md-8"
+            label="File Name"
+            controlClass="form-control-solid"
+            formControlName="filename"
+          ></form-text>
+        </div>
+        <div class="row offset-md-2 mb-4">
+          <form-checkbox
+            class="col-md-8"
+            controlClass="form-control-solid"
+            label="Confidential"
+            formControlName="confidential"
+          ></form-checkbox>
+        </div>
+        <!-- END SECTION ROW -->
+        <div class="row offset-md-2 mb-4">
+          <div class="col-md-8" *ngIf="checkIntegrity">
+            <div class="alert alert-warning" role="alert">
+              <div class="alert-icon"><i class="flaticon-warning"></i></div>
+              <div class="alert-text">
+                <strong>Warning!</strong>
+                <p>
+                  For integrity reason, you can only either change the confidentiality or status but not both in same
+                  time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row offset-md-2">
+          <form-select
+            class="col-md-4"
+            controlClass="form-select-solid"
+            label="Action"
+            formControlName="action"
+            [allowClear]="true"
+            info="The next action associated to submission of this attachment"
+          >
+            <option></option>
+            <option value="CREATE">Create</option>
+            <option value="UPDATE">Update</option>
+          </form-select>
+          <form-select
+            class="col-md-4"
+            controlClass="form-select-solid"
+            label="Send Status"
+            formControlName="sendStatus"
+            [allowClear]="true"
+            info="The current status indicating whether attachemnt has been sent in its last version"
+          >
+            <option></option>
+            <option value="NO_SEND">No send</option>
+            <option value="SENT">Sent</option>
+          </form-select>
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+  </form>
+  <app-audit-detail [audit]="attachment"></app-audit-detail>
+</ng-container>
+<div
+  #WhereUsedDrawer="ltDrawer"
+  [ltDrawer]="{
+    name: 'whereused',
+    width: { default: '390px', lg: '500px' }
+  }"
+  id="m_drawer_where_used"
+  class="bg-white"
+>
+  <app-where-used [selected]="selectedWhereUsed"></app-where-used>
+</div>

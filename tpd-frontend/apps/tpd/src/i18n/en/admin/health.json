@@ -1,0 +1,27 @@
+{
+  "health": {
+    "title": "Health checks",
+    "refresh.button": "Refresh",
+    "stacktrace": "Stacktrace",
+    "indicator": {
+      "database": "Database",
+      "diskSpace": "Disk space",
+      "mail": "Email",
+      "rest": "RESTful Web Service",
+      "smtp": "Simple Mail Transfer Protocol",
+      "threadlock": "Thread Lock",
+      "domibus.ws": "Domibus Backend Web Service"
+    },
+    "table": {
+      "service": "Service name",
+      "product": "Product",
+      "type": "Type",
+      "status": "Status"
+    },
+    "status": {
+      "UP": "UP",
+      "DOWN": "DOWN",
+      "OUT_OF_SERVICE": "OUT_OF_SERVICE"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<project name="Clover Report" default="current">
+
+    <clover-format id="clover.format" type="${type}" orderBy="${orderBy}" filter="${filter}" reportStyle="${reportStyle}"/>
+
+    <clover-setup initString="${cloverdb}"/>
+
+    <fileset id="test.sources" dir="${projectDir}">
+        <include name="**/src/test/java/**/*.java"/>
+        <include name="**/src/it/java/**/*.java"/>
+    </fileset>
+
+    <clover-columns id="clover.columns">
+        <totalChildren/>
+        <filteredElements/>
+        <avgMethodComplexity/>
+        <uncoveredElements format="raw"/>
+        <totalPercentageCovered format="longbar"/>
+    </clover-columns>
+
+    <target name="historical">
+        <clover-report>
+            <current outfile="${output}" summary="${summary}"
+                     charset="${charset}" title="${title}" titleAnchor="${titleAnchor}"
+                     span="${span}" alwaysReport="${alwaysReport}"
+                     showInnerFunctions="${showInnerFunctions}" showLambdaFunctions="${showLambdaFunctions}">
+                <format refid="clover.format"/>
+                <testsources refid="test.sources"/>
+                <columns refid="clover.columns"/>
+            </current>
+            <historical outfile="${historyout}" historydir="${history}"
+                        charset="${charset}" title="${title}" titleAnchor="${titleAnchor}"
+                        span="${span}">
+                <format refid="clover.format"/>
+            </historical>
+        </clover-report>
+    </target>
+
+    <target name="current">
+        <clover-report>
+            <current outfile="${output}" summary="${summary}"
+                     charset="${charset}" title="${title}" titleAnchor="${titleAnchor}"
+                     span="${span}" alwaysReport="${alwaysReport}"
+                     showInnerFunctions="${showInnerFunctions}" showLambdaFunctions="${showLambdaFunctions}">
+                <format refid="clover.format"/>
+                <sourcepath>
+                  <dirset dir="${projectDir}">
+                    <include name="**/src/main/java/**/*"/>
+                    <!-- exclude unit test -->
+                    <exclude name="**/src/test/java/**/*"/>
+                    <!-- exclude integration test -->
+                    <exclude name="**/src/it/java/**/*"/>
+                    <exclude name="**/ch/qos/**/*" />
+                    <exclude name="**/com/hazelcast/**/*" />
+                    <exclude name="**/liquibase/ext/**/*" />
+                    <exclude name="**/org/cfr/**/*" />
+                    <exclude name="**/org/codehaus/**/*" />
+                  </dirset>
+                </sourcepath>
+                <testsources refid="test.sources"/>
+                <columns refid="clover.columns"/>
+            </current>
+        </clover-report>
+    </target>
+
+</project>

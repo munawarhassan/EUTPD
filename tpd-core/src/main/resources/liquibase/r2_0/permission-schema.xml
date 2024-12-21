@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+  <changeSet author="devacfr" context="production" id="permission-schema-1">
+    <createTable tableName="t_global_permission">
+      <column name="id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="group_name" type="VARCHAR(255)" />
+      <column name="permission_id" type="INTEGER">
+        <constraints nullable="false" />
+      </column>
+      <column name="user_id" type="BIGINT" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-2">
+    <comment>
+            Metadata table for adding knowledge of each's permission's relative weight to the database. This allows more
+            efficient retrieval of a user or group's "highest" permission.
+
+            See Permission.getWeight() documentation for more details.
+    </comment>
+    <createTable tableName="t_permission_type">
+      <column name="permission_id" type="INTEGER">
+        <constraints nullable="false" />
+      </column>
+      <column name="permission_weight" type="INTEGER">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-3">
+    <addPrimaryKey columnNames="id" constraintName="grantedpermispk" tableName="t_global_permission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-4">
+    <addPrimaryKey columnNames="permission_id" constraintName="t_permission_typepk" tableName="t_permission_type" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-5">
+    <comment>Add unique constraint to the 'permission_weight' column on in the 't_permission_type' table.</comment>
+    <addUniqueConstraint columnNames="permission_weight" constraintName="uc_t_permission_typepermission_weight_col"
+      tableName="t_permission_type" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-6">
+    <comment>Add an index to the 'group_name' column on in the 't_global_permission' table.</comment>
+    <createIndex indexName="idx_global_permission_group" tableName="t_global_permission">
+      <column name="group_name" />
+    </createIndex>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-7">
+    <comment>Add an index to the 'user_id' column on in the 't_global_permission' table.</comment>
+    <createIndex indexName="idx_global_permission_user" tableName="t_global_permission">
+      <column name="user_id" />
+    </createIndex>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-8">
+    <comment>Add the foreign key constraint between the 't_user' table and the global permission table.</comment>
+    <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="t_global_permission"
+      constraintName="fk_qtpie7jgywknxn1dlojge7pps" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_user" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-9">
+    <comment>Initial population of relative weights for all permissions. These values must match the values specified in
+    the Permission enumeration _exactly_ or the database will return incorrect results.</comment>
+    <insert tableName="t_permission_type">
+      <column name="permission_id" valueNumeric="3" remarks="USER" />
+      <column name="permission_weight" valueNumeric="0" />
+    </insert>
+    <insert tableName="t_permission_type">
+      <column name="permission_id" valueNumeric="2" remarks="ADMIN" />
+      <column name="permission_weight" valueNumeric="9000" />
+    </insert>
+    <insert tableName="t_permission_type">
+      <column name="permission_id" valueNumeric="1" remarks="SYS_ADMIN" />
+      <column name="permission_weight" valueNumeric="10000" />
+    </insert>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-10">
+    <addForeignKeyConstraint baseTableName="t_global_permission" baseColumnNames="permission_id"
+      referencedTableName="t_permission_type" referencedColumnNames="permission_id" constraintName="granted_perm_weight_fk" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-11">
+    <comment></comment>
+    <addColumn tableName="t_group">
+      <column name="deleted_timestamp" type="timestamp" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-12">
+    <comment></comment>
+    <addColumn tableName="t_user">
+      <column name="deleted_timestamp" type="timestamp" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-13">
+    <comment>Set user directory to internal for all users with null directory</comment>
+    <update tableName="t_user">
+      <column name="user_directory" value="Internal" />
+      <where>
+        <column name="user_directory" value="null" />
+      </where>
+    </update>
+  </changeSet>
+
+  <!-- Remove t_role table and mtn t_group_role table -->
+  <changeSet author="devacfr" context="production" id="permission-schema-14">
+    <dropForeignKeyConstraint baseTableName="t_group_role" constraintName="fk_t_group_role_group_fk" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-15">
+    <dropForeignKeyConstraint baseTableName="t_group_role" constraintName="fk_t_group_role_role_fk" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-16">
+    <dropUniqueConstraint constraintName="idx_t_role_name" tableName="t_role" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-17">
+    <dropTable tableName="t_group_role" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-18">
+    <dropTable tableName="t_role" />
+  </changeSet>
+
+  <!-- change group name and add sysadmin group -->
+  <changeSet author="devacfr" context="production" id="permission-schema-19">
+    <comment>Add system administrator group</comment>
+    <insert tableName="t_group">
+      <column name="id" valueNumeric="3" />
+      <column name="description" value="System Administror Group" />
+      <column name="name" value="tpd-sysadmin" />
+    </insert>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-20">
+    <comment>Change name of administrator group</comment>
+    <update tableName="t_group">
+      <column name="name" value="tpd-administrator" />
+      <column name="description" value="Administrator Group" />
+      <where>id = 1</where>
+    </update>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-21">
+    <comment>Change name of user group</comment>
+    <update tableName="t_group">
+      <column name="name" value="tpd-user" />
+      <column name="description" value="User Group" />
+      <where>id = 2</where>
+    </update>
+  </changeSet>
+  <!-- add global permissions to group -->
+  <changeSet author="devacfr" context="production" id="permission-schema-22">
+    <comment>associate SYS_ADMIN permission to system administrator group</comment>
+    <insert tableName="t_global_permission">
+      <column name="id" valueNumeric="1" />
+      <column name="group_name" value="tpd-sysadmin" />
+      <column name="permission_id" valueNumeric="1" />
+    </insert>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-23">
+    <comment>associate ADMIN permission to administrator group</comment>
+    <insert tableName="t_global_permission">
+      <column name="id" valueNumeric="2" />
+      <column name="group_name" value="tpd-administrator" />
+      <column name="permission_id" valueNumeric="2" />
+    </insert>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-24">
+    <comment>associate user permission to user group</comment>
+    <insert tableName="t_global_permission">
+      <column name="id" valueNumeric="3" />
+      <column name="group_name" value="tpd-user" />
+      <column name="permission_id" valueNumeric="3" />
+    </insert>
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="permission-schema-26">
+    <comment>update permission generated id</comment>
+    <insert tableName="t_generated_id">
+      <column name="key_name" type="VARCHAR(255)" value="permission_id" />
+      <column name="key_value" type="INT" valueNumeric="100" />
+    </insert>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-27">
+    <comment>Remove role generated id </comment>
+    <delete tableName="t_generated_id">
+      <where>key_name = 'role_id'</where>
+    </delete>
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="permission-schema-28">
+    <preConditions onFail="MARK_RAN">
+      <!-- check "system" user exists -->
+      <sqlCheck expectedResult="1">select count(*) from t_user u where u.id= 1</sqlCheck>
+      <!-- check "system" user is not in group "sysadmin" -->
+      <sqlCheck expectedResult="0">select count(*) from t_user_group ug where ug.group_fk= 3</sqlCheck>
+    </preConditions>
+    <comment>add sysadmin as group sysadmin of the system</comment>
+    <insert tableName="t_user_group">
+      <column name="user_fk" valueNumeric="1" />
+      <column name="group_fk" valueNumeric="3" />
+    </insert>
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="permission-schema-29">
+    <comment>add cascade delete on join table t_user_group</comment>
+    <dropForeignKeyConstraint baseTableName="t_user_group" constraintName="fk_t_user_group_user_fk" />
+    <dropForeignKeyConstraint baseTableName="t_user_group" constraintName="fk_t_user_group_group_fk" />
+    <addForeignKeyConstraint baseColumnNames="user_fk" baseTableName="t_user_group"
+      constraintName="fk_t_user_group_user_fk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_user" onDelete="CASCADE" />
+    <addForeignKeyConstraint baseColumnNames="group_fk" baseTableName="t_user_group"
+      constraintName="fk_t_user_group_group_fk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_group" onDelete="CASCADE" />
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="permission-schema-30">
+  <comment>add user_directory column in t_group table</comment>
+    <addColumn tableName="t_group">
+      <column name="user_directory" type="varchar(50)" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="permission-schema-31">
+    <comment>Set user_directory to internal for all groups with null directory</comment>
+    <update tableName="t_group">
+      <column name="user_directory" value="Internal" />
+      <where>
+        <column name="user_directory" value="null" />
+      </where>
+    </update>
+  </changeSet>
+
+</databaseChangeLog>

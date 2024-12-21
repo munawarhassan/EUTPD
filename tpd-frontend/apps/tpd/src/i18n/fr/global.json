@@ -1,0 +1,135 @@
+{
+  "global": {
+    "title": "TPD Submission Tools",
+    "welcome": "Bienvenue",
+    "description": "TPD Submission Tool is a implementation of The Tobacco Products Directive. <br/> This is facility tools allowing to import submitter, tobacco and e-cigarette information.",
+    "menu": {
+      "home": "Accueil",
+      "account": {
+        "greeting": "Bonjour,",
+        "signin": "Se connecter",
+        "main": "Compte",
+        "profile": "Profile",
+        "login": "S'authentifier",
+        "logout": "Déconnexion",
+        "register": "Créer un compte"
+      },
+      "admin": {
+        "overview": "Vue d'Ensemble",
+        "api": "API",
+        "accounts": "Comptes",
+        "console": "Console",
+        "users": "Utilisateurs",
+        "groups": "Groupes",
+        "globalpermissions": "Autorisations Globales",
+        "server": "Paramètres de serveur",
+        "index": "Indexation de recherche",
+        "mail": "Serveur de courrier électronique",
+        "ldap": "Serveur LDAP",
+        "keystore": "Key Store",
+        "domibus": "Serveur Domibus",
+        "main": "Administration",
+        "tracker": "Suivi des utilisateurs",
+        "metrics": "Métriques",
+        "health": "Diagnostics",
+        "settings": "Configuration",
+        "support": "Support",
+        "audits": "Audits",
+        "apidocs": "API",
+        "database": "Base de données"
+      },
+      "language": "Langue"
+    },
+    "permission": {
+      "user": "Utilisateur",
+      "admin": "Administrateur",
+      "sysadmin": "Administrateur Système"
+    },
+    "button": {
+      "add": "Ajouter",
+      "save": "Sauvegarder",
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "search": "Rechercher",
+      "test": "Tester",
+      "delete": "Effacer",
+      "deactivate": "Désactivater",
+      "back": "Retour"
+    },
+    "form": {
+      "username": "Nom utilisateur",
+      "username.placeholder": "Nom utilisateur",
+      "displayname": "Nom Complet",
+      "displayname.placeholder": "Nom Complet",
+      "currentpassword": "Mot de passe Courant",
+      "currentpassword.placeholder": "Mot de passe Courant",
+      "newpassword": "Nouveau mot de passe",
+      "newpassword.placeholder": "Nouveau mot de passe",
+      "password": "Mot de passe",
+      "password.placeholder": "Mot de passe",
+      "confirmpassword": "Confirmation du mot de passe",
+      "confirmpassword.placeholder": "Confirmation du mot de passe",
+      "confirmnewpassword": "Confirmation du nouveau mot de passe",
+      "confirmnewpassword.placeholder": "Confirmation du nouveau mot de passe",
+      "email": "Adresse Email",
+      "email.placeholder": "Adresse Email",
+      "phone": "Téléphone",
+      "phone.placeholder": "Téléphone",
+      "location": "Lieu du bureau",
+      "location.placeholder": "Lieu du bureau"
+    },
+    "messages": {
+      "info": {
+        "authenticated": "Si vous voulez vous <a href=\"#!/login\">connecter</a>.",
+        "authenticatedInfo": "vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\").",
+        "register": "Vous n'avez pas encore de compte ? <a href=\"#!/register\">Créer un compte</a>"
+      },
+      "error": {
+        "dontmatch": "Le nouveau mot de passe et sa confirmation ne sont pas égaux!"
+      },
+      "validate": {
+        "username": {
+          "required": "Le nom utilisateur est requis.",
+          "minlength": "Le nom utilisateur doit avoir au moins 3 caractères",
+          "maxlength": "Le nom utilisateur doit avoir au plus 20 caractères",
+          "pattern": "Le nom utilisateur ne doit contenir que des caractères ou des chiffres"
+        },
+        "displayname": {
+          "required": "The nom complet est requis."
+        },
+        "currentpassword": {
+          "required": "Le mot de passe courant est requis."
+        },
+        "password": {
+          "required": "Le mot de passe est requis.",
+          "minlength": "Le mot de passe doit comporter au moins 5 caractères",
+          "maxlength": "Le mot de passe ne doit pas comporter plus de 50 caractères"
+        },
+        "newpassword": {
+          "required": "Le mot de passe est requis.",
+          "minlength": "Le mot de passe doit comporter au moins 5 caractères",
+          "maxlength": "Le mot de passe ne doit pas comporter plus de 50 caractères",
+          "strength": "Robustesse du mot de passe:"
+        },
+        "confirmpassword": {
+          "required": "Le confirmation du mot de passe est requis.",
+          "minlength": "Le confirmation du mot de passe doit comporter au moins 5 caractères",
+          "maxlength": "Le confirmation du mot de passe ne doit pas comporter plus de 50 caractères",
+          "compareTo": "Le confirmation du mot de passe doit correspondre au mot de passe précédent"
+        },
+        "confirmnewpassword": {
+          "required": "Le confirmation du nouveau mot de passe est requis.",
+          "minlength": "Le confirmation du nouveau mot de passe doit comporter au moins 5 caractères",
+          "maxlength": "Le confirmation du nouveau mot de passe ne doit pas comporter plus de 50 caractères",
+          "compareTo": "Le confirmation du nouveau mot de passe doit correspondre au nouveau mot de passe"
+        },
+        "email": {
+          "required": "L'adresse email est requis.",
+          "minlength": "L'adresse email doit comporter au moins 5 caractères",
+          "maxlength": "L'adresse email ne doit pas comporter plus de 50 caractères",
+          "invalid": "L'adresse email n'est pas valide."
+        }
+      }
+    }
+  }
+}

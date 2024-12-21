@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4
+    class="modal-title"
+    id="modal-title"
+    [innerHTML]="'users.rename.title' | translate: { user: user?.displayName }"
+  ></h4>
+</div>
+<form
+  [formGroup]="formControl"
+  #form="ngForm"
+  role="form"
+  (ngSubmit)="updateUser()"
+  class="form"
+  novalidate
+  show-validation
+>
+  <div class="modal-body" id="modal-body">
+    <div class="row mb-4">
+      <form-text
+        [label]="'users.fields.displayname' | translate"
+        controlClass="form-control-solid"
+        formControlName="displayName"
+        [placeholder]="'users.fields.displayname.placeholder' | translate"
+        [icon]="svgIcons.Duotone.communication.addressBook"
+        [iconPosition]="'start'"
+        [autocomplete]="false"
+      ></form-text>
+    </div>
+    <div class="row mb-4">
+      <form-text
+        [label]="'users.fields.email' | translate"
+        controlClass="form-control-solid"
+        formControlName="email"
+        [placeholder]="'users.fields.email.placeholder' | translate"
+        [icon]="svgIcons.Duotone.communication.envelopOpen"
+        [iconPosition]="'start'"
+      ></form-text>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary me-3" translate="global.button.save"></button>
+    <a
+      href="#"
+      id="change-password-cancel"
+      class="link-primary"
+      (click)="bsModalRef.hide()"
+      translate="global.button.cancel"
+    ></a>
+  </div>
+</form>

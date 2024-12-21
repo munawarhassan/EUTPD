@@ -1,0 +1,311 @@
+<lt-toolbar></lt-toolbar>
+<form [formGroup]="formControl" #form="ngForm" (ngSubmit)="save()" novalidate autocomplete="false" class="form">
+  <lt-portlet id="m_portlet_domibus">
+    <lt-portlet-head tabClass="fs-5 fw-bolder"></lt-portlet-head>
+    <lt-portlet-body>
+      <portlet-tab id="m_portlet_general" heading="Setup Domibus Server">
+        <div class="row mb-4 offset-lg-1">
+          <form-checkbox
+            [switch]="true"
+            label="Enable"
+            controlClass="form-check-solid"
+            name="enable"
+            formControlName="enable"
+          >
+          </form-checkbox>
+        </div>
+        <div class="row">
+          <div class="separator separator-dashed my-5"></div>
+        </div>
+        <div class="row offset-lg-1 mb-3">
+          <h6 class="text-gray-700">Setup Domibus Server</h6>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-radio
+            class="col-2"
+            controlClass="form-check-solid"
+            label="Old Web Service"
+            name="connectionType"
+            value="Ws"
+            formControlName="connectionType"
+          ></form-radio>
+          <form-radio
+            class="col-2"
+            controlClass="form-check-solid"
+            label="Plugin Web Service"
+            name="connectionType"
+            value="WsPlugin"
+            formControlName="connectionType"
+          ></form-radio>
+          <form-radio
+            class="col-2"
+            controlClass="form-check-solid"
+            label="Jms Connection"
+            name="connectionType"
+            value="Jms"
+            formControlName="connectionType"
+          ></form-radio>
+        </div>
+        <div class="row">
+          <div class="separator separator-dashed my-5"></div>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <div class="col-lg-6 col-md-12">
+            <label class="form-label required">URL Server</label>
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control form-control-solid"
+                [ngClass]="{ 'is-invalid': url.hasError('healthcheck') }"
+                placeholder="URL Server"
+                name="domibusUrl"
+                formControlName="url"
+              />
+              <span
+                class="position-absolute top-50 end-0 translate-middle-y lh-0 me-2"
+                [ngClass]="{ 'd-none': !spinner }"
+              >
+                <span class="spinner-border h-15px w-15px align-middle text-success"></span>
+              </span>
+            </div>
+            <div class="form-text text-muted">
+              The full URL of the server (Exemple : https://domibus.app.pmi/domibus)."
+            </div>
+            <div *ngIf="url.invalid">
+              <span class="invalid-feedback" *ngIf="url.hasError('healthcheck')">URL Server is not valid.</span>
+              <span class="error invalid-feedback" *ngIf="url.hasError('required')">URL Server is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            label="Username"
+            name="username"
+            controlClass="form-control-solid"
+            formControlName="username"
+            helpText="The username used for connection to Domibus."
+          >
+          </form-text>
+        </div>
+        <div class="form-group row offset-lg-1">
+          <form-text
+            type="password"
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Password"
+            name="password"
+            formControlName="password"
+            helpText="The password used for connection to Domibus."
+          ></form-text>
+        </div>
+        <div class="row">
+          <div class="separator separator-dashed my-5"></div>
+        </div>
+        <div class="row offset-lg-1 mb-3">
+          <h6 class="text-gray-700">General Options</h6>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <div class="col-lg-6 col-md-12">
+            <form-checkbox
+              label="Skip Tls Certificate verification"
+              name="tlsInsecure"
+              formControlName="tlsInsecure"
+            ></form-checkbox>
+          </div>
+        </div>
+      </portlet-tab>
+      <portlet-tab id="m_portlet__jms_options" heading="Jms Options">
+        <div formGroupName="jmsOptions" class="m-section">
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              class="col-lg-6 col-md-12"
+              controlClass="form-control-solid"
+              label="Jms Url Server"
+              name="jmsUrl"
+              formControlName="url"
+              helpText="The Jms Domibus server (Exemple: tcp://server.jms:61616)."
+            ></form-text>
+          </div>
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              class="col-lg-6 col-md-12"
+              controlClass="form-control-solid"
+              label="Username"
+              name="jmsOptionsUsername"
+              formControlName="username"
+              helpText="The username used for connection to Jms Domibus server."
+            ></form-text>
+          </div>
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              type="password"
+              controlClass="form-control-solid"
+              class="col-lg-6 col-md-12"
+              label="Password"
+              name="jmsOptionsPassword"
+              formControlName="password"
+              helpText="The password used for connection to Jms Domibus server."
+            ></form-text>
+          </div>
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              class="col-lg-2 col-md-2"
+              controlClass="form-control-solid"
+              label="Concurrency"
+              name="jmsOptionsConcurrency"
+              formControlName="concurrency"
+              helpText="Specify concurrency limits of message listener via a 'lower-upper', e.g. '5-10', or a simple upper limit String, e.g. '10' (the lower limit will be 1 in this case)."
+            >
+            </form-text>
+          </div>
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              type="number"
+              class="col-lg-2 col-md-2"
+              controlClass="form-control-solid"
+              label="Concurrency"
+              name="jmsOptionsReceiveTimeout"
+              formControlName="receiveTimeout"
+              helpText="The timeout to use for receive calls (in seconds)."
+            ></form-text>
+          </div>
+        </div>
+      </portlet-tab>
+      <portlet-tab id="m_portlet_ws_options" heading="Web Service Options">
+        <div formGroupName="wsOptions" class="m-section">
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              class="col-lg-4 col-md-12"
+              controlClass="form-control-solid"
+              label="Authorization type"
+              name="wsOptionsAuthorizationType"
+              formControlName="authorizationType"
+              helpText="Authorization type."
+            ></form-text>
+          </div>
+          <div class="row mb-4 offset-lg-1">
+            <form-text
+              type="number"
+              class="col-lg-4 col-md-2"
+              controlClass="form-control-solid"
+              label="Pending Interval"
+              name="wsOptionsPendingInterval"
+              formControlName="pendingInterval"
+              helpText="The interval in second that backend service should poll pending message in Domibus."
+            >
+            </form-text>
+          </div>
+        </div>
+      </portlet-tab>
+      <portlet-tab id="m_portlet_properties" heading="As4 Properties">
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Submit Action"
+            name="action"
+            formControlName="action"
+            helpText="The Pmode submitRequest action."
+          ></form-text>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Service"
+            name="service"
+            formControlName="service"
+            helpText="The service."
+          ></form-text>
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Service Type"
+            name="serviceType"
+            formControlName="serviceType"
+            helpText="The service type."
+          >
+          </form-text>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Original sender ID"
+            name="originalSender"
+            formControlName="originalSender"
+            helpText="The sender ID (Exemple : urn:oasis:names:tc:ebcore:partyid-type:unregistered:C1)."
+          >
+          </form-text>
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Final recipient ID"
+            name="finalRecipient"
+            formControlName="finalRecipient"
+            helpText="The recipient ID (Exemple : urn:oasis:names:tc:ebcore:partyid-type:unregistered:C4)."
+          >
+          </form-text>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Party ID Type"
+            name="partyIdType"
+            formControlName="partyIdType"
+            helpText="The Party ID type of the sender and receiver (Exemple : urn:oasis:names:tc:ebcore:partyid-type:unregistered:EUCEG)."
+          >
+          </form-text>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="From Party ID"
+            name="fromPartyId"
+            formControlName="fromPartyId"
+            helpText="The Party ID of the sender (Exemple : ACC-EUCEG-99962-AS4)."
+          ></form-text>
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="To Party ID"
+            name="toPartyId"
+            formControlName="toPartyId"
+            helpText="The Party ID of the recipient (Exemple : EUCEG_EC)."
+          >
+          </form-text>
+        </div>
+        <div class="row mb-4 offset-lg-1">
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Key Pair alias"
+            name="keyPairAlias"
+            formControlName="keyPairAlias"
+            helpText="The alias of the euceg key pair."
+          ></form-text>
+          <form-text
+            class="col-lg-6 col-md-12"
+            controlClass="form-control-solid"
+            label="Trusted Certificate alias"
+            name="trustedCerificateAlias"
+            formControlName="trustedCertificateAlias"
+            helpText="The alias of Trusted certificate."
+          >
+          </form-text>
+        </div>
+      </portlet-tab>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="offset-md-3 col m--align-right">
+          <button type="submit" class="btn btn-bold btn-primary me-4" translate="global.button.save"></button>
+          <a href="#" class="link link-primary" (click)="goBack()" translate="global.button.cancel"></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

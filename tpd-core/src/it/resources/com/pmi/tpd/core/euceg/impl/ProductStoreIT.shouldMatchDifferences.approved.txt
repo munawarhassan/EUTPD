@@ -1,0 +1,25 @@
+--- 7dcf3333-79be-435a-ba1d-89efe08be5db
++++ 7dcf3333-79be-435a-ba1d-89efe08be5db
+@@ -18,21 +18,21 @@
+             <ProductionSiteAddress confidential="false">
+                <Address>45 rue des heros</Address>
+                <Country>FR</Country>
+                <PhoneNumber>+339252255522</PhoneNumber>
+                <Email>productioncenter@company.com</Email>
+             </ProductionSiteAddress>
+          </ProductionSiteAddresses>
+       </Manufacturer>
+    </Manufacturers>
+    <ProductType confidential="true">1</ProductType>
+-   <Length confidential="true">18.0</Length>
++   <Length confidential="true">20.0</Length>
+    <Diameter confidential="true">1.4</Diameter>
+    <Weight confidential="true">2.1</Weight>
+    <TobaccoWeight confidential="true">25.4</TobaccoWeight>
+    <Filter confidential="true">true</Filter>
+    <FilterLength confidential="true">30</FilterLength>
+    <Presentations>
+       <Presentation>
+          <NationalMarket confidential="true">FR</NationalMarket>
+          <NationalComment confidential="true">string 1000 National comment FR</NationalComment>
+          <BrandName confidential="true">string 100 Brand name FR</BrandName>

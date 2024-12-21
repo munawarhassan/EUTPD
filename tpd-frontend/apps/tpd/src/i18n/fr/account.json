@@ -1,0 +1,40 @@
+{
+  "account": {
+    "profile": {
+      "title": "Information Personnel",
+      "description": "Mettez à jour vos données personnelles",
+      "messages": {
+        "error": {
+          "fail": "<strong>Une erreur est survenue!</strong> Votre profil n'a pas été sauvegardé.",
+          "emailexists": "<strong>Cet E-mail est déjà utilisé!</strong> Veuillez en choisir un autre."
+        },
+        "readonly": "Vous <b>ne</b> pouvez <b>pas</b> modifier le nom complet, le mot de passe ou l'adresse e-mail de cet utilisateur, car ils sont persistés dans un répertoire utilisateur en lecture seule.",
+        "success": "<strong>Votre profil a été sauvegardé!</strong>"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "description": "Mettez à jour vos paramètres personnelles"
+    },
+    "password": {
+      "title": "Changer votre mot de passe",
+      "messages": {
+        "error": "<strong>Une erreur est survenue!</strong> Le mot de passe n'a pas pu être modifié.",
+        "success": "<strong>La mot de passe a été modifié!</strong>"
+      }
+    },
+    "sessions": {
+      "title": "Vos Sessions actives",
+      "table": {
+        "ipaddress": "Adresse IP",
+        "useragent": "User Agent",
+        "date": "Date",
+        "button": "Invalider"
+      },
+      "messages": {
+        "success": "<strong>Session a été invalidée!</strong>",
+        "error": "<strong>Une erreur est survenue!</strong> La session ne peut pas être invalidée."
+      }
+    }
+  }
+}

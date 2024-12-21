@@ -1,0 +1,29 @@
+<label class="form-label">
+  <span *ngIf="label" [class.required]="required">{{ label }} </span>
+  <i *ngIf="info" class="bi bi-info-circle-fill text-info mx-1 fs-4" [ltTooltip]="info" placement="top"></i>
+</label>
+<div class="position-relative">
+  <textarea
+    #Textarea
+    class="form-control form-control-solid"
+    [disabled]="disabled"
+    (input)="handleTextarea($event)"
+    (blur)="markAsTouched()"
+    (focus)="touched = false"
+    [rows]="rows"
+    [disabled]="disabled"
+  ></textarea>
+  <app-confidential
+    class="position-absolute translate-middle-y top-0 mt-6 end-0 me-6"
+    (valueChange)="handleChangeCheckbox($event)"
+    [disabled]="disabled"
+    [enforce-confidential]="enforceConfidential"
+  ></app-confidential>
+</div>
+<samp *ngIf="maxlength">Size: {{ Textarea.value.length }} (maximum size {{ maxlength }} characters)</samp>
+<div *ngIf="(form?.submitted || ngControl.touched) && ngControl.invalid">
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('required')">{{ label }} is required. </span>
+  <span class="invalid-feedback" *ngIf="ngControl.hasError('maxlength')">
+    {{ label }} cannot be longer than {{ maxlength }} characters.
+  </span>
+</div>

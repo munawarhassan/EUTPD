@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TobaccoProductSubmission>
+  <Submitter confidential="false" submitterID="99962">
+    <SubmitterType>MANUFACTURER</SubmitterType>
+    <HasParent>true</HasParent>
+    <Parent confidential="false">
+      <Name>PHILIP MORRIS PRODUCTS S.A.</Name>
+      <Address>Quai Jeanrenaud 3, 2000 Neuchâtel</Address>
+      <Country>CH</Country>
+      <PhoneNumber>+41 (58) 242 3384</PhoneNumber>
+      <Email>ProductInformationReporting.PIR@pmi.com</Email>
+    </Parent>
+    <HasAffiliates>true</HasAffiliates>
+    <Affiliates>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Austria GmbH</Name>
+        <Address>Vorgartenstraße 206 B-C, A-1020 Vienna</Address>
+        <Country>AT</Country>
+        <PhoneNumber>0043 1 72786 1001</PhoneNumber>
+        <Email>Office.PMAT@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Bulgaria EOOD</Name>
+        <Address>Sofia, 53A Nikola Vaptsarov Blvd., East Park Trade Center, fl. 3</Address>
+        <Country>BG</Country>
+        <PhoneNumber>+359 2 8063100</PhoneNumber>
+        <Email>Administration.PMBG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS ZAGREB, d.o.o.</Name>
+        <Address>Heinzelova ulica 70, 10000 Zagreb</Address>
+        <Country>HR</Country>
+        <PhoneNumber>+385 (0)1 6166 900</PhoneNumber>
+        <Email>pmz.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris ČR a.s.</Name>
+        <Address>Vítězná 1, 284 03 Kutná Hora</Address>
+        <Country>CZ</Country>
+        <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+        <Email>philipmorris.cz@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris ApS</Name>
+        <Address>Weidekampsgade 14 A, 3 DK-2300 Copenhagen S</Address>
+        <Country>DK</Country>
+        <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+        <Email>thomas.jepsen@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Eesti OÜ</Name>
+        <Address>Tartu mnt 43/F.R. Kreutzwaldi 24, 10147 Tallinn, Estonia</Address>
+        <Country>EE</Country>
+        <PhoneNumber>+ 372 6050400</PhoneNumber>
+        <Email>kai.tammist@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Finland Oy</Name>
+        <Address>Lautatarhankatu 6 FI-00580 Helsinki</Address>
+        <Country>FI</Country>
+        <PhoneNumber>+358 207 600 600</PhoneNumber>
+        <Email>berth.sundstrom@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris GmbH</Name>
+        <Address>Am Haag 14, 82166 Gräfelfing</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Manufacturing GmbH</Name>
+        <Address>Neuköllnische Allee 80, 12057 Berlin</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>f6 Cigarettenfabrik GmbH &amp; Co.KG</Name>
+        <Address>Glashütter Straße 94, 01277 Dresden</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Papastratos Cigarettes Manufacturing Company S.A.</Name>
+        <Address>Imeros Topos, Location Kororemi, Aspropyrgos, 193 00, Greece</Address>
+        <Country>GR</Country>
+        <PhoneNumber>+30 210 4193000</PhoneNumber>
+        <Email>papastratos@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Hungary Cigarette Trading Ltd.</Name>
+        <Address>1085 Budapest, Kálvin square 12. II-III. Floor</Address>
+        <Country>HU</Country>
+        <PhoneNumber>+36 (1) 450 4417</PhoneNumber>
+        <Email>zoltan.pozsga@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris AB</Name>
+        <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm</Address>
+        <Country>SE</Country>
+        <PhoneNumber>+46 8440 59 40</PhoneNumber>
+        <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Limited</Name>
+        <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+        <Country>GB</Country>
+        <PhoneNumber>44 20 7076 6000</PhoneNumber>
+        <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Italia Srl</Name>
+        <Address>Via Po 11-13-15, 00198 Rome</Address>
+        <Country>IT</Country>
+        <PhoneNumber>003906854451</PhoneNumber>
+        <Email>philipmorrisitaliasrl@pec.it</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PM Tobakk Norge AS</Name>
+        <Address>Stenersgata 2 0184 Oslo</Address>
+        <Country>NO</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>reception.pmno@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Polska S.A.</Name>
+        <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+        <Country>PL</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Polska Distribution Spółka z o.o.</Name>
+        <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+        <Country>PL</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS LJUBLJANA D.O.O.</Name>
+        <Address>Letališka cesta 29a, 1000 Ljubljana</Address>
+        <Country>SI</Country>
+        <PhoneNumber>01 586 37 00</PhoneNumber>
+        <Email>pmi.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Slovakia s.r.o.</Name>
+        <Address>Galvaniho 15/A Bratislava 821 04</Address>
+        <Country>SK</Country>
+        <PhoneNumber>+421249242111</PhoneNumber>
+        <Email>sk.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS SPAIN S.L.</Name>
+        <Address>Paseo de la Habana 101 28036 Madrid Spain</Address>
+        <Country>ES</Country>
+        <PhoneNumber>0034 91 748 5500</PhoneNumber>
+        <Email>spain.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris AB</Name>
+        <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm</Address>
+        <Country>SE</Country>
+        <PhoneNumber>+46 8440 59 40</PhoneNumber>
+        <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Limited</Name>
+        <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+        <Country>GB</Country>
+        <PhoneNumber>44 20 7076 6000</PhoneNumber>
+        <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+    </Affiliates>
+    <HasEnterer>false</HasEnterer>
+  </Submitter>
+  <SubmissionType confidential="false">1</SubmissionType>
+  <Product>
+    <ProductID confidential="false">99962-19-00001</ProductID>
+    <OtherProductsExist confidential="true">false</OtherProductsExist>
+    <SameCompositionProductsExist confidential="true">true</SameCompositionProductsExist>
+    <SameCompositionProducts>
+      <ProductIdentification type="TEXT" confidential="true">other EU markets</ProductIdentification>
+    </SameCompositionProducts>
+    <Manufacturers>
+      <Manufacturer confidential="false">
+        <Name>Philip Morris Manufacturing &amp; Technology Bologna S.p.A.</Name>
+        <Address>Piazza Belgioioso, 2 - 20121 Milano</Address>
+        <Country>IT</Country>
+        <PhoneNumber>+39 051 3517865</PhoneNumber>
+        <Email>philipmorrisbolognia@pec.it</Email>
+        <ProductionSiteAddresses>
+          <ProductionSiteAddress confidential="false">
+            <Address>Via Fratelli Rosselli, 4 - 40069 Predosa (BO)</Address>
+            <Country>IT</Country>
+          </ProductionSiteAddress>
+        </ProductionSiteAddresses>
+      </Manufacturer>
+    </Manufacturers>
+    <MarketResearchFiles>
+      <Attachment attachmentID="ca8b4f66-9bee-4244-8e9b-d3715209dffe" />
+    </MarketResearchFiles>
+    <ProductType confidential="false">11</ProductType>
+    <Weight confidential="false">801.1</Weight>
+    <TobaccoWeight confidential="false">306.03</TobaccoWeight>
+    <Filter confidential="false">false</Filter>
+    <TechnicalFiles>
+      <Attachment attachmentID="206d5051-8e23-4653-ad42-0217338c6121" />
+    </TechnicalFiles>
+    <Presentations>
+      <Presentation>
+        <NationalMarket confidential="false">FR</NationalMarket>
+        <BrandName confidential="false">iQOS - Marlboro Smooth</BrandName>
+        <BrandSubtypeNameExists confidential="false">true</BrandSubtypeNameExists>
+        <BrandSubtypeName confidential="false">Hard Pack - 20 Heaststicks</BrandSubtypeName>
+        <LaunchDate confidential="false">2016-05-20</LaunchDate>
+        <WithdrawalIndication confidential="false">false</WithdrawalIndication>
+        <ProductNumberType confidential="false">SUBMITTER</ProductNumberType>
+        <ProductNumber confidential="false">POM.fr.received</ProductNumber>
+        <PackageType confidential="false">14</PackageType>
+        <PackageNetWeight confidential="false">6.1</PackageNetWeight>
+        <HasOtherMarketData confidential="true">false</HasOtherMarketData>
+      </Presentation>
+    </Presentations>
+    <TobaccoIngredients>
+      <TobaccoIngredient>
+        <PartType confidential="true">3</PartType>
+        <LeafType confidential="true">7</LeafType>
+        <LeafTypeOther confidential="true">Homogenized</LeafTypeOther>
+        <LeafCureMethod confidential="true">6</LeafCureMethod>
+        <LeafCureMethodOther confidential="true">See Tobacco Part Description File</LeafCureMethodOther>
+        <Quantity confidential="true">201.5</Quantity>
+        <PartDescriptionFiles>
+          <Attachment attachmentID="c7d95b86-12d5-4748-9124-9e93c74ecd1b" />
+        </PartDescriptionFiles>
+        <Suppliers>
+          <Supplier confidential="true">
+            <Name>Philip Morris Manufacturing &amp; Technology Bologna S.p.A.</Name>
+            <Address>Piazza Belgioioso, 2 - 20121 Milano</Address>
+            <Country>IT</Country>
+            <PhoneNumber>+39 051 3517865</PhoneNumber>
+            <Email>philipmorrisbolognia@pec.it</Email>
+          </Supplier>
+        </Suppliers>
+      </TobaccoIngredient>
+    </TobaccoIngredients>
+    <OtherIngredientsExist confidential="false">true</OtherIngredientsExist>
+    <OtherIngredients>
+      <Ingredient>
+        <Name confidential="false">glycerol</Name>
+        <CasNumberExists confidential="false">true</CasNumberExists>
+        <CasNumber confidential="false">55-82-5</CasNumber>
+        <RecipeQuantity confidential="false">52.3</RecipeQuantity>
+        <Functions>
+          <Function confidential="false">13</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">0</ToxicityStatus>
+        <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+        <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable confidential="false">3</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">true</ToxEmission>
+          <ToxCmr confidential="false">true</ToxCmr>
+          <ToxCardioPulmonary confidential="false">true</ToxCardioPulmonary>
+          <ToxAddictive confidential="false">false</ToxAddictive>
+          <ToxOther confidential="false">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment attachmentID="9d285216-9432-47d3-ae52-73e1a3690aaa" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment attachmentID="011c7f44-4974-4055-b497-0cf7f2d7787f" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment attachmentID="d5620302-145b-476f-bded-0ac302d4a138" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment attachmentID="b54c4056-b39c-4865-b8c9-4e7bd896ae27" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <Category confidential="false">2</Category>
+        <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+        <PriorityAdditive confidential="false">true</PriorityAdditive>
+        <PriorityAdditiveFiles>
+          <Attachment attachmentID="22d5c0bf-a9b7-4775-ad01-ae65adea7574" />
+        </PriorityAdditiveFiles>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="false">water</Name>
+        <CasNumberExists confidential="false">true</CasNumberExists>
+        <CasNumber confidential="false">7732-28-5</CasNumber>
+        <RecipeQuantity confidential="false">36.1</RecipeQuantity>
+        <Functions>
+          <Function confidential="false">17</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">0</ToxicityStatus>
+        <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+        <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable confidential="false">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">false</ToxEmission>
+          <ToxCmr confidential="false">false</ToxCmr>
+          <ToxCardioPulmonary confidential="false">false</ToxCardioPulmonary>
+          <ToxAddictive confidential="false">false</ToxAddictive>
+          <ToxOther confidential="false">false</ToxOther>
+        </ToxicologicalDetails>
+        <Category confidential="false">2</Category>
+        <QuantityFluctuate confidential="false">false</QuantityFluctuate>
+        <PriorityAdditive confidential="false">false</PriorityAdditive>
+      </Ingredient>
+    </OtherIngredients>
+    <OtherEmissionsAvailable confidential="false">true</OtherEmissionsAvailable>
+    <OtherEmissions>
+      <Emission>
+        <CasNumber confidential="false">53-51-4</CasNumber>
+        <IupacName confidential="false">12345</IupacName>
+        <Quantity confidential="false">12</Quantity>
+        <Unit confidential="false">mg</Unit>
+        <MethodsFile>
+          <Attachment attachmentID="c039a3a0-54eb-42f1-af54-b8359209aa31" />
+          <Attachment attachmentID="11bec334-0127-4689-be60-19abe072b8d6" />
+        </MethodsFile>
+        <Name confidential="false">emission 1</Name>
+      </Emission>
+    </OtherEmissions>
+    <NovelSpecific>
+      <DetailsDescriptionFile attachmentID="4fe34c13-9599-4583-a8d3-d9bc3a3adfab" />
+      <UseInstructionsFile attachmentID="301e8826-f2bc-46c0-813e-5a19a1833e50" />
+      <RiskBenefitFile attachmentID="2d7c8183-0e66-4708-ac54-e5314d6d369a" />
+      <StudyFiles>
+        <Attachment attachmentID="0b2bb18b-ca01-42c6-8292-c62324758ca8" />
+      </StudyFiles>
+    </NovelSpecific>
+  </Product>
+</TobaccoProductSubmission>

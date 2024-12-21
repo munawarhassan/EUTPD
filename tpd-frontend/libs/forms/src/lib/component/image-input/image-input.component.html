@@ -1,0 +1,37 @@
+<!--begin::Image preview wrapper-->
+<div #wrapper class="image-input-wrapper"></div>
+<!--end::Image preview wrapper-->
+
+<!--begin::Edit button-->
+<label
+  class="image-input-action-change btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+  ltTooltip="Change avatar"
+>
+  <i class="bi bi-pencil-fill fs-7"></i>
+
+  <!--begin::Inputs-->
+  <input #input type="file" [name]="inputName" accept=".png, .jpg, .jpeg" [disabled]="disabled" />
+  <!--end::Inputs-->
+</label>
+<!--end::Edit button-->
+
+<!--begin::Cancel button-->
+<span
+  *ngIf="cancellable"
+  class="image-input-action-cancel btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+  (click)="cancel($event)"
+  ltTooltip="Cancel avatar"
+>
+  <i class="bi bi-x fs-2"></i>
+</span>
+<!--end::Cancel button-->
+
+<!--begin::Remove button-->
+<span
+  class="image-input-action-remove btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+  (click)="remove($event)"
+  ltTooltip="Remove avatar"
+>
+  <i class="bi bi-x fs-2"></i>
+</span>
+<!--end::Remove button-->

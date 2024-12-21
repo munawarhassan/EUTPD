@@ -1,0 +1,235 @@
+<lt-toolbar></lt-toolbar>
+
+<div id="m_portlet_globalpermission_user" class="globalpermission-portlet">
+  <lt-portlet [mode]="['bordered', 'rounded', 'bordered-semi']" id="m_portlet_globalpermission_user">
+    <lt-portlet-head [title]="'globalpermissions.usertitle' | translate" [icon]="svgIcons.Duotone.general.shieldLock">
+      <lt-portlet-tool type="toggle"></lt-portlet-tool>
+    </lt-portlet-head>
+    <lt-portlet-body>
+      <div class="group-list fs-5">
+        <div class="permission-header d-flex flex-row align-items-end px-3 py-4">
+          <div class="flex-grow-1" translate="globalpermissions.fields.username"></div>
+          <div class="w-125px d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.sysadmin"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              size="1"
+              placement="top"
+              [ltTooltip]="'globalpermissions.permission.sysadmin.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-125px d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.admin"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              size="1"
+              placement="top"
+              [ltTooltip]="'globalpermissions.permission.admin.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-125px me-10 d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.user"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              placement="top"
+              size="1"
+              [ltTooltip]="'globalpermissions.permission.user.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-50px"></div>
+        </div>
+        <div class="d-flex flex-nowrap mb-3">
+          <div class="p-1 flex-grow-1">
+            <app-tagify-user [users]="getUsersWithoutAnyPermission.bind(this)" [(value)]="userToAdd"></app-tagify-user>
+          </div>
+          <div class="p-1 w-250px">
+            <select
+              select2
+              class="permission-type-select form-control form-select form-select-solid"
+              [(ngModel)]="selectedUserPermission"
+              [datasource]="permissions"
+              optionText="value"
+              optionValue="name"
+            ></select>
+          </div>
+          <div class="p-1 ms-auto">
+            <button
+              type="button"
+              class="btn btn-primary btn-bold add-button"
+              (click)="setUserPermission(userToAdd, selectedUserPermission)"
+              translate="global.button.add"
+            ></button>
+          </div>
+        </div>
+        <div
+          class="permission-row d-flex flex-row align-items-center px-3 py-4"
+          *ngFor="let access of userAccess"
+          [attr.data-entity-id]="access.user.username"
+        >
+          <div class="flex-grow-1">
+            <app-user-card [user]="access.user" [link]="['/admin/users/view', access.user.username]"> </app-user-card>
+          </div>
+          <div class="w-125px">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="SYS_ADMIN"
+                [checked]="access.permission === 'SYS_ADMIN'"
+                (click)="onUserPermissionChange($event, access, 'SYS_ADMIN')"
+              />
+            </div>
+          </div>
+          <div class="w-125px">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="ADMIN"
+                [checked]="access.permission === 'SYS_ADMIN' || access.permission === 'ADMIN'"
+                [disabled]="access.permission === 'SYS_ADMIN'"
+                (click)="onUserPermissionChange($event, access, 'ADMIN')"
+              />
+              <label class="form-check-label"> </label>
+            </div>
+          </div>
+          <div class="w-125px me-10">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input type="checkbox" class="form-check-input" name="USER" checked="true" disabled />
+              <label class="form-check-label"> </label>
+            </div>
+          </div>
+          <div class="w-50px">
+            <a
+              class="delete-button"
+              (click)="revokeUserPermission(access.user.username)"
+              placement="right"
+              [ltTooltip]="'globalpermissions.tooltip.user.remove' | translate"
+            >
+              <inline-svg class="d-flex" [src]="svgIcons.Simple.code.errorCircle" size="1" color="primary"></inline-svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </lt-portlet-body>
+  </lt-portlet>
+  <!-- end user access panel -->
+  <lt-portlet [mode]="['bordered', 'rounded', 'bordered-semi']" id="m_portlet_globalpermission_group">
+    <lt-portlet-head [title]="'globalpermissions.grouptitle' | translate" [icon]="svgIcons.Duotone.general.shieldLock">
+      <lt-portlet-tool type="toggle"></lt-portlet-tool>
+    </lt-portlet-head>
+    <lt-portlet-body>
+      <div class="group-list fs-5">
+        <div class="permission-header d-flex flex-row align-items-end px-3 py-4">
+          <div class="flex-grow-1" translate="globalpermissions.fields.groupname"></div>
+          <div class="w-125px d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.sysadmin"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              size="1"
+              placement="top"
+              [ltTooltip]="'globalpermissions.permission.sysadmin.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-125px d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.admin"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              size="1"
+              placement="top"
+              [ltTooltip]="'globalpermissions.permission.admin.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-125px me-10 d-flex flex-column text-center">
+            <span class="me-1" translate="global.permission.user"> </span>
+            <inline-svg
+              [src]="svgIcons.Simple.code.infoCircle"
+              size="1"
+              placement="top"
+              [ltTooltip]="'globalpermissions.permission.user.description' | translate"
+            ></inline-svg>
+          </div>
+          <div class="w-50px"></div>
+        </div>
+        <div class="d-flex flex-nowrap align-items-center mb-3">
+          <div class="p-1 flex-grow-1">
+            <app-tagify-group
+              [groups]="getGroupsWithoutAnyPermission.bind(this)"
+              [(value)]="groupToAdd"
+            ></app-tagify-group>
+          </div>
+          <div class="p-1 w-250px">
+            <select
+              select2
+              class="permission-type-select form-control form-select form-select-solid"
+              [(ngModel)]="selectedGroupPermission"
+              [datasource]="permissions"
+              optionText="value"
+              optionValue="name"
+            ></select>
+          </div>
+          <div class="p-1 ms-auto">
+            <button
+              type="button"
+              class="btn btn-primary btn-bold add-button"
+              (click)="setGroupPermission(groupToAdd, selectedGroupPermission)"
+              translate="global.button.add"
+            ></button>
+          </div>
+        </div>
+        <div
+          class="permission-row d-flex flex-row px-3 py-4"
+          *ngFor="let access of groupAccess"
+          [attr.data-entity-id]="access.group"
+        >
+          <div class="flex-grow-1">
+            <inline-svg class="me-4" [src]="svgIcons.Simple.communication.group"></inline-svg>
+            <a class="link link-primary" [routerLink]="['/admin/groups/view', access.group]"> {{ access.group }} </a>
+          </div>
+          <div class="w-125px">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="SYS_ADMIN"
+                [checked]="access.permission === 'SYS_ADMIN'"
+                (click)="onGroupPermissionChange($event, access, 'SYS_ADMIN')"
+              />
+              <label class="form-check-label"> </label>
+            </div>
+          </div>
+          <div class="w-125px">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="ADMIN"
+                [checked]="access.permission === 'SYS_ADMIN' || access.permission === 'ADMIN'"
+                [disabled]="access.permission === 'SYS_ADMIN'"
+                (click)="onGroupPermissionChange($event, access, 'ADMIN')"
+              />
+              <label class="form-check-label"> </label>
+            </div>
+          </div>
+          <div class="w-125px me-10">
+            <div class="form-check form-check-custom form-check-solid flex-center">
+              <input type="checkbox" class="form-check-input" name="USER" checked="true" disabled />
+              <span> </span>
+              <label class="form-check-label"> </label>
+            </div>
+          </div>
+          <div class="w-50px">
+            <a
+              class="delete-button"
+              (click)="revokeGroupPermission(access.group)"
+              placement="right"
+              [ltTooltip]="'globalpermissions.tooltip.group.remove' | translate"
+            >
+              <inline-svg class="d-flex" size="1" [src]="svgIcons.Simple.code.errorCircle" color="primary"></inline-svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </lt-portlet-body>
+  </lt-portlet>
+</div>

@@ -1,0 +1,112 @@
+<ng-container *ngIf="product">
+  <button *ngIf="!readonly" type="button" (click)="add()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Other Emission
+  </button>
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Name</th>
+          <th scope="col">CAS Number</th>
+          <th scope="col">UIPAC Number</th>
+          <th scope="col">Quantity/Unit</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let otherEmission of dataRows.otherEmission.content"
+          (click)="selected = otherEmission"
+          class="row-selectable"
+          [ngClass]="{ active: dataRows.otherEmission.isSelected(otherEmission) }"
+        >
+          <td>{{ otherEmission?.Name?.value }}</td>
+          <td>{{ otherEmission?.CasNumber?.value }}</td>
+          <td>{{ otherEmission?.IupacName?.value }}</td>
+          <td>{{ otherEmission?.Quantity?.value }}&nbsp;{{ otherEmission?.Unit?.value }}</td>
+          <td class="text-center text-nowrap">
+            <button
+              [disabled]="readonly"
+              type="button"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              (click)="remove(otherEmission)"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="5">
+          <lt-pagination
+            [page]="dataRows.otherEmission"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="this.dataRows.otherEmission.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+  <ng-container *ngIf="selected">
+    <div class="separator separtor-dashed mb-8"></div>
+    <form name="otherEmissionForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.Name"
+            name="Name"
+            label="Name"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.CasNumber"
+            name="CasNumber"
+            label="Cas Number"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.IupacName"
+            name="IupacName"
+            label="Iupac Name"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.Quantity"
+            name="Quantity"
+            label="Quantity"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.Unit"
+            name="Unit"
+            label="Unit"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-list-files
+            name="MethodsFile"
+            [(ngModel)]="selected.MethodsFile"
+            [disabled]="readonly"
+            label="Methods File(s)"
+          ></app-list-files>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</ng-container>

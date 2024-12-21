@@ -1,0 +1,216 @@
+<ng-container *ngIf="product">
+  <button *ngIf="!readonly" type="button" (click)="addIngredient()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Ingredient
+  </button>
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Part Type</th>
+          <th scope="col">Leaf Type</th>
+          <th scope="col">Leaf Cure Method</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let ingredient of dataRows.ingredient.content"
+          (click)="selected = ingredient"
+          class="row-selectable"
+          [ngClass]="{ active: dataRows.ingredient.isSelected(ingredient) }"
+        >
+          <td>{{ euceg.getTobaccoPartType(ingredient.PartType) }}</td>
+          <td>{{ euceg.getTobaccoLeafType(ingredient.LeafType) }}</td>
+          <td>{{ euceg.getTobaccoLeafCureMethod(ingredient.LeafCureMethod) }}</td>
+          <td>{{ ingredient.Quantity?.value }}</td>
+          <td class="text-center text-nowrap" style="width: 10rem">
+            <button
+              [disabled]="readonly"
+              type="button"
+              (click)="removeIngredient(ingredient)"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              ltTooltip="Remove"
+              placement="top"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="4">
+          <lt-pagination
+            [page]="dataRows.ingredient"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="this.dataRows.ingredient.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+  <ng-container *ngIf="selected">
+    <div class="separator separtor-dashed mb-8"></div>
+    <form name="ingredientForm" #ingredientForm="ngForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="PartType"
+            [options]="tobaccoPartTypes$"
+            label="Part Type"
+            [(ngModel)]="selected.PartType"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+            [required]="false"
+          ></app-confidential-select>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="LeafType"
+            [options]="this.tobaccoLeafTypes$"
+            label="Leaf Type"
+            [(ngModel)]="selected.LeafType"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+            [required]="false"
+          ></app-confidential-select>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-select
+            name="LeafCureMethod"
+            [options]="tobaccoLeafCureMethods$"
+            label="Leaf Cure Method"
+            [(ngModel)]="selected.LeafCureMethod"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+            [required]="false"
+          ></app-confidential-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.PartTypeOther"
+            name="PartTypeOther"
+            label="Part Type Other"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.LeafTypeOther"
+            name="LeafTypeOther"
+            label="Leaf Type Other"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.LeafCureMethodOther"
+            name="LeafCureMethodOther"
+            label="Leaf Cure Method Other"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-input
+            [(ngModel)]="selected.Quantity"
+            name="Quantity"
+            label="Quantity"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+            [required]="true"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="separator separator-dashed my-6"></div>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <app-list-files
+            [(ngModel)]="selected.PartDescriptionFiles"
+            name="PartDescriptionFiles"
+            [disabled]="readonly"
+            label="Part Description File(s)"
+          ></app-list-files>
+        </div>
+      </div>
+    </form>
+    <div class="separator separator-dashed my-6"></div>
+    <h4 class="my-4">Manufactured Supplier(s)</h4>
+
+    <button *ngIf="!readonly" type="button" (click)="addSupplier()" class="btn btn-light-primary btn-sm mb-3">
+      <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+      Add Supplier
+    </button>
+    <div class="table-responsive">
+      <table class="table table-hover table-row-dashed align-middle g-1">
+        <thead>
+          <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+            <th scope="col">Submitter ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Country</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let supplier of dataRows.supplier.content; index as $index">
+            <td scope="row">{{ supplier.submitterID }}</td>
+            <td>{{ supplier.Name }}</td>
+            <td>{{ supplier.Address }}</td>
+            <td>{{ euceg.getCountry(supplier.Country) }}</td>
+            <td>{{ supplier.PhoneNumber }}</td>
+            <td>{{ supplier.Email }}</td>
+            <td class="text-end">
+              <div class="d-flex justify-content-end">
+                <div>
+                  <button
+                    type="button"
+                    (click)="updateSupplier(supplier)"
+                    class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2"
+                  >
+                    <inline-svg class="m-0" [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+                  </button>
+                  <button
+                    [disabled]="readonly"
+                    type="button"
+                    (click)="removeSupplier(supplier)"
+                    class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+                    ltTooltip="Remove"
+                    placement="top"
+                  >
+                    <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <td colspan="7">
+            <lt-pagination
+              [page]="dataRows.supplier"
+              [maxSize]="5"
+              [boundaryLinks]="true"
+              (pageChanged)="this.dataRows.supplier.pageable = $event.pageable"
+            >
+            </lt-pagination>
+          </td>
+        </tfoot>
+      </table>
+    </div>
+  </ng-container>
+</ng-container>

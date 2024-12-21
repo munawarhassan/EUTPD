@@ -1,0 +1,97 @@
+version: "3.9"
+
+services:
+  docker-registry:
+    image: registry:2
+    environment:
+       - "REGISTRY_HTTP_SECRET=mysecret"
+       - "REGISTRY_STORAGE_DELETE_ENABLED=true"
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+          constraints:
+            - "node.role == manager"
+    labels:
+       - "traefik.enable=false"
+    volumes:
+      - "registry-data:/var/lib/registry"
+    networks:
+      - net
+
+  registry:
+    image: joxit/docker-registry-ui:latest
+    environment:
+        - "DELETE_IMAGES=true"
+        - "REGISTRY_TITLE=My Private Docker Registry"
+        - "NGINX_PROXY_PASS_URL=http://docker-registry:5000"
+        - "SINGLE_REGISTRY=true"
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+          constraints:
+            - "node.role == manager"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.registry-http.rule=HostRegexp(`registry.${DOMAIN}`,`registry-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.registry-http.entrypoints=http"
+        - "traefik.http.routers.registry-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.registry-https.rule=HostRegexp(`registry.${DOMAIN}`,`registry-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.registry-https.tls.domains[0].main=registry.${DOMAIN}"
+        - "traefik.http.routers.registry-https.tls.domains[0].sans=registry-*.${DOMAIN}"
+        - "traefik.http.routers.registry-https.entrypoints=https"
+        - "traefik.http.routers.registry-https.tls=true"
+        - "traefik.http.services.registry.loadbalancer.server.port=80"
+    networks:
+      - net
+      - discovery
+  jenkins:
+    image: "jenkins/jenkins:${JENKINS_TAG}"
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+          constraints:
+            - "node.role == manager"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.jenkins-http.rule=HostRegexp(`jenkins.${DOMAIN}`,`jenkins-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.jenkins-http.entrypoints=http"
+        - "traefik.http.routers.jenkins-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.jenkins-https.rule=HostRegexp(`jenkins.${DOMAIN}`,`jenkins-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.jenkins-https.tls.domains[0].main=jenkins.${DOMAIN}"
+        - "traefik.http.routers.jenkins-https.tls.domains[0].sans=jenkins-*.${DOMAIN}"
+        - "traefik.http.routers.jenkins-https.entrypoints=https"
+        - "traefik.http.routers.jenkins-https.tls=true"
+        - "traefik.http.services.jenkins.loadbalancer.server.port=${JENKINS_PORT:-8080}"
+    networks:
+      - net
+      - discovery
+    ports:
+     - "${JENKINS_AGENTS_PORT:-50000}:50000"
+    environment:
+      # Certificate expiration of the plugin when checking for plugin updates on Jenkins startup
+      # "JAVA_OPTS=-Dhudson.model.DownloadService.noSignatureCheck=true -Dspec.master.disableCSRFProtection=true"
+      - "JENKINS_USER=CHANGE_ME"
+      - "JENKINS_PASS=CHANGE_ME"
+    volumes:
+      - "jenkins-data:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      
+networks:
+  net:
+    external: true
+  discovery:
+    external: true
+    
+volumes:
+  registry-data: {}
+  jenkins-data: {}
+

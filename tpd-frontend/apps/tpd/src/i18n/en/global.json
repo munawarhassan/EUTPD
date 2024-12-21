@@ -1,0 +1,136 @@
+{
+  "global": {
+    "title": "TPD Submission Tools",
+    "welcome": "Welcome",
+    "description": "TPD Submission Tool is a implementation of The Tobacco Products Directive.<br />This is facility tools allowing to import submitter, tobacco and e-cigarette information.",
+    "menu": {
+      "home": "Home",
+      "account": {
+        "greeting": "Hi,",
+        "signin": "Sign in",
+        "main": "Account",
+        "profile": "Profile",
+        "login": "Authenticate",
+        "logout": "Sign out",
+        "register": "Register"
+      },
+      "admin": {
+        "overview": "Overview",
+        "api": "API",
+        "accounts": "Accounts",
+        "console": "Console",
+        "users": "Users",
+        "groups": "Groups",
+        "globalpermissions": "Global permissions",
+        "server": "Server settings",
+        "index": "Search indexes",
+        "mail": "Mails server",
+        "ldap": "LDAP Server",
+        "keystore": "Key Store",
+        "domibus": "Domibus Server",
+        "main": "Administration",
+        "tracker": "User tracker",
+        "metrics": "Metrics",
+        "health": "Health",
+        "settings": "Settings",
+        "support": "Support",
+        "audits": "Audits",
+        "apidocs": "API",
+        "database": "Database"
+      },
+      "language": "Language"
+    },
+    "permission": {
+      "user": "User",
+      "admin": "Administrator",
+      "sysadmin": "System Administrator"
+    },
+    "button": {
+      "add": "Add",
+      "save": "Save",
+      "close": "Close",
+      "cancel": "Cancel",
+      "search": "Search",
+      "delete": "Delete",
+      "test": "Test",
+      "deactivate": "Deactivate",
+      "back": "Back"
+    },
+    "form": {
+      "username": "Username",
+      "username.placeholder": "Username",
+      "displayname": "Full Name",
+      "displayname.placeholder": "Full Name",
+      "currentpassword": "Current Password",
+      "currentpassword.placeholder": "Current Password",
+      "newpassword": "New Password",
+      "newpassword.placeholder": "New Password",
+      "password": "Password",
+      "password.placeholder": "Password",
+      "confirmpassword": "Password Confirmation",
+      "confirmpassword.placeholder": "Confirm the password",
+      "confirmnewpassword": "New Password Confirmation",
+      "confirmnewpassword.placeholder": "Confirm New Password",
+      "email": "E-mail",
+      "email.placeholder": "E-mail Address",
+      "phone": "Contact Phone",
+      "phone.placeholder": "Contact Phone",
+      "location": "Office Location",
+      "location.placeholder": "Office Location"
+    },
+    "messages": {
+      "info": {
+        "authenticated": "If you want to <a href=\"#!/login\">authenticate</a>.",
+        "authenticatedInfo": "you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
+        "register": "You don't have an account yet? <a href=\"#!/register\">Register a new account</a>"
+      },
+      "error": {
+        "dontmatch": "The password and its confirmation do not match!"
+      },
+      "validate": {
+        "username": {
+          "required": "The user name is required.",
+          "minlength": "The user name is required to be at least 3 characters",
+          "maxlength": "The user name cannot be longer than 20 characters",
+          "pattern": "The user name can only contain letters and digits"
+        },
+        "displayname": {
+          "required": "The display name is required."
+        },
+        "currentpassword": {
+          "required": "The current password is required."
+        },
+        "newpassword": {
+          "required": "The password is required.",
+          "minlength": "The password is required to be at least 5 characters",
+          "maxlength": "The password cannot be longer than 50 characters",
+          "strength": "Password strength:"
+        },
+        "password": {
+          "required": "The password is required.",
+          "minlength": "The password is required to be at least 5 characters",
+          "maxlength": "The password cannot be longer than 50 characters",
+          "strength": "Password strength:"
+        },
+        "confirmpassword": {
+          "required": "The confirmation password is required.",
+          "minlength": "The confirmation password is required to be at least 5 characters",
+          "maxlength": "The confirmation password cannot be longer than 50 characters",
+          "compareTo": "The password confirmation must match the previous password"
+        },
+        "confirmnewpassword": {
+          "required": "The confirmation new password is required.",
+          "minlength": "The confirmation new password is required to be at least 5 characters",
+          "maxlength": "The confirmation new password cannot be longer than 50 characters",
+          "compareTo": "The password confirmation must match the new password"
+        },
+        "email": {
+          "required": "The e-mail address is required.",
+          "invalid": "The e-mail address is invalid.",
+          "minlength": "The e-mail address is required to be at least 5 characters",
+          "maxlength": "The e-mail address cannot be longer than 50 characters"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.pmi.tpd</groupId>
+    <artifactId>tpd.parent</artifactId>
+    <version>3.4.0</version>
+  </parent>
+
+  <artifactId>tpd.euceg.parent</artifactId>
+  <packaging>pom</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Commission Common Entry Gate Parent</description>
+
+  <properties>
+    <cxf.version>3.5.5</cxf.version>
+    <jaxb-fluent-api.version>2.1.8</jaxb-fluent-api.version>
+    <activemq-client.version>5.16.2</activemq-client.version>
+  </properties>
+
+  <modules>
+    <module>tpd-euceg-api</module>
+    <module>tpd-backend-ws-stubs</module>
+    <module>tpd-ws-plugin-stubs</module>
+    <module>tpd-backend-core</module>
+    <module>tpd-backend-receiver</module>
+    <module>tpd-euceg-core</module>
+  </modules>
+</project>

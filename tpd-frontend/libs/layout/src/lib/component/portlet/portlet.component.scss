@@ -1,0 +1,851 @@
+@use 'sass:math';
+
+@import 'init';
+//
+// Portlet
+//
+
+// Portlet settings
+$portlet: (
+    min-height: (
+        //
+        default:
+            (
+                //
+                desktop: 60px,
+                mobile: 50px //
+            ),
+        sm: (
+            //
+            desktop: 50px,
+            mobile: 40px //
+        ),
+        lg: (
+            //
+            desktop: 80px,
+            mobile: 60px //
+        ),
+        xl: (
+            //
+            desktop: 100px,
+            mobile: 80px //
+        )
+        //,
+    ),
+    space: (
+        //
+        desktop: 25px,
+        mobile: 15px //,
+    ),
+    bottom-space: (
+        //
+        desktop: 20px,
+        mobile: 20px //,
+    ),
+    border-color: $border-color,
+    bg-color: #ffffff,
+    shadow: 0px 0px 30px 0px rgba(82, 63, 105, 0.05),
+) !default;
+
+.portlet {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    $elevate-shadow: 0px 0px 13px 0px rgba(82, 63, 105, 0.05);
+    $elevate-shadow-2: 0px 0px 13px 0px rgba(82, 63, 105, 0.1);
+    box-shadow: $elevate-shadow;
+    background-color: get($portlet, bg-color);
+    margin-bottom: get($portlet, bottom-space, desktop);
+    $fullscreen-height: 5.1rem;
+    $fullscreen-height-sm: 4.1rem;
+    $fullscreen-height-lg: 7rem;
+    $rotate-transition: transform 0.3s ease;
+    $icon-color: $gray-400;
+    $icon-hover-color: $primary;
+
+    .tool-toggle.rotate-180 {
+        transition: $rotate-transition;
+        -webkit-backface-visibility: hidden;
+    }
+
+    &.collapsible:not(.collapsed) {
+        .tool-toggle.rotate-180 {
+            transform: rotateZ(180deg);
+            transition: $rotate-transition;
+
+            [direction='rtl'] & {
+                transform: rotateZ(-180deg);
+            }
+        }
+    }
+
+    &.portlet--remove {
+        display: none;
+    }
+
+    // Global white content mode
+    .page-content-white & {
+        box-shadow: $elevate-shadow-2;
+    }
+
+    @include border-radius($border-radius);
+
+    // Base
+    .portlet-head {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        position: relative;
+        padding: 0 get($portlet, space, desktop);
+        border-bottom: 1px solid get($portlet, border-color);
+        min-height: get($portlet, min-height, default, desktop);
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+
+        &.portlet-head--right {
+            justify-content: flex-end;
+        }
+
+        &.portlet-head--noborder {
+            border-bottom: 0;
+        }
+
+        .portlet-head-label {
+            display: flex;
+            align-items: center;
+            align-content: flex-first;
+
+            .portlet-head-title {
+                margin: 0;
+                padding: 0;
+                font-size: 1.2rem;
+                font-weight: 500;
+                color: $gray-800;
+
+                small {
+                    font-weight: 300;
+                    padding-left: 0.5rem;
+                    font-size: 1rem;
+                    color: $gray-600;
+                }
+            }
+
+            .portlet-head-icon {
+                padding-right: 0.75rem;
+                font-size: 1.3rem;
+                color: $gray-600;
+            }
+        }
+
+        .portlet-head-toolbar {
+            display: flex !important;
+            align-items: center !important;
+            align-content: flex-end !important;
+
+            .nav-pills,
+            .nav-tabs {
+                margin: 0;
+            }
+
+            .portlet-head-wrapper {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .portlet-head-progress {
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+
+        .portlet-head-group {
+            .btn-tool {
+                .svg-icon {
+                    @include svg-icon-color($icon-color);
+                }
+
+                &:hover {
+                    .svg-icon {
+                        @include svg-icon-color($icon-hover-color);
+                    }
+                }
+            }
+        }
+    }
+
+    // Head sizing
+    &.portlet--head-sm {
+        .portlet-head {
+            min-height: get($portlet, min-height, sm, desktop);
+        }
+    }
+
+    &.portlet--head-lg {
+        .portlet-head {
+            min-height: get($portlet, min-height, lg, desktop);
+        }
+    }
+
+    &.portlet--head-xl {
+        .portlet-head {
+            min-height: get($portlet, min-height, xl, desktop);
+        }
+    }
+
+    // Sticky portlet
+    &.portlet--sticky {
+        > .portlet-head {
+            height: get($portlet, min-height, default, desktop) - 10px;
+            min-height: get($portlet, min-height, default, desktop) - 10px;
+
+            &.portlet-head--sm {
+                height: get($portlet, min-height, sm, desktop) - 10px;
+                min-height: get($portlet, min-height, sm, desktop) - 10px;
+            }
+
+            &.portlet-head--lg {
+                height: get($portlet, min-height, lg, desktop) - 10px;
+                min-height: get($portlet, min-height, lg, desktop) - 10px;
+            }
+
+            &.portlet-head--xl {
+                height: get($portlet, min-height, xl, desktop) - 10px;
+                min-height: get($portlet, min-height, xl, desktop) - 10px;
+            }
+        }
+    }
+
+    &.portlet--fullscreen {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: get($header-config, fixed, z-index) + 1;
+        margin: 0;
+        > .portlet-wrapper {
+            > .portlet-body {
+                left: 0;
+                right: 0;
+                top: $fullscreen-height;
+                bottom: 0;
+                position: fixed;
+                overflow: auto;
+            }
+        }
+
+        > .portlet-foot {
+            position: relative;
+            top: 100%;
+        }
+
+        &.portlet--head-sm {
+            .portlet-body {
+                top: $fullscreen-height-sm;
+            }
+        }
+
+        &.portlet--head-lg {
+            .portlet-body {
+                top: $fullscreen-height-lg;
+            }
+        }
+
+        .portlet-head {
+            .btn-tool {
+                &.tool-toggle {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // Head overlay
+    &.portlet--head-overlay {
+        .portlet-head {
+            position: relative;
+            z-index: 1;
+            border: 0;
+            height: get($portlet, min-height, default, desktop);
+        }
+
+        .portlet-body {
+            margin-top: -(get($portlet, min-height, default, desktop));
+        }
+
+        // Head sizing
+        &.portlet--head-sm {
+            .portlet-head {
+                height: get($portlet, min-height, sm, desktop);
+            }
+
+            .portlet-body {
+                margin-top: -(get($portlet, min-height, sm, desktop));
+            }
+        }
+
+        &.portlet--head-lg {
+            .portlet-head {
+                height: get($portlet, min-height, lg, desktop);
+            }
+
+            .portlet-body {
+                margin-top: -(get($portlet, min-height, lg, desktop));
+            }
+        }
+
+        &.portlet--head-xl {
+            .portlet-head {
+                height: get($portlet, min-height, xl, desktop);
+            }
+
+            .portlet-body {
+                margin-top: -(get($portlet, min-height, xl, desktop));
+            }
+        }
+    }
+
+    .portlet-body {
+        display: flex;
+        flex-direction: column;
+        padding: get($portlet, space, desktop);
+
+        @include border-radius($border-radius);
+    }
+
+    .portlet-foot {
+        padding: get($portlet, space, desktop);
+        border-top: 1px solid get($portlet, border-color);
+
+        .portlet-foot-wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+
+        &.portlet-foot--sm {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        &.portlet-foot--md {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        &.portlet-foot--no-border {
+            border-top: 0;
+        }
+
+        &.portlet-foot--top {
+            border-top: 0;
+            border-bottom: 1px solid get($portlet, border-color);
+        }
+
+        &.portlet-foot--solid {
+            background-color: $page-bg;
+            border-top: 0;
+
+            &.portlet-foot--top {
+                border-bottom: 0;
+            }
+        }
+    }
+
+    .portlet__separator {
+        height: 0;
+        border-top: 1px solid get($portlet, border-color);
+    }
+
+    // Unelivate
+    &.portlet--bordered {
+        box-shadow: none;
+        border: 1px solid get($portlet, border-color);
+    }
+
+    // Unelevate
+    &.portlet--unelevate {
+        box-shadow: none;
+    }
+
+    // Unround
+    &.portlet--unround {
+        .portlet-head {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .portlet-body {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .portlet-foot {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    // Marginless
+    &.portlet--last {
+        margin-bottom: 0;
+    }
+
+    // Portlet body alignment
+    .portlet-body {
+        &.portlet-body-center {
+            justify-content: center;
+            align-items: center;
+        }
+
+        &.portlet-body-center-x {
+            justify-content: center;
+        }
+
+        &.portlet-body-center-y {
+            align-items: center;
+        }
+
+        .portlet-body-hor-fit {
+            margin-left: -(get($portlet, space, desktop));
+            margin-right: -(get($portlet, space, desktop));
+        }
+
+        &.portlet-body-stick-bottom {
+            position: relative;
+            bottom: 0;
+        }
+
+        &.portlet-body-fluid {
+            height: 100%;
+            flex-direction: row;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        // Full height
+        &.portlet-body-fill {
+            flex-grow: 1 !important;
+        }
+
+        // Non full height
+        &.portlet-body-unfill {
+            flex-grow: 0 !important;
+        }
+
+        &.portlet-body-fullheight {
+            flex-grow: auto;
+        }
+    }
+
+    // Padding options
+    &.portlet--fit {
+        .portlet-head {
+            padding: 0;
+        }
+
+        .portlet-body {
+            padding: 0;
+        }
+
+        .portlet-foot {
+            padding: 0;
+        }
+
+        &.portlet--height-fluid-half {
+            align-items: stretch;
+
+            .portlet-body {
+                height: 100%;
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    }
+
+    // Contain inner elements
+    &.portlet--contain {
+        overflow: hidden;
+    }
+
+    &.portlet--space {
+        padding-left: get($portlet, space, desktop);
+        padding-right: get($portlet, space, desktop);
+
+        .portlet-head,
+        .portlet-body,
+        .portlet-foot {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    // Options
+    // No border
+    &.portlet--head-noborder {
+        .portlet-head {
+            border-bottom: 0;
+        }
+
+        .portlet-body {
+            padding-top: math.div(get($portlet, space, desktop), 2);
+        }
+    }
+
+    // Tab style
+    &.portlet--tabs {
+        .portlet-head {
+            .portlet-head-toolbar {
+                display: flex;
+                align-items: stretch;
+            }
+        }
+    }
+
+    // Tab 3x border style
+    &.portlet--tabs-border-3x {
+        .portlet-head {
+            border-bottom: 3px solid $gray-400;
+
+            .nav.nav-tabs {
+                margin-bottom: -3px;
+            }
+        }
+    }
+
+    @each $color, $value in $theme-colors {
+        // Solid style
+        &.portlet--solid-#{$color} {
+            background: $value;
+
+            .portlet-head {
+                color: theme-inverse-color($color);
+                border-bottom: 1px solid transparent;
+
+                .portlet-head-title {
+                    color: theme-inverse-color($color);
+
+                    small {
+                        color: darken(theme-inverse-color($color), 6%);
+                    }
+                }
+
+                .portlet-head-icon {
+                    i {
+                        color: darken(theme-inverse-color($color), 6%);
+                    }
+                }
+            }
+
+            .portlet-body {
+                padding-top: 5px;
+            }
+
+            .portlet__wrapper,
+            .portlet-body {
+                color: theme-inverse-color($color);
+            }
+
+            .portlet-foot {
+                color: theme-inverse-color($color);
+                border-top: 1px solid transparent;
+                background: darken($value, 6%);
+            }
+        }
+
+        // Tab 3x border states
+        &.portlet--tabs-border-3x-#{$color} {
+            .portlet-head {
+                border-bottom: 3px solid rgba($value, 0.1);
+            }
+        }
+
+        // Bottom Border
+        &.portlet--border-bottom-#{$color} {
+            border-bottom: 3px solid rgba($value, 0.2);
+        }
+    }
+
+    // Sortable mode
+    // jQuery UI Draggable Portlets
+    &.portlet--sortable {
+        .portlet-head {
+            cursor: move;
+        }
+    }
+
+    &.portlet--sortable-empty {
+        visibility: hidden;
+        height: 45px;
+        min-height: 125px;
+    }
+
+    &.ui-sortable-helper {
+        border: 1px dashed $gray-400;
+    }
+
+    // Sticky portlet head
+    .portlet-head {
+        transition: left 0.3s, right 0.3s, height 0.3s;
+    }
+
+    &.portlet--sticky {
+        > .portlet-head {
+            transition: left 0.3s, right 0.3s, height 0.3s;
+            position: fixed;
+            box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.1);
+            z-index: 101;
+            background: #fff;
+        }
+    }
+
+    // Spacing
+    .portlet__space-x {
+        padding-left: get($portlet, space, desktop) !important;
+        padding-right: get($portlet, space, desktop) !important;
+    }
+
+    .portlet__space-y {
+        padding-top: get($portlet, space, desktop) !important;
+        padding-bottom: get($portlet, space, desktop) !important;
+    }
+
+    .portlet-head.portlet-head--fit {
+        padding: 0;
+    }
+
+    .portlet-body.portlet-body-fit {
+        padding: 0;
+    }
+
+    .portlet-body.portlet-body-fit-top {
+        padding-top: 0 !important;
+    }
+
+    .portlet-body.portlet-body-fit-bottom {
+        padding-bottom: 0 !important;
+    }
+
+    .portlet-body.portlet-body-fit-x,
+    .portlet-body.portlet-body-hor-fit {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .portlet-body.portlet-body-fit-y {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .portlet-foot.portlet-foot--fit {
+        padding: 0;
+    }
+}
+
+// Portlet tools tooltip
+.tooltip-portlet {
+    opacity: 1;
+}
+
+@include media-breakpoint-up(lg) {
+    .portlet {
+        // Fluid Height
+        &.portlet--height-fluid {
+            height: calc(100% - #{get($portlet, bottom-space, desktop)});
+
+            .portlet-body {
+                flex-grow: 1;
+            }
+        }
+
+        // Full height portlet mode
+        &.portlet--height-fluid-half {
+            height: calc(50% - #{get($portlet, bottom-space, desktop)});
+
+            .portlet-body {
+                flex-grow: 1;
+            }
+        }
+    }
+}
+
+//== fullscreen mode
+body.portlet--fullscreen {
+    overflow: hidden !important;
+
+    &.header--fixed {
+        .header {
+            display: none;
+        }
+    }
+
+    &.aside--fixed {
+        .aside {
+            display: none;
+        }
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .portlet {
+        margin-bottom: get($portlet, bottom-space, mobile);
+
+        // Head sizing
+        .portlet-head {
+            padding: 0 get($portlet, space, mobile);
+            min-height: get($portlet, min-height, default, mobile);
+
+            &.portlet-head--sm {
+                min-height: get($portlet, min-height, sm, mobile);
+            }
+
+            &.portlet-head--lg {
+                min-height: get($portlet, min-height, lg, mobile);
+            }
+
+            &.portlet-head--xl {
+                min-height: get($portlet, min-height, xl, mobile);
+            }
+        }
+
+        &.portlet--head-sm {
+            .portlet-head {
+                min-height: get($portlet, min-height, sm, mobile);
+            }
+        }
+
+        &.portlet--head-lg {
+            .portlet-head {
+                min-height: get($portlet, min-height, lg, mobile);
+            }
+        }
+
+        &.portlet--head-xl {
+            .portlet-head {
+                min-height: get($portlet, min-height, xl, mobile);
+            }
+        }
+
+        // Portlet body alignment
+        .portlet-body {
+            padding: get($portlet, space, mobile);
+
+            &.portlet-body-hor-fit {
+                margin-left: -(get($portlet, space, mobile));
+                margin-right: -(get($portlet, space, mobile));
+            }
+        }
+
+        .portlet-foot {
+            padding: get($portlet, space, mobile);
+        }
+
+        // Marginless
+        &.portlet--marginless {
+            margin-bottom: 0;
+        }
+
+        // Sticky portlet
+        &.portlet--sticky {
+            > .portlet-head {
+                height: get($portlet, min-height, default, mobile) - 10px;
+
+                &.portlet-head--sm {
+                    height: get($portlet, min-height, sm, mobile) - 10px;
+                }
+
+                &.portlet-head--lg {
+                    height: get($portlet, min-height, lg, mobile) - 10px;
+                }
+
+                &.portlet-head--xl {
+                    height: get($portlet, min-height, xl, mobile) - 10px;
+                }
+            }
+        }
+
+        // Head overlay
+        &.portlet--head-overlay {
+            .portlet-head {
+                height: get($portlet, min-height, default, mobile);
+            }
+
+            .portlet-body {
+                margin-top: -(get($portlet, min-height, default, mobile));
+            }
+
+            // Head sizing
+            &.portlet--head-sm {
+                .portlet-head {
+                    height: get($portlet, min-height, sm, mobile);
+                }
+
+                .portlet-body {
+                    margin-top: -(get($portlet, min-height, sm, mobile));
+                }
+            }
+
+            &.portlet--head-lg {
+                .portlet-head {
+                    height: get($portlet, min-height, lg, mobile);
+                }
+
+                .portlet-body {
+                    margin-top: -(get($portlet, min-height, lg, mobile));
+                }
+            }
+
+            &.portlet--head-xl {
+                .portlet-head {
+                    height: get($portlet, min-height, xl, mobile);
+                }
+
+                .portlet-body {
+                    margin-top: -(get($portlet, min-height, xl, mobile));
+                }
+            }
+        }
+
+        // No border
+        &.portlet--head-noborder {
+            .portlet-body {
+                padding-top: math.div(get($portlet, space, mobile), 2);
+            }
+        }
+
+        // Spacing
+        .portlet__space-x {
+            padding-left: get($portlet, space, mobile) !important;
+            padding-right: get($portlet, space, mobile) !important;
+        }
+
+        .portlet__space-y {
+            padding-top: get($portlet, space, mobile) !important;
+            padding-bottom: get($portlet, space, mobile) !important;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .portlet {
+        &.portlet--head-break-sm {
+            .portlet-head {
+                padding-top: get($portlet, space, mobile);
+                padding-bottom: get($portlet, space, mobile);
+                min-height: initial !important;
+                height: auto;
+                flex-wrap: wrap;
+
+                .portlet-head-label {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<lt-toolbar></lt-toolbar>
+<lt-portlet [mode]="['bordered-semi']">
+  <lt-portlet-body>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th translate="tracker.table.userlogin"></th>
+          <th translate="tracker.table.ipaddress"></th>
+          <th translate="tracker.table.page"></th>
+          <th translate="tracker.table.time"></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let activity of activities">
+          <td>{{ activity.userLogin }}</td>
+          <td>{{ activity.ipAddress }}</td>
+          <td>{{ activity.page }}</td>
+          <td>{{ activity.time }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </lt-portlet-body>
+</lt-portlet>

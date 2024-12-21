@@ -1,0 +1,116 @@
+version: "3.9"
+
+services:
+  reverse-proxy:
+    image: traefik:${TRAEFIK_VERSION}
+    deploy:
+      # Deploy the service to all nodes that match our constraints
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+        constraints:
+          - "node.labels.manager.discovery == true"
+          - "node.role == manager"
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.api-http.rule=HostRegexp(`proxy.${DOMAIN}`,`proxy-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.api-http.entrypoints=http"
+        - "traefik.http.routers.api-http.service=api@internal"
+        - "traefik.http.routers.api-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.api-https.rule=HostRegexp(`proxy.${DOMAIN}`,`proxy-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.api-https.tls.domains[0].main=proxy.${DOMAIN}"
+        - "traefik.http.routers.api-https.tls.domains[0].sans=proxy-*.${DOMAIN}"
+        - "traefik.http.routers.api-https.tls=true"
+        - "traefik.http.routers.api-https.service=api@internal"
+        - "traefik.http.routers.api-https.entrypoints=https"
+        # Use the special Traefik service api@internal with the web UI/Dashboard
+        - "traefik.http.services.api.loadbalancer.server.port=8080"
+    ports:
+      # The HTTP port
+      - "80:80"
+      - "443:443"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: volume
+        source: certs
+        target: /etc/ssl/traefik
+        volume: {}
+      - type: bind
+        source: ${CONFIGURATION_PATH}/traefik
+        target: /etc/traefik
+    networks:
+      - discovery
+      - net
+
+  reverse-proxy-https-helper:
+    image: alpine
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.manager.discovery == true"
+          - "node.role == manager"
+      restart_policy:
+        condition: none
+    command: sh -c "cd /etc/ssl/traefik && wget traefik.me/cert.pem -O cert.pem && wget traefik.me/privkey.pem -O privkey.pem && wget traefik.me/fullchain.pem -O fullchain.pem"
+    volumes:
+      - certs:/etc/ssl/traefik
+    networks:
+      - discovery
+
+  portainer-agent:
+    image: portainer/agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - net
+    deploy:
+      mode: global
+      labels:
+        - "portainer.agent=true"
+        - "traefik.enable=false"
+  portainer:
+    image: portainer/portainer-ce
+    command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
+    volumes:
+      - portainer-data:/data
+    networks:
+      - net
+      - discovery
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: ${DOCKER_RESTART_POLICY:-on-failure}
+      placement:
+        constraints:
+          - "node.labels.manager.discovery == true"
+          - "node.role == manager"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.portainer-http.rule=HostRegexp(`portainer.${DOMAIN}`,`portainer-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.portainer-http.entrypoints=http"
+        - "traefik.http.routers.portainer-http.middlewares=https-redirect@file"
+        - "traefik.http.routers.portainer-https.rule=HostRegexp(`portainer.${DOMAIN}`,`portainer-{dashed-ip:.*}.${DOMAIN}`)"
+        - "traefik.http.routers.portainer-https.tls.domains[0].main=portainer.${DOMAIN}"
+        - "traefik.http.routers.portainer-https.tls.domains[0].sans=portainer-*.${DOMAIN}"
+        - "traefik.http.routers.portainer-https.entrypoints=https"
+        - "traefik.http.routers.portainer-https.tls=true"
+        - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+networks:
+  net:
+    external: true
+  discovery:
+    external: true
+    
+volumes:
+  certs: {}
+  portainer-data: {}
+

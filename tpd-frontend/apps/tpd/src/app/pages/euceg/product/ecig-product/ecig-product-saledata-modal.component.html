@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <h4 class="modal-title">Sale Annual Data</h4>
+</div>
+<form [formGroup]="formControl" name="saledataForm" #form="ngForm" (ngSubmit)="onClose()">
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div *ngIf="reason" class="alert alert-danger" role="alert">{{ reason }}</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-confidential-input
+          type="number"
+          formControlName="Year"
+          name="Year"
+          label="Year"
+          [enforce-confidential]="true"
+        ></app-confidential-input>
+      </div>
+      <div class="col-md-4">
+        <app-one-file name="SalesMode" formControlName="SalesMode" label="Sales Mode"> </app-one-file>
+      </div>
+      <div class="col-md-4">
+        <app-confidential-input
+          formControlName="SalesVolume"
+          name="SalesVolume"
+          label="Sales Volume"
+          [enforce-confidential]="true"
+        ></app-confidential-input>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary btn-bold me-4" translate="global.button.close"></button>
+    <a
+      *ngIf="!readonly"
+      href="#"
+      (click)="onCancel()"
+      class="link link-primary me-4"
+      translate="global.button.cancel"
+    ></a>
+  </div>
+</form>

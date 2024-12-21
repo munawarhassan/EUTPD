@@ -1,0 +1,12 @@
+{
+  "name": "@devacfr/auth",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~16",
+    "@angular/core": "~16",
+    "@auth0/angular-jwt": "^5.1.2"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
+}

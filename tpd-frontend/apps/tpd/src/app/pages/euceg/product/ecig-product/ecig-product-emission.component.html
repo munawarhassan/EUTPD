@@ -1,0 +1,160 @@
+<ng-container *ngIf="product">
+  <button *ngIf="!readonly" type="button" (click)="add()" class="btn btn-light-primary btn-sm mb-3">
+    <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+    Add Emission
+  </button>
+  <div class="table-responsive">
+    <table class="table table-hover table-row-dashed align-middle g-1">
+      <thead>
+        <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+          <th scope="col">Name</th>
+          <th scope="col">Other Name</th>
+          <th scope="col">CAS Number</th>
+          <th scope="col">UIPAC Number</th>
+          <th scope="col">Quantity/Unit</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let emission of dataRows.emission.content"
+          (click)="selected = emission"
+          class="row-selectable"
+          [ngClass]="{ active: dataRows.emission.isSelected(emission) }"
+        >
+          <td scope="row">{{ euceg.getEmissionName(emission.Name) }}</td>
+          <td>{{ emission?.NameOther?.value }}</td>
+          <td>{{ emission?.CasNumber?.value }}</td>
+          <td>{{ emission?.IupacName?.value }}</td>
+          <td>{{ emission?.Quantity?.value }}&nbsp;{{ emission?.Unit?.value }}</td>
+          <td class="text-center text-nowrap">
+            <button
+              [disabled]="readonly"
+              type="button"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              (click)="remove(emission)"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td colspan="6">
+          <lt-pagination
+            [page]="dataRows.emission"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChanged)="this.dataRows.emission.pageable = $event.pageable"
+          >
+          </lt-pagination>
+        </td>
+      </tfoot>
+    </table>
+  </div>
+  <ng-container *ngIf="selected">
+    <form name="emissionForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-sm-4">
+          <app-confidential-select
+            label="Name"
+            name="Name"
+            [options]="emissionNames$"
+            [(ngModel)]="selected.Name"
+            [required]="true"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-select>
+        </div>
+        <div *ngIf="selected.Name.value === '22'" class="col-sm-8">
+          <app-confidential-input
+            label="Other Name"
+            [(ngModel)]="selected.NameOther"
+            name="NameOther"
+            [maxlength]="100"
+            [required]="true"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-3">
+          <app-confidential-input
+            label="Iupac Name"
+            [(ngModel)]="selected.IupacName"
+            name="IupacName"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-3">
+          <app-confidential-input
+            label="Quantity"
+            [(ngModel)]="selected.Quantity"
+            name="Quantity"
+            [required]="true"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-sm-3">
+          <app-confidential-input
+            label="Unit"
+            [(ngModel)]="selected.Unit"
+            name="Unit"
+            [required]="true"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-sm-3">
+          <app-confidential-input
+            label="Cas Number"
+            [(ngModel)]="selected.CasNumber"
+            name="CasNumber"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="separator separtor-dashed mb-8"></div>
+      <div class="row mb-3">
+        <div class="col-sm-6">
+          <app-list-files
+            name="MethodsFile"
+            [(ngModel)]="selected.MethodsFile"
+            [disabled]="readonly"
+            label="Method File(s)"
+          ></app-list-files>
+        </div>
+        <div class="col-sm-6">
+          <app-composition
+            title="Additional Product(s)"
+            label="Product Identification"
+            [disabled]="readonly"
+            path="AdditionalProducts.ProductIdentification"
+            [value]="selected"
+            [enforce-confidential]="true"
+          ></app-composition>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <app-confidential-textarea
+            label="Product Combination"
+            name="ProductCombination"
+            [maxlength]="500"
+            [(ngModel)]="selected.ProductCombination"
+            [rows]="5"
+            [disabled]="readonly"
+          >
+          </app-confidential-textarea>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</ng-container>

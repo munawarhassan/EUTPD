@@ -1,0 +1,368 @@
+<ng-container *ngIf="product && ecigProduct && ecigProduct.Design">
+  <form name="designForm" class="form-horizontal">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Liquid Volume Capacity"
+          [(ngModel)]="ecigProduct.Design.LiquidVolumeCapacity"
+          name="LiquidVolumeCapacity"
+          [required]="
+            ecigProduct.ProductType?.value === '1' ||
+            ecigProduct.ProductType?.value === '2' ||
+            ecigProduct.ProductType?.value === '3' ||
+            ecigProduct.ProductType?.value === '4' ||
+            ecigProduct.ProductType?.value === '5' ||
+            ecigProduct.ProductType?.value === '7'
+          "
+          group-after="0.00"
+          [disabled]="readonly"
+        ></app-confidential-input>
+      </div>
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Nicotine Concentration"
+          name="NicotineConcentration"
+          [(ngModel)]="ecigProduct.Design.NicotineConcentration"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="
+            ecigProduct.ProductType?.value === '1' ||
+            ecigProduct.ProductType?.value === '2' ||
+            ecigProduct.ProductType?.value === '4' ||
+            ecigProduct.ProductType?.value === '7'
+          "
+        >
+        </app-confidential-input>
+      </div>
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Coil Resistance"
+          name="CoilResistance"
+          [(ngModel)]="ecigProduct.Design.CoilResistance"
+          group-after="0.00"
+          [disabled]="readonly"
+        >
+        </app-confidential-input>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-confidential-select
+          label="Voltage/Wattage Adjustable"
+          name="VoltageWattageAdjustable"
+          [(ngModel)]="ecigProduct.Design.VoltageWattageAdjustable"
+          [options]="voltageWattageAdjustables$"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-select>
+      </div>
+    </div>
+    <div
+      class="row mb-3"
+      *ngIf="
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '2' ||
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '4'
+      "
+    >
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Voltage"
+          [(ngModel)]="ecigProduct.Design.Voltage"
+          name="Voltage"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-input>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '2'
+        "
+        ng-class="{ 'has-error': $ctrl.fieldHasError(designForm, 'VoltageLowerRange') }"
+      >
+        <label class="form-label required">Voltage Lower Range</label>
+        <app-confidential-input
+          [(ngModel)]="ecigProduct.Design.VoltageLowerRange"
+          name="VoltageLowerRange"
+          placeholder="Voltage Lower Range"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-input>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '2'
+        "
+      >
+        <label class="form-label required">Voltage Upper Range</label>
+        <app-confidential-input
+          [(ngModel)]="ecigProduct.Design.VoltageUpperRange"
+          name="VoltageUpperRange"
+          placeholder="Voltage Upper Range"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-input>
+      </div>
+    </div>
+    <div
+      class="row mb-3"
+      *ngIf="
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '3' ||
+        ecigProduct.Design.VoltageWattageAdjustable?.value === '4'
+      "
+    >
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Wattage"
+          [(ngModel)]="ecigProduct.Design.Wattage"
+          name="Wattage"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-input>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '3'
+        "
+      >
+        <app-confidential-input
+          label="Wattage Lower Range"
+          [(ngModel)]="ecigProduct.Design.WattageLowerRange"
+          name="WattageLowerRange"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-input>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '1' ||
+          ecigProduct.Design.VoltageWattageAdjustable?.value === '3'
+        "
+      >
+        <app-confidential-input
+          label="Wattage Upper Range"
+          [(ngModel)]="ecigProduct.Design.WattageUpperRange"
+          name="WattageUpperRange"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-input>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-confidential-input
+          label="Battery Capacity"
+          [(ngModel)]="ecigProduct.Design.BatteryCapacity"
+          name="BatteryCapacity"
+          placeholder="Battery Capacity"
+          group-after="0.00"
+          [disabled]="readonly"
+        >
+        </app-confidential-input>
+      </div>
+      <div class="col-md-8">
+        <app-confidential-textarea
+          label="Battery Type"
+          name="BatteryType"
+          [rows]="2"
+          info="Description of the battery type"
+          [(ngModel)]="ecigProduct.Design.BatteryType"
+          [maxlength]="300"
+          [disabled]="readonly"
+        >
+        </app-confidential-textarea>
+      </div>
+    </div>
+    <div class="row my-6">
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Airflow Adjustable?"
+          name="AirflowAdjustable"
+          [(ngModel)]="ecigProduct.Design.AirflowAdjustable"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Wick Changeable?"
+          name="WickChangeable"
+          [(ngModel)]="ecigProduct.Design.WickChangeable"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Microprocessor?"
+          name="Microprocessor"
+          [(ngModel)]="ecigProduct.Design.Microprocessor"
+          [disabled]="readonly"
+          [required]="ecigProduct.ProductType?.value !== '7'"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Is Quality Safety?"
+          name="QualitySafety"
+          [(ngModel)]="ecigProduct.Design.QualitySafety"
+          [required]="true"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Child Tamper Proof?"
+          name="ChildTamperProof"
+          [(ngModel)]="ecigProduct.Design.ChildTamperProof"
+          [required]="true"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has High Purity?"
+          name="HighPurity"
+          [(ngModel)]="ecigProduct.Design.HighPurity"
+          [required]="true"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Non Risk?"
+          name="NonRisk"
+          [(ngModel)]="ecigProduct.Design.NonRisk"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Consistent Dosing?"
+          name="ConsistentDosing"
+          [(ngModel)]="ecigProduct.Design.ConsistentDosing"
+          [required]="true"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-checkbox
+          label="Has Production Conformity?"
+          name="ProductionConformity"
+          [(ngModel)]="ecigProduct.Design.ProductionConformity"
+          [required]="true"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <app-confidential-textarea
+          label="Description"
+          name="Description"
+          [(ngModel)]="ecigProduct.Design.Description"
+          [disabled]="readonly"
+          [required]="true"
+          [maxlength]="1000"
+          [rows]="8"
+          info="Description of the product to facilitate unique product identification, including a description of all items and the individual parts (components/e-liquid)."
+        >
+        </app-confidential-textarea>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <app-confidential-textarea
+          label="Coil Composition"
+          [maxlength]="300"
+          name="CoilComposition"
+          [(ngModel)]="ecigProduct.Design.CoilComposition"
+          [rows]="2"
+          [disabled]="readonly"
+          [required]="ecigProduct.ProductType?.value === '7'"
+        ></app-confidential-textarea>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <app-confidential-textarea
+          label="Identification Ecigarette Device"
+          name="IdentificationEcigDevice"
+          [maxlength]="300"
+          [(ngModel)]="ecigProduct.Design.IdentificationEcigDevice"
+          [rows]="2"
+          [disabled]="readonly"
+        >
+        </app-confidential-textarea>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <hr />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-one-file
+          name="NicotineDoseUptakeFile"
+          [(ngModel)]="ecigProduct.Design.NicotineDoseUptakeFile"
+          [disabled]="readonly"
+          label="Nicotine Dose Uptake File"
+        ></app-one-file>
+      </div>
+      <div class="col-md-4">
+        <app-one-file
+          name="ProductionFile"
+          [(ngModel)]="ecigProduct.Design.ProductionFile"
+          [disabled]="readonly"
+          label="Production File"
+        >
+        </app-one-file>
+      </div>
+      <div class="col-md-4">
+        <app-one-file
+          name="OpeningRefillFile"
+          [(ngModel)]="ecigProduct.Design.OpeningRefillFile"
+          [disabled]="readonly"
+          label="Opening Refill File"
+        ></app-one-file>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <app-one-file
+          name="ConsistentDosingMethodsFile"
+          [(ngModel)]="ecigProduct.Design.ConsistentDosingMethodsFile"
+          [disabled]="readonly"
+          label="Consistent Dosing Methods File"
+        ></app-one-file>
+      </div>
+      <div class="col-md-4">
+        <app-one-file
+          name="LeafletFile"
+          [(ngModel)]="ecigProduct.Design.LeafletFile"
+          [disabled]="readonly"
+          label="Leaflet File"
+        >
+        </app-one-file>
+      </div>
+    </div>
+  </form>
+</ng-container>

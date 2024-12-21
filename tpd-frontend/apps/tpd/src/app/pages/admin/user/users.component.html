@@ -1,0 +1,112 @@
+<lt-toolbar [sticky]="true">
+  <button
+    type="button"
+    id="m_create_user_link"
+    routerLink="create"
+    class="btn btn-dark fw-bold"
+    translate="users.button.create"
+  ></button>
+</lt-toolbar>
+<lt-portlet [mode]="['unelevate', 'fit']" id="m_portlet_users" class="bg-transparent">
+  <lt-portlet-body>
+    <div class="d-flex flex-wrap flex-stack pb-7">
+      <div class="d-flex align-items-center">
+        <app-search
+          inputClass="border-0"
+          (search)="search($event)"
+          (cleared)="clearFilter()"
+          [placeholder]="'users.search.placeholder' | translate"
+        ></app-search>
+      </div>
+      <div class="d-flex flex-wrap my-1">
+        <!--begin::Tab nav-->
+        <ul class="nav nav-pills me-6 mb-2 mb-sm-0">
+          <li class="nav-item m-0">
+            <a
+              class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-3"
+              [class.active]="layer === 'card'"
+              (click)="layer = 'card'"
+            >
+              <inline-svg [src]="svgIcons.Duotone.general.layerCard" size="2"></inline-svg>
+            </a>
+          </li>
+          <li class="nav-item m-0">
+            <a
+              class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary"
+              [class.active]="layer === 'line'"
+              (click)="layer = 'line'"
+            >
+              <inline-svg [src]="svgIcons.Duotone.abstract.abs015" size="2"></inline-svg>
+            </a>
+          </li>
+        </ul>
+        <!--end::Tab nav-->
+        <!--begin::Actions-->
+        <div class="d-flex my-0"></div>
+        <!--end::Actions-->
+      </div>
+    </div>
+    <lt-table
+      id="m_users_list"
+      [layer]="layer"
+      [page]="page"
+      [pageable]="currentPageable"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+      [cardTemplate]="cardTemplate"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<ng-template #cardTemplate let-page="page">
+  <div class="row g-6 g-xl-9">
+    <div class="col-md-6 col-xxl-4" *ngFor="let user of page.content; trackBy: trackUser">
+      <app-user-card layer="card" [user]="user" [link]="['view', user.username]"></app-user-card>
+    </div>
+  </div>
+  <!-- <lt-pagination class="mt-5" [page]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"> </lt-pagination> -->
+</ng-template>
+
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let user of page.content; trackBy: trackUser">
+    <td data-header="username" [attr.data-entity-id]="user.username">
+      <app-user-card [user]="user" [link]="['view', user.username]"></app-user-card>
+    </td>
+    <td data-header="directory">{{ directory(user.directory)?.description }}</td>
+    <td data-header="activated" class="text-center">
+      <span *ngIf="user.activated" class="badge badge-sm badge-light-success fw-bolder">Activated</span>
+      <span *ngIf="!user.activated" class="badge badge-sm badge-light-danger fw-bolder">Deactivated</span>
+    </td>
+    <td class="text-end">
+      <a
+        href="#"
+        class="btn btn-light btn-active-light-primary btn-sm text-nowrap menu-dropdown"
+        data-lt-menu-trigger="click"
+        data-lt-menu-placement="bottom-end"
+        >Actions
+        <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+      </a>
+      <!--begin::Menu-->
+      <div
+        ltMenu
+        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+      >
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" [routerLink]="['view', user.username]" class="menu-link px-3">
+            <span class="menu-title">View</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+          <a href="#" class="menu-link px-3" (click)="deleteUser(user)">
+            <span class="menu-title text-danger">Delete...</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+    </td>
+  </tr>
+</ng-template>

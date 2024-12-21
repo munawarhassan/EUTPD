@@ -1,0 +1,57 @@
+<ng-container *ngIf="title$ | async as title">
+  <ng-container *ngIf="enableTitle">
+    <!-- begin::Title -->
+    <div class="d-flex flex-row align-items-center">
+      <span *ngIf="!useSVG(title.icon) && title.icon" class="portlet-head-icon"
+        ><i [class]="title.icon" [ngClass]="iconCLass"></i
+      ></span>
+      <span
+        class="me-2 svg-icon"
+        *ngIf="useSVG(title.icon) && title.icon"
+        [inlineSVG]="title.icon"
+        [ngClass]="iconCLass"
+      ></span>
+      <h1 class="d-flex align-items-center text-dark fw-bolder my-1 fs-3">
+        {{ title.title }}
+      </h1>
+    </div>
+    <!-- end::Title -->
+  </ng-container>
+</ng-container>
+<ul
+  class="breadcrumb fw-bold fs-7 my-1"
+  [ngClass]="{
+    'breadcrumb-dot': separator === 'dot',
+    'breadcrumb-line': separator === 'line',
+    'breadcrumb-separatorless': separator === 'separatorless'
+  }"
+>
+  <li
+    *ngFor="let breadcrumb of breadcrumbs$ | async; last as isLast; first as isFirst; index as index; count as count"
+    class="breadcrumb-item"
+    [ngClass]="{ 'text-dark': isLast, 'text-muted': !isLast }"
+  >
+    <ng-container>
+      <a
+        *ngIf="!isLast"
+        class="text-muted text-hover-primary"
+        [ngClass]="{ disabled: breadcrumb.disable }"
+        [attr.aria-disabled]="breadcrumb.disable"
+        [attr.tabIndex]="breadcrumb.disable ? -1 : 0"
+        role="button"
+        rel="noopener noreferrer"
+        [routerLink]="
+          breadcrumb.routeInterceptor
+            ? breadcrumb.routeInterceptor(breadcrumb.routeLink, breadcrumb)
+            : breadcrumb.routeLink
+        "
+        [queryParams]="preserveQueryParams ? breadcrumb.queryParams : undefined"
+        [fragment]="preserveFragment ? breadcrumb.fragment : undefined"
+        [target]="anchorTarget ? anchorTarget : '_self'"
+      >
+        {{ breadcrumb.label }}
+      </a>
+      <li *ngIf="isLast" class="breadcrumb-item text-dark">{{ breadcrumb.label }}</li>
+    </ng-container>
+  </li>
+</ul>

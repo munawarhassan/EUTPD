@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+           jaxb:version="2.1">
+
+    <xs:include schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="submitters.xsd"/>
+    <xs:include schemaLocation="tobacco_products.xsd"/>
+    <xs:include schemaLocation="ecig_products.xsd"/>
+
+    <xs:complexType name="Submission" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines an abstract submission.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Submitter" type="Submitter">
+                <xs:annotation>
+                    <xs:documentation>The submitter information.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SubmissionType" type="SubmissionType">
+                <xs:annotation>
+                    <xs:documentation>The type of the submission.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="GeneralComment" type="String1000" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>General comments to accompany notification. When modifying/updating an existing notification, please
+                        indicate here which information is being changed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SubmissionResponse" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Defines the submission response returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractAppResponse">
+                <xs:sequence>
+                    <xs:element name="ProductID" type="ProductNumberValue">
+                        <xs:annotation>
+                            <xs:documentation>The product ID (TP-ID or EC-ID) of the submitted product</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="SubmissionType" type="SubmissionTypeEnum">
+                        <xs:annotation>
+                            <xs:documentation>The type the submission sent to the system.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="TobaccoProductSubmission">
+        <xs:annotation>
+            <xs:documentation>Defines a tobacco product submission.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="Submission">
+                    <xs:sequence>
+                        <xs:element name="Product" type="TobaccoProduct">
+                            <xs:annotation>
+                                <xs:documentation>The details of the tobacco product.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="TobaccoProductSubmissionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="SubmissionResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EcigProductSubmission">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette product submission.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="Submission">
+                    <xs:sequence>
+                        <xs:element name="Product" type="EcigProduct">
+                            <xs:annotation>
+                                <xs:documentation>The details of the e-cigarette product.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EcigProductSubmissionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="SubmissionResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="SubmissionType">
+        <xs:annotation>
+            <xs:documentation>Defines the type of the submission.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="SubmissionTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the submission type is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="SubmissionTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The list of submission types.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Reporting/notification of information on a new product (new Product ID).</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NEW"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Substantial modification of information on a previously reported/notified product leading to a new 
+                        Product ID (with a link to the previous Product ID).
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="MODIFICATION_NEW"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Addition of product presentation (e.g. national market) to an existing product submission.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UPDATE_ADDITION"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>Removal of product presentation, including product withdrawal, from an existing 
+                        product submission.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UPDATE_WITHDRAW"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>Update of information on a previously reported/notified product submission at 
+                    	product and/or presentation level not leading to a new Product ID.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UPDATE_OTHER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>Update of information required to be submitted for reported/notified products in regular 
+                        intervals (annually), such as sales data or actual quantities of ingredients.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UPDATE_ANNUAL_DATA"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>Correction of clerical/administrative errors in existing product submission.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CORRECTION"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

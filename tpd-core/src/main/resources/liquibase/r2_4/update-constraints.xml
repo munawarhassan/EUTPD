@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="devacfr" context="production" id="1587481381230-2">
+    <addNotNullConstraint columnDataType="VARCHAR(255)" columnName="key_name"
+      tableName="t_generated_id" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-17">
+    <addPrimaryKey columnNames="key_name" tableName="t_generated_id" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-20">
+    <dropForeignKeyConstraint baseTableName="t_global_permission"
+      constraintName="GRANTED_PERM_WEIGHT_FK" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-21">
+    <dropUniqueConstraint constraintName="UK_1PUJHYYGNJ6C3GDC7K0Q89NWP" tableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-22">
+    <dropTable tableName="t_persistent_token" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-23">
+    <dropColumn columnName="activation_key" tableName="t_user" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-1">
+    <addDefaultValue columnDataType="int" columnName="current_value" defaultValueNumeric="1"
+      tableName="t_product_id" />
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="1587481381230-3">
+    <addNotNullConstraint columnDataType="bigint" columnName="payload_product_id"
+      tableName="t_product" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-4">
+    <addNotNullConstraint columnDataType="bigint" columnName="payload_submission_id"
+      tableName="t_submission" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1587481381230-5">
+    <dropDefaultValue columnDataType="bigint" columnName="size_file" tableName="t_attachment" />
+  </changeSet>
+</databaseChangeLog>

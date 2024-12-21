@@ -1,0 +1,48 @@
+<project name="tomcat-override" default="update" basedir="${basedir}">
+  <description>
+    The following catalina.bat replacements modify the Tomcat catalina.bat script to allow us to use "exit
+    /b 1" in setenv.bat and prevent Tomcat from starting. This is necessary to allow us to omit "start /b /wait cmd /c" when
+    start|stop-tpd-api.bat execute Tomcat scripts without having the entire command prompt close because we call "exit
+    1" (without
+    the /b). However, if we use "start /b /wait cmd /c" when we execute the other scripts, Ctrl+C can't stop Tomcat. Note:
+    The
+    match tokens may change between Tomcat versions, so if the Tomcat version is updated these tokens may need to be changed
+    too.
+  </description>
+
+  <target name="update">
+    <replace file="${tomcat.dir}/bin/catalina.bat" token="goto setenvDone" failOnNoReplacements="true">
+      <replacevalue>
+<![CDATA[if errorlevel 1 goto end
+goto setenvDone]]></replacevalue>
+    </replace>
+    <replace file="${tomcat.dir}/bin/catalina.bat" token=":setenvDone" failOnNoReplacements="true">
+      <replacevalue>
+<![CDATA[if errorlevel 1 goto end
+:setenvDone]]></replacevalue>
+    </replace>
+    <replace file="${tomcat.dir}/bin/catalina.bat" token="set &quot;CLASSPATH=%CLASSPATH%%CATALINA_HOME%\bin\bootstrap.jar&quot;" value="set &quot;CLASSPATH=%CLASSPATH%%CATALINA_HOME%\bin\tpd.tomcat.bootstrap.jar;%CATALINA_HOME%\bin\bootstrap.jar&quot;" failOnNoReplacements="true" />
+    <!-- Patch the various tool classpaths to make com.pmi.tpd.catalina.startup.Bootstrap available -->
+    <replace file="${tomcat.dir}/bin/catalina.sh" token="CLASSPATH=&quot;$CLASSPATH&quot;&quot;$CATALINA_HOME&quot;/bin/bootstrap.jar" value="CLASSPATH=&quot;$CLASSPATH&quot;&quot;$CATALINA_HOME&quot;/bin/tpd.tomcat.bootstrap.jar:&quot;$CATALINA_HOME&quot;/bin/bootstrap.jar" failOnNoReplacements="true" />
+    <replace file="${tomcat.dir}/bin/daemon.sh" token="CLASSPATH=&quot;$CLASSPATH$CATALINA_HOME/bin/bootstrap.jar:$CATALINA_HOME/bin/commons-daemon.jar&quot;" value="CLASSPATH=$CLASSPATH&quot;$CATALINA_HOME/bin/tpd.tomcat.bootstrap.jar:&quot;$CATALINA_HOME&quot;/bin/bootstrap.jar:&quot;$CATALINA_HOME&quot;/bin/commons-daemon.jar" failOnNoReplacements="true" />
+    <replace file="${tomcat.dir}/conf/catalina.properties" token="bootstrap.jar," value="bootstrap.jar,tpd.tomcat.bootstrap.jar," failOnNoReplacements="true" />
+    <!-- Switch out the Tomcat bootstrap class to com.pmi.tpd.catalina.startup.Bootstrap -->
+    <replace file="${tomcat.dir}/bin/catalina.bat" token="org.apache.catalina.startup.Bootstrap" value="com.pmi.tpd.catalina.startup.Bootstrap" failOnNoReplacements="true" />
+    <replace file="${tomcat.dir}/bin/catalina.sh" token="org.apache.catalina.startup.Bootstrap" value="com.pmi.tpd.catalina.startup.Bootstrap" failOnNoReplacements="true" />
+    <replace file="${tomcat.dir}/bin/daemon.sh" token="org.apache.catalina.startup.Bootstrap" value="com.pmi.tpd.catalina.startup.Bootstrap" failOnNoReplacements="true" />
+
+
+    <!-- This change makes $TPD_HOME/lib jars available in Tomcat's common classloader, which allows things like
+      JDBC drivers to be put there, safe across upgrades. -->
+    <replace file="${tomcat.dir}/conf/catalina.properties" token="common.loader=" value="common.loader=$${app.home}/lib,$${app.home}/lib/*.jar," failOnNoReplacements="true" />
+    <!-- Turn off WebappClassLoader logging, which dumps a stream of (completely useless) "SEVERE" warnings about
+      ThreadLocals every time the application is stopped -->
+                <concat destfile="${tomcat.dir}/conf/logging.properties" append="true">
+<![CDATA[org.apache.catalina.loader.WebappClassLoaderBase.level = OFF]]>
+                </concat>
+                <concat destfile="${tomcat.dir}/conf/logging.properties" append="true">
+<![CDATA[org.apache.catalina.loader.WebappClassLoader.level = OFF]]>
+    </concat>
+  </target>
+
+</project>

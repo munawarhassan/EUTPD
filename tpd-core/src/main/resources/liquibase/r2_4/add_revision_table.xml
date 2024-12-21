@@ -1,0 +1,135 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="devacfr" context="production" id="add-envers-revinfo-table">
+    <comment>Add Envers REVINFO table</comment>
+    <createSequence sequenceName="hibernate_sequence" startValue="1" incrementBy="1"/>
+    <createTable tableName="REVINFO">
+      <column autoIncrement="true" name="REV" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="revinfo_pk" />
+      </column>
+      <column name="REVTSTMP" type="BIGINT" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-payload-audit-table">
+    <comment>Add payload audit table</comment>
+    <createTable tableName="t_payload_aud">
+      <column name="id" type="BIGINT">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_payload_audpk" />
+      </column>
+      <column name="REV" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_payload_audpk" />
+      </column>
+      <column name="REVTYPE" type="SMALLINT" />
+      <column name="created_by" type="VARCHAR(50)" />
+      <column name="created_date" type="TIMESTAMP" />
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="TIMESTAMP" />
+      <column name="payload_data" type="CLOB(1024000)" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-audit-table">
+    <comment>Add product audit table</comment>
+    <createTable tableName="t_product_aud">
+      <column name="product_number" type="VARCHAR(255)">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_product_audpk" />
+      </column>
+      <column name="REV" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_product_audpk" />
+      </column>
+      <column name="REVTYPE" type="SMALLINT" />
+      <column name="version" type="integer" />
+      <column name="product_status" type="varchar(50)"/>
+      <column name="product_type" type="VARCHAR(50)" />
+      <column name="source_file_name" type="VARCHAR(120)" />
+      <column name="previous_product_number" type="VARCHAR(255)" />
+      <column name="payload_product_id" type="BIGINT" />
+      <column name="created_by" type="VARCHAR(50)" />
+      <column name="created_date" type="TIMESTAMP" />
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="TIMESTAMP" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-version-field-table-product">
+    <comment>Add version field in product table</comment>
+    <addColumn tableName="t_product">
+      <column name="version" type="integer" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-version-default-existing-products">
+    <comment>Add default value for version field in product table</comment>
+    <sql>UPDATE t_product SET version=0 WHERE version is NULL</sql>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-fk-payload-audit-revinfo">
+    <addForeignKeyConstraint baseColumnNames="REV" baseTableName="t_payload_aud"
+      constraintName="FKnvbk66vm7h9368n1ioxts1xhn" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="REV" referencedTableName="REVINFO" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-fk-product-audit-revinfo">
+    <addForeignKeyConstraint baseColumnNames="REV" baseTableName="t_product_aud"
+      constraintName="FKt3imtjkdmskcay14ey672d4gh" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="REV" referencedTableName="REVINFO" validate="true" />
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-version-field-attachment-product">
+    <comment>Add version field in attachment table</comment>
+    <addColumn tableName="t_attachment">
+      <column name="version" type="integer" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-version-default-existing-attachments">
+    <comment>Add default value for version field in attachment table</comment>
+    <sql>UPDATE t_attachment SET version=0 WHERE version is NULL</sql>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-attachment-revision-table">
+    <createTable tableName="t_attachment_aud">
+      <column name="attachment_id" type="VARCHAR(80)">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_attachment_audpk" />
+      </column>
+      <column name="REV" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="t_attachment_audpk" />
+      </column>
+      <column name="REVTYPE" type="SMALLINT" />
+      <column name="version" type="INTEGER" />
+      <column name="confidential" type="BOOLEAN" />
+      <column name="content_type" type="VARCHAR(50)" />
+      <column name="filename" type="VARCHAR(250)" />
+      <column name="size_file" type="INTEGER" />
+      <column name="created_by" type="VARCHAR(50)" />
+      <column name="created_date" type="TIMESTAMP" />
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="TIMESTAMP" />
+    </createTable>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-submitter-audit-table">
+      <comment>Add submitter audit table</comment>
+      <createTable tableName="t_submitter_aud">
+          <column name="submitter_id" type="VARCHAR(10)">
+              <constraints nullable="false" primaryKey="true" primaryKeyName="t_submitter_audpk" />
+          </column>
+          <column name="REV" type="INTEGER">
+              <constraints nullable="false" primaryKey="true" primaryKeyName="t_submitter_audpk" />
+          </column>
+          <column name="REVTYPE" type="SMALLINT" />
+          <column name="version" type="INTEGER" />
+          <column name="name" type="VARCHAR(250)"/>
+          <column name="xml_submitter" type="CLOB(1024000)" />
+          <column name="xml_submitter_detail" type="CLOB(1024000)" />
+          <column name="created_by" type="VARCHAR(50)" />
+          <column name="created_date" type="TIMESTAMP" />
+          <column name="last_modified_by" type="VARCHAR(50)" />
+          <column name="last_modified_date" type="TIMESTAMP" />
+      </createTable>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-version-field-table-submitter">
+      <comment>Add version field in submitter table</comment>
+      <addColumn tableName="t_submitter">
+          <column name="version" type="INTEGER" />
+      </addColumn>
+  </changeSet>
+  <changeSet author="jjuiller" context="production" id="add-version-default-existing-submitters">
+    <comment>Add default value for version field in submitter table</comment>
+    <sql>UPDATE t_submitter SET version=0 WHERE version is NULL</sql>
+  </changeSet>
+</databaseChangeLog>

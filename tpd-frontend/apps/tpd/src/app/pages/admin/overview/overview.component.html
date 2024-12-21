@@ -1,0 +1,139 @@
+<div class="row">
+  <!-- BEGIN : column -->
+  <div class="col-lg-6">
+    <lt-portlet [mode]="['height-fluid', 'bordered']">
+      <lt-portlet-head [title]="'global.menu.admin.accounts' | translate"> </lt-portlet-head>
+      <lt-portlet-body>
+        <div class="row">
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.general.user" size="2hx" color="gray-800"> </inline-svg>
+            <a class="link-primary" routerLink="/admin/users" translate="global.menu.admin.users"></a>
+          </p>
+          <p class="text-muted" translate="admin.users.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.communication.group" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/groups" translate="global.menu.admin.groups"></a>
+          </p>
+          <p class="text-muted" translate="admin.groups.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Duotone.general.shieldUser" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/globalpermissions" translate="global.menu.admin.globalpermissions"></a>
+          </p>
+          <p class="text-muted" translate="admin.globalpermissions.description"></p>
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.communication.addressBookCard" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/ldap" translate="global.menu.admin.ldap"></a>
+          </p>
+          <p class="text-muted" translate="admin.ldap.description"></p>
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <!-- END : column -->
+  <!-- BEGIN : column -->
+  <div class="col-lg-6">
+    <lt-portlet [mode]="['height-fluid', 'bordered']">
+      <lt-portlet-head [title]="'global.menu.admin.settings' | translate"> </lt-portlet-head>
+      <lt-portlet-body>
+        <div class="row">
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.devices.server" size="2hx" color="gray-800"> </inline-svg>
+            <a class="m-link" routerLink="/admin/server" translate="global.menu.admin.server"></a>
+          </p>
+          <p class="text-muted" translate="admin.server.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.devices.hardDrive" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/database" translate="global.menu.admin.database"></a>
+          </p>
+          <p class="text-muted" translate="admin.database.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.code.git4" size="2hx" color="gray-800"> </inline-svg>
+            <a class="m-link" routerLink="/admin/indexing" translate="global.menu.admin.index"></a>
+          </p>
+          <p class="text-muted" translate="admin.index.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.communication.incomingBox" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/mail" translate="global.menu.admin.mail"></a>
+          </p>
+          <p class="text-muted" translate="admin.mail.description"></p>
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.general.shieldCheck" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/keystore" translate="global.menu.admin.keystore"></a>
+          </p>
+          <p class="text-muted" translate="admin.keystore.description"></p>
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.electric.socketEU" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/domibus" translate="global.menu.admin.domibus"></a>
+          </p>
+          <p class="text-muted" translate="admin.domibus.description"></p>
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <!-- END : column -->
+</div>
+<!-- END : Row -->
+<div class="row">
+  <!-- BEGIN : column -->
+  <div class="col-lg-6">
+    <lt-portlet [mode]="['height-fluid', 'bordered']">
+      <lt-portlet-head [title]="'global.menu.admin.support' | translate"> </lt-portlet-head>
+      <lt-portlet-body>
+        <div class="row">
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.shopping.box2" size="2hx" color="gray-800"> </inline-svg>
+            <a class="m-link" routerLink="/admin/api" translate="global.menu.admin.api"></a>
+          </p>
+          <p class="text-muted" translate="admin.api.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.devices.diagnostics" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/metrics" translate="global.menu.admin.metrics"></a>
+          </p>
+          <p class="text-muted" translate="admin.metrics.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.code.terminal" size="2hx" color="gray-800"> </inline-svg>
+            <a class="m-link" routerLink="/admin/console" translate="global.menu.admin.console"></a>
+          </p>
+          <p class="text-muted" translate="admin.console.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.tools.angleGrinder" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/audits" translate="global.menu.admin.audits"></a>
+          </p>
+          <p class="text-muted" translate="admin.audits.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.general.heart" size="2hx" color="gray-800"> </inline-svg>
+            <a class="m-link" routerLink="/admin/health" translate="global.menu.admin.health"></a>
+          </p>
+          <p class="text-muted" translate="admin.health.description"></p>
+
+          <p class="fw-bold fs-lg-3">
+            <inline-svg class="me-3" [src]="svgIcons.Simple.general.binocular" size="2hx" color="gray-800">
+            </inline-svg>
+            <a class="m-link" routerLink="/admin/tracker" translate="global.menu.admin.tracker"></a>
+          </p>
+          <p class="text-muted" translate="admin.tracker.description"></p>
+        </div>
+      </lt-portlet-body>
+    </lt-portlet>
+  </div>
+  <!-- END : column -->
+</div>
+<!-- END : Row -->

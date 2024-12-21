@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="62"
+   height="62"
+   viewBox="0 0 62 62"
+   fill="none"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="zip.svg"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="14.080645"
+     inkscape:cx="24.111111"
+     inkscape:cy="31"
+     inkscape:window-width="1782"
+     inkscape:window-height="965"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg16">
+    <sodipodi:guide
+       position="27.058419,24.856816"
+       orientation="1,0"
+       id="guide12672" />
+  </sodipodi:namedview>
+  <path
+     d="M15.5 0C13.3687 0 11.625 1.74375 11.625 3.875V58.125C11.625 60.2562 13.3687 62 15.5 62H54.25C56.3812 62 58.125 60.2562 58.125 58.125V15.5L42.625 0H15.5Z"
+     fill="#E2E5E7"
+     id="path2" />
+  <path
+     d="M46.5 15.5H58.125L42.625 0V11.625C42.625 13.7563 44.3687 15.5 46.5 15.5Z"
+     fill="#B0B7BD"
+     id="path4" />
+  <path
+     d="M58.125 27.125L46.5 15.5H58.125V27.125Z"
+     fill="#CAD1D8"
+     id="path6" />
+  <path
+     d="M50.375 50.375C50.375 51.4406 49.5031 52.3125 48.4375 52.3125H5.8125C4.74687 52.3125 3.875 51.4406 3.875 50.375V31C3.875 29.9344 4.74687 29.0625 5.8125 29.0625H48.4375C49.5031 29.0625 50.375 29.9344 50.375 31V50.375Z"
+     fill="#F7B84E"
+     id="path8"
+     style="fill:#333333" />
+  <path
+     d="M48.4375 52.3125H11.625V54.25H48.4375C49.5031 54.25 50.375 53.3781 50.375 52.3125V50.375C50.375 51.4406 49.5031 52.3125 48.4375 52.3125Z"
+     fill="#CAD1D8"
+     id="path14" />
+  <g
+     id="g18245">
+    <path
+       d="m 17.57042,45.239407 h 6.029962 q 0.43685,0 0.708986,-0.236329 0.272136,-0.24349 0.272136,-0.658856 0,-0.422527 -0.272136,-0.658855 -0.264975,-0.236329 -0.708986,-0.236329 h -4.518891 v -0.05729 l 4.898449,-6.638687 q 0.14323,-0.200521 0.236329,-0.379558 0.0931,-0.186199 0.0931,-0.43685 0,-0.472657 -0.300782,-0.751955 Q 23.707805,34.9054 23.206502,34.9054 h -5.757826 q -0.43685,0 -0.708986,0.236329 -0.264975,0.236329 -0.264975,0.658856 0,0.415365 0.264975,0.658855 0.272136,0.236329 0.708986,0.236329 h 4.2754 v 0.05013 l -4.934256,6.660172 q -0.315105,0.422527 -0.315105,0.837893 0,0.451173 0.300782,0.723309 0.300782,0.272136 0.794924,0.272136 z"
+       style="font-size:14.6667px;line-height:1.25;font-family:'.SF NS Rounded';-inkscape-font-specification:'.SF NS Rounded, @wght=700';font-variation-settings:'wght' 700;fill:#ffffff"
+       id="path18167" />
+    <path
+       d="m 27.030728,45.375475 q 0.508465,0 0.794924,-0.293621 0.286459,-0.300782 0.286459,-0.830731 v -8.357441 q 0,-0.537111 -0.286459,-0.830731 -0.286459,-0.300782 -0.794924,-0.300782 -0.508464,0 -0.794923,0.300782 -0.286459,0.29362 -0.286459,0.830731 v 8.357441 q 0,0.529949 0.286459,0.830731 0.286459,0.293621 0.794923,0.293621 z"
+       style="font-size:14.6667px;line-height:1.25;font-family:'.SF NS Rounded';-inkscape-font-specification:'.SF NS Rounded, @wght=700';font-variation-settings:'wght' 700;fill:#ffffff"
+       id="path18169" />
+    <path
+       d="m 30.926571,45.375475 q 0.508465,0 0.794924,-0.293621 0.286459,-0.300782 0.286459,-0.830731 v -2.270187 h 1.933598 q 1.088544,0 1.919275,-0.43685 0.830731,-0.444012 1.296227,-1.238936 0.472657,-0.802085 0.472657,-1.861983 0,-1.06706 -0.458334,-1.861983 -0.451173,-0.794924 -1.253258,-1.231774 -0.802085,-0.444012 -1.869145,-0.444012 h -3.122403 q -0.508465,0 -0.794924,0.293621 -0.286459,0.29362 -0.286459,0.830731 v 8.221373 q 0,0.529949 0.286459,0.830731 0.286459,0.293621 0.794924,0.293621 z m 1.081383,-5.084647 v -3.673837 h 1.468102 q 0.930992,0 1.439456,0.479819 0.515627,0.472657 0.515627,1.353518 0,0.880862 -0.515627,1.360681 -0.515626,0.479819 -1.446618,0.479819 z"
+       style="font-size:14.6667px;line-height:1.25;font-family:'.SF NS Rounded';-inkscape-font-specification:'.SF NS Rounded, @wght=700';font-variation-settings:'wght' 700;fill:#ffffff"
+       id="path18171" />
+  </g>
+</svg>

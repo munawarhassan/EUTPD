@@ -1,0 +1,9 @@
+--- POM.number
++++ POM.newNumber
+@@ -1,5 +1,4 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <Product xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TobaccoProduct">
+-   <Filter confidential="false">true</Filter>
+-   <FilterLength confidential="false">20</FilterLength>
++   <Filter confidential="false">false</Filter>
+ </Product>

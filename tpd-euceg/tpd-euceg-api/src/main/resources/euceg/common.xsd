@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="0.2"
+    xml:lang="en" jaxb:extensionBindingPrefixes="xjc" jaxb:version="2.0">
+
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <jaxb:serializable uid="1" />
+                <jaxb:javaType name="java.math.BigDecimal" xmlType="xs:double"
+                    parseMethod="javax.xml.bind.DatatypeConverter.parseDecimal"
+                    printMethod="javax.xml.bind.DatatypeConverter.printDecimal" />
+                <jaxb:javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
+                    parseMethod="com.pmi.tpd.euceg.api.Parsers.parseDateTime"
+                    printMethod="com.pmi.tpd.euceg.api.Parsers.printDateTime" />
+                <jaxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
+                    parseMethod="com.pmi.tpd.euceg.api.Parsers.parseLocalDate"
+                    printMethod="com.pmi.tpd.euceg.api.Parsers.printLocalDate" />
+                <jaxb:javaType name="java.lang.Integer" xmlType="xs:gYear"
+                    parseMethod="javax.xml.bind.DatatypeConverter.parseInt"
+                    printMethod="javax.xml.bind.DatatypeConverter.printInt" />
+            </jaxb:globalBindings>
+            <jaxb:bindings node="//xs:complexType[@name='BooleanNullable']">
+                <jaxb:class ref="com.pmi.tpd.euceg.api.binding.BooleanNullable" />
+            </jaxb:bindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType name="AppResponse" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Describes an application response returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="uuid" type="UUID" use="required">
+            <xs:annotation>
+                <xs:documentation>The unique identifier of the exception.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="date" type="xs:dateTime" use="required">
+            <xs:annotation>
+                <xs:documentation>The date and time that the exception was sent.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="ErrorResponse">
+        <xs:annotation>
+            <xs:documentation>Describes an exception returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AppResponse">
+                    <xs:sequence>
+                        <xs:element name="Code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The error code of the exception.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Message" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>The error message of the exception.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="AbstractAppResponse" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="AppResponse">
+                <xs:sequence>
+                    <xs:element name="Checksum" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>The checksum (SHA-512) of the request received by the system.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice minOccurs="0">
+                        <xs:element name="Error" type="Error">
+                            <xs:annotation>
+                                <xs:documentation>The error details, if any.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Errors">
+                            <xs:annotation>
+                                <xs:documentation>The list of error details, if any.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Error" type="Error" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:sequence>
+                <xs:attribute name="status" type="ResponseStatus" use="required">
+                    <xs:annotation>
+                        <xs:documentation>The status of the response returned by the system.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Error">
+        <xs:annotation>
+            <xs:documentation>Describes an error in the response returned by the system.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Code" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>The error code.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Message" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>The error message.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ResponseStatus">
+        <xs:annotation>
+            <xs:documentation>Response status enumeration.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="SUCCESS"/>
+            <xs:enumeration value="ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="UUID">
+        <xs:annotation>
+            <xs:documentation>Defines an UUID.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="String40">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 40 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String40Value">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="String40Value">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 40 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="String100">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 100 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String100Value">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="String100Value">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 100 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="String300">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 300 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String300Value">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="String300Value">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 300 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="300"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="String500">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 500 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String500Value">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="String500Value">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 500 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="String1000">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 1000 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="String1000Value">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="String1000Value">
+        <xs:annotation>
+            <xs:documentation>Defines a string (max. 1000 chars).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Boolean">
+        <xs:annotation>
+            <xs:documentation>Defines a boolean.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:boolean">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="BooleanNullableValue">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />              
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="BooleanNullable">
+        <xs:annotation>
+            <xs:documentation>Defines a boolean that admits nulls.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+        <!-- [devacfr] replace BooleanNullableValue by xs:boolean to keep compatibility with existing -->
+            <xs:extension base="xs:boolean">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Double">
+        <xs:annotation>
+            <xs:documentation>Defines a decimal.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:double">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Integer">
+        <xs:annotation>
+            <xs:documentation>Defines an integer.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:int">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Date">
+        <xs:annotation>
+            <xs:documentation>Defines a date.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:date">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Year">
+        <xs:annotation>
+            <xs:documentation>Defines a year.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:gYear">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Percentage">
+        <xs:annotation>
+            <xs:documentation>Defines a percentage.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="PercentageValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the value is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="PercentageValue">
+        <xs:annotation>
+            <xs:documentation>Defines a percentage.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="PhoneNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a phone number.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="PhoneNumberValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the phone number is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="PhoneNumberValue">
+        <xs:annotation>
+            <xs:documentation>Defines a phone number.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[+]{0,1}[0-9 \.\(\)]+" />
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="EmailAddress">
+        <xs:annotation>
+            <xs:documentation>Defines an email address.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EmailAddressValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the email address is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EmailAddressValue">
+        <xs:annotation>
+            <xs:documentation>Defines an email address.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([?'_%&amp;!*+#0-9a-zA-Z-]+(\.([?'_%&amp;!*+#0-9a-zA-Z-])+)*@([0-9a-zA-Z])+([0-9a-zA-Z-])+(\.([0-9a-zA-Z])+([0-9a-zA-Z-])+)*\.([0-9a-zA-Z]){1,})"/>
+            <xs:maxLength value="80"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Country">
+        <xs:annotation>
+            <xs:documentation>Defines a country.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="CountryValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the country is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="CountryValue">
+        <xs:annotation>
+            <xs:documentation>The list of countries.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="AD"/>
+            <xs:enumeration value="AE"/>
+            <xs:enumeration value="AF"/>
+            <xs:enumeration value="AG"/>
+            <xs:enumeration value="AI"/>
+            <xs:enumeration value="AL"/>
+            <xs:enumeration value="AM"/>
+            <xs:enumeration value="AO"/>
+            <xs:enumeration value="AQ"/>
+            <xs:enumeration value="AR"/>
+            <xs:enumeration value="AS"/>
+            <xs:enumeration value="AT"/>
+            <xs:enumeration value="AU"/>
+            <xs:enumeration value="AW"/>
+            <xs:enumeration value="AX"/>
+            <xs:enumeration value="AZ"/>
+            <xs:enumeration value="BA"/>
+            <xs:enumeration value="BB"/>
+            <xs:enumeration value="BD"/>
+            <xs:enumeration value="BE"/>
+            <xs:enumeration value="BF"/>
+            <xs:enumeration value="BG"/>
+            <xs:enumeration value="BH"/>
+            <xs:enumeration value="BI"/>
+            <xs:enumeration value="BJ"/>
+            <xs:enumeration value="BL"/>
+            <xs:enumeration value="BM"/>
+            <xs:enumeration value="BN"/>
+            <xs:enumeration value="BO"/>
+            <xs:enumeration value="BQ"/>
+            <xs:enumeration value="BR"/>
+            <xs:enumeration value="BS"/>
+            <xs:enumeration value="BT"/>
+            <xs:enumeration value="BV"/>
+            <xs:enumeration value="BW"/>
+            <xs:enumeration value="BY"/>
+            <xs:enumeration value="BZ"/>
+            <xs:enumeration value="CA"/>
+            <xs:enumeration value="CC"/>
+            <xs:enumeration value="CD"/>
+            <xs:enumeration value="CF"/>
+            <xs:enumeration value="CG"/>
+            <xs:enumeration value="CH"/>
+            <xs:enumeration value="CI"/>
+            <xs:enumeration value="CK"/>
+            <xs:enumeration value="CL"/>
+            <xs:enumeration value="CM"/>
+            <xs:enumeration value="CN"/>
+            <xs:enumeration value="CO"/>
+            <xs:enumeration value="CR"/>
+            <xs:enumeration value="CU"/>
+            <xs:enumeration value="CV"/>
+            <xs:enumeration value="CW"/>
+            <xs:enumeration value="CX"/>
+            <xs:enumeration value="CY"/>
+            <xs:enumeration value="CZ"/>
+            <xs:enumeration value="DE"/>
+            <xs:enumeration value="DJ"/>
+            <xs:enumeration value="DK"/>
+            <xs:enumeration value="DM"/>
+            <xs:enumeration value="DO"/>
+            <xs:enumeration value="DZ"/>
+            <xs:enumeration value="EC"/>
+            <xs:enumeration value="EE"/>
+            <xs:enumeration value="EG"/>
+            <xs:enumeration value="EH"/>
+            <xs:enumeration value="ER"/>
+            <xs:enumeration value="ES"/>
+            <xs:enumeration value="ET"/>
+            <xs:enumeration value="FI"/>
+            <xs:enumeration value="FJ"/>
+            <xs:enumeration value="FK"/>
+            <xs:enumeration value="FM"/>
+            <xs:enumeration value="FO"/>
+            <xs:enumeration value="FR"/>
+            <xs:enumeration value="GA"/>
+            <xs:enumeration value="GB"/>
+            <xs:enumeration value="GD"/>
+            <xs:enumeration value="GE"/>
+            <xs:enumeration value="GG"/>
+            <xs:enumeration value="GF"/>
+            <xs:enumeration value="GH"/>
+            <xs:enumeration value="GI"/>
+            <xs:enumeration value="GL"/>
+            <xs:enumeration value="GM"/>
+            <xs:enumeration value="GN"/>
+            <xs:enumeration value="GP"/>
+            <xs:enumeration value="GQ"/>
+            <xs:enumeration value="GR"/>
+            <xs:enumeration value="GS"/>
+            <xs:enumeration value="GT"/>
+            <xs:enumeration value="GU"/>
+            <xs:enumeration value="GW"/>
+            <xs:enumeration value="GY"/>
+            <xs:enumeration value="HK"/>
+            <xs:enumeration value="HM"/>
+            <xs:enumeration value="HN"/>
+            <xs:enumeration value="HR"/>
+            <xs:enumeration value="HT"/>
+            <xs:enumeration value="HU"/>
+            <xs:enumeration value="ID"/>
+            <xs:enumeration value="IE"/>
+            <xs:enumeration value="IL"/>
+            <xs:enumeration value="IM"/>
+            <xs:enumeration value="IN"/>
+            <xs:enumeration value="IO"/>
+            <xs:enumeration value="IQ"/>
+            <xs:enumeration value="IR"/>
+            <xs:enumeration value="IS"/>
+            <xs:enumeration value="IT"/>
+            <xs:enumeration value="JE"/>
+            <xs:enumeration value="JM"/>
+            <xs:enumeration value="JO"/>
+            <xs:enumeration value="JP"/>
+            <xs:enumeration value="KE"/>
+            <xs:enumeration value="KG"/>
+            <xs:enumeration value="KH"/>
+            <xs:enumeration value="KI"/>
+            <xs:enumeration value="KM"/>
+            <xs:enumeration value="KN"/>
+            <xs:enumeration value="KP"/>
+            <xs:enumeration value="KR"/>
+            <xs:enumeration value="KW"/>
+            <xs:enumeration value="KY"/>
+            <xs:enumeration value="KZ"/>
+            <xs:enumeration value="LA"/>
+            <xs:enumeration value="LB"/>
+            <xs:enumeration value="LC"/>
+            <xs:enumeration value="LI"/>
+            <xs:enumeration value="LK"/>
+            <xs:enumeration value="LR"/>
+            <xs:enumeration value="LS"/>
+            <xs:enumeration value="LT"/>
+            <xs:enumeration value="LU"/>
+            <xs:enumeration value="LV"/>
+            <xs:enumeration value="LY"/>
+            <xs:enumeration value="MA"/>
+            <xs:enumeration value="MC"/>
+            <xs:enumeration value="MD"/>
+            <xs:enumeration value="ME"/>
+            <xs:enumeration value="MF"/>
+            <xs:enumeration value="MG"/>
+            <xs:enumeration value="MH"/>
+            <xs:enumeration value="MK"/>
+            <xs:enumeration value="ML"/>
+            <xs:enumeration value="MM"/>
+            <xs:enumeration value="MN"/>
+            <xs:enumeration value="MO"/>
+            <xs:enumeration value="MP"/>
+            <xs:enumeration value="MQ"/>
+            <xs:enumeration value="MR"/>
+            <xs:enumeration value="MS"/>
+            <xs:enumeration value="MT"/>
+            <xs:enumeration value="MV"/>
+            <xs:enumeration value="MW"/>
+            <xs:enumeration value="MU"/>
+            <xs:enumeration value="MX"/>
+            <xs:enumeration value="MY"/>
+            <xs:enumeration value="MZ"/>
+            <xs:enumeration value="NA"/>
+            <xs:enumeration value="NC"/>
+            <xs:enumeration value="NE"/>
+            <xs:enumeration value="NF"/>
+            <xs:enumeration value="NG"/>
+            <xs:enumeration value="NI"/>
+            <xs:enumeration value="NL"/>
+            <xs:enumeration value="NO"/>
+            <xs:enumeration value="NP"/>
+            <xs:enumeration value="NR"/>
+            <xs:enumeration value="NU"/>
+            <xs:enumeration value="NZ"/>
+            <xs:enumeration value="OM"/>
+            <xs:enumeration value="PA"/>
+            <xs:enumeration value="PE"/>
+            <xs:enumeration value="PF"/>
+            <xs:enumeration value="PG"/>
+            <xs:enumeration value="PH"/>
+            <xs:enumeration value="PK"/>
+            <xs:enumeration value="PL"/>
+            <xs:enumeration value="PM"/>
+            <xs:enumeration value="PN"/>
+            <xs:enumeration value="PR"/>
+            <xs:enumeration value="PS"/>
+            <xs:enumeration value="PT"/>
+            <xs:enumeration value="PW"/>
+            <xs:enumeration value="PY"/>
+            <xs:enumeration value="QA"/>
+            <xs:enumeration value="RE"/>
+            <xs:enumeration value="RO"/>
+            <xs:enumeration value="RS"/>
+            <xs:enumeration value="RU"/>
+            <xs:enumeration value="RW"/>
+            <xs:enumeration value="SA"/>
+            <xs:enumeration value="SB"/>
+            <xs:enumeration value="SC"/>
+            <xs:enumeration value="SD"/>
+            <xs:enumeration value="SE"/>
+            <xs:enumeration value="SG"/>
+            <xs:enumeration value="SH"/>
+            <xs:enumeration value="SI"/>
+            <xs:enumeration value="SJ"/>
+            <xs:enumeration value="SK"/>
+            <xs:enumeration value="SL"/>
+            <xs:enumeration value="SM"/>
+            <xs:enumeration value="SN"/>
+            <xs:enumeration value="SO"/>
+            <xs:enumeration value="SR"/>
+            <xs:enumeration value="SS"/>
+            <xs:enumeration value="ST"/>
+            <xs:enumeration value="SV"/>
+            <xs:enumeration value="SX"/>
+            <xs:enumeration value="SY"/>
+            <xs:enumeration value="SZ"/>
+            <xs:enumeration value="TC"/>
+            <xs:enumeration value="TD"/>
+            <xs:enumeration value="TF"/>
+            <xs:enumeration value="TG"/>
+            <xs:enumeration value="TH"/>
+            <xs:enumeration value="TJ"/>
+            <xs:enumeration value="TK"/>
+            <xs:enumeration value="TL"/>
+            <xs:enumeration value="TM"/>
+            <xs:enumeration value="TN"/>
+            <xs:enumeration value="TO"/>
+            <xs:enumeration value="TR"/>
+            <xs:enumeration value="TT"/>
+            <xs:enumeration value="TV"/>
+            <xs:enumeration value="TW"/>
+            <xs:enumeration value="TZ"/>
+            <xs:enumeration value="UA"/>
+            <xs:enumeration value="UG"/>
+            <xs:enumeration value="UM"/>
+            <xs:enumeration value="US"/>
+            <xs:enumeration value="UY"/>
+            <xs:enumeration value="UZ"/>
+            <xs:enumeration value="VA"/>
+            <xs:enumeration value="VC"/>
+            <xs:enumeration value="VE"/>
+            <xs:enumeration value="VG"/>
+            <xs:enumeration value="VI"/>
+            <xs:enumeration value="VN"/>
+            <xs:enumeration value="VU"/>
+            <xs:enumeration value="WF"/>
+            <xs:enumeration value="WS"/>
+            <xs:enumeration value="YE"/>
+            <xs:enumeration value="YT"/>
+            <xs:enumeration value="ZA"/>
+            <xs:enumeration value="ZM"/>
+            <xs:enumeration value="ZW"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="NationalMarket">
+        <xs:annotation>
+            <xs:documentation>Defines a national market.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="NationalMarketValue">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the national market is confidential.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="NationalMarketValue">
+        <xs:annotation>
+            <xs:documentation>The list of national markets.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="CountryValue">
+            <xs:enumeration value="AT"/>
+            <xs:enumeration value="BE"/>
+            <xs:enumeration value="BG"/>
+            <xs:enumeration value="CY"/>
+            <xs:enumeration value="CZ"/>
+            <xs:enumeration value="DK"/>
+            <xs:enumeration value="DE"/>
+            <xs:enumeration value="EE"/>
+            <xs:enumeration value="ES"/>
+            <xs:enumeration value="FI"/>
+            <xs:enumeration value="FR"/>
+            <xs:enumeration value="GB"/>
+            <xs:enumeration value="GR"/>
+            <xs:enumeration value="HR"/>
+            <xs:enumeration value="HU"/>
+            <xs:enumeration value="IE"/>            
+            <xs:enumeration value="IT"/>
+            <xs:enumeration value="LT"/>            
+            <xs:enumeration value="LU"/>
+            <xs:enumeration value="LV"/>
+            <xs:enumeration value="MT"/>
+            <xs:enumeration value="NL"/>            
+            <xs:enumeration value="PL"/>
+            <xs:enumeration value="PT"/>
+            <xs:enumeration value="RO"/>
+            <xs:enumeration value="SE"/>
+            <xs:enumeration value="SI"/>
+            <xs:enumeration value="SK"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Company">
+        <xs:annotation>
+            <xs:documentation>Defines a company.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="Name" type="String100Value">
+                <xs:annotation>
+                    <xs:documentation>The name of the company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Address" type="String300Value">
+                <xs:annotation>
+                    <xs:documentation>The address of the company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Country" type="CountryValue">
+                <xs:annotation>
+                    <xs:documentation>The country of the company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PhoneNumber" type="PhoneNumberValue">
+                <xs:annotation>
+                    <xs:documentation>The business phone of the company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Email" type="EmailAddressValue">
+                <xs:annotation>
+                    <xs:documentation>The email address of the company.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="confidential" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Indicates whether or not the company is confidential.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="submitterID" type="SubmitterNumber">
+            <xs:annotation>
+                <xs:documentation>The submitter ID of the company, if any.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="SubmitterNumber">
+        <xs:annotation>
+            <xs:documentation>Defines a submitter ID.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,263 @@
+//
+// Wizard linear
+// Pages SASS files are compiled into separate css files
+//
+
+// Global config
+@import 'init';
+
+// Variables
+$wizard-linear-step-label: #959cb6;
+$wizard-linear-step-icon: #dee1eb;
+$wizard-linear-step-highlight: $primary;
+$wizard-linear-step-border: #eeeef4;
+$wizard-linear-form-bg: #f9fafc;
+$wizard-linear-form-inner-bg: #ffffff;
+
+// General mode
+.wizard-linear {
+    // Nav
+    .wizard-linear__nav {
+        border-bottom: 1px solid $wizard-linear-step-border;
+
+        .nav-items {
+            padding: 0 4rem;
+
+            .nav-item {
+                .nav-body {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    color: $wizard-linear-step-label;
+                    padding: 2rem 0.5rem;
+
+                    .nav-label {
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+
+                        span {
+                            font-size: 2rem;
+                            margin-right: 0.5rem;
+                        }
+                    }
+
+                    .nav-bar {
+                        height: 4px;
+                        width: 100%;
+                        background-color: $wizard-linear-step-icon;
+                        position: relative;
+
+                        &:after {
+                            content: ' ';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 4px;
+                            width: 0;
+                            background-color: transparent;
+                            transition: $transition-link;
+                        }
+                    }
+                }
+
+                &[data-wizard-state='current'] {
+                    &:after {
+                        color: $wizard-linear-step-highlight;
+                    }
+
+                    .nav-body {
+                        color: $wizard-linear-step-highlight;
+
+                        .nav-bar {
+                            &:after {
+                                width: 100%;
+                                background-color: $wizard-linear-step-highlight;
+                            }
+                        }
+                    }
+                }
+            }
+
+            cursor: pointer;
+
+            // mobile
+            @include media-breakpoint-down(md) {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem 0;
+
+                .nav-item {
+                    flex: 0 0 100%;
+                    position: relative;
+                    width: 100%;
+
+                    &:after {
+                        position: absolute;
+                        right: 2rem;
+                    }
+
+                    &:last-child {
+                        &:after {
+                            content: '\f105';
+                            font-family: 'Font Awesome 5 Free';
+                            font-weight: 900;
+                            font-size: 2rem;
+                            color: $wizard-linear-step-icon;
+                        }
+                    }
+
+                    .nav-body {
+                        justify-content: flex-start;
+                        flex: 0 0 100%;
+                        padding: 0.5rem 2rem;
+                    }
+                }
+            }
+        }
+
+        &.wizard-linear__nav-items--clickable {
+            .nav-item {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .wizard-linear-wrapper {
+        .wizard-actions {
+            // mobile-sm
+            @include media-breakpoint-down(md) {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                // mobile-sm
+                @include media-breakpoint-down(md) {
+                    margin: 0 0.5rem 1rem;
+                }
+            }
+
+            [data-wizard-type='action-prev'] {
+                margin-right: auto;
+
+                // mobile-sm
+                @include media-breakpoint-down(md) {
+                    margin-right: 0.5rem;
+                }
+            }
+
+            [data-wizard-type='action-next'] {
+                margin: auto 0 auto auto;
+
+                // mobile-sm
+                @include media-breakpoint-down(sm) {
+                    margin: 0 0 1rem;
+                }
+            }
+        }
+
+        // mobile
+        @include media-breakpoint-down(md) {
+            padding: 2rem;
+
+            .form {
+                width: 100%;
+                padding: 2rem 1rem 4rem;
+            }
+        }
+    }
+
+    &.wizard-linear--white {
+        .wizard-linear__wrapper {
+            background-color: $wizard-linear-form-inner-bg;
+        }
+    }
+
+    // Step
+    [data-wizard-type='step'] {
+        &[data-wizard-state='current'] {
+        }
+
+        &[data-wizard-state='done'] {
+        }
+
+        &[data-wizard-state='pending'] {
+        }
+    }
+
+    // Step info
+    [data-wizard-type='step-info'] {
+        display: none;
+
+        &[data-wizard-state='current'] {
+            display: block;
+        }
+    }
+
+    // Content states
+    [data-wizard-type='step-content'] {
+        display: none;
+
+        &[data-wizard-state='current'] {
+            display: block;
+        }
+    }
+
+    // Action buttons states
+    & {
+        [data-wizard-type='action-prev'] {
+            display: none;
+        }
+
+        [data-wizard-type='action-next'] {
+            display: inline-block;
+        }
+
+        [data-wizard-type='action-submit'] {
+            display: none;
+        }
+    }
+
+    &[data-wizard-state='first'] {
+        [data-wizard-type='action-prev'] {
+            display: none;
+        }
+
+        [data-wizard-type='action-next'] {
+            display: inline-block;
+        }
+
+        [data-wizard-type='action-submit'] {
+            display: none;
+        }
+    }
+
+    &[data-wizard-state='between'] {
+        [data-wizard-type='action-prev'] {
+            display: inline-block;
+        }
+
+        [data-wizard-type='action-next'] {
+            display: inline-block;
+        }
+
+        [data-wizard-type='action-submit'] {
+            display: none;
+        }
+    }
+
+    &[data-wizard-state='last'] {
+        [data-wizard-type='action-prev'] {
+            display: inline-block;
+        }
+
+        [data-wizard-type='action-next'] {
+            display: none;
+        }
+
+        [data-wizard-type='action-submit'] {
+            display: inline-block;
+        }
+    }
+}

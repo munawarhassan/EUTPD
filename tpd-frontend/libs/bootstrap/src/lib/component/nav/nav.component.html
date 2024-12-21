@@ -1,0 +1,18 @@
+<div [class]="navClass">
+  <ng-content select="nav-link,[navItem]"></ng-content>
+  <ng-container *ngIf="tabset">
+    <ng-container *ngFor="let tab of tabset">
+      <nav-link
+        [title]="tab.heading"
+        [icon]="tab.icon"
+        [iconClass]="tab.iconClass"
+        [target]="'#' + tab.id"
+        [parent]="this"
+        [active]="tab.active"
+      ></nav-link>
+    </ng-container>
+  </ng-container>
+</div>
+<div *ngIf="tabset && tabset.length > 0" class="tab-content">
+  <ng-content select="tab-pane,[tab-pane]"></ng-content>
+</div>

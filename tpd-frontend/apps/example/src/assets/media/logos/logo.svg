@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<svg width="48px" height="48px" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+  <g id="g146" fill-rule="evenodd" fill="none" stroke-width="1" stroke="none">
+    <polygon id="polygon126" points="0 0 32 0 32 32 0 32" />
+    <path fill="#7a7a7a" opacity="0.8" style="stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="M 1.9942474,0.03068073 H 15.98466 L 32,15.98466 15.98466,32.061361 1.9942474,31.969319 15.98466,15.98466 Z" id="path868" />
+    <path fill="#ffffff" opacity="0.5" style="stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="M 1.9942474,15.98466 8.0076702,7.976989 H 23.99233 l -8.00767,8.007671 7.946308,8.03835 H 8.9587728 Z" id="path870" />
+  </g>
+</svg>

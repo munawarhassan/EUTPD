@@ -1,0 +1,31 @@
+{
+  "login": {
+    "title": "Sign In to TPD Submission Tools",
+    "forgetpassword": "Forgot my password?",
+    "rememberme": "Remember me",
+    "button": "Log In",
+    "welcome": "Join our Competitions",
+    "slogan": "Your talent is our feeling.",
+    "messages": {
+      "error": {
+        "fail": "Incorrect username or password. Please try again."
+      }
+    }
+  },
+  "signup": {
+    "title": "Sign Up",
+    "description": "Enter your details to create your account",
+    "label": "Don't have an account yet ?",
+    "button": "Sign Up"
+  },
+  "forgotpassword": {
+    "title": "Forgotten your password?",
+    "description": "Enter your username to reset your password",
+    "button": "Request Password Reset"
+  },
+  "resetpassword": {
+    "title": "Reset your password",
+    "description": "Enter your new password",
+    "button": "Change Password"
+  }
+}

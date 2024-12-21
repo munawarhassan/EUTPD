@@ -1,0 +1,52 @@
+<event-config>
+    <!-- provide any setup parameters like this -->
+    <parameters>
+        <init-param>
+            <param-name>foo</param-name>
+            <param-value>bar</param-value>
+        </init-param>
+        <init-param>
+            <param-name>baz</param-name>
+            <param-value>bat</param-value>
+        </init-param>
+    </parameters>
+
+    <setup-config class="com.pmi.tpd.core.event.advisor.SimpleSetupConfig"/>
+
+    <event-checks>
+        <event-check id="1" class="com.pmi.tpd.core.event.advisor.SimpleEventCheck"/>
+        <event-check id="2" class="com.pmi.tpd.core.event.advisor.SimpleRequestEventCheck"/>
+        <event-check class="com.pmi.tpd.core.event.advisor.SimpleApplicationEventCheck"/>
+    </event-checks>
+
+    <setup>
+        <path>/the/setup/path.jsp</path>
+    </setup>
+
+    <error>
+        <path>/the/error/path.jsp</path>
+    </error>
+
+    <ignore>
+        <path>/ignore/path/1.jsp</path>
+        <path>/ignore/path/*.html</path>
+    </ignore>
+
+    <event-levels>
+        <event-level key="warning">
+            <description>This is a warning buddy</description>
+        </event-level>
+        <event-level key="error">
+            <description>Error</description>
+        </event-level>
+    </event-levels>
+
+    <event-types>
+        <event-type key="database">
+            <description>Database</description>
+        </event-type>
+        <event-type key="upgrade">
+            <description>Upgrade</description>
+        </event-type>
+    </event-types>
+</event-config>

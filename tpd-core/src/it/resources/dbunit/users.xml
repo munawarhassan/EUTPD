@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <t_user id="1" login="sysadmin" slug="sysadmin" email="sysadmin@company.com" encoded_password="$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG"
+    display_name="System Administrator" activated="true" created_by="sysadmin" created_date="[current_timestamp]" />
+  <t_user id="2" login="admin" slug="admin" encoded_password="$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC"
+    display_name="Administrator" email="admin@company.com" activated="true" created_by="sysadmin" created_date="[current_timestamp]" />
+  <t_user id="3" login="user" slug="user" email="user@company.com" encoded_password="$2a$10$xJxYIgeFRpDrUGNFL61ruucJm689zsDi/FZOuv1lv5PSYUGSSCa5u"
+    display_name="lastName firstName" activated="true" created_by="sysadmin" created_date="[current_timestamp]" />
+
+  <t_user id="10" login="access.key.1" slug="access.key.1" encoded_password="passwword" display_name="access.key.1" activated="true"
+    created_by="sysadmin" created_date="[current_timestamp]" />
+  <t_user id="11" login="optimus.prime" slug="optimus.prime" encoded_password="passwword" display_name="optimus.prime" activated="true"
+    created_by="sysadmin" created_date="[current_timestamp]" />
+  <t_user id="12" login="robutt" slug="robutt" encoded_password="passwword" display_name="Robutt" activated="true" created_by="sysadmin"
+    created_date="[current_timestamp]" />
+
+
+  <t_group id="1" name="grp-sysAdministrator" description="System Administrator Permission" />
+  <t_group id="2" name="grp-Administrator" description="Administrator Permission" />
+  <t_group id="3" name="grp-User" description="User Permission" />
+  <t_group id="10" name="test-group-to-delete" description="test-group-to-delete" deleted_timestamp="2015-04-07 12:00:00" />
+  <t_group id="11" name="test-group-to-keep" description="test-group-to-keep" deleted_timestamp="2015-04-09 12:00:00" />
+
+  <t_user_group user_fk="1" group_fk="1" />
+  <t_user_group user_fk="2" group_fk="2" />
+  <t_user_group user_fk="2" group_fk="3" />
+  <t_user_group user_fk="3" group_fk="3" />
+</dataset>

@@ -1,0 +1,24 @@
+{
+  "name": "@devacfr/forms",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~16",
+    "@angular/core": "~16",
+    "@angular/forms": "~16",
+    "@yaireo/tagify": "~4.21.1",
+    "lodash-es": "^4.17.21",
+    "jquery": "~3.7",
+    "select2": "^4.1.0-rc.0",
+    "daterangepicker": "^3.1.0",
+    "flatpickr": "^4.6.9",
+    "moment": "^2.29.1",
+    "ng2-file-upload": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.5",
+    "@types/jquery": "~3.5",
+    "@types/select2": "~4.0",
+    "@types/daterangepicker": "~3.1.4",
+    "@types/yaireo__tagify": "~4.18"
+  }
+}

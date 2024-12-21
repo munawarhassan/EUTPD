@@ -1,0 +1,188 @@
+<!-- BEGIN PORTLET -->
+<form
+  class="form"
+  [formGroup]="formControl"
+  #form="ngForm"
+  (ngSubmit)="updateProfile()"
+  role="form"
+  novalidate
+  show-validation
+>
+  <lt-portlet id="m-portlet_account_profile">
+    <lt-portlet-head
+      [title]="'account.profile.title' | translate"
+      [description]="'account.profile.description' | translate"
+    >
+      <lt-portlet-nav-dropdown-item
+        formGroupName="settings"
+        [icon]="svgIcons.Simple.general.otherVertical"
+        placement="right"
+        ltTooltip="Avatar Options..."
+      >
+        <!--begin::Nav-->
+
+        <li><h6 class="dropdown-header">Avatar Options</h6></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li class="ps-4 mb-4">
+          <div class="form-check form-switch form-check-custom form-check-solid">
+            <input
+              class="form-check-input h-20px w-30px"
+              id="avatarSourceDisable"
+              type="radio"
+              name="avatarSource"
+              value="Disable"
+              formControlName="avatarSource"
+            />
+            <label class="form-check-label" for="avatarSourceDisable">Use your photo</label>
+          </div>
+        </li>
+        <li class="ps-4 mb-4">
+          <div class="form-check form-switch form-check-custom form-check-solid">
+            <input
+              class="form-check-input h-20px w-30px"
+              id="avatarSourceGravatar"
+              type="radio"
+              name="avatarSource"
+              value="Gravatar"
+              formControlName="avatarSource"
+              [attr.disabled]="isLocalAvatar"
+            />
+            <label class="form-check-label" for="avatarSourceGravatar">Use Gravatar</label>
+          </div>
+        </li>
+        <li class="ps-4 mb-4">
+          <div class="form-check form-switch form-check-custom form-check-solid">
+            <input
+              class="form-check-input h-20px w-30px"
+              id="avatarSourceOutlook"
+              type="radio"
+              name="avatarSource"
+              value="Outlook"
+              formControlName="avatarSource"
+              [attr.disabled]="isLocalAvatar"
+            />
+            <label class="form-check-label" for="avatarSourceOutlook">Use Outlook Picture</label>
+          </div>
+        </li>
+        <li *ngIf="isLocalAvatar"><hr class="dropdown-divider" /></li>
+        <li *ngIf="isLocalAvatar" class="d-flex flex-center">
+          <button class="btn btn-bold btn-light-danger btn-outline-danger btn-sm" (click)="removeAvatar()">
+            Delete Avatar
+          </button>
+        </li>
+        <!--end::Nav-->
+      </lt-portlet-nav-dropdown-item>
+    </lt-portlet-head>
+
+    <!-- BEGIN PORTLET BODY -->
+    <lt-portlet-body>
+      <app-alert-profile *ngIf="message" [message]="message"></app-alert-profile>
+      <div class="row">
+        <div class="offset-lg-2 col-md-3 mb-4">
+          <label class="form-label">Avatar</label>
+          <div class="ms-2">
+            <lt-image-input
+              #Avatar
+              mode="outline"
+              formControlName="avatarUrl"
+              [cancellable]="false"
+              (changed)="uploadAvatar($event)"
+              (removed)="removeAvatar()"
+            ></lt-image-input>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-lg-2 col-md-8 mb-4">
+          <form-text
+            [label]="'global.form.username' | translate"
+            type="text"
+            controlClass="form-control-solid"
+            [icon]="svgIcons.Duotone.communication.user"
+            iconPosition="start"
+            name="username"
+            formControlName="username"
+          ></form-text>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-lg-2 col-md-8 mb-4">
+          <form-text
+            [label]="'global.form.displayname' | translate"
+            type="text"
+            controlClass="form-control-solid"
+            [icon]="svgIcons.Simple.communication.addressBookCard"
+            iconPosition="start"
+            name="displayName"
+            [placeholder]="'global.form.displayname.placeholder' | translate"
+            formControlName="displayName"
+            [autocomplete]="false"
+          ></form-text>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-lg-2 col-md-8 mb-4">
+          <form-text
+            [label]="'global.form.email' | translate"
+            type="email"
+            controlClass="form-control-solid"
+            [icon]="svgIcons.Duotone.communication.envelopClose"
+            iconPosition="start"
+            name="email"
+            formControlName="email"
+            [autocomplete]="false"
+          ></form-text>
+        </div>
+      </div>
+      <!-- END SECTION -->
+      <div class="row">
+        <div class="offset-lg-2 col-md-8">
+          <div class="separator separator-dashed my-5"></div>
+          <h4>Contact Info</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-lg-2 col-md-8 my-4">
+          <form-text
+            [label]="'global.form.phone' | translate"
+            type="text"
+            controlClass="form-control-solid"
+            [icon]="svgIcons.Simple.communication.phone"
+            iconPosition="start"
+            name="contactPhone"
+            [placeholder]="'global.form.phone.placeholder' | translate"
+            formControlName="contactPhone"
+            [autocomplete]="false"
+          ></form-text>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-lg-2 col-md-8 mb-4">
+          <form-text
+            [label]="'global.form.location' | translate"
+            type="text"
+            controlClass="form-control-solid"
+            [icon]="svgIcons.Simple.map.marker1"
+            iconPosition="start"
+            name="officeLocation"
+            [placeholder]="'global.form.location.placeholder' | translate"
+            formControlName="officeLocation"
+            [autocomplete]="false"
+          ></form-text>
+        </div>
+      </div>
+    </lt-portlet-body>
+    <!-- END PORTLET BODY -->
+    <!-- BEGIN PORTLET FOOTER -->
+    <lt-portlet-foot>
+      <div class="row">
+        <div class="col offset-lg-2">
+          <button type="submit" class="btn btn-success me-4" *ngIf="!readOnly" translate="global.button.save"></button>
+          <a href="#" class="link link-primary" (click)="refresh()" translate="global.button.cancel"></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+    <!-- END PORTLET FOOTER -->
+  </lt-portlet>
+  <!-- END PORTLET -->
+</form>

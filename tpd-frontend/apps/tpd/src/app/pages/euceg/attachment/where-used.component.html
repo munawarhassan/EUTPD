@@ -1,0 +1,62 @@
+<ng-container *ngIf="selected">
+  <div class="card-header align-items-center mt-4">
+    <div class="card-title align-items-start flex-column">
+      <span class="fw-bolder text-dark">Where Used </span>
+      <div class="mt-2">
+        <inline-svg-file class="me-3" size="1" [extension]="svgIcons.getExtension(selected.filename)"></inline-svg-file>
+        <span class="fs-6 text-muted">{{ selected.filename }}</span>
+      </div>
+    </div>
+    <div class="card-toolbar"></div>
+  </div>
+  <div class="card-body pt-3">
+    <ng-container *ngFor="let entry of page$ | async | keyvalue; trackBy: trackPage">
+      <div
+        class="d-flex align-items-sm-center mb-7"
+        *ngFor="let product of entry.value.content; trackBy: trackProductList"
+      >
+        <!--begin::Symbol-->
+        <div class="symbol symbol-60px me-4">
+          <inline-svg class="symbol-label" size="3hx" [src]="svgIcons.Simple.shopping.box2"> </inline-svg>
+        </div>
+        <!--end::Symbol-->
+        <!--begin::Content-->
+        <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+          <!--begin::Title-->
+          <div class="flex-grow-1 my-lg-0 my-2 me-2">
+            <div>
+              <a
+                [routerLink]="['/product', product.productType, 'view', product.productNumber]"
+                class="text-gray-800 fw-bolder text-hover-primary fs-6"
+                >Product {{ product.productNumber }}
+              </a>
+              <app-product-status [status]="product.status" size="sm"></app-product-status>
+            </div>
+            <span class="badge badge-light-dark badge-sm text-gray-600">{{ product.productType }}</span>
+          </div>
+          <!--end::Title-->
+          <!--begin::Section-->
+          <div class="d-flex align-items-center">
+            <a
+              [routerLink]="['/product', product.productType, 'view', product.productNumber]"
+              class="btn btn-icon btn-light-linkedin btn-sm border-0"
+            >
+              <inline-svg size="2" [src]="svgIcons.Duotone.arrows.arrowRight"></inline-svg>
+            </a>
+          </div>
+          <!--end::Section-->
+        </div>
+        <!--end::Content-->
+      </div>
+    </ng-container>
+    <div *ngIf="currentPage?.hasNext()" class="d-flex flex-center">
+      <button class="btn btn-primary" [attr.data-lt-indicator]="loading" (click)="showMore()">
+        <span class="indicator-label">Show more</span>
+        <span class="indicator-progress"
+          >Loading...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-container>

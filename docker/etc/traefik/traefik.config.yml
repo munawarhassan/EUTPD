@@ -1,0 +1,33 @@
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /etc/ssl/traefik/cert.pem
+        keyFile: /etc/ssl/traefik/privkey.pem
+  certificates:
+    - certFile: /etc/ssl/traefik/cert.pem
+      keyFile: /etc/ssl/traefik/privkey.pem
+
+http:
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    cors-api:
+      headers:
+        accessControlAllowMethods:
+          - GET
+          - HEAD
+          - POST
+          - OPTIONS
+          - PUT
+        accessControlAllowOriginListRegex:
+          - "http://localhost(.*)"
+          - "http(s)?://(.*)traefik.me(.*)"
+        accessControlAllowHeaders:
+          - "*"
+        accessControlAllowCredentials: true
+        accessControlMaxAge: 100
+        addVaryHeader: true

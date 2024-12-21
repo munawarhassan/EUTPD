@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:configuration xmlns:db="http://domibus.eu/configuration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://domibus.eu/configuration domibus-pmode.xsd"
+  party="EUCEG_EC">
+  <mpcs>
+    <mpc name="defaultMpc"
+      qualifiedName="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/defaultMPC"
+      enabled="true" default="true" retention_downloaded="0" retention_undownloaded="14400"
+      retention_sent="14400"
+      delete_message_metadata="false" max_batch_delete="1000" />
+  </mpcs>
+  <businessProcesses>
+    <roles>
+      <role name="defaultInitiatorRole"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/initiator" />
+      <role name="defaultResponderRole"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/responder" />
+    </roles>
+    <parties>
+      <partyIdTypes>
+        <partyIdType name="partyTypeUrn"
+          value="urn:oasis:names:tc:ebcore:partyid-type:unregistered:EUCEG" />
+      </partyIdTypes>
+      <party name="EUCEG_EC" endpoint="http://domibus-red:8080/services/msh" allowChunking="false">
+        <identifier partyId="EUCEG_EC" partyIdType="partyTypeUrn" />
+      </party>
+      <party name="ACC-EUCEG-99962-AS4" endpoint="http://domibus-blue:8080/services/msh"
+        allowChunking="false">
+        <identifier partyId="ACC-EUCEG-99962-AS4" partyIdType="partyTypeUrn" />
+      </party>
+    </parties>
+    <meps>
+      <mep name="oneway"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/oneWay" />
+      <binding name="push"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/push" />
+      <binding name="pull"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/pull" />
+    </meps>
+    <properties>
+      <property name="originalSenderProperty" key="originalSender" datatype="string" required="true" />
+      <property name="finalRecipientProperty" key="finalRecipient" datatype="string" required="true" />
+      <propertySet name="eDeliveryPropertySet">
+        <propertyRef property="finalRecipientProperty" />
+        <propertyRef property="originalSenderProperty" />
+      </propertySet>
+    </properties>
+    <payloadProfiles>
+      <payload name="businessContentPayload" cid="cid:message" required="true"
+        mimeType="application/xml" />
+      <payload name="businessContentPayloadXml" cid="cid:message" required="true"
+        mimeType="text/xml" />
+      <payload name="businessContentAttachment" cid="cid:attachment" required="false"
+        mimeType="application/octet-stream" />
+      <payloadProfile name="MessageProfile" maxSize="2147483647">
+        <attachment name="businessContentPayload" />
+        <attachment name="businessContentAttachment" />
+      </payloadProfile>
+      <payloadProfile name="MessageProfileTest" maxSize="2147483647">
+        <attachment name="businessContentPayloadXml" />
+        <attachment name="businessContentAttachment" />
+      </payloadProfile>
+    </payloadProfiles>
+    <securities>
+      <security name="eDeliveryAS4Policy" policy="eDeliveryAS4Policy.xml"
+        signatureMethod="RSA_SHA256" />
+    </securities>
+    <errorHandlings>
+      <errorHandling name="defaultErrorHandling" errorAsResponse="true"
+        businessErrorNotifyProducer="true"
+        businessErrorNotifyConsumer="true" deliveryFailureNotifyProducer="true" />
+    </errorHandlings>
+    <agreements>
+      <agreement name="agreementEmpty" value="" type="" />
+    </agreements>
+    <services>
+      <service name="euCegESens"
+        value="http://ec.europa.eu/e-delivery/services/tobacco-ecig-reporting"
+        type="e-delivery" />
+      <service name="testService1" value="bdx:noprocess" type="tc1" />
+      <service name="testService"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/service" />
+    </services>
+    <actions>
+      <action name="submitRequest" value="SubmitRequest" />
+      <action name="submitResponse" value="SubmitResponse" />
+      <action name="tc1Action" value="TC1Leg1" />
+      <action name="testAction"
+        value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/test" />
+    </actions>
+    <as4>
+      <receptionAwareness name="receptionAwareness" retry="5;5;CONSTANT" duplicateDetection="true" />
+      <receptionAwareness name="receptionAwarenessTest" retry="0;0;SEND_ONCE"
+        duplicateDetection="true" />
+      <reliability name="AS4Reliability" nonRepudiation="true" replyPattern="response" />
+      <reliability name="noReliability" nonRepudiation="false" replyPattern="response" />
+    </as4>
+    <legConfigurations>
+      <legConfiguration name="euCegESenssubmitRequest" service="euCegESens" action="submitRequest"
+        defaultMpc="defaultMpc" reliability="AS4Reliability" security="eDeliveryAS4Policy"
+        receptionAwareness="receptionAwareness" propertySet="eDeliveryPropertySet"
+        payloadProfile="MessageProfile"
+        errorHandling="defaultErrorHandling" compressPayloads="true"></legConfiguration>
+      <legConfiguration name="euCegESenssubmitResponse" service="euCegESens" action="submitResponse"
+        defaultMpc="defaultMpc" reliability="AS4Reliability" security="eDeliveryAS4Policy"
+        receptionAwareness="receptionAwareness" propertySet="eDeliveryPropertySet"
+        payloadProfile="MessageProfile"
+        errorHandling="defaultErrorHandling" compressPayloads="true"></legConfiguration>
+      <legConfiguration name="testServiceCase" service="testService" action="testAction"
+        defaultMpc="defaultMpc" reliability="AS4Reliability" security="eDeliveryAS4Policy"
+        receptionAwareness="receptionAwarenessTest" propertySet="eDeliveryPropertySet"
+        payloadProfile="MessageProfileTest"
+        errorHandling="defaultErrorHandling" compressPayloads="true" />
+      <legConfiguration name="pushTestcase1tc1Action" service="testService1" action="tc1Action"
+        defaultMpc="defaultMpc" reliability="AS4Reliability" security="eDeliveryAS4Policy"
+        receptionAwareness="receptionAwareness" propertySet="eDeliveryPropertySet"
+        payloadProfile="MessageProfileTest" errorHandling="defaultErrorHandling"
+        compressPayloads="true" />
+    </legConfigurations>
+    <process
+      name="euCegProcess" agreement="agreementEmpty" mep="oneway" binding="push"
+      initiatorRole="defaultInitiatorRole" responderRole="defaultResponderRole">
+      <initiatorParties>
+        <initiatorParty name="EUCEG_EC" />
+        <initiatorParty name="ACC-EUCEG-99962-AS4" />
+      </initiatorParties>
+      <responderParties>
+        <responderParty name="ACC-EUCEG-99962-AS4" />
+        <responderParty name="EUCEG_EC" />
+      </responderParties>
+      <legs>
+        <leg name="euCegESenssubmitRequest" />
+        <leg name="euCegESenssubmitResponse" />
+      </legs>
+    </process>
+    <process name="tc1Process"
+      mep="oneway" binding="push" initiatorRole="defaultInitiatorRole"
+      responderRole="defaultResponderRole">
+      <initiatorParties>
+        <initiatorParty name="EUCEG_EC" />
+        <initiatorParty name="ACC-EUCEG-99962-AS4" />
+      </initiatorParties>
+      <responderParties>
+        <responderParty name="ACC-EUCEG-99962-AS4" />
+        <responderParty name="EUCEG_EC" />
+      </responderParties>
+      <legs>
+        <leg name="testServiceCase" />
+        <leg name="pushTestcase1tc1Action" />
+      </legs>
+    </process>
+  </businessProcesses>
+</db:configuration>

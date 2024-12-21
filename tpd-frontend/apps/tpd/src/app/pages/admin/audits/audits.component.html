@@ -1,0 +1,242 @@
+<lt-toolbar> </lt-toolbar>
+<app-audit-timeline [range]="range" [channels]="channels" [auditItemTemplate]="AuditItemTemplate"></app-audit-timeline>
+
+<ng-template #AuditItemTemplate let-audit>
+  <ng-container [ngSwitch]="audit.action">
+    <ng-container
+      *ngSwitchCase="'UserCreatedEvent'"
+      [ngTemplateOutlet]="UserCreatedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'UserDeletedEvent'"
+      [ngTemplateOutlet]="UserDeletedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GroupMemberAddedEvent'"
+      [ngTemplateOutlet]="GroupMemberAddedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GroupMemberRemovedEvent'"
+      [ngTemplateOutlet]="GroupMemberRemovedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'AuthenticationSuccessEvent'"
+      [ngTemplateOutlet]="AuthenticationSuccessEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'AuthenticationFailureEvent'"
+      [ngTemplateOutlet]="AuthenticationFailureEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GroupCreatedEvent'"
+      [ngTemplateOutlet]="GroupCreatedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GroupDeletedEvent'"
+      [ngTemplateOutlet]="GroupDeletedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'ApplicationConfigurationChangedEvent'"
+      [ngTemplateOutlet]="ApplicationConfigurationChangedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GlobalPermissionGrantedEvent'"
+      [ngTemplateOutlet]="GlobalPermissionGrantedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GlobalPermissionModifiedEvent'"
+      [ngTemplateOutlet]="GlobalPermissionModifiedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'GlobalPermissionRevokedEvent'"
+      [ngTemplateOutlet]="GlobalPermissionRevokedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #UserCreatedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Simple.communication.addUser" state="created" color="success" [audit]="audit">
+    <timeline-title>
+      <span>
+        The user <strong>{{ audit.data.user }}</strong> has been created.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #UserDeletedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Simple.communication.deleteUser" state="deleted" color="primary" [audit]="audit">
+    <timeline-title>
+      <span>
+        The user <strong>{{ audit.data.user }}</strong> has been deleted.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GroupMemberAddedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.shieldUser" state="added" color="success" [audit]="audit">
+    <timeline-title>
+      <span>
+        The user <strong>{{ audit.data.username }}</strong> has been added to
+        <div class="badge badge-light-primary badge-sm">{{ audit.data.group }}</div>
+        group.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GroupMemberRemovedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.shieldUser" state="removed" color="primary" [audit]="audit">
+    <timeline-title>
+      <span>
+        The user <strong>{{ audit.data.username }}</strong> has been Removed to
+        <div class="badge badge-light-primary badge-sm">{{ audit.data.group }}</div>
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #AuthenticationSuccessEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.tech.fingerprint" state="success" color="primary" [audit]="audit">
+    <timeline-title>
+      <span>
+        The user <strong>{{ audit.principal }}</strong> has successfully logged in.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #AuthenticationFailureEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.tech.fingerprint" state="failure" color="danger" [audit]="audit">
+    <timeline-title>
+      <span> A user has failed to logging in. </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GroupCreatedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Simple.communication.group" state="created" color="success" [audit]="audit">
+    <timeline-title>
+      <span>
+        The group <strong>{{ audit.data.group }}</strong> has been created.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GroupDeletedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Simple.communication.group" state="deleted" color="primary" [audit]="audit">
+    <timeline-title>
+      <span>
+        The group <strong>{{ audit.data.group }}</strong> has been deleted.
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #ApplicationConfigurationChangedEvent let-audit>
+  <app-timeline-item
+    [icon]="svgIcons.Duotone.general.switch"
+    [state]="audit.data.oldValue ? 'changed' : 'new'"
+    [color]="audit.data.oldValue ? 'info' : 'success'"
+    [audit]="audit"
+  >
+    <timeline-title>
+      <span>
+        The property <strong>{{ audit.data.property }}</strong> has
+        <ng-container *ngIf="audit.data.oldValue">
+          been changed from value '<span class="text-muted">{{
+            audit.data.oldValue ? audit.data.oldValue : '&lt;null&gt;'
+          }}</span
+          >' to new value '<span class="text-muted">{{
+            audit.data.newValue ? audit.data.newValue : '&lt;null&gt;'
+          }}</span
+          >'
+        </ng-container>
+        <ng-container *ngIf="!audit.data.oldValue">
+          new value '<span class="text-muted">{{ audit.data.newValue ? audit.data.newValue : '&lt;null&gt;' }}</span
+          >'
+        </ng-container>
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GlobalPermissionGrantedEvent let-audit>
+  <app-timeline-item
+    [icon]="audit.data.affectedUser ? svgIcons.Duotone.general.shieldUser : svgIcons.Duotone.general.shieldLock"
+    state="granted"
+    color="info"
+    [audit]="audit"
+  >
+    <timeline-title>
+      <span>
+        <ng-container *ngIf="audit.data.affectedUser">
+          The access of user <strong>{{ audit.data.affectedUser }}</strong> has been granted to
+          <div class="badge badge-secondary badge-sm">{{ audit.data.permission }}</div>
+          permission.
+        </ng-container>
+        <ng-container *ngIf="audit.data.affectedGroup">
+          The access of group <strong>{{ audit.data.affectedGroup }}</strong> has been granted to
+          <div class="badge badge-secondary badge-sm">{{ audit.data.permission }}</div>
+          permission.
+        </ng-container>
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GlobalPermissionModifiedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.shieldLock" state="granted" color="info" [audit]="audit">
+    <timeline-title>
+      <span>
+        <ng-container *ngIf="audit.data.affectedUser">
+          The access of user <strong>{{ audit.data.affectedUser }}</strong> has been changed from
+          <div class="badge badge-secondary badge-sm">{{ audit.data.oldPermission }}</div>
+          to
+          <div class="badge badge-secondary badge-sm">{{ audit.data.newPermission }}</div>
+          permission.
+        </ng-container>
+        <ng-container *ngIf="audit.data.affectedGroup">
+          The access of group <strong>{{ audit.data.affectedGroup }}</strong> has been changed from
+          <div class="badge badge-secondary badge-sm">{{ audit.data.oldPermission }}</div>
+          to
+          <div class="badge badge-secondary badge-sm">{{ audit.data.newPermission }}</div>
+          permission.
+        </ng-container>
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #GlobalPermissionRevokedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.shieldCross" state="revoked" color="primary" [audit]="audit">
+    <timeline-title>
+      <span>
+        <ng-container *ngIf="audit.data.affectedUser">
+          The access permission
+          <div class="badge badge-secondary badge-sm">{{ audit.data.permission }}</div>
+          of user <strong>{{ audit.data.affectedUser }}</strong> has been revoked.
+        </ng-container>
+        <ng-container *ngIf="audit.data.affectedGroup">
+          The access permission
+          <div class="badge badge-secondary badge-sm">{{ audit.data.permission }}</div>
+          of group <strong>{{ audit.data.affectedGroup }}</strong> has been revoked.
+        </ng-container>
+      </span>
+    </timeline-title>
+  </app-timeline-item>
+</ng-template>

@@ -1,0 +1,83 @@
+<event-config>
+    <event-levels>
+        <event-level key="fatal">
+            <!--
+                'fatal' means the Spring application context failed to start due to an unexpected error.
+                The following technologies are available for this level:
+                  * Java Servlet API
+                This level will almost certainly require a code level fix.
+            -->
+            <description>Fatal</description>
+        </event-level>
+        <event-level key="warning">
+            <!--
+                'warning' means the Spring application context has started but some part of the system is not
+                as expected.
+                Examples of this are:
+                  * Git binary not being available on the path
+                  * Home directory updated (and not yet processed)
+                The following technologies are available for this level:
+                  * Java Servlet API
+                  * Spring
+                  * I18n
+                  * Spring MVC
+                This level may be able to be resolved at runtime and will most likely some level of configuration changed.
+            -->
+            <description>Warning</description>
+        </event-level>
+        <event-level key="maintenance">
+            <!--
+                'maintenance' means the Spring application context has started but some part of the system is not
+                available due to a scheduled task.
+                Examples of this are:
+                  * Database migration
+                  * Backup / Restore
+                  * Reindexing of some form
+                The following technologies are available for this level:
+                  * Java Servlet API
+                  * Spring
+                  * I18n
+                  * Spring MVC
+                This level should be resolved at runtime automatically and requires no action from the user.
+            -->
+            <description>Maintenance</description>
+        </event-level>
+        <event-level key="system-maintenance">
+            <!--
+                'system-maintenance' means the Spring application context has started but a system administrator
+                has locked the system to perform maintenance. Multiple 'maintenance' level events may _also_ be
+                generated before the 'system-maintenance' event is removed.
+                Examples of this are:
+                  * Full system backups, including all repository data, created by an out-of-process helper
+                  * Arbitrary site maintenance scripted by customers for their specific installations
+                The following technologies are available for this level:
+                  * Java Servlet API
+                  * Spring
+                  * I18n
+                  * Spring MVC
+                  * Spring Security
+                  * Hibernate
+                  * ActiveObjects
+                This level should be resolved at runtime automatically and requires no action from the user.
+            -->
+            <description>System Maintenance</description>
+        </event-level>
+    </event-levels>
+    <event-types>
+        <event-type key="home-updated">
+            <description>The Home Directory has been updated</description>
+        </event-type>
+        <event-type key="performing-maintenance">
+            <description>The system is unavailable while maintenance is being performed</description>
+        </event-type>
+        <event-type key="database-unavailable">
+            <description>The database as configured is unavailable</description>
+        </event-type>
+    </event-types>
+    <error>
+        <path>/unavailable</path>
+    </error>
+    <setup>
+        <path>/setup</path>
+    </setup>
+</event-config>

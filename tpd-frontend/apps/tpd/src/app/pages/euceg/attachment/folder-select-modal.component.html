@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h4 class="modal-title">Move to Folder</h4>
+</div>
+<form [formGroup]="formControl" (ngSubmit)="close()">
+  <div class="modal-body">
+    <ng-container *ngIf="directories$ | async as directories">
+      <div class="tree fw-bold fs-6">
+        <ng-container
+          [ngTemplateOutlet]="menuItem"
+          [ngTemplateOutletContext]="{ $implicit: directories }"
+        ></ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" translate="global.button.save" class="btn btn-primary me-3"></button>
+    <a href="#" translate="global.button.cancel" class="link-primary me-3" (click)="cancel()"></a>
+  </div>
+</form>
+
+<ng-template #menuItem let-child>
+  <div class="tree-item" [class.disabled]="isDisabled(child)">
+    <div class="tree-row">
+      <div class="tree-check">
+        <div class="form-check form-check-custom form-check-solid">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="checkbox"
+            [checked]="selectedPath === child.path ? 'checked' : ''"
+            (change)="handleChecked($event, child)"
+            [disabled]="isDisabled(child)"
+          />
+        </div>
+      </div>
+      <div class="tree-content">
+        <div class="tree-icon">
+          <inline-svg size="3x" [src]="svgIcons.Duotone.files.folder"></inline-svg>
+        </div>
+        <div class="tree-title">{{ child.name === '' ? 'File Storage' : child.name }}</div>
+        <div *ngIf="child.path === currentItem?.parentPath" class="text-danger opacity-75 ms-4">(Current)</div>
+      </div>
+    </div>
+    <div class="tree-sub" *ngFor="let achild of child.children">
+      <ng-container [ngTemplateOutlet]="menuItem" [ngTemplateOutletContext]="{ $implicit: achild }"></ng-container>
+    </div>
+  </div>
+</ng-template>

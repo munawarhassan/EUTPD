@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+  <changeSet author="devacfr" context="production" id="1644224564556-13">
+    <createTable tableName="t_product_attachment">
+      <column name="product_number" type="VARCHAR(255)">
+        <constraints nullable="false" primaryKey="true" />
+      </column>
+      <column name="attachmentId" type="VARCHAR(80)">
+        <constraints nullable="false" primaryKey="true" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1644224564556-16">
+    <addForeignKeyConstraint baseColumnNames="product_number" baseTableName="t_product_attachment"
+      constraintName="fkgk0rck0whfa3p94lxe4v069sp" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="product_number" referencedTableName="t_product" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="164422456455-7">
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.NormalizeAttachedAttachement" />
+  </changeSet>
+</databaseChangeLog>

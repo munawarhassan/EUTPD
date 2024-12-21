@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.3.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+  <changeSet author="devacfr" context="production" id="add-submitter-status-1617787303580-13">
+    <addColumn tableName="t_submitter">
+      <column name="submitter_status" type="varchar(50)" value="SENT">
+        <constraints nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet  author="devacfr" context="production" id="add-submitter-status-1617865058792-1">
+    <addNotNullConstraint columnDataType="varchar(50)" columnName="submitter_status"
+      tableName="t_submitter" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-submitter-status-1617787303580-14">
+    <addColumn tableName="t_submitter_aud">
+      <column name="submitter_status" type="varchar(50)" />
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

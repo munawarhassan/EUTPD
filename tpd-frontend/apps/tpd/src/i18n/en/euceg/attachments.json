@@ -1,0 +1,30 @@
+{
+  "attachments": {
+    "title": "Attachments",
+    "list": {
+      "fields": {
+        "filename": "File Name",
+        "confidential": "Confidential",
+        "status": "Status",
+        "size": "Size",
+        "action": "Action"
+      }
+    },
+    "view": {
+      "title": "Attachment <strong class=\"ml-3\"><code class=\"bg-secondary p-2\">{{filename}}</code>",
+      "description": "Modify attachment details and submit"
+    },
+    "search": {
+      "placeholder": "Search Attachment..."
+    },
+    "revision": {
+      "title": "Revisions of Attachment <strong class=\"ml-3\"><code class=\"bg-secondary p-2\">{{fileName}}</code></strong>",
+      "version": "Version",
+      "filename": "File name",
+      "size": "Size",
+      "confidential": "Confidential",
+      "modifiedDate": "Modified",
+      "modifiedBy": "By"
+    }
+  }
+}

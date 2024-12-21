@@ -1,0 +1,74 @@
+<lt-table
+  id="m_submission_report_list"
+  [page]="page"
+  [pageable]="currentPageable"
+  [options]="tableOptions"
+  [lineTemplate]="lineTemplate"
+></lt-table>
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let report of page.content; trackBy: reportTrack">
+    <td data-header="name">
+      <a class="link" href="#" [securedLink]="report.url">
+        <span class="svg-original svg-icon-1 me-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+        <span>{{ report.name }}</span>
+      </a>
+    </td>
+    <td data-header="username" class="text-center">
+      <span class="symbol symbol-circle symbol-35px" [ltTooltip]="report.username" placement="top">
+        <img [avatarUrl]="report.username" />
+      </span>
+    </td>
+    <td data-header="modified">
+      {{ report.modified | date }}
+    </td>
+    <td data-header="type">
+      {{ report.type }}
+    </td>
+    <td class="text-end text-nowrap">
+      <div class="d-flex justify-content-end">
+        <div class="ms-2">
+          <!--begin::Button Options-->
+          <button
+            type="button"
+            class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2 show menu-dropdown"
+            data-lt-menu-trigger="click"
+            data-lt-menu-attach="parent"
+            data-lt-menu-placement="bottom-end"
+          >
+            <inline-svg class="m-0" [src]="svgIcons.Duotone.general.otherHorizontal" size="1"></inline-svg>
+          </button>
+          <!--begin::Menu-->
+          <div
+            ltMenu
+            [options]="{ overflow: false }"
+            class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+          >
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" [securedLink]="report.url" class="menu-link px-3">
+                <span class="menu-icon">
+                  <inline-svg [src]="svgIcons.Duotone.files.folderDownload" size="1" color="gray-600"></inline-svg>
+                </span>
+                <span class="menu-title text-gray-600">Download</span>
+              </a>
+            </div>
+            <!--end::Menu item-->
+            <div class="separator my-3"></div>
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" (click)="deleteReport(report.name)" class="menu-link px-3">
+                <span class="menu-icon">
+                  <inline-svg [src]="svgIcons.Duotone.general.trash" size="1" [color]="'danger'"></inline-svg>
+                </span>
+                <span class="menu-title text-danger">Delete</span>
+              </a>
+            </div>
+            <!--end::Menu item-->
+          </div>
+          <!--end::Menu-->
+          <!--end::Button Options-->
+        </div>
+      </div>
+    </td>
+  </tr>
+</ng-template>

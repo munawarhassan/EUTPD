@@ -1,0 +1,1369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:annox="http://annox.dev.java.net" elementFormDefault="qualified"
+	jaxb:version="2.1" jaxb:extensionBindingPrefixes="xjc annox">
+
+	<xs:include schemaLocation="products.xsd" />
+
+	<xs:complexType name="TobaccoProduct">
+		<xs:annotation>
+			<xs:documentation>Defines a tobacco product.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:bindings
+					node="//xs:element[@name='CigaretteSpecific']">
+					<annox:annotate target="field">
+						<annox:annotate
+							annox:class="org.eclipse.persistence.oxm.annotations.XmlNullPolicy"
+							emptyNodeRepresentsNull="true" />
+					</annox:annotate>
+				</jaxb:bindings>
+				<jaxb:bindings
+                    node="//xs:element[@name='SmokelessSpecific']">
+                    <annox:annotate target="field">
+                        <annox:annotate
+                            annox:class="org.eclipse.persistence.oxm.annotations.XmlNullPolicy"
+                            emptyNodeRepresentsNull="true" />
+                    </annox:annotate>
+                </jaxb:bindings>
+                <jaxb:bindings
+                    node="//xs:element[@name='RyoPipeSpecific']">
+                    <annox:annotate target="field">
+                        <annox:annotate
+                            annox:class="org.eclipse.persistence.oxm.annotations.XmlNullPolicy"
+                            emptyNodeRepresentsNull="true" />
+                    </annox:annotate>
+                </jaxb:bindings>
+                <jaxb:bindings
+                    node="//xs:element[@name='NovelSpecific']">
+                    <annox:annotate target="field">
+                        <annox:annotate
+                            annox:class="org.eclipse.persistence.oxm.annotations.XmlNullPolicy"
+                            emptyNodeRepresentsNull="true" />
+                    </annox:annotate>
+                </jaxb:bindings>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Product">
+				<xs:sequence>
+					<xs:element name="ProductType" type="TobaccoProductType">
+						<xs:annotation>
+							<xs:documentation>The product type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Length" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The average length of the product unit in mm.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Diameter" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The average diameter (measured at the point with maximal diameter) of the product unit in
+								mm.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Weight" type="Double">
+						<xs:annotation>
+                            <xs:documentation>The weight of one product unit, including the specified moisture, in mg.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="TobaccoWeight" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The total weight of the tobacco in one product in mg. Remark: a unit of product is one cigar,
+                                one cigarillo, one cigarette, one pouch/bit, etc. of SLT. One unit for all loose products is 1 g including
+                                the moisture content and expressed in mg.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="Filter" type="BooleanNullable" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>Indicates the existence of a filter in the product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="FilterLength" type="Integer" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The length of the product filter in mm.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TechnicalFiles" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The technical document(s) setting out a general description of the additives used and their
+								properties.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Presentations">
+						<xs:annotation>
+                            <xs:documentation>Description of the format(s) and Member State(s) in which the product is presented for sale.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Presentation" type="TobaccoPresentation" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="TobaccoIngredients" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The tobacco ingredients defined by leaf cure method, leaf type and part type used in the
+								product.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="TobaccoIngredient" type="TobaccoIngredient" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OtherIngredientsExist" type="Boolean">
+						<xs:annotation>
+                            <xs:documentation>Indication whether other ingredients exist.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OtherIngredients" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The other ingredient means an additive, as well as any substance or element present in a
+                                finished tobacco product or related products, including paper, filter, ink, capsules and adhesives.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Ingredient" type="TobaccoOtherIngredient" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+                    <xs:element name="TncoEmission" type="TncoEmission" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The TNCO emission information.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="OtherEmissionsAvailable" type="Boolean">
+						<xs:annotation>
+                            <xs:documentation>The indication as to whether other emissions have been measured.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OtherEmissions" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The emissions of the product.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Emission" type="TobaccoEmission" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:choice minOccurs="0">
+                        <xs:element name="CigaretteSpecific" type="CigaretteSpecific">
+							<xs:annotation>
+                                <xs:documentation>The information on the cigarette filter.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+                        <xs:element name="SmokelessSpecific" type="SmokelessSpecific">
+							<xs:annotation>
+                                <xs:documentation>The information the smokeless product.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+                        <xs:element name="RyoPipeSpecific" type="RyoPipeSpecific" minOccurs="0">
+							<xs:annotation>
+                                <xs:documentation>The information on the roll your own tobacco and pipe tobacco products.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+                        <xs:element name="NovelSpecific" type="NovelSpecific" minOccurs="0">
+							<xs:annotation>
+                                <xs:documentation>The information on the product tobacco and pipe tobacco products.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="TobaccoProductType">
+		<xs:annotation>
+            <xs:documentation>Defines the tobacco product type.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="TobaccoProductTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the product type is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="TobaccoProductTypeEnum">
+		<xs:annotation>
+            <xs:documentation>The list of tobacco product types.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Cigarette</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CIGARETTE" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Cigar</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CIGAR" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Cigarillo</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CIGARILLO" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Roll your own tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ROLL_YOUR_OWN"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Pipe tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PIPE_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Waterpipe tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="WATERPIPE_TOBACCCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Oral tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ORAL_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Nasal tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NASAL_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Chewing tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CHEWING_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Herbal product for smoking</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="HERBAL_PRODUCT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Novel tobacco product</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NOVEL_TOBACCO_PRODUCT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Other tobacco product</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="OTHER" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="TobaccoPresentation">
+		<xs:annotation>
+            <xs:documentation>Defines a tobacco product presentation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Presentation">
+				<xs:sequence>
+					<xs:element name="PackageType" type="PackageType">
+						<xs:annotation>
+							<xs:documentation>The type of product package.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="PackageUnits" type="Integer" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The number of individual units in the unit packet.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="PackageNetWeight" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The net weight of one unit packet in g.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="HasOtherMarketData" type="BooleanNullable">
+						<xs:annotation>
+                            <xs:documentation>Indication whether the product other market has data. If no, the "Other_Market_Data" field is
+								not applicable.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="OtherMarketData" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The supplementary market data available to the submitter. To be updated in case new data
+								become available.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="UnitPacketPictureFiles" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The picture of the unit packet. The picture must be clear enough to view details and to assist
+                                in the identification of unique products.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="AnnualSalesDataList" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The supplementary market data available to the submitter. To be updated in case new data
+								become available.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="AnnualSalesData" type="TobaccoAnnualSalesData" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PackageType">
+		<xs:annotation>
+            <xs:documentation>Defines the package type of the product.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PackageTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the package type is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="PackageTypeEnum">
+		<xs:annotation>
+			<xs:documentation>The list of package types.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Flip top box, square corner</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FLIP_TOP_BOX_SQUARE_CORNER"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+                    <xs:documentation>Flip top box, bevel corner/octagonal</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FLIP_TOP_BOX_BEVEL_CORNER"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Flip top box, rounded corner</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FLIP_TOP_BOX_ROUNDED_CORNER"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Shoulder hinged box</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SHOULDER_HINGED_BOX"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Soft pack</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="SOFT_PACK" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Pouch with flap</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="POUCH_WITH_FLAP"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Bucket (Cylindrical or cuboid)</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="BUCKET" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Cuboid can</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CUBOID_CAN" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Block/Foil pack</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="BLOCK_PACK" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Cylinder card/can</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CYLINDER_CARD"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Standing pouch</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="STANDING_POUCH"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Folding box</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FOLDING_BOX"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Carton box</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CARTON_BOX" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Hinged box</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="HINGED_BOX" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Hinged tin</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="HINGED_TIN" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Flip top pack</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FLIP_TOP_PACK"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Single tube tin</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SINGLE_TUBE_TIN"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Bundle</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="BUNDLE" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>Multi cigar tube</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="MULTI_CIGAR_TUBE"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Cylinder tin</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CYLINDER_TIN"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Round tin</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="ROUND_TIN" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Standing pouch roll-fold</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="STANDING_POUCH_ROLL_FOLD"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>Slide lid box</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SLIDE_LID_BOX"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24">
+				<xs:annotation>
+					<xs:documentation>Flow wrap</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="FLOW_WRAP" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="25">
+				<xs:annotation>
+					<xs:documentation>Folding pouch</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FOLDING_POUCH"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>Shell/Hull and Slide box</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="SLIDE_BOX" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="27">
+				<xs:annotation>
+					<xs:documentation>Multi-pack display</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="MULTI_PACK" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="28">
+				<xs:annotation>
+					<xs:documentation>Plastic Container</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PLASTIC_CONTAINER"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="TobaccoAnnualSalesData">
+		<xs:annotation>
+            <xs:documentation>Defines an annual sales data for tobacco product.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AnnualSalesData">
+				<xs:sequence>
+                    <xs:element name="MaximumSalesPrice" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The maximum sales price of the product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="TobaccoIngredient">
+		<xs:annotation>
+            <xs:documentation>Defines a tobacco product ingredient.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PartType" type="PartType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of tobacco part.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="PartTypeOther" type="String100" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The name of the tobacco part type if "Other".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LeafType" type="LeafType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of tobacco leaf used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="LeafTypeOther" type="String100" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The name or description of the tobacco leaf type if "Other" or "Unspecified".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="LeafCureMethod" type="LeafCureMethod"  minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The method used to cure the tobacco leaf.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="LeafCureMethodOther" type="String100" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The name or description of the cure method used if "Other".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantity" type="Double">
+				<xs:annotation>
+                    <xs:documentation>The weight per product unit in mg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PartDescriptionFiles" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The general description of the manufactured part type in the recipe. The description must provide
+                        detailed information on the quantitative and qualitative composition of the manufactured tobacco.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Suppliers" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The general description of the manufactured part type in the recipe. The description must provide
+                        detailed information on the quantitative and qualitative composition of the manufactured tobacco.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+                        <xs:element name="Supplier" type="Company" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PartType">
+		<xs:annotation>
+			<xs:documentation>Defines the tobacco part type.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PartTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the part type is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="PartTypeEnum">
+		<xs:annotation>
+			<xs:documentation>The list of tobacco part types.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Tobacco leaf</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TOBACCO_LEAF"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Manufactured – Cut stems</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="CUT_STEMS" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+                    <xs:documentation>Manufactured - Reconstituted tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="RECONSTITUTED_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+                    <xs:documentation>Manufactured - Expanded tobacco</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="EXPANDED_TOBACCO"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Other/Unspecified</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="OTHER" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="LeafType">
+		<xs:annotation>
+			<xs:documentation>Defines the tobacco leaf type.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LeafTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the leaf type is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="LeafTypeEnum">
+		<xs:annotation>
+			<xs:documentation>The list of tobacco leafs.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Virginia</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="VIRGINIA" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Burley</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="BURLEY" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Oriental</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="ORIENTAL" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Maryland</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="MARYLAND" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Kentucky</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="KENTUCKY" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Dark</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="DARK" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="OTHER" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+                    <xs:documentation>Unspecified (less than 30% is identifiable to one leaf type)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UNSPECIFIED"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="LeafCureMethod">
+		<xs:annotation>
+            <xs:documentation>Defines the tobacco leaf cure method.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LeafCureMethodEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the tobacco leaf cure method is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="LeafCureMethodEnum">
+		<xs:annotation>
+            <xs:documentation>The list of tobacco leaf cure methods</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Air</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="AIR" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Fire</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="FIRE" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Steam</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="STEAM" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Sun</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="SUN" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Flue</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="FLUE" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Other</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="OTHER" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="TobaccoOtherIngredient">
+		<xs:annotation>
+            <xs:documentation>Defines an ingredient for tobacco product.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Ingredient">
+				<xs:sequence>
+					<xs:element name="Category" type="IngredientCategory">
+						<xs:annotation>
+                            <xs:documentation>The category of product component.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="CategoryOther" type="String100" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The category of the product component if "Other".</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="QuantityFluctuate" type="BooleanNullable">
+						<xs:annotation>
+                            <xs:documentation>Indicates if the ingredient quantity fluctuates across production batches.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="RecipeRangeMinLevel" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The indication of the lowest range in weight (mg) of the ingredient in one product unit
+                                according to recipe, if the declared quantity fluctuates in order to adjust for the natural variations of
+								the tobacco leaf.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="RecipeRangeMaxLevel" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The indication of the highest range in weight (mg) of the additive in one product unit
+                                according to recipe, if the declared quantity fluctuates in order to adjust for the natural variations of
+								the tobacco leaf.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="MeasuredMeanQuantity" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The mean weight of the ingredient in mg that was actually added per product unit during the
+                                reporting period calculated as the average of the quantities of that ingredient added to each produced
+								standardised batch.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="MeasuredSd" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The statistically derived standard deviation of the mean quantity of ingredient added per
+                                product unit within each standardised batch.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="MeasuredMinLevel" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The measured (actual) lower value of the quantity of that ingredient added to one unit of the
+                                product within each standardized batch during the previous reporting period. This corresponds with the
+								minimal value recorded.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="MeasuredMaxLevel" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The measured upper value of the weight quantity of that ingredient included during the
+                                previous reporting period. This corresponds with the maximal value recorded during the previous reporting
+								period.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="MeasuredNumber" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The number of measurements considered.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="PriorityAdditive" type="BooleanNullable">
+						<xs:annotation>
+                            <xs:documentation>Indicates if the ingredient is part of the priority list established pursuant to Article 6 of
+                                Directive 2014/40/EU.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PriorityAdditiveFiles" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The copies of the report(s) which shall include an executive summary, and a comprehensive
+                                overview compiling the available scientific literature on that additive and summarising internal data on the
+								effects of the additive.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+                                <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IngredientCategory">
+		<xs:annotation>
+            <xs:documentation>Defines the category of an ingredient.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="IngredientCategoryEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+					<xs:annotation>
+                        <xs:documentation>Indicates whether or not the ingredient category is confidential.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="IngredientCategoryEnum">
+		<xs:annotation>
+            <xs:documentation>The list of ingredient categories.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:typesafeEnumClass />
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Tobacco (burnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TOBACCO_BURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Tobacco (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TOBACCO_UNBURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Paper (burnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PAPER_BURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Side seam adhesive (burnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="SIDE_SEAM_ADHESIVE"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+                    <xs:documentation>Inks used on cigarette paper (burnt)</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="INKS" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Filtration material (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILTRATION_MATERIAL"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Filter overwrap (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILTER_OVERWRAP"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Filter adhesive (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FILTER_ADHESIVE"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+                    <xs:documentation>Tipping paper and tipping paper inks (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TIPPING_PAPER"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Adhesive (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ADHESIVE_UNBURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Adhesive (burnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ADHESIVE_BURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Tips (unburnt)</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="TIPS" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Pouch material (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="POUCH_MATERIAL"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Paper (unburnt)</xs:documentation>
+					<xs:appinfo>
+                        <jaxb:typesafeEnumMember name="PAPER_UNBURNT"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Other (unburnt)</xs:documentation>
+					<xs:appinfo>
+						<jaxb:typesafeEnumMember name="OTHER" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="TncoEmission">
+		<xs:annotation>
+			<xs:documentation>Defines a TNCO emission.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Tar" type="Double" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The tar yield according to the ISO standard 4387 with the accuracy measurements determined in
+                        accordance with ISO standard 8243.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nicotine" type="Double" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The nicotine yield according to the ISO standard 10315 with the accuracy measurements determined in
+                        accordance with ISO standard 8243.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Co" type="Double" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The carbon monoxide yield according to the ISO standard 8454 with the accuracy measurements determined
+                        in accordance with ISO standard 8243.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Laboratories" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The identification of the laboratory/laboratories used to measure emissions of tar, nicotine and
+						carbon monoxide.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+                        <xs:element name="Laboratory" type="String500" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TobaccoEmission">
+		<xs:annotation>
+            <xs:documentation>Defines a tobacco product emission.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Emission">
+				<xs:sequence>
+					<xs:element name="Name" type="String100" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The chemical name of the emission(s) produced during the testing of the product.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CigaretteSpecific">
+		<xs:annotation>
+            <xs:documentation>Defines the specific information for cigarette products.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CharacterisingFlavour" type="Boolean">
+				<xs:annotation>
+                    <xs:documentation>The classification of the cigarette as having a characterising flavour as referred to in Article 7(14)
+                        of Directive 2014/40/EU.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="FilterVentilation" type="Percentage" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The total ventilation of the filter (0-100%).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="FilterDropPressureClosed" type="Double"  minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The drop of pressure with closed vents (mmH2O).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="FilterDropPressureOpen" type="Double"  minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The drop of pressure with open vents (mmH2O).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SmokelessSpecific">
+		<xs:annotation>
+            <xs:documentation>Defines the specific information for smokeless products.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="RyoPipeSpecific">
+				<xs:sequence>
+					<xs:element name="Ph" type="Double">
+						<xs:annotation>
+							<xs:documentation>The pH of the product.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="TotalMoisture" type="Double" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The total moisture of the product per product unit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+                    <xs:element name="AnalysisMethods" type="String300" minOccurs="0">
+						<xs:annotation>
+                            <xs:documentation>The brief Text description of the methods used to measure the above variables including
+                                references to more detailed information on the approach.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="RyoPipeSpecific">
+		<xs:annotation>
+            <xs:documentation>Defines specific information for Roll-your-own / Pipe products.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TotalNicotineContent" type="Double">
+				<xs:annotation>
+                    <xs:documentation>The total nicotine content of the product per product unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="UnionisedNicotineContent" type="Double" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The unionised nicotine content of the product per product unit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NovelSpecific">
+		<xs:annotation>
+            <xs:documentation>Defines specific information for novel tobacco product.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+            <xs:element name="DetailsDescriptionFile" type="AttachmentRef" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>A PDF file describing the available scientific studies on toxicity, addictiveness and attractiveness
+                        of the novel tobacco product, in particular as regards its ingredients and emissions.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="UseInstructionsFile" type="AttachmentRef" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>A PDF file describing the available studies, executive summaries thereof and market research on the
+                        preferences of various consumer groups, including young people and current smokers.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="RiskBenefitFile" type="AttachmentRef" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>The pdf file describing the other available and relevant information, including a risk/benefit
+                        analysis of the product, its expected effects on cessation of tobacco consumption, its expected effects on
+                        initiation of tobacco consumption and predicted consumer perception.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StudyFiles" minOccurs="0">
+				<xs:annotation>
+                    <xs:documentation>Other available studies/information as provided for under Article 19 of the TPD and not submitted in
+                        other sections.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+                        <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

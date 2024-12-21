@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+        "java.configuration.updateBuildConfiguration": "interactive",
+        "java.autobuild.enabled":false,
+        "java.format.settings.url": "./eclipse/java-code-style-formatter.xml",
+		"liveServer.settings.multiRootWorkspaceName": "tpd",
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		},
+		"git.ignoreLimitWarning": true,
+		"maven.view": "hierarchical",
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+  <changeSet author="devacfr" id="1594877406722-13">
+  <comment>Add channel table to audit</comment>
+    <createTable tableName="t_audit_event_channel">
+      <column name="event_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="channel_value" type="VARCHAR(255)" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" id="1594877406722-16">
+    <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="t_audit_event_channel"
+      constraintName="FK64e75bn528o02ahfacj4269r" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="event_id" referencedTableName="t_audit_event" validate="true" />
+  </changeSet>
+</databaseChangeLog>

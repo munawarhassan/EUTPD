@@ -1,0 +1,47 @@
+
+.git
+.github
+coverage
+.gitignore
+.gitattributes
+
+# OS generated files #
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# maven #
+pom.xml
+README.md
+
+# Node Files #
+node/
+node_modules
+npm-debug.log
+npm-debug.log.*
+
+# Dist #
+.awcache
+.webpack.json
+compiled
+dll
+
+# IDE #
+.idea
+*.swp
+.vscode
+*.code-workspace
+
+# Angular #
+*.ngfactory.ts
+*.css.shim.ts
+*.ngsummary.json
+*.shim.ngstyle.ts
+.angular/
+
+# project #
+dist
+target/
+src/
+tmp/

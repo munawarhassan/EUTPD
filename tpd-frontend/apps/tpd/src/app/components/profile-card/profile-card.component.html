@@ -1,0 +1,70 @@
+<div class="card-user-header d-flex align-items-start mb-4">
+  <div class="symbol symbol-lg-100px symbol-md-70px">
+    <img id="m-profile-avatar-image" alt="avatar" />
+    <div
+      *ngIf="chatEnable"
+      class="
+        bg-success
+        border border-4 border-white
+        h-20px
+        position-absolute
+        rounded-circle
+        start-100
+        top-0
+        translate-middle
+        w-20px
+      "
+    ></div>
+  </div>
+  <div
+    id="m-profile-avatar-badge"
+    class="d-none badge badge-primary badge-rounded d-flex flex-center fs-4hx p-0 text-uppercase"
+  >
+    {{ user?.displayName | firstLetter }}
+  </div>
+  <div class="card-user-content">
+    <div class="section">
+      <span id="m_user_displayname_label" class="username">
+        {{ user?.displayName }}
+      </span>
+      <span class="badge badge-light-success fw-bolder py-1">{{ highestPermission }}</span>
+    </div>
+  </div>
+</div>
+<div *ngIf="chatEnable" class="card-user-action justify-content-center d-flex">
+  <button type="button" class="btn btn-primary btn-sm me-3">chat</button>
+  <button type="button" class="btn btn-success btn-sm">follow</button>
+</div>
+<div class="card-user-body">
+  <div class="card-user-content">
+    <div *ngIf="user?.email" class="info">
+      <div>
+        <inline-svg
+          class="me-2"
+          [src]="svgIcons.Duotone.communication.envelopClose"
+          size="3"
+          color="gray-500"
+        ></inline-svg>
+        <span class="label" translate="global.form.email"></span>
+      </div>
+      <a id="m_user_email_label" href="#" class="data">{{ user?.email }}</a>
+    </div>
+    <div *ngIf="user?.contactPhone" class="info">
+      <div>
+        <inline-svg class="me-2" [src]="svgIcons.Simple.communication.call" size="2" color="gray-500"></inline-svg>
+        <span class="label" translate="global.form.phone"></span>
+      </div>
+      <a href="#" class="data">{{ user?.contactPhone }}</a>
+    </div>
+    <div *ngIf="user?.officeLocation" class="info">
+      <div>
+        <inline-svg class="me-2" [src]="svgIcons.Duotone.general.markerMap" size="2" color="gray-500"></inline-svg>
+        <span class="label" translate="global.form.location"></span>
+      </div>
+      <span class="data">{{ user?.officeLocation }}</span>
+    </div>
+  </div>
+  <div class="card-user-items">
+    <ng-content></ng-content>
+  </div>
+</div>

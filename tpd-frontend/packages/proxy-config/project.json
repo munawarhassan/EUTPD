@@ -1,0 +1,61 @@
+{
+  "name": "proxy-config",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/proxy-config/src",
+  "projectType": "library",
+  "targets": {
+    "build-base": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/proxy-config",
+        "tsConfig": "packages/proxy-config/tsconfig.lib.json",
+        "packageJson": "packages/proxy-config/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "main": "packages/proxy-config/src/index.ts",
+        "assets": [
+          "packages/proxy-config/*.md"
+        ]
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/packages/proxy-config"
+      ],
+      "options": {
+        "command": "node ./scripts/noop.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/proxy-config/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/packages/proxy-config"
+      ],
+      "options": {
+        "jestConfig": "packages/proxy-config/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "configurations": {
+      "ci": {
+        "ci": true,
+        "codeCoverage": true
+      }
+    }
+  },
+  "tags": []
+}

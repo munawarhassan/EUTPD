@@ -1,0 +1,58 @@
+<lt-portlet mode="bordered-semi">
+  <lt-portlet-head [icon]="svgIcons.Duotone.abstract.abs027" title="Thread"> </lt-portlet-head>
+  <lt-portlet-body>
+    <div class="row">
+      <!-- begin: col threads -->
+      <div class="col-md-12 col-lg-6 col-xl-4">
+        <!--begin: threads ≤∂widget-->
+        <div>
+          <div class="mb-4">
+            <lt-progress-bar>
+              <lt-progress-bar-item [value]="threads.runnable.percentage" color="success"> </lt-progress-bar-item>
+              <lt-progress-bar-item [value]="threads.waiting.percentage" color="primary"> </lt-progress-bar-item>
+              <lt-progress-bar-item [value]="threads.blocked.percentage" color="danger"> </lt-progress-bar-item>
+            </lt-progress-bar>
+            <span class="justify-content-end d-flex text-muted">{{ threads.count }}</span>
+          </div>
+          <div>
+            <div class="row mb-4">
+              <div class="col">
+                <div>
+                  <span>{{ threads.runnable.percentage }}%</span>
+                  <span>Runnable ({{ threads.runnable.count }})</span>
+                  <lt-progress-bar [value]="threads.runnable.percentage" size="sm" color="success"> </lt-progress-bar>
+                </div>
+              </div>
+              <div class="col">
+                <div>
+                  <span>{{ threads.waiting.percentage }}%</span>
+                  <span>Waiting ({{ threads.waiting.count }})</span>
+                  <lt-progress-bar [value]="threads.waiting.percentage" size="sm" color="primary"> </lt-progress-bar>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col">
+                <div>
+                  <span>{{ threads.blocked.percentage }}%</span>
+                  <span>Blocked ({{ threads.blocked.count }})</span>
+                  <lt-progress-bar [value]="threads.blocked.percentage" size="sm" color="danger"> </lt-progress-bar>
+                </div>
+              </div>
+              <div class="col">
+                <div>
+                  <span>{{ threads.free.percentage }}%</span>
+                  <span>Free ({{ threads.free.count }})</span>
+                  <lt-progress-bar [value]="threads.free.percentage" size="sm" color="gray-500"></lt-progress-bar>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end: Thread widget-->
+      </div>
+      <!-- end: col threads -->
+    </div>
+    <!-- end : row -->
+  </lt-portlet-body>
+</lt-portlet>

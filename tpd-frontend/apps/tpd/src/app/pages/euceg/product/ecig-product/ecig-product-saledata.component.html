@@ -1,0 +1,57 @@
+<div class="separator separator-dashed py-4"></div>
+<h4 class="my-4">Annual Sales Data</h4>
+<button *ngIf="!readonly" type="button" (click)="addSaledata()" class="btn btn-light-primary btn-sm mb-3">
+  <inline-svg class="m-0" [src]="svgIcons.Simple.code.plusCircle" size="1"></inline-svg>
+  Add Sale Data
+</button>
+<table class="table table-hover table-row-dashed table-sm align-middle g-1">
+  <thead>
+    <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+      <th scope="col">Year</th>
+      <th scope="col">Sales Volume</th>
+      <th class="text-center" scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let saledata of dataRows.saledata.content; index as $index; trackBy: trackedByYear">
+      <td scope="row">
+        <a href="#" class="m-link" (click)="updateSaledata(saledata)">{{ saledata.Year?.value }}</a>
+      </td>
+      <td>{{ saledata.SalesVolume?.value }}</td>
+      <td class="text-end">
+        <div class="d-flex justify-content-end">
+          <div>
+            <button
+              type="button"
+              (click)="updateSaledata(saledata)"
+              class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.general.visible" size="1"></inline-svg>
+            </button>
+            <button
+              [disabled]="readonly"
+              type="button"
+              (click)="removeSaledata(saledata)"
+              class="btn btn-sm btn-icon btn-light btn-active-light-danger"
+              ltTooltip="Remove"
+              placement="top"
+            >
+              <inline-svg class="m-0" [src]="svgIcons.Simple.code.minusCircle" size="1"></inline-svg>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <td colspan="3">
+      <lt-pagination
+        [page]="dataRows.saledata"
+        [maxSize]="5"
+        [boundaryLinks]="true"
+        (pageChanged)="dataRows.saledata.pageable = $event.pageable"
+      >
+      </lt-pagination>
+    </td>
+  </tfoot>
+</table>

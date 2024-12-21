@@ -1,0 +1,371 @@
+<lt-toolbar>
+  <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<lt-wizard
+  mode="aside"
+  (changeStep)="handleWizardChange()"
+  (completeWizard)="handleWizardComplete()"
+  [manualStepForward]="false"
+>
+  <!-- begin: Form Wizard Step   1 -->
+  <lt-wizard-step
+    (activate)="handleStep1Activate($event)"
+    title="1. Choose Operation"
+    [icon]="svgIcons.Simple.tools.swissKnife"
+    description="Choose the Operation you Wish to Perform"
+  >
+    <div class="d-flex flex-center">
+      <div>
+        <div class="row mb-4">
+          <div class="col">
+            <h3>
+              1. Choose the operation you wish to perform on
+              {{ selectedAll ? 'all' : 'the selected' + selectedProducts.length }} product(s)
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="d-flex flex-column">
+              <!--begin:Option-->
+              <input
+                id="m_operation_export_excel"
+                class="btn-check"
+                type="radio"
+                name="operation"
+                value="exportExcel"
+                [(ngModel)]="selectedOperation"
+              />
+              <label
+                for="m_operation_export_excel"
+                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex flex-stack mb-5 cursor-pointer"
+              >
+                <!--begin:Label-->
+                <span class="d-flex align-items-center me-2">
+                  <!--begin:Icon-->
+                  <span class="symbol symbol-50px me-6">
+                    <span class="symbol-label bg-light-primary">
+                      <inline-svg
+                        class="mx-0"
+                        [src]="svgIcons.Simple.files.upload"
+                        size="1"
+                        color="primary"
+                      ></inline-svg>
+                    </span>
+                  </span>
+                  <!--end:Icon-->
+                  <!--begin:Info-->
+                  <span class="d-flex flex-column align-items-start">
+                    <span class="fw-bolder fs-6">Export Excel</span>
+                    <span class="fs-7 text-muted">Export selected product(s) in one Excel File.</span>
+                  </span>
+                  <!--end:Info-->
+                </span>
+                <!--end:Label-->
+              </label>
+              <!--end::Option-->
+              <!--begin:Option-->
+              <input
+                id="m_operation_send_submission"
+                class="btn-check"
+                type="radio"
+                value="sendSubmission"
+                [(ngModel)]="selectedOperation"
+              />
+              <label
+                for="m_operation_send_submission"
+                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex flex-stack mb-5 cursor-pointer"
+              >
+                <!--begin:Label-->
+                <span class="d-flex align-items-center me-2">
+                  <!--begin:Icon-->
+                  <span class="symbol symbol-50px me-6">
+                    <span class="symbol-label bg-light-primary">
+                      <inline-svg class="mx-0" [src]="svgIcons.Simple.communication.send" size="1"></inline-svg>
+                    </span>
+                  </span>
+                  <!--end:Icon-->
+                  <!--begin:Info-->
+                  <span class="d-flex flex-column align-items-start">
+                    <span class="fw-bolder fs-6">Send Submission</span>
+                    <span class="fs-7 text-muted">Send Submission.</span>
+                  </span>
+                  <!--end:Info-->
+                </span>
+                <!--end:Label-->
+              </label>
+              <!--end::Option-->
+              <!--begin:Option-->
+              <input
+                id="m_operation_create_submission"
+                class="btn-check"
+                type="radio"
+                name="operation"
+                value="createSubmission"
+                [(ngModel)]="selectedOperation"
+              />
+              <label
+                for="m_operation_create_submission"
+                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex flex-stack mb-5 cursor-pointer"
+              >
+                <!--begin:Label-->
+                <span class="d-flex align-items-center me-2">
+                  <!--begin:Icon-->
+                  <span class="symbol symbol-50px me-6">
+                    <span class="symbol-label bg-light-primary">
+                      <inline-svg class="mx-0" [src]="svgIcons.Simple.communication.incomingBox" size="1"></inline-svg>
+                    </span>
+                  </span>
+                  <!--end:Icon-->
+                  <!--begin:Info-->
+                  <span class="d-flex flex-column align-items-start">
+                    <span class="fw-bolder fs-6">Create Submission </span>
+                    <span class="fs-7 text-muted">Create Submission.</span>
+                  </span>
+                  <!--end:Info-->
+                </span>
+                <!--end:Label-->
+              </label>
+              <!--end::Option-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lt-wizard-step>
+  <!-- end: Form Wizard Step 1 -->
+  <!--begin: Form Wizard Step 2 -->
+  <lt-wizard-step
+    (activate)="handleStep2Activate($event)"
+    [valid]="this.validStep.bind(this)"
+    title="2. Choose Products"
+    [icon]="svgIcons.Simple.general.search"
+    description="Select Products to Use"
+  >
+    <form name="chooseForm" class="form-horizontal" novalidate>
+      <div class="d-flex flex-wrap flex-stack pb-3">
+        <div class="d-flex align-items-center">
+          <app-product-filter
+            #productFilter="appProductFilter"
+            [productType]="productType"
+            (changed)="onFilterChanged($event)"
+          ></app-product-filter>
+        </div>
+      </div>
+      <app-product-filter-result
+        [filters]="filters"
+        (cleared)="productFilter.clearFilters()"
+        (removeTag)="productFilter.removeTag($event)"
+        (notChanged)="productFilter.storeFitler(); refresh()"
+      ></app-product-filter-result>
+      <div class="d-flex flex-row-reverse my-2">
+        <!--begin::Folder Stats-->
+        <div class="badge badge-lg badge-light-dark">
+          <span>{{ totalSelectedProduct }} on {{ totalProduct }} items</span>
+        </div>
+      </div>
+      <lt-table
+        id="m_bulk_product_list"
+        [page]="page"
+        [pageable]="currentPageable"
+        [autoResizeOptions]="{
+          activate: true,
+          height: 'auto',
+          minHeight: '300px',
+          dependencies: '#lt_header,#lt_footer'
+        }"
+        [options]="tableOptions"
+        [lineTemplate]="lineTemplate"
+        [(allChecked)]="selectedAll"
+      >
+      </lt-table>
+    </form>
+  </lt-wizard-step>
+  <!-- end: Form Wizard Step 2 -->
+
+  <!--begin: Form Wizard Step 3 -->
+  <lt-wizard-step
+    title="3. Operation Details"
+    [icon]="svgIcons.Simple.tools.screwdriver"
+    description="Choose the Bulk Action(s) to Perform."
+  >
+    <div class="d-flex flex-column">
+      <div class="row align-self-center">
+        <div class="col">
+          <h3>3. Choose the Bulk Action(s) to Perform.</h3>
+        </div>
+      </div>
+      <ng-container *ngIf="selectedOperation === 'exportExcel'">
+        <div class="d-flex flex-column align-self-center">
+          <li class="d-flex align-items-center py-2">
+            <span class="bullet bg-primary me-5"></span>
+            <span>There are not specific actions for Excel export file.</span>
+          </li>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="selectedOperation === 'sendSubmission' || selectedOperation === 'createSubmission'">
+        <div class="alert alert-primary d-flex align-items-center p-5 my-3" role="alert">
+          <inline-svg class="me-3" size="2hx" color="primary" [src]="svgIcons.Duotone.general.checkCircle"></inline-svg>
+          <div class="d-flex flex-column">
+            <h4 class="mb-1 text-dark"></h4>
+            <span>The table above summarizes the breakdown of selected products by type of submission.</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <table class="table w-75" *ngIf="submissionTypeCount$ | async as submissionTypeCount">
+              <thead>
+                <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                  <th>Submision Type</th>
+                  <th>Number of Products</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="submissionTypeCount.partitions">
+                  <tr *ngFor="let countResult of countResultToArray(submissionTypeCount.partitions)">
+                    <td>
+                      <strong>{{ countResult.key }}</strong> - {{ countResult.name }}
+                    </td>
+                    <td>{{ countResult.value }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header border-0">
+            <!--begin::Card title-->
+            <div class="card-title flex-column">
+              <h2>Override Submission Type</h2>
+              <div class="fs-6 fw-bold text-muted">
+                Choose what submission type you’d like to use for each of your products.
+              </div>
+            </div>
+            <!--end::Card title-->
+          </div>
+          <div class="card-body">
+            <form name="dataForm" novalidate>
+              <div class="row mb-4">
+                <label class="col-form-label col-3">Override Submission Type ?</label>
+                <div class="col-6 d-flex align-items-center">
+                  <div class="form-check form-switch form-check-custom form-check-solid">
+                    <input
+                      class="form-check-input"
+                      id="overrideSubmissionType"
+                      type="checkbox"
+                      name="overrideSubmissionType"
+                      [(ngModel)]="overrideSubmissionType"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row col-md-7">
+                <label class="form-label text-left">Type</label>
+                <form-select
+                  controlClass="form-select-solid"
+                  name="submissionType"
+                  placeholder="Select Submission Type..."
+                  [(ngModel)]="selectedSubmissionType"
+                  [options]="submissionTypes"
+                  [disabled]="!overrideSubmissionType"
+                ></form-select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </lt-wizard-step>
+  <!-- end: Form Wizard Step 3 -->
+
+  <!-- begin: Form Wizard Step 4 -->
+  <lt-wizard-step title="4. Confirmation" [icon]="svgIcons.Simple.general.like" description="Review and Confirm">
+    <ng-container [ngSwitch]="selectedOperation">
+      <div>
+        <div class="d-flex flex-column flex-center">
+          <div class="row w-650px">
+            <div class="col">
+              <h3>4. Confirmation</h3>
+            </div>
+          </div>
+          <div class="row w-650px">
+            <div class="col">
+              <div class="alert alert-primary d-flex align-items-center p-5 my-3" role="alert">
+                <inline-svg
+                  class="me-3"
+                  size="2hx"
+                  color="primary"
+                  [src]="svgIcons.Duotone.general.checkCircle"
+                ></inline-svg>
+                <div class="d-flex flex-column">
+                  <span class="fs-4 fw-bolder ls-2 mb-2">Summarize</span>
+                  <ul>
+                    <ng-container *ngSwitchCase="'exportExcel'">
+                      <li>
+                        <span>Bulk file export operation has been chosen.</span>
+                      </li>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'sendSubmission'">
+                      <li>
+                        <span>Bulk send submission operation has been chosen.</span>
+                      </li>
+                      <li *ngIf="overrideSubmissionType && selectedSubmissionType">
+                        <span
+                          >The submission type has been overriden with value
+                          <strong>{{ selectedSubmissionType }}</strong
+                          >.</span
+                        >
+                      </li>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'createSubmission'">
+                      <li>
+                        <span>Bulk create submission operation has been chosen.</span>
+                      </li>
+                      <li *ngIf="overrideSubmissionType && selectedSubmissionType">
+                        <span
+                          >The submission type has been overriden with value
+                          <strong>{{ selectedSubmissionType }}</strong
+                          >.</span
+                        >
+                      </li>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault> </ng-container>
+                    <li>
+                      <span
+                        ><strong>{{ totalSelectedProduct }}</strong> product{{ totalProduct > 1 ? 's' : '' }} are
+                        selected.</span
+                      >
+                    </li>
+                  </ul>
+                  <span class="fw-bolder fs-5">Do you wish to complete?</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </lt-wizard-step>
+  <!--end: Form Wizard Step 4-->
+</lt-wizard>
+
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let product of page.content; let i = index; trackBy: productTrack" class="table-item">
+    <td data-header="check" class="w-50px">
+      <div class="form-check form-check-custom">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="checkbox"
+          [checked]="product.selected ? 'checked' : ''"
+          [(ngModel)]="product.selected"
+          (change)="handleCheckProduct(product)"
+        />
+      </div>
+    </td>
+    <td data-header="product" class="w-100">
+      <app-widget-product [product]="product" [productType]="productType"></app-widget-product>
+    </td>
+  </tr>
+</ng-template>

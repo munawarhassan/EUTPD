@@ -1,0 +1,145 @@
+<lt-portlet>
+  <lt-portlet-body>
+    <div class="row m-row--no-padding m-row--col-separator-xl">
+      <!-- begin: col memory -->
+      <div class="col-md-12 col-lg-4 col-xl-4">
+        <div>
+          <div>
+            <h3>Memory Usage</h3>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <ngx-gauge
+                [value]="memory.value"
+                type="arch"
+                [thick]="15"
+                [size]="180"
+                label="Memory"
+                append="%"
+                prepend=""
+                cap="round"
+                foregroundColor="#34bfa3"
+              >
+              </ngx-gauge>
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-success"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ memory.used }}</span
+                    >Mo Memory Used</span
+                  >
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-secondary"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ memory.max }}</span
+                    >Mo Total Memory</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end: col memory -->
+      <!-- begin: col heap -->
+      <div class="col-md-12 col-lg-4 col-xl-4">
+        <div>
+          <div>
+            <h3>Heap Usage</h3>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <ngx-gauge
+                [value]="heap.value"
+                type="arch"
+                [thick]="15"
+                [size]="180"
+                label="Heap"
+                append="%"
+                prepend=""
+                cap="round"
+                foregroundColor="#36a3f7"
+              >
+              </ngx-gauge>
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-primary"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ heap.used }}</span
+                    >Mo Heap Used</span
+                  >
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-secondary"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ heap.max }}</span
+                    >Mo Total Memory</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end: col heap -->
+      <!-- begin: col no heap -->
+      <div class="col-md-12 col-lg-4 col-xl-4">
+        <!-- begin : widget no heap -->
+        <div>
+          <div>
+            <h3>No Heap Usage</h3>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <ngx-gauge
+                [value]="noheap.value"
+                type="arch"
+                [thick]="15"
+                [size]="180"
+                label="Non Heap"
+                append="%"
+                prepend=""
+                cap="round"
+                foregroundColor="#ffb822"
+              >
+              </ngx-gauge>
+            </div>
+          </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-warning"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ noheap.used }}</span
+                    >Mo Heap Used</span
+                  >
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px bg-secondary"></span>
+                  <span class="text-muted">
+                    <span class="fw-bold me-1">{{ noheap.committed }}</span
+                    >Mo Total Memory</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end : widget no heap -->
+      </div>
+      <!-- end: col no heap -->
+    </div>
+    <!-- end : row -->
+  </lt-portlet-body>
+  <!-- end : portlet body-->
+</lt-portlet>

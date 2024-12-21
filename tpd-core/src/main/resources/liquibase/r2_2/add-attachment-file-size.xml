@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+  <changeSet author="devacfr" context="production" id="add-column-size-attachement-1">
+    <comment>Add column size(long) in table t_attachment with default value 0</comment>
+    <addColumn tableName="t_attachment">
+      <column name="size_file" type="BIGINT" defaultValueNumeric="0" />
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

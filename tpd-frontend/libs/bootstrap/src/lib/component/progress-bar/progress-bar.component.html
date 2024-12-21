@@ -1,0 +1,18 @@
+<div *ngIf="progress.message" class="d-flex justify-content-between mb-2 mt-auto w-100">
+  <span class="fw-bold fs-6 text-gray-400">{{ progress.message }}</span>
+  <span class="fw-bolder fs-6">{{ progress.percentage }}%</span>
+</div>
+<div class="progress w-100" [style.height]="getSize()">
+  <div
+    *ngIf="items.length === 0"
+    [ngClass]="getColorCss()"
+    role="progressbar"
+    [style.width]="progress.percentage + '%'"
+    [attr.aria-valuenow]="progress.percentage"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    {{ enableLabel ? progress.percentage : '' }}
+  </div>
+  <ng-content select="lt-progress-bar-item"></ng-content>
+</div>

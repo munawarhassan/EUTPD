@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dependencies: users.xml -->
+<dataset>
+  <!-- Normal user-level global permissions -->
+  <t_global_permission id="1" permission_id="1" user_id="1" /> <!-- sys admin user with sysadmin permission -->
+  <t_global_permission id="2" permission_id="2" user_id="1" /> <!-- sys admin user with admin permission -->
+  <t_global_permission id="3" permission_id="3" user_id="1" /> <!-- sys admin user with user permission -->
+  <t_global_permission id="4" permission_id="2" user_id="2" /> <!-- admin user with admin permission -->
+  <t_global_permission id="5" permission_id="3" user_id="2" /> <!-- admin user with user permission -->
+  <t_global_permission id="6" permission_id="3" user_id="3" /> <!-- user user with user permission -->
+
+
+  <!-- Group-level global permissions -->
+  <t_global_permission id="20" permission_id="3" group_name="special_group" />
+  <t_global_permission id="21" permission_id="3" group_name="app-users" />
+  <t_global_permission id="22" permission_id="3" group_name="app-admins" />
+  <t_global_permission id="23" permission_id="2" group_name="app-admins" />
+  <t_global_permission id="24" permission_id="1" group_name="app-admins" />
+  <t_global_permission id="25" permission_id="3" group_name="group-with-global-and-resource-perms"/>
+
+  <t_global_permission id="26" permission_id="2" user_id="10" />
+  <t_global_permission id="27" permission_id="1" user_id="11" />
+</dataset>

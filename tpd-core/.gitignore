@@ -1,0 +1,5 @@
+target/
+.checkstyle
+.externalToolBuilders
+/.apt_src/
+/.clover/

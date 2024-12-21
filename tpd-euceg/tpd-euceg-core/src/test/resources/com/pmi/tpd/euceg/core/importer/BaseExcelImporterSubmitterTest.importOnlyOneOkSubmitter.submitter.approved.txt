@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Submitter confidential="false" submitterID="99962">
+   <SubmitterType>MANUFACTURER</SubmitterType>
+   <HasParent>true</HasParent>
+   <Parent confidential="false">
+      <Name>PHILIP MORRIS PRODUCTS S.A.</Name>
+      <Address>Quai Jeanrenaud 3, 2000 Neuchâtel</Address>
+      <Country>CH</Country>
+      <PhoneNumber>+41 (58) 242 3384</PhoneNumber>
+      <Email>ProductInformationReporting.PIR@pmi.com</Email>
+   </Parent>
+   <HasAffiliates>true</HasAffiliates>
+   <Affiliates>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Austria GmbH</Name>
+         <Address>Vorgartenstraße 206 B-C, A-1020 Vienna</Address>
+         <Country>AT</Country>
+         <PhoneNumber>0043 1 72786 1001</PhoneNumber>
+         <Email>Office.PMAT@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Bulgaria EOOD</Name>
+         <Address>Sofia, 53A Nikola Vaptsarov Blvd., East Park Trade Center, fl. 3</Address>
+         <Country>BG</Country>
+         <PhoneNumber>+359 2 8063100</PhoneNumber>
+         <Email>Administration.PMBG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>PHILIP MORRIS ZAGREB, d.o.o.</Name>
+         <Address>Heinzelova ulica 70, 10000 Zagreb</Address>
+         <Country>HR</Country>
+         <PhoneNumber>+385 (0)1 6166 900</PhoneNumber>
+         <Email>pmz.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris ČR a.s.</Name>
+         <Address>Vítězná 1, 284 03 Kutná Hora</Address>
+         <Country>CZ</Country>
+         <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+         <Email>philipmorris.cz@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris ApS</Name>
+         <Address>Weidekampsgade 14 A, 3 DK-2300 Copenhagen S</Address>
+         <Country>DK</Country>
+         <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+         <Email>thomas.jepsen@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Eesti OÜ</Name>
+         <Address>Tartu mnt 43/F.R. Kreutzwaldi 24, 10147 Tallinn, Estonia</Address>
+         <Country>EE</Country>
+         <PhoneNumber>+ 372 6050400</PhoneNumber>
+         <Email>kai.tammist@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Finland Oy</Name>
+         <Address>Lautatarhankatu 6 FI-00580 Helsinki</Address>
+         <Country>FI</Country>
+         <PhoneNumber>+358 207 600 600</PhoneNumber>
+         <Email>berth.sundstrom@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris GmbH</Name>
+         <Address>Am Haag 14, 82166 Gräfelfing</Address>
+         <Country>DE</Country>
+         <PhoneNumber>+498972470</PhoneNumber>
+         <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Manufacturing GmbH</Name>
+         <Address>Neuköllnische Allee 80, 12057 Berlin</Address>
+         <Country>DE</Country>
+         <PhoneNumber>+498972470</PhoneNumber>
+         <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>f6 Cigarettenfabrik GmbH &amp; Co.KG</Name>
+         <Address>Glashütter Straße 94, 01277 Dresden</Address>
+         <Country>DE</Country>
+         <PhoneNumber>+498972470</PhoneNumber>
+         <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Papastratos Cigarettes Manufacturing Company S.A.</Name>
+         <Address>Imeros Topos, Location Kororemi, Aspropyrgos, 193 00, Greece</Address>
+         <Country>GR</Country>
+         <PhoneNumber>+30 210 4193000</PhoneNumber>
+         <Email>papastratos@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Hungary Cigarette Trading Ltd.</Name>
+         <Address>1085 Budapest, Kálvin square 12. II-III. Floor</Address>
+         <Country>HU</Country>
+         <PhoneNumber>+36 (1) 450 4417</PhoneNumber>
+         <Email>zoltan.pozsga@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris AB</Name>
+         <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm</Address>
+         <Country>SE</Country>
+         <PhoneNumber>+46 8440 59 40</PhoneNumber>
+         <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Limited</Name>
+         <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+         <Country>GB</Country>
+         <PhoneNumber>44 20 7076 6000</PhoneNumber>
+         <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Italia Srl</Name>
+         <Address>Via Po 11-13-15, 00198 Rome</Address>
+         <Country>IT</Country>
+         <PhoneNumber>003906854451</PhoneNumber>
+         <Email>philipmorrisitaliasrl@pec.it</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>PM Tobakk Norge AS</Name>
+         <Address>Stenersgata 2 0184 Oslo</Address>
+         <Country>NO</Country>
+         <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+         <Email>reception.pmno@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Polska S.A.</Name>
+         <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+         <Country>PL</Country>
+         <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+         <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Polska Distribution Spółka z o.o.</Name>
+         <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+         <Country>PL</Country>
+         <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+         <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>PHILIP MORRIS LJUBLJANA D.O.O.</Name>
+         <Address>Letališka cesta 29a, 1000 Ljubljana</Address>
+         <Country>SI</Country>
+         <PhoneNumber>01 586 37 00</PhoneNumber>
+         <Email>pmi.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Slovakia s.r.o.</Name>
+         <Address>Galvaniho 15/A Bratislava   821 04</Address>
+         <Country>SK</Country>
+         <PhoneNumber>+421249242111</PhoneNumber>
+         <Email>sk.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>PHILIP MORRIS SPAIN S.L.</Name>
+         <Address>Paseo de la Habana 101             28036 Madrid Spain</Address>
+         <Country>ES</Country>
+         <PhoneNumber>0034 91 748 5500</PhoneNumber>
+         <Email>spain.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris AB</Name>
+         <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm</Address>
+         <Country>SE</Country>
+         <PhoneNumber>+46 8440 59 40</PhoneNumber>
+         <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+         <Name>Philip Morris Limited</Name>
+         <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+         <Country>GB</Country>
+         <PhoneNumber>44 20 7076 6000</PhoneNumber>
+         <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+   </Affiliates>
+   <HasEnterer>false</HasEnterer>
+   <HasNaturalLegalRepresentative confidential="false">false</HasNaturalLegalRepresentative>
+</Submitter>

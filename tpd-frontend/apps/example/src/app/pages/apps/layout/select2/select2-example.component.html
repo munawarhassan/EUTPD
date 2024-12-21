@@ -1,0 +1,210 @@
+<form name="theForm" #theForm="ngForm" novalidate (ngSubmit)="submit(theForm)">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-3 px-7 py-5">
+          <label class="form-label required fw-bold">Default:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-solid"
+              select2
+              name="state1"
+              [(ngModel)]="state1"
+              placeholder="Select option"
+              [allowClear]="false"
+              required
+            >
+              <option></option>
+              <option value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label required fw-bold">Clear select:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="state2"
+              [(ngModel)]="state2"
+              placeholder="Select option"
+              [allowClear]="true"
+              required
+            >
+              <option></option>
+              <option value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label required fw-bold">Searchable select:</label>
+          <div>
+            <select
+              class="form-control form-select"
+              select2
+              name="state3"
+              [(ngModel)]="state3"
+              placeholder="Select option"
+              [hideSearch]="false"
+              [allowClear]="true"
+              required
+            >
+              <option></option>
+              <option value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">disable select:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="state4"
+              [(ngModel)]="state4"
+              placeholder="Select option"
+              disabled="true"
+              required
+            >
+              <option></option>
+              <option selected value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">Multi select:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="state4"
+              mode="multi"
+              [(ngModel)]="states"
+              placeholder="Select option"
+              required
+            >
+              <option selected value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">Multi select with tags(dynamic creation):</label>
+          <div>
+            <select
+              class="form-control form-select form-select-solid form-select-lg"
+              select2
+              name="state4"
+              mode="multi"
+              [tags]="{}"
+              [(ngModel)]="tags"
+              placeholder="Select option"
+              required
+            >
+              <option selected value="1">Approved</option>
+              <option value="2">Pending</option>
+              <option value="3">In Process</option>
+              <option value="4">Rejected</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">select on sync datasource:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="stateUser"
+              mode="single"
+              optionValue="_id"
+              optionText="name"
+              [datasource]="users"
+              [(ngModel)]="stateUser"
+              placeholder="Select User..."
+              [allowClear]="true"
+            ></select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">select on async datasource:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="stateUser$"
+              mode="single"
+              optionValue="_id"
+              optionText="name"
+              [datasource]="users$"
+              [(ngModel)]="stateUser"
+              placeholder="Select User..."
+              [allowClear]="true"
+              [hideSearch]="false"
+            ></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">select on sync datasource by Id:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="stateUserId"
+              mode="single"
+              optionValue="_id"
+              optionText="name"
+              [datasource]="users"
+              [(ngModel)]="stateUserId"
+              placeholder="Select User..."
+              [allowClear]="true"
+            ></select>
+          </div>
+        </div>
+        <div class="col-3 px-7 py-5">
+          <label class="form-label fw-bold">select on async datasource by Id:</label>
+          <div>
+            <select
+              class="form-control form-select form-select-transparent"
+              select2
+              name="stateUserId$"
+              mode="single"
+              optionValue="_id"
+              optionText="name"
+              [datasource]="users$"
+              [(ngModel)]="stateUserId"
+              placeholder="Select User..."
+              [allowClear]="true"
+              [hideSearch]="false"
+            ></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 my-6">
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

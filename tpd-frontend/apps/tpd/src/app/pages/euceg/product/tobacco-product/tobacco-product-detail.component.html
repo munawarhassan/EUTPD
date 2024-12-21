@@ -1,0 +1,329 @@
+<ng-container *ngIf="product">
+  <form name="detailForm" #detailForm="ngForm">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <form-text
+          name="PMIProductNumber"
+          [(ngModel)]="product.productNumber"
+          label="PMI Product Number"
+          [disabled]="readonly"
+          [required]="true"
+        ></form-text>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <app-confidential-select
+          name="ProductType"
+          [options]="productTypes"
+          label="Product Type"
+          [(ngModel)]="tobaccoProduct.ProductType"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.Length"
+          name="Length"
+          label="Product Length"
+          group-after="0.00"
+          [disabled]="readonly"
+          [enforce-confidential]="true"
+        >
+        </app-confidential-input>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.Diameter"
+          name="Diameter"
+          label="Product Diameter"
+          group-after="0.00"
+          [disabled]="readonly"
+          [enforce-confidential]="true"
+        >
+        </app-confidential-input>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.Weight"
+          name="Weight"
+          label="Product Weight"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-input>
+      </div>
+      <div class="col-md-3">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.TobaccoWeight"
+          name="TobaccoWeight"
+          label="Product Tobacco Weight"
+          group-after="0.00"
+          [disabled]="readonly"
+        ></app-confidential-input>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label class="form-label">Product Filter</label>
+        <app-confidential-checkbox
+          label="Has product filter?"
+          name="Filter"
+          [(ngModel)]="tobaccoProduct.Filter"
+          [disabled]="readonly"
+        ></app-confidential-checkbox>
+      </div>
+      <div class="col-md-3" *ngIf="tobaccoProduct.Filter && tobaccoProduct.Filter.value">
+        <app-confidential-input
+          [(ngModel)]="tobaccoProduct.FilterLength"
+          name="FilterLength"
+          label="Product Filter Length"
+          [disabled]="readonly"
+          [enforce-confidential]="true"
+        >
+        </app-confidential-input>
+      </div>
+    </div>
+    <div class="separator separator-dashed my-6"></div>
+    <div class="row mb-3">
+      <div class="col">
+        <app-composition
+          title="Other Product(s)"
+          label="Product Identification"
+          [disabled]="readonly"
+          path="OtherProducts.ProductIdentification"
+          [value]="tobaccoProduct"
+          [enforce-confidential]="true"
+        ></app-composition>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <app-composition
+          title="Other Product(s) with same composition"
+          label="Product Identification"
+          [disabled]="readonly"
+          path="SameCompositionProducts.ProductIdentification"
+          [value]="tobaccoProduct"
+          [enforce-confidential]="true"
+        ></app-composition>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <app-list-files
+          [(ngModel)]="tobaccoProduct.TechnicalFiles"
+          name="TechnicalFiles"
+          [disabled]="readonly"
+          label="Technical File(s)"
+        >
+        </app-list-files>
+      </div>
+      <div class="col-md-6">
+        <app-list-files
+          [(ngModel)]="tobaccoProduct.MarketResearchFiles"
+          name="MarketResearchFiles"
+          [disabled]="readonly"
+          label="Market Research File(s)"
+        ></app-list-files>
+      </div>
+    </div>
+  </form>
+  <!-- The following information is required only for products that have “cigarette” as their “product type”. -->
+  <ng-container *ngIf="CigaretteSpecific && tobaccoProduct.ProductType?.value === '1'">
+    <div class="separator separator-dashed my-6"></div>
+    <h3 class="my-5">Cigarette Specific</h3>
+    <form name="cigaretteForm" #cigaretteForm="ngForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-confidential-checkbox
+            label="Has Characterising Flavour?"
+            name="CharacterisingFlavour"
+            [(ngModel)]="CigaretteSpecific.CharacterisingFlavour"
+            [disabled]="readonly"
+            info="The classification of the cigarette as having a characterising flavour as referred to in Article 7(14) of Directive 2014/40/EU"
+          >
+          </app-confidential-checkbox>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <app-confidential-input
+            [(ngModel)]="CigaretteSpecific.FilterVentilation"
+            info="The total ventilation of the filter (0-100%)"
+            name="FilterVentilation"
+            label="Filter Ventilation"
+            group-after="%"
+            [required]="false"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-md-4">
+          <app-confidential-input
+            [(ngModel)]="CigaretteSpecific.FilterDropPressureOpen"
+            info="The drop of pressure with open vents (mmH2O)"
+            name="FilterDropPressureOpen"
+            label="Filter Drop Pressure Open"
+            group-after="0.00"
+            [required]="false"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-input>
+        </div>
+        <div class="col-md-4">
+          <app-confidential-input
+            [(ngModel)]="CigaretteSpecific.FilterDropPressureClosed"
+            info="The drop of pressure with closed vents (mmH2O)"
+            name="FilterDropPressureClosed"
+            label="Filter Drop Pressure Closed"
+            group-after="0.00"
+            [required]="false"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          ></app-confidential-input>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <!-- The following information is required only for products that have “Oral tobacco” or “Nasal tobacco” or “Chewing tobacco” as their “product type”. -->
+  <ng-container
+    *ngIf="
+      SmokelessSpecific &&
+      (tobaccoProduct.ProductType?.value === '7' ||
+        tobaccoProduct.ProductType?.value === '8' ||
+        tobaccoProduct.ProductType?.value === '9')
+    "
+  >
+    <div class="separator separator-dashed my-6"></div>
+    <h3 class="my-5">Smokeless (Oral-Nasal-Chewing)</h3>
+    <form name="smokelessForm" #smokelessForm="ngForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-confidential-input [(ngModel)]="SmokelessSpecific.Ph" label="Ph" name="Ph" [disabled]="readonly">
+          </app-confidential-input>
+        </div>
+        <div class="col-md-6">
+          <app-confidential-input
+            [(ngModel)]="SmokelessSpecific.TotalMoisture"
+            name="TotalMoisture"
+            label="Total Moisture"
+            [disabled]="readonly"
+          ></app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-confidential-input
+            [(ngModel)]="SmokelessSpecific.TotalNicotineContent"
+            name="TotalNicotineContent"
+            label="Total Nicotine Content"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-md-6">
+          <app-confidential-input
+            [(ngModel)]="SmokelessSpecific.UnionisedNicotineContent"
+            name="UnionisedNicotineContent"
+            label="Unionised Nicotine Content"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <app-confidential-textarea
+            label="Analysis Methods"
+            [(ngModel)]="SmokelessSpecific.AnalysisMethods"
+            [disabled]="readonly"
+            name="AnalysisMethods"
+            [maxlength]="300"
+            [rows]="5"
+          ></app-confidential-textarea>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <!-- The following information is required only for products that have "roll-your-own" and "pipe tobacco" as their “product type” -->
+  <ng-container
+    *ngIf="RyoPipeSpecific && (tobaccoProduct.ProductType?.value === '4' || tobaccoProduct.ProductType?.value === '5')"
+  >
+    <div class="separator separator-dashed my-6"></div>
+    <h3 class="my-5">Roll-your-own and Pipe Tobacco Specific</h3>
+    <form name="ryoForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-confidential-input
+            [(ngModel)]="RyoPipeSpecific.TotalNicotineContent"
+            name="TotalNicotineContent"
+            label="Total Nicotine Content"
+            [disabled]="readonly"
+            [enforce-confidential]="true"
+          >
+          </app-confidential-input>
+        </div>
+        <div class="col-md-6">
+          <app-confidential-input
+            [(ngModel)]="RyoPipeSpecific.UnionisedNicotineContent"
+            name="UnionisedNicotineContent"
+            label="Unionised Nicotine Content"
+            [disabled]="readonly"
+          >
+          </app-confidential-input>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <!-- The following information is required only for products that have "novel tobacco product” as their “product type”. -->
+  <ng-container *ngIf="NovelSpecific && tobaccoProduct.ProductType?.value === '11'">
+    <div class="separator separator-dashed my-6"></div>
+    <h3 class="my-5">Novel Tobacco Products</h3>
+    <form name="novelForm" class="form-horizontal">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <app-one-file
+            [(ngModel)]="NovelSpecific.DetailsDescriptionFile"
+            name="DetailsDescriptionFile"
+            [disabled]="readonly"
+            label="Novel Details Description File"
+          ></app-one-file>
+        </div>
+        <div class="col-md-4">
+          <app-one-file
+            [(ngModel)]="NovelSpecific.UseInstructionsFile"
+            name="UseInstructionsFile"
+            [disabled]="readonly"
+            label="Use Instructions File"
+          ></app-one-file>
+        </div>
+        <div class="col-md-4">
+          <app-one-file
+            [(ngModel)]="NovelSpecific.RiskBenefitFile"
+            name="RiskBenefitFile"
+            [disabled]="readonly"
+            label="Risk/Benefit File"
+          ></app-one-file>
+        </div>
+      </div>
+      <div class="separator separator-dashed my-6"></div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <app-list-files
+            [(ngModel)]="NovelSpecific.StudyFiles"
+            name="StudyFiles"
+            [disabled]="readonly"
+            label="Study Files(s)"
+          ></app-list-files>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</ng-container>

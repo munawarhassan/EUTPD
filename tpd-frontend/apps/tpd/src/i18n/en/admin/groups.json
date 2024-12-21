@@ -1,0 +1,50 @@
+{
+  "groups": {
+    "title": "Groups",
+    "description": "Create groups and manage the users within each group.",
+    "fields": {
+      "name": "Groupe Name",
+      "name.placeholder": "Group Name",
+      "add.user": "Add Users",
+      "add.user.placeholder": "Add Users"
+    },
+    "button": {
+      "create": "Create Group"
+    },
+    "search": {
+      "placeholder": "Search Group..."
+    },
+    "view": {
+      "tooltip.userremove": "Remove User",
+      "button": {
+        "back": "Back to Groups",
+        "add": "Add",
+        "delete": "Delete"
+      },
+      "notify": {
+        "deleted": "The group <b>{{name}}</b> has been deleted.",
+        "addUsersToGroup": "The user(s) <b>{{users}}</b> has/have been added to group <b>{{name}}</b>.",
+        "removeUserFromGroup": "The user <b>{{user}}</b> has been removed to group <b>{{name}}</b>."
+      },
+      "alert": {
+        "delete": {
+          "title": "Are you sure?",
+          "msg": "Are you sure that you want to delete group <b>{{name}}</b>?"
+        }
+      }
+    },
+    "create": {
+      "title": "Create Group",
+      "notify": {
+        "created": "the group <b>{{name}}</b> has been created."
+      },
+      "button": {
+        "create": "Create Group"
+      },
+      "validate": {
+        "name.required": "The group name is required.",
+        "name.maxlength": "The group name cannot be longer than 255 characters."
+      }
+    }
+  }
+}

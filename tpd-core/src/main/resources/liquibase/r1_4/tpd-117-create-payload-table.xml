@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="create-payload-table-1">
+    <comment>Create t_payload table.</comment>
+    <createTable tableName="t_payload">
+      <column name="id" type="bigint">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="varchar(50)" />
+      <column name="last_modified_date" type="timestamp" />
+      <column name="payload_data" type="clob(1024000)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-2">
+    <comment>add payload id foreign key for t_product table.</comment>
+    <addColumn tableName="t_product">
+      <column name="payload_product_id" type="bigint" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-3">
+    <comment>add primary key constraint for t_payload table.</comment>
+    <addPrimaryKey columnNames="id" constraintName="t_payloadpk" tableName="t_payload" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-4">
+    <comment>add unique constraint for t_product table.</comment>
+    <addUniqueConstraint columnNames="payload_product_id" tableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-5">
+    <comment>add foreign key constraint for t_product table.</comment>
+    <addForeignKeyConstraint baseColumnNames="payload_product_id" baseTableName="t_product"
+      constraintName="fk_3j79h83ehtuhasf882h2lu3fk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_payload" />
+  </changeSet>
+
+
+  <changeSet author="devacfr" context="production" id="create-payload-table-6">
+    <comment>add payload id foreign key for t_submission table.</comment>
+    <addColumn tableName="t_submission">
+      <column name="payload_submission_id" type="bigint" />
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-7">
+    <comment>add unique constraint for t_submission table.</comment>
+    <addUniqueConstraint columnNames="payload_submission_id" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-8">
+    <comment>add foreign key constraint for t_submission table.</comment>
+    <addForeignKeyConstraint baseColumnNames="payload_submission_id" baseTableName="t_submission"
+      constraintName="fk_o6cx299gd3803m9hhe7db1pef" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_payload" />
+  </changeSet>
+  
+  <changeSet author="devacfr" context="production" id="create-payload-table-9">
+    <comment>move product and submission to t_payload table </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_117_MoveProductAndSubmissionPayload" />
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="create-payload-table-10">
+    <comment>remove xml_product column for t_product table.</comment>
+    <dropColumn columnName="xml_product" tableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-11">
+    <comment>remove xml_submission column for t_submission table.</comment>
+    <dropColumn columnName="xml_submission" tableName="t_submission" />
+  </changeSet>
+
+
+  <changeSet author="devacfr" context="production" id="create-payload-table-20">
+    <dropIndex indexName="idx_product_modified_date" tableName="t_product" />
+    <createIndex indexName="idx_product_modified_date" tableName="t_product">
+      <column name="last_modified_date" />
+    </createIndex>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="create-payload-table-21">
+    <dropIndex indexName="idx_submission_modified_date" tableName="t_submission" />
+    <createIndex indexName="idx_submission_modified_date" tableName="t_submission">
+      <column name="last_modified_date" />
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

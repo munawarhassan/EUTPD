@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="submission-schema-create-table-t_attachment">
+    <createTable tableName="t_attachment">
+      <column name="attachment_id" type="VARCHAR(80)">
+        <constraints nullable="false" />
+      </column>
+      <column name="confidential" type="BOOLEAN">
+        <constraints nullable="false" />
+      </column>
+      <column name="content_type" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="filename" type="VARCHAR(250)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="varchar(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="varchar(50)" />
+      <column name="last_modified_date" type="timestamp" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addprimary-t_attachment">
+    <addPrimaryKey columnNames="attachment_id" constraintName="t_attachmentPK" tableName="t_attachment" />
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="submission-schema-create-table-t_submitter">
+    <createTable tableName="t_submitter">
+      <column name="submitter_id" type="VARCHAR(10)">
+        <constraints nullable="false" />
+      </column>
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="xml_submitter" type="CLOB(4096)">
+        <constraints nullable="false" />
+      </column>
+      <column name="xml_submitter_detail" type="CLOB(4096)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="timestamp" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addprimary-t_submitter">
+    <addPrimaryKey columnNames="submitter_id" constraintName="t_submitterPK" tableName="t_submitter" />
+  </changeSet>
+
+  <changeSet author="devacfr (generated)" id="submission-schema-create-table-t_submission">
+    <createTable tableName="t_submission">
+      <column name="product_id" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="product_type" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="submission_status" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="product_number" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="submitter_id" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="xml_submission" type="CLOB(1024000)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="timestamp" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addprimary-t_submission">
+    <validCheckSum>7:fc5c1c7bf18c5bcedab0e0a503bdca7c</validCheckSum>
+    <addPrimaryKey columnNames="product_id" constraintName="t_submissionpk" tableName="t_submission" />
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="submission-schema-create-table-t_submission_exported_att">
+    <validCheckSum>7:03f5b8d29440ddee17e8799e745af580</validCheckSum>
+    <createTable tableName="t_submission_exported_att">
+      <column name="productid" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="att_exported" type="BOOLEAN" />
+      <column name="attachmentid" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addprimary-t_submission_exported_att">
+    <validCheckSum>7:67f4fcd098a32df0b136d16eab847f18</validCheckSum>
+    <addPrimaryKey columnNames="productid, attachmentid" tableName="t_submission_exported_att" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addforeignkey-t_submission_exported_att">
+    <validCheckSum>7:fed355708496ff44f7437f9dedf3cdde</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="productid" baseTableName="t_submission_exported_att"
+      constraintName="fk_t7qq9wkx8ktivd7rodt6ol29h" deferrable="false" initiallyDeferred="false" referencedColumnNames="product_id"
+      referencedTableName="t_submission" />
+  </changeSet>
+
+
+  <changeSet author="devacfr" context="production" id="submission-schema-create-table-t_status_attachment">
+    <createTable tableName="t_status_attachment">
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="timestamp" />
+      <column name="attachment_action" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="att_sent" type="BOOLEAN">
+        <constraints nullable="false" />
+      </column>
+      <column name="attachment_id" type="VARCHAR(80)">
+        <constraints nullable="false" />
+      </column>
+      <column name="submitter_id" type="VARCHAR(10)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-primarykey-t_status_attachment">
+    <addPrimaryKey columnNames="attachment_id, submitter_id" constraintName="t_status_attachmentPK"
+      tableName="t_status_attachment" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="submission-schema-addforeignkey-t_status_attachment-1">
+    <validCheckSum>7:a1eeea3daec295b2f7a23e6ed50033a0</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="attachment_id" baseTableName="t_status_attachment"
+      constraintName="fk_5gldn09bxpnfk6w1q90jeyteb" deferrable="false" initiallyDeferred="false" referencedColumnNames="attachment_id"
+      referencedTableName="t_attachment" />
+  </changeSet>
+
+  <changeSet author="cfriedri" id="submission-schema-createtable-t_transmit_receipt">
+    <createTable tableName="t_transmit_receipt">
+      <column name="message_id" type="VARCHAR(250)">
+        <constraints nullable="false" />
+      </column>
+      <column name="product_id" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="timestamp" />
+      <column name="transmit_status" type="VARCHAR(25)">
+        <constraints nullable="false" />
+      </column>
+      <column name="payload_type" type="VARCHAR(50)" />
+      <column name="xml_response" type="CLOB(4096)" />
+    </createTable>
+  </changeSet>
+  <changeSet author="cfriedri" id="submission-schema-addprimarykey-t_transmit_receipt">
+    <addPrimaryKey columnNames="message_id, product_id" constraintName="t_transmit_receiptPK" tableName="t_transmit_receipt" />
+  </changeSet>
+  <changeSet author="cfriedri" id="submission-schema-addforeignkey-t_transmit_receipt">
+    <validCheckSum>7:016cfc7a61c690c74c5c0220ca838742</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="t_transmit_receipt"
+      constraintName="fk_682tn78qsd3sni5gj3jmtpfu5" deferrable="false" initiallyDeferred="false" referencedColumnNames="product_id"
+      referencedTableName="t_submission" />
+  </changeSet>
+</databaseChangeLog>
+

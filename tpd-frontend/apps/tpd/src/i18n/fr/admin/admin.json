@@ -1,0 +1,53 @@
+{
+  "admin": {
+    "title": "Administration",
+    "users": {
+      "description": "Modifiez les détails, les mots de passe et les appartenances de groupe de l'utilisateur individuel."
+    },
+    "server": {
+      "description": "Configurer le HTTP et les autres paramètres serveur."
+    },
+    "audits": {
+      "description": "View current access activity."
+    },
+    "database": {
+      "description": "Affichez et migrez les configurations de base de données."
+    },
+    "console": {
+      "description": "Affichez and Configurez les logs."
+    },
+    "index": {
+      "description": "L'indexation de recherche permets une recherhe dans le contenu du produit."
+    },
+    "health": {
+      "description": "Affichez les principaux diagnostiques de l'application."
+    },
+    "mail": {
+      "description": "Configurez le serveur SMTP utilisé pour envoyer des courriers électroniques de notification."
+    },
+    "ldap": {
+      "description": "Connectez les utilisateurs TPD à un directory servers - Active Directory and LDAP."
+    },
+    "keystore": {
+      "description": "Gérez les certificats et les pairs de clés utilisés dans l'application."
+    },
+    "domibus": {
+      "description": "Configurez le serveur Domibus utilisé pour envoyer les soumissions vers U.E.."
+    },
+    "metrics": {
+      "description": "Affichez les principaux métriques de l'application."
+    },
+    "tracker": {
+      "description": "Affichez les utilisateurs actuellement utilisant l'application."
+    },
+    "groups": {
+      "description": "Créez des groupes et gérez les utilisateurs à l'intérieur de chaque groupe."
+    },
+    "globalpermissions": {
+      "description": "Configurez les autorisations d'utilisateur globales."
+    },
+    "api": {
+      "description": "Swagger API."
+    }
+  }
+}

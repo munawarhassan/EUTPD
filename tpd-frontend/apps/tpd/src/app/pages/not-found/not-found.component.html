@@ -1,0 +1,15 @@
+<div [style.backgroundImage]="'url(' + image + ')'" class="error flex-column-fluid">
+  <div class="error_container">
+    <div class="error_number">
+      <h1>{{ code }}</h1>
+    </div>
+    <p class="error_title fw-light">
+      {{ title }}
+    </p>
+    <p class="error_subtitle">
+      {{ subtitle }}
+    </p>
+    <p class="error_description" [innerHTML]="desc"></p>
+    <a [routerLink]="['/']" class="btn btn-primary">Return Home</a>
+  </div>
+</div>

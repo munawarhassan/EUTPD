@@ -1,0 +1,12 @@
+<!-- begin::Aside menu -->
+<div [ltScroll]="scrollOptions" id="lt_aside_menu_wrapper" class="hover-scroll-overlay-y my-5 pe-4 me-n4">
+  <ng-container *ngIf="menu">
+    <lt-menu
+      [items]="menu.items"
+      [menuType]="menu.type"
+      id="lt_aside_menu"
+      class="fw-bold menu-column menu-title-gray-800 menu-state-dark menu-state-bg-light-dark menu-arrow-gray-500"
+    ></lt-menu>
+  </ng-container>
+</div>
+<!-- end::Aside menu -->

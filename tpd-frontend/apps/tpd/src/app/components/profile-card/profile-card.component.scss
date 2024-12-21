@@ -1,0 +1,140 @@
+@import 'init';
+
+//
+// User Profile 1
+//
+
+.card-user-profile {
+    padding-bottom: 1.7rem;
+
+    .card-user-header {
+        display: flex;
+        align-items: flex-start;
+
+        .card-user-content {
+            padding-left: 1.6rem;
+
+            .section {
+                .username {
+                    font-size: 1.3rem;
+                    color: get($base-colors, label, 4);
+                    font-weight: 500;
+
+                    span,
+                    i {
+                        font-size: 1.1rem;
+                        padding-left: 0.4rem;
+                    }
+                }
+
+                .subtitle {
+                    font-size: 1;
+                    display: block;
+                    padding: 0.25rem 0 0 0;
+                    font-weight: 500;
+                    color: get($base-colors, label, 2);
+                }
+            }
+        }
+    }
+
+    .card-user-body {
+        .card-user-content {
+            padding: 1.9rem 0 2.1rem 0;
+
+            .info {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 0.5rem;
+
+                .label {
+                    color: get($base-colors, label, 4);
+                    font-weight: 500;
+                }
+
+                .data {
+                    color: get($base-colors, label, 2);
+                    font-weight: 400;
+                }
+
+                a.data:hover {
+                    color: $primary;
+                    transition: color 0.3s ease;
+                }
+
+                &:last-child {
+                    padding-bottom: 0;
+                }
+            }
+        }
+
+        .card-user-items {
+            .card-user-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.9rem 1.05rem 0.9rem 0.6rem;
+                margin: 0.4rem 0;
+
+                &.active {
+                    transition: color 0.3s ease;
+                    background: #f2f3f7;
+
+                    border-radius: $border-radius;
+
+                    .section {
+                        .desc {
+                            color: $primary;
+                        }
+                    }
+                }
+
+                .section {
+                    .desc {
+                        color: get($base-colors, label, 2);
+                        font-weight: 500;
+                        padding-left: 0.3rem;
+                    }
+                }
+
+                &:hover {
+                    transition: color 0.3s ease;
+                    background: #f2f3f7;
+                    cursor: pointer;
+
+                    border-radius: $border-radius;
+
+                    .desc {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//tablet-and-mobile
+@include media-breakpoint-down(lg) {
+    .card-user-profile {
+        padding-bottom: 1.2rem;
+
+        .card-user-header {
+            .card-user-content {
+                .section {
+                    .username {
+                        font-size: 1.1rem;
+                        color: get($base-colors, label, 4);
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        .card-user-body {
+            .card-user-content {
+                padding-bottom: 2rem;
+            }
+        }
+    }
+}

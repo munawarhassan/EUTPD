@@ -1,0 +1,120 @@
+<ng-container *ngIf="product">
+  <form name="detailForm" #detailForm="ngForm" class="m-form form-horizontal">
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <form-text
+          label="PMI Product Number"
+          controlClass="form-control-solid"
+          name="PMIProductNumber"
+          [(ngModel)]="product.productNumber"
+          [disabled]="readonly"
+          [required]="true"
+        ></form-text>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <app-confidential-select
+          name="ProductType"
+          [options]="productTypes$"
+          label="Product Type"
+          [(ngModel)]="ecigProduct.ProductType"
+          [disabled]="readonly"
+          [required]="true"
+        >
+        </app-confidential-select>
+      </div>
+    </div>
+    <div
+      class="ro mb-3w"
+      *ngIf="
+        ecigProduct.ProductType?.value === '1' ||
+        ecigProduct.ProductType?.value === '2' ||
+        ecigProduct.ProductType?.value === '4' ||
+        ecigProduct.ProductType?.value === '7'
+      "
+    >
+      <div class="col-sm-3">
+        <app-confidential-input
+          label="Product Weight e-liquid"
+          [(ngModel)]="ecigProduct.Weight"
+          name="Weight"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-input>
+      </div>
+      <div class="col-sm-3">
+        <app-confidential-input
+          label="Product Volume e-liquid"
+          [(ngModel)]="ecigProduct.Volume"
+          name="Volume"
+          group-after="0.00"
+          [disabled]="readonly"
+          [required]="true"
+        ></app-confidential-input>
+      </div>
+    </div>
+    <div class="separator separator-dashed my-6"></div>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <app-composition
+          title="Other Product(s)"
+          label="Product Identification"
+          [disabled]="readonly"
+          path="OtherProducts.ProductIdentification"
+          [value]="ecigProduct"
+          [enforce-confidential]="true"
+        ></app-composition>
+      </div>
+      <div class="col-sm-6">
+        <app-composition
+          title="Other Product(s) with same composition"
+          label="Product Identification"
+          [disabled]="readonly"
+          path="SameCompositionProducts.ProductIdentification"
+          [value]="ecigProduct"
+          [enforce-confidential]="true"
+        ></app-composition>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-12">
+        <app-confidential-textarea
+          label="Product CLP Classification"
+          name="ClpClassification"
+          [maxlength]="300"
+          [(ngModel)]="ecigProduct.ClpClassification"
+          [rows]="4"
+          [disabled]="readonly"
+          [required]="
+            ecigProduct.ProductType?.value === '1' ||
+            ecigProduct.ProductType?.value === '2' ||
+            ecigProduct.ProductType?.value === '4' ||
+            ecigProduct.ProductType?.value === '7'
+          "
+        >
+        </app-confidential-textarea>
+      </div>
+    </div>
+    <div class="separator separator-dashed my-6"></div>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <app-list-files
+          name="StudySummaryFiles"
+          [(ngModel)]="ecigProduct.StudySummaryFiles"
+          disabled="readonly"
+          label="Study Summary File(s)"
+        ></app-list-files>
+      </div>
+      <div class="col-sm-6">
+        <app-list-files
+          name="MarketResearchFiles"
+          [(ngModel)]="ecigProduct.MarketResearchFiles"
+          disabled="readonly"
+          label="Market Research File(s)"
+        ></app-list-files>
+      </div>
+    </div>
+  </form>
+</ng-container>

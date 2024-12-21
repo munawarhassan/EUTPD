@@ -1,0 +1,36 @@
+{
+  "submissions": {
+    "title": "Submission",
+    "fields": {
+      "productId": "Product ID",
+      "productNumber": "Product Number",
+      "productType": "Product Type",
+      "previousProductId": "Previous Product ID",
+      "nationalMarkets": "National Markets",
+      "submissionType": "Type",
+      "submissionStatus": "Status",
+      "lastModifiedDate": "Last Modified",
+      "action": "Action"
+    },
+    "search": {
+      "placeholder": "Search Submission..."
+    },
+    "report": {
+      "fields": {
+        "filename": "Filename",
+        "username": "Created By",
+        "modified": "Modified",
+        "type": "Type",
+        "action": "Action"
+      },
+      "progress": {
+        "title": "Please Wait...",
+        "message-start": "Starting generation of tracking report file...",
+        "message-end": "Tracking report file generation is complete"
+      },
+      "modal": {
+        "title": "List Submission Reports"
+      }
+    }
+  }
+}

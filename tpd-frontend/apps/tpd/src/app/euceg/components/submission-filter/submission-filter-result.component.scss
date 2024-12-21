@@ -1,0 +1,71 @@
+@import 'init';
+
+$notCheck: (
+    //
+    link:
+        (
+            //
+            icon:
+                (
+                    //
+                    font-color:
+                        (
+                            //
+                            uncheck: $primary,
+                            disabled: $gray-500,
+                            checked: $danger//
+                        )
+                        //
+                ),
+            //
+        )
+        //
+);
+
+::ng-deep {
+    .not-check {
+        .svg-icon {
+            @include svg-icon-size(20px);
+        }
+
+        .icon-check {
+            display: none;
+        }
+
+        .icon-uncheck {
+            display: inline;
+        }
+
+        &:not(.disabled) {
+            .svg-icon {
+                @include svg-icon-color(get($notCheck, link, icon, font-color, uncheck));
+            }
+        }
+
+        &:not(.disabled, .readonly) {
+            cursor: pointer;
+        }
+
+        &.disabled {
+            .svg-icon {
+                @include svg-icon-color(get($notCheck, link, icon, font-color, disabled));
+            }
+        }
+
+        &.checked {
+            .icon-check {
+                display: inline !important;
+            }
+
+            .icon-uncheck {
+                display: none !important;
+            }
+        }
+
+        &.checked:not(.disabled) {
+            .svg-icon {
+                @include svg-icon-color(get($notCheck, link, icon, font-color, checked));
+            }
+        }
+    }
+}

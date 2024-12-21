@@ -1,0 +1,10 @@
+<ng-container *ngFor="let user of users$ | async">
+  <div class="symbol symbol-circle symbol-35px" [ltTooltip]="user.displayName" placement="top">
+    <img [src]="user.avatarUrl" alt="avatar" />
+  </div>
+</ng-container>
+<ng-container *ngIf="nextTotal > 0">
+  <div class="symbol symbol-35px symbol-circle">
+    <span class="bg-light-primary fs-8 fw-bolder symbol-label text-primary">+{{ nextTotal }}</span>
+  </div>
+</ng-container>

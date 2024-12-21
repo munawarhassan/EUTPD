@@ -1,0 +1,35 @@
+<div class="d-flex flex-column flex-root">
+  <div class="d-flex flex-row flex-column-fluid">
+    <!--begin::Header-->
+    <lt-header>
+      <ng-content select="[ltTopbar]"></ng-content>
+    </lt-header>
+    <!--end::Header-->
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="lt_wrapper">
+      <!--begin::Content wrapper-->
+      <div class="d-flex flex-column flex-column-fluid" [ngClass]="contentClass">
+        <ng-content select="lt-aside,[ltAside]"></ng-content>
+
+        <!--begin::Container-->
+        <ng-content select="lt-content"></ng-content>
+        <!--end::Container-->
+        <ng-content select="lt-footer,[ltFooter]"></ng-content>
+      </div>
+      <!--end::Content wrapper-->
+    </div>
+  </div>
+</div>
+
+<lt-scroll-top></lt-scroll-top>
+
+<!-- begin:: Drawers -->
+<!-- <app-activity-drawer></app-activity-drawer>
+<app-explore-main-drawer></app-explore-main-drawer>
+<app-messenger-drawer></app-messenger-drawer> -->
+<!-- end:: Drawers -->
+
+<!-- begin:: Modals -->
+<!-- <app-main-modal></app-main-modal>
+<app-invite-users-modal></app-invite-users-modal>
+<app-upgrade-plan-modal></app-upgrade-plan-modal> -->
+<!-- end:: Modals -->

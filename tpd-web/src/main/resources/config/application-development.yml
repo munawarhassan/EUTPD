@@ -1,0 +1,127 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# The app.home configuration must be set and specifies the directory in which application will store its data files.
+# This must be set to an absolute path. Relative paths are not allowed.
+# Ensure that only one application instance uses the selected Home folder.
+#
+###########################
+# Note for Windows Users
+###########################
+#
+# NOTE : If you are using Windows, you will need to use double \ characters, for example c:\app-home should be written
+# as c:\\app-home
+#
+# You can also use Unix like paths which Java/Portal can handle. eg c:/app-home
+#-----------------------------------------------------------------------------------------------------------------------
+app:
+  home: C:/development/tpd-home
+  dev.mode: true
+  auto-setup: true
+  log:
+    # log level : (TRACE|DEBUG|INFO|WARN|ERROR)
+    loglevel: INFO
+    fullStackTraces: true
+  mail:
+    # install hMailServer (PMI has desactivated SMTP protocol on local machine) or use our mail server
+    host: localhost
+    port: 25
+    user:
+    password:
+    protocol: smtp
+    tls: false
+    auth: false
+    from: noreply@tpd-dev.app.pmi
+
+  security:
+    keystore:
+      defaultLocation: classpath:certificates/keystore-dev.jks
+      notification:
+        contact: christophe.friederich@pmi.com
+        expiration:
+          enable: true
+          # Controls how frequently the job to check expiration is run.
+          # Value is in DAYS.
+          interval: 2
+          # period before send notification. Value is in DAYS
+          threshold: 30
+          # period to remind expiration
+          reminder: 7
+    authentication:
+      directory: # ldap, activeDirectory
+        # LDAP directory that you will connect to.
+#        activeDirectory:
+#          name: "Delegated LDAP Authentication PMI Active Directory"
+#          domain: PMINTL.NET
+#          authenticationOnly: true
+#          hostname: ldap.app.pmi
+#          port: 389 # ldap or 636 ldaps
+#          username:
+#          password:
+#          ldapSchema:
+#            baseDn: DC=PMINTL,DC=NET
+#            additionalUserDn: (objectClass=user)
+# for local test at home
+        ldap:
+          name: Local LDAP server
+          authenticationOnly: false
+          hostname: kenobi.local
+          port: 389 # ldap or 636 ldaps
+          username:
+          password:
+          ldapSchema:
+            baseDn: dc=ldap,dc=synology,dc=com
+            additionalGroupDn: (cn=*)
+            additionalUserDn: (cn=users)
+          userLdapSchema:
+            userObjectClass: posixAccount
+            userObjectFilter: (objectclass=person)
+            userFirstNameAttribute: gecos
+            userDisplayNameAttribute: gecos
+            userUniqueIDAttribute: uidNumber
+          groupSchema:
+            groupObjectClass: posixGroup
+            groupObjectFilter: (objectClass=apple-group)
+            groupNameAttribute: cn
+            groupDescriptionAttribute: description
+          membershipSchema:
+            groupMembersAttribute: member
+            userMembersAttribute: memberOf
+  elasticsearch:
+    enableMemoryLock: true
+
+
+
+
+# for dev only
+spring.profiles.include: mock
+
+database:
+  liquibase:
+    contexts: dev,production
+
+jpa:
+  show_sql: false
+
+# Domibus Configuration
+#-----------------------------------------------------------------------------------------------------------------------
+app.domibus:
+  enable: true
+  connectionType: WsPlugin
+  url: http://domibus-blue:7080/
+  tlsInsecure: true
+  username: admin
+  password: "123456"
+  jmsOptions:
+    url: tcp://localhost:6262
+    receiveTimeout: 10
+    concurrency: "1-1"
+    username: "domibus"
+    password: "changeit"
+  wsOptions:
+    authorizationType: BASIC
+    pendingInterval: 5
+
+jmx.enabled: false
+
+# Metrics interface see http://metrics.dropwizard.io for more information
+metrics:
+  jmx.enabled: false

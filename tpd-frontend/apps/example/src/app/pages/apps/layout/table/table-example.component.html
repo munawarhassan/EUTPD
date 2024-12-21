@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Table</div>
+  </div>
+  <div class="card-body">
+    <lt-table
+      [page]="page"
+      tableClass="fs-6 g-3"
+      (pageChanged)="handlePaginationChanged($event)"
+      [options]="tableOptions"
+    >
+      <tr *ngFor="let user of page.content" class="text-gray-700">
+        <td data-header="name">{{ user.name }}</td>
+        <td data-header="email">{{ user.email }}</td>
+        <td data-header="phone">{{ user.phone }}</td>
+        <td data-header="gender">{{ user.gender }}</td>
+        <td data-header="company">{{ user.company }}</td>
+      </tr>
+    </lt-table>
+  </div>
+</div>

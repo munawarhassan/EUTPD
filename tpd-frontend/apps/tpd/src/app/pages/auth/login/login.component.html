@@ -1,0 +1,121 @@
+<!--begin::Authentication - Sign-in -->
+<!--begin::Form-->
+<form
+  class="form w-100"
+  [formGroup]="formControl"
+  #form="ngForm"
+  (ngSubmit)="login()"
+  novalidate="novalidate"
+  id="m-sign_in_form"
+>
+  <!--begin::Heading-->
+  <div class="text-center mb-10">
+    <!--begin::Title-->
+    <h1 class="text-dark mb-3" translate="login.title"></h1>
+    <!--end::Title-->
+    <!--begin::Link-->
+    <div *ngIf="signupEnable" class="text-gray-400 fw-bold fs-4">
+      {{ 'signup.label' | translate }}
+      <a [routerLink]="['/register']" id="m_login_signup" class="link-primary fw-bolder">{{
+        'signup.button' | translate
+      }}</a>
+    </div>
+    <!--end::Link-->
+  </div>
+  <!--end::Heading-->
+  <!--begin::alert-->
+  <div
+    *ngIf="authenticationError"
+    class="bg-light-danger border border-danger border-dashed d-flex mb-5 p-6 rounded text-danger"
+    role="alert"
+    translate="login.messages.error.fail"
+  ></div>
+  <!--end::alert-->
+  <!--begin::Input group-->
+  <div class="row mb-10">
+    <!--begin::Label-->
+    <label class="form-label fs-6 fw-bolder text-dark">{{ 'global.form.username.placeholder' | translate }}</label>
+    <!--end::Label-->
+    <!--begin::Input-->
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="text"
+      [placeholder]="'global.form.username.placeholder' | translate"
+      name="username"
+      autocomplete="off"
+      formControlName="username"
+    />
+    <!--end::Input-->
+    <div *ngIf="(form?.submitted || username.touched) && username.invalid">
+      <div
+        id="username-error"
+        *ngIf="username.hasError('required')"
+        class="invalid-feedback"
+        translate="global.messages.validate.username.required"
+      ></div>
+    </div>
+  </div>
+  <!--end::Input group-->
+  <!--begin::Input group-->
+  <div class="row mb-10">
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-stack mb-2">
+      <!--begin::Label-->
+      <label class="form-label fw-bolder text-dark fs-6 mb-0">{{
+        'global.form.password.placeholder' | translate
+      }}</label>
+      <!--end::Label-->
+      <!--begin::Link-->
+      <a
+        *ngIf="signupEnable"
+        [routerLink]="['/forgot-password']"
+        id="m_login_forgot"
+        class="link-primary fs-6 fw-bolder"
+        >{{ 'login.forgetpassword' | translate }}</a
+      >
+      <!--end::Link-->
+    </div>
+    <!--end::Wrapper-->
+    <!--begin::Input-->
+    <input
+      class="form-control form-control-lg form-control-solid"
+      type="password"
+      name="password"
+      [placeholder]="'global.form.password.placeholder' | translate"
+      autocomplete="off"
+      formControlName="password"
+    />
+    <!--end::Input-->
+    <div *ngIf="(form?.submitted || password.touched) && password.invalid">
+      <div
+        id="password-error"
+        *ngIf="password.hasError('required')"
+        class="invalid-feedback"
+        translate="global.messages.validate.password.required"
+      ></div>
+    </div>
+  </div>
+  <div class="row mb-10">
+    <div class="form-check form-check-custom form-check-solid">
+      <input type="checkbox" class="form-check-input" name="remember" id="m_rememberme" formControlName="rememberMe" />
+      <label class="form-check-label">{{ 'login.rememberme' | translate }}</label>
+    </div>
+  </div>
+
+  <!--end::Input group-->
+  <!--begin::Actions-->
+  <div class="text-center">
+    <!--begin::Submit button-->
+    <button type="submit" id="m-sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+      <span [ngClass]="{ 'd-none': loading }" class="indicator-label">Continue</span>
+      <span [ngClass]="{ 'd-none': !loading }"
+        >Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span
+      ></span>
+    </button>
+    <!--end::Submit button-->
+  </div>
+  <!--end::Actions-->
+  <div></div>
+</form>
+<!--end::Form-->
+<!--end::Authentication - Sign-in-->

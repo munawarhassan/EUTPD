@@ -1,0 +1,80 @@
+<div class="card card-bordered card-py-0 card-stretch h-100">
+  <div class="card-header bg-gray-100 py-2">
+    <div class="card-title">
+      <h5>{{ title }}</h5>
+    </div>
+    <div class="card-toolbar">
+      <button
+        *ngIf="!disabled"
+        href="#"
+        class="btn btn-circle btn-icon btn-light-primary btn-sm ms-2"
+        popover="Add"
+        (click)="handleAdd()"
+      >
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-row-bordered">
+        <thead>
+          <tr class="text-gray-600 text-uppercase ls-1 fs-7">
+            <th>Type</th>
+            <th>{{ label }}</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of getValue(); index as $index">
+            <td>
+              <select
+                select2
+                class="form-select form-select-solid w-150px"
+                [value]="p.type"
+                placeholder="Select Type..."
+                [disabled]="disabled"
+                (valueChange)="handleTypeChange(p, $event)"
+              >
+                <option></option>
+                <option value="PRODUCT_ID">Product ID</option>
+                <option value="TEXT">Text</option>
+              </select>
+            </td>
+            <td class="col-10">
+              <div class="position-relative">
+                <textarea
+                  class="form-control form-control-solid"
+                  placeholder="Same Composition Product Id"
+                  [value]="p.value"
+                  [rows]="rows"
+                  (input)="handleTextareaChange(p, $event)"
+                  [disabled]="disabled"
+                ></textarea>
+                <app-confidential
+                  class="position-absolute translate-middle-y top-0 mt-6 end-0 me-6"
+                  [value]="p.confidential"
+                  [enforce-confidential]="true"
+                  [disabled]="disabled"
+                  (valueChange)="handleConfidentialChange(p, $event)"
+                  [enforce-confidential]="enforceConfidential"
+                ></app-confidential>
+              </div>
+            </td>
+            <td class="text-end">
+              <a
+                *ngIf="!disabled"
+                href="#"
+                class="btn btn-circle btn-icon btn-light-primary btn-sm ms-2"
+                ltTooltip="Remove"
+                (click)="handleRemove(p)"
+              >
+                <i class="fa fa-minus"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

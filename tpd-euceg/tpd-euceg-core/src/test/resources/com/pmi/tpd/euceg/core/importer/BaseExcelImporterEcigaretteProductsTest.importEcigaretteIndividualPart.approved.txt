@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EcigProduct>
+   <ProductID confidential="false">00000-00-00000</ProductID>
+   <OtherProductsExist confidential="true">true</OtherProductsExist>
+   <OtherProducts>
+      <ProductIdentification confidential="true" type="PRODUCT_ID">SubmitterID-2016-POM.other</ProductIdentification>
+   </OtherProducts>
+   <SameCompositionProductsExist confidential="true">false</SameCompositionProductsExist>
+   <Manufacturers>
+      <Manufacturer confidential="false">
+         <Name>Company Name</Name>
+         <Address>1234 Address St</Address>
+         <Country>GB</Country>
+         <PhoneNumber>41 (0)73 985 68 25</PhoneNumber>
+         <Email>pmi@pmi</Email>
+         <ProductionSiteAddresses>
+            <ProductionSiteAddress confidential="false">
+               <Address>1234 Keller Drive</Address>
+               <Country>CH</Country>
+            </ProductionSiteAddress>
+         </ProductionSiteAddresses>
+      </Manufacturer>
+   </Manufacturers>
+   <ProductType confidential="false">8</ProductType>
+   <Weight confidential="false">1075.4</Weight>
+   <Volume confidential="false">1</Volume>
+   <ClpClassification confidential="false">Not classified</ClpClassification>
+   <Presentations>
+      <Presentation>
+         <NationalMarket confidential="false">GB</NationalMarket>
+         <NationalComment confidential="false">Should be GB not UK</NationalComment>
+         <BrandName confidential="false">Brand 1</BrandName>
+         <BrandSubtypeNameExists confidential="false">true</BrandSubtypeNameExists>
+         <BrandSubtypeName confidential="false">Cartomiser</BrandSubtypeName>
+         <LaunchDate confidential="false">2016-09-01</LaunchDate>
+         <WithdrawalIndication confidential="false">false</WithdrawalIndication>
+         <ProductNumberType confidential="false">SUBMITTER</ProductNumberType>
+         <ProductNumber confidential="false">POM.cartomiser</ProductNumber>
+         <PackageUnits confidential="false">6</PackageUnits>
+         <UnitPacketPictureFile attachmentID="Product_Unit_Packet_Picture_File.pdf"/>
+         <AnnualSalesDataList>
+            <AnnualSalesData>
+               <Year confidential="true">2016</Year>
+               <SalesVolume confidential="true">8000</SalesVolume>
+               <SalesMode attachmentID="Product_Mode_Of_Sales.pdf"/>
+            </AnnualSalesData>
+         </AnnualSalesDataList>
+      </Presentation>
+   </Presentations>
+   <Ingredients>
+      <Ingredient>
+         <Name confidential="false">Ingredient_ Name1</Name>
+         <CasNumberExists confidential="false">true</CasNumberExists>
+         <CasNumber confidential="false">11-11-1</CasNumber>
+         <AdditionalCasNumbers>
+            <CasNumber confidential="false">11-11-3</CasNumber>
+            <CasNumber confidential="false">11-11-4</CasNumber>
+            <CasNumber confidential="false">11-11-5</CasNumber>
+         </AdditionalCasNumbers>
+         <RecipeQuantity confidential="false">7752.214919</RecipeQuantity>
+         <Functions>
+            <Function confidential="false">4</Function>
+         </Functions>
+         <ToxicityStatus confidential="false">0</ToxicityStatus>
+         <ReachRegistration confidential="false">NOT_YET_REGISTERED</ReachRegistration>
+         <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+         <ToxicologicalDetails>
+            <ToxicologicalDataAvailable confidential="false">1</ToxicologicalDataAvailable>
+            <ToxEmission confidential="false">true</ToxEmission>
+            <ToxCmr confidential="false">true</ToxCmr>
+            <ToxCardioPulmonary confidential="false">true</ToxCardioPulmonary>
+            <ToxAddictive confidential="false">true</ToxAddictive>
+            <ToxOther confidential="false">true</ToxOther>
+            <ToxEmissionFiles>
+               <Attachment attachmentID="Ingredient_Tox_Emission_File.pdf"/>
+            </ToxEmissionFiles>
+            <ToxCmrFiles>
+               <Attachment attachmentID="Ingredient_Tox_CMR_File.pdf"/>
+            </ToxCmrFiles>
+            <ToxCardioPulmonaryFiles>
+               <Attachment attachmentID="Ingredient_Tox_CardioPulmonary_File.pdf"/>
+            </ToxCardioPulmonaryFiles>
+            <ToxAddictiveFiles>
+               <Attachment attachmentID="Ingredient_Tox_Addictive_File.pdf"/>
+            </ToxAddictiveFiles>
+            <ToxOtherFiles>
+               <Attachment attachmentID="Ingredient_Tox_Other_File.pdf"/>
+            </ToxOtherFiles>
+         </ToxicologicalDetails>
+      </Ingredient>
+      <Ingredient>
+         <Name confidential="false">Ingredient_ Name2</Name>
+         <CasNumberExists confidential="false">true</CasNumberExists>
+         <CasNumber confidential="false">222-22-2</CasNumber>
+         <AdditionalCasNumbers>
+            <CasNumber confidential="false">11-11-3</CasNumber>
+            <CasNumber confidential="false">11-11-4</CasNumber>
+         </AdditionalCasNumbers>
+         <RecipeQuantity confidential="false">2151.4</RecipeQuantity>
+         <Functions>
+            <Function confidential="false">4</Function>
+         </Functions>
+         <ToxicityStatus confidential="false">0</ToxicityStatus>
+         <ReachRegistration confidential="false">EXEMPTED</ReachRegistration>
+         <ClpWhetherClassification confidential="false">false</ClpWhetherClassification>
+         <ToxicologicalDetails>
+            <ToxicologicalDataAvailable confidential="false">1</ToxicologicalDataAvailable>
+            <ToxEmission confidential="false">false</ToxEmission>
+            <ToxCmr confidential="false">false</ToxCmr>
+            <ToxCardioPulmonary confidential="false">false</ToxCardioPulmonary>
+            <ToxAddictive confidential="false">false</ToxAddictive>
+            <ToxOther confidential="false">false</ToxOther>
+         </ToxicologicalDetails>
+      </Ingredient>
+      <Ingredient>
+         <Name confidential="true">Ingredient_ Name3</Name>
+         <CasNumberExists confidential="true">true</CasNumberExists>
+         <CasNumber confidential="true">3333-33-3</CasNumber>
+         <AdditionalCasNumbers>
+            <CasNumber confidential="true">11-11-3</CasNumber>
+         </AdditionalCasNumbers>
+         <RecipeQuantity confidential="true">645.42</RecipeQuantity>
+         <Functions>
+            <Function confidential="true">2</Function>
+         </Functions>
+         <ToxicityStatus confidential="true">0</ToxicityStatus>
+         <ReachRegistrationNumber confidential="true">1</ReachRegistrationNumber>
+         <ClpWhetherClassification confidential="true">true</ClpWhetherClassification>
+         <ClpAcuteToxOral confidential="true">1</ClpAcuteToxOral>
+         <ClpAcuteToxDermal confidential="true">1</ClpAcuteToxDermal>
+         <ClpAcuteToxInhalation confidential="true">1</ClpAcuteToxInhalation>
+         <ClpSkinCorrosiveIrritant confidential="true">1A</ClpSkinCorrosiveIrritant>
+         <ClpEyeDamageIrritation confidential="true">1</ClpEyeDamageIrritation>
+         <ClpRespiratorySensitisation confidential="true">1</ClpRespiratorySensitisation>
+         <ClpSkinSensitisation confidential="true">1</ClpSkinSensitisation>
+         <ClpMutagenGenotox confidential="true">1A</ClpMutagenGenotox>
+         <ClpCarcinogenicity confidential="true">1A</ClpCarcinogenicity>
+         <ClpReproductiveTox confidential="true">1A</ClpReproductiveTox>
+         <ClpStot confidential="true">1</ClpStot>
+         <ClpStotDescription confidential="true">CLP STOT Description</ClpStotDescription>
+         <ClpAspirationTox confidential="true">1</ClpAspirationTox>
+         <ToxicologicalDetails>
+            <ToxicologicalDataAvailable confidential="true">1</ToxicologicalDataAvailable>
+            <ToxEmission confidential="true">false</ToxEmission>
+            <ToxCmr confidential="true">false</ToxCmr>
+            <ToxCardioPulmonary confidential="true">false</ToxCardioPulmonary>
+            <ToxAddictive confidential="true">false</ToxAddictive>
+            <ToxOther confidential="true">false</ToxOther>
+         </ToxicologicalDetails>
+      </Ingredient>
+   </Ingredients>
+   <Emissions>
+      <Emission>
+         <CasNumber confidential="true">54-11-5</CasNumber>
+         <Quantity confidential="true">10000</Quantity>
+         <Unit confidential="true">mg per puff</Unit>
+         <MethodsFile>
+            <Attachment attachmentID="Emission_Method_Files.1.pdf"/>
+         </MethodsFile>
+         <AdditionalProducts>
+            <ProductIdentification confidential="true" type="TEXT">EC-ID of battery</ProductIdentification>
+         </AdditionalProducts>
+         <Name confidential="true">1</Name>
+      </Emission>
+      <Emission>
+         <CasNumber confidential="true">107-21-1</CasNumber>
+         <Quantity confidential="true">1000</Quantity>
+         <Unit confidential="true">mg per puff</Unit>
+         <MethodsFile>
+            <Attachment attachmentID="Emission_Method_Files.2.pdf"/>
+         </MethodsFile>
+         <AdditionalProducts>
+            <ProductIdentification confidential="true" type="TEXT">EC-ID of battery</ProductIdentification>
+         </AdditionalProducts>
+         <Name confidential="true">2</Name>
+      </Emission>
+   </Emissions>
+   <Design>
+      <Description confidential="false">Ecigarette 1</Description>
+      <LiquidVolumeCapacity confidential="false">1</LiquidVolumeCapacity>
+      <NicotineConcentration confidential="false">20</NicotineConcentration>
+      <VoltageWattageAdjustable confidential="false">4</VoltageWattageAdjustable>
+      <Voltage confidential="false">0</Voltage>
+      <Wattage confidential="false">0</Wattage>
+      <AirflowAdjustable confidential="false">false</AirflowAdjustable>
+      <WickChangeable confidential="false">false</WickChangeable>
+      <Microprocessor confidential="false">false</Microprocessor>
+      <CoilComposition confidential="false">Ni80Cr20</CoilComposition>
+      <NicotineDoseUptakeFile attachmentID="E-Cigarette_Nicotine_Dose_Uptake_File.pdf"/>
+      <ProductionFile attachmentID="E-Cigarette_Production_File.pdf"/>
+      <ProductionConformity confidential="false">true</ProductionConformity>
+      <QualitySafety confidential="false">true</QualitySafety>
+      <ChildTamperProof confidential="false"/>
+      <HighPurity confidential="false"/>
+      <NonRisk confidential="false"/>
+      <ConsistentDosing confidential="false"/>
+   </Design>
+</EcigProduct>

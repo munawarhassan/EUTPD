@@ -1,0 +1,40 @@
+{
+  "account": {
+    "profile": {
+      "title": "Personal Information",
+      "description": "Update your personal information",
+      "messages": {
+        "error": {
+          "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
+          "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+        },
+        "readonly": "You <strong>cannot</strong> edit this user's display name, password or email address as they are stored in a read-only user directory.",
+        "success": "<strong>Your profile has been saved!</strong>"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Update your personal settings"
+    },
+    "password": {
+      "title": "Change Your Password",
+      "messages": {
+        "error": "<strong>An error has occurred!</strong> The password could not be changed.",
+        "success": "<strong>Password changed!</strong>"
+      }
+    },
+    "sessions": {
+      "title": "Your Active sessions",
+      "table": {
+        "ipaddress": "IP address",
+        "useragent": "User Agent",
+        "date": "Date",
+        "button": "Invalidate"
+      },
+      "messages": {
+        "success": "<strong>Session invalidated!</strong>",
+        "error": "<strong>An error has occurred!</strong> The session could not be invalidated."
+      }
+    }
+  }
+}

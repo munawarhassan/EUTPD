@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" id="property-set-schema-1-create-tables" context="production">
+    <createTable tableName="os_propertyentry">
+      <column name="entity_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="entitty_name" type="VARCHAR(125)">
+        <constraints nullable="false" />
+      </column>
+      <column name="entity_key" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="key_type" type="INT" />
+      <column name="boolean_value" type="BOOLEAN" />
+      <column name="date_value" type="timestamp" />
+      <column name="double_value" type="DOUBLE" />
+      <column name="int_value" type="INT" />
+      <column name="long_value" type="BIGINT" />
+      <column name="string_value" type="VARCHAR(2000)" />
+      <column name="data_value" type="blob" />
+    </createTable>
+    <addPrimaryKey columnNames="entity_id, entitty_name, entity_key" constraintName="os_propertyentry_pk"
+      tableName="os_propertyentry" />
+  </changeSet>
+</databaseChangeLog>
+

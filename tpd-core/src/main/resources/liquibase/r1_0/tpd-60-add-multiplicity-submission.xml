@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-1">
+    <comment>create new technical key for submission.</comment>
+    <addColumn tableName="t_submission">
+      <column name="id" type="bigint" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-2">
+    <comment>create new technical key for exported attachment.</comment>
+    <addColumn tableName="t_submission_exported_att">
+      <column name="id" type="bigint" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-3">
+    <comment>create new technical key for receipt the name of payload and add submission foreign key.</comment>
+    <addColumn tableName="t_transmit_receipt">
+      <column name="id" type="bigint" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+    <addColumn tableName="t_transmit_receipt">
+      <column name="submission_id" type="bigint" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+    <addColumn tableName="t_transmit_receipt">
+      <column name="payload_name" type="varchar(250)" defaultValue="">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <!-- to remove after put in production. use 'validCheckSum' changeSet attribute -->
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-1.1">
+    <comment>Extract id from productId and store in ID column.</comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_60_NormalizeSubmissionKey"></customChange>
+  </changeSet>
+  <!-- to remove after put in production. use 'validCheckSum' changeSet attribute -->
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-1.2">
+    <comment>Extract id from productId and store in ID column. Similar to TPD_60_NormalizeSubmissionKey but for
+      't_submission_exported_att' table
+    </comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_60_NormalizeExportedAttachement"></customChange>
+  </changeSet>
+  <!-- to remove after put in production. use 'validCheckSum' changeSet attribute -->
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-1.3">
+    <comment>sets all old submission as SENT and success.</comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_60_RecieptAsSent"></customChange>
+  </changeSet>
+
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-6">
+    <validCheckSum>7:acd6dd7862830ab7c1a3b3761895b603</validCheckSum>
+    <dropForeignKeyConstraint baseTableName="t_transmit_receipt" constraintName="fk_682tn78qsd3sni5gj3jmtpfu5" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-7">
+    <validCheckSum>7:479f8b9a4f1632975ade50e53826ac20</validCheckSum>
+    <dropForeignKeyConstraint baseTableName="t_submission_exported_att" constraintName="fk_t7qq9wkx8ktivd7rodt6ol29h" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-8">
+    <validCheckSum>7:434ff363132f470f8fb06facd959499f</validCheckSum>
+    <dropPrimaryKey tableName="t_submission" />
+    <addPrimaryKey columnNames="id" constraintName="t_submissionpk" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-9">
+    <validCheckSum>7:b00b7a50486a1526522163a79600fb06</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="id" baseTableName="t_submission_exported_att"
+      constraintName="fk_ejaf8drc2olkroc19rolx785c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-10">
+    <validCheckSum>7:104e313755ba2a778f1127b1e1fe859c</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="t_transmit_receipt"
+      constraintName="fk_hfuyjoli483ln5iax2as3fjwj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+      referencedTableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-11">
+    <validCheckSum>7:2079f0dcff78fab23226a80e7ff26a3b</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="product_number" baseTableName="t_submission"
+      constraintName="fk_rlnva89a2dr2ni457u267abvt" deferrable="false" initiallyDeferred="false" referencedColumnNames="product_number"
+      referencedTableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-12">
+    <validCheckSum>7:f12fd32be036dfa2e17b9750332a39ed</validCheckSum>
+    <dropColumn columnName="productid" tableName="t_submission_exported_att" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-13">
+    <validCheckSum>7:de4feb4f16d0924ef8413dcfc1b16ca0</validCheckSum>
+    <dropColumn columnName="product_id" tableName="t_transmit_receipt" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-15">
+    <validCheckSum>7:8b71bb7138677ceee7f4587e1e8c587d</validCheckSum>
+    <addPrimaryKey columnNames="id, attachmentid" tableName="t_submission_exported_att" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-16">
+    <addPrimaryKey columnNames="id" constraintName="t_transmit_receiptPK" tableName="t_transmit_receipt" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="tpd-60-add-multiplicity-submission-17">
+    <comment>Drop temporary default value after update</comment>
+    <dropDefaultValue columnDataType="bigint" columnName="id" tableName="t_submission" />
+    <dropDefaultValue columnDataType="bigint" columnName="id" tableName="t_submission_exported_att" />
+    <dropDefaultValue columnDataType="bigint" columnName="id" tableName="t_transmit_receipt" />
+    <dropDefaultValue columnDataType="bigint" columnName="submission_id" tableName="t_transmit_receipt" />
+    <dropDefaultValue columnDataType="VARCHAR(250)" columnName="payload_name" tableName="t_transmit_receipt" />
+  </changeSet>
+</databaseChangeLog>

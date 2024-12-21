@@ -1,0 +1,5 @@
+<ng-content select="lt-portlet-head"></ng-content>
+<div class="portlet-wrapper" [id]="wrapperBodyId" [ngClass]="{ collapse: this.collapsible, show: !this.collapsed }">
+  <ng-content select="lt-portlet-body"></ng-content>
+</div>
+<ng-content select="lt-portlet-foot"></ng-content>

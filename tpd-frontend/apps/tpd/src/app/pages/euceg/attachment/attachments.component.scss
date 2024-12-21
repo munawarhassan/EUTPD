@@ -1,0 +1,24 @@
+@import 'init';
+
+.drop-box {
+    border: 2px none;
+    //cursor: pointer;
+
+    &.drag-over {
+        border-style: dashed;
+        border-width: 2px;
+        border-color: $primary;
+        background-color: #d9e8f5;
+
+        border-radius: $border-radius;
+
+        .drop-box-content {
+            opacity: 0.5;
+        }
+
+        * {
+            pointer-events: none;
+        }
+    }
+}
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="devacfr" context="production" id="add-product-table-1">
+    <createTable tableName="t_product">
+      <column name="product_number" type="VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="product_type" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="product_status" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="preferred_submission_type" type="VARCHAR(50)">
+        <constraints nullable="true" />
+      </column>
+      <column name="preferred_submitter_id" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="preferred_general_comment" type="VARCHAR(1000)">
+        <constraints nullable="true" />
+      </column>
+      <column name="xml_product" type="CLOB(1024000)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_by" type="VARCHAR(50)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_date" type="timestamp">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_modified_by" type="VARCHAR(50)" />
+      <column name="last_modified_date" type="timestamp" />
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-1.1">
+    <comment>add t_product_id table</comment>
+    <createTable tableName="t_product_id">
+      <column name="submitter_id" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="current_value" type="INT default 1">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-1.2">
+    <comment>add t_booking_range table</comment>
+    <createTable tableName="t_booking_range">
+      <column name="id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="range_length" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="national_market_code" type="VARCHAR(2)">
+        <constraints nullable="false" />
+      </column>
+      <column name="range_start" type="INT">
+        <constraints nullable="false" />
+      </column>
+      <column name="submission_id" type="VARCHAR(20)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+  <!-- to remove after put in production. use 'validCheckSum' changeSet attribute -->
+  <changeSet author="devacfr" context="production" id="add-product-table-2">
+    <comment>create product with existing submission</comment>
+    <customChange class="com.pmi.tpd.core.liquibase.upgrade.TPD_60_CreateProductFromExistingSubmission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-3">
+    <addPrimaryKey columnNames="product_number" constraintName="t_productPK" tableName="t_product" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-4">
+    <validCheckSum>7:66a58ac980d6017effa8e9f422c5394b</validCheckSum>
+    <dropColumn columnName="submission_status" tableName="t_submission" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-5">
+    <addPrimaryKey columnNames="submitter_id" constraintName="t_product_idPK" tableName="t_product_id" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-6">
+    <addPrimaryKey columnNames="id" constraintName="t_booking_rangePK" tableName="t_booking_range" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="add-product-table-7">
+    <validCheckSum>7:50b34ee44d749ce884e21acdc7296ded</validCheckSum>
+    <addForeignKeyConstraint baseColumnNames="submission_id" baseTableName="t_booking_range"
+      constraintName="fk_mxqfy0mocls0u69emkp7la1ry" deferrable="false" initiallyDeferred="false" referencedColumnNames="submitter_id"
+      referencedTableName="t_product_id" />
+  </changeSet>
+</databaseChangeLog>

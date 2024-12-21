@@ -1,0 +1,82 @@
+@import 'init';
+
+@mixin tree-content-indention($value, $offset) {
+    // Accordion mode
+    .tree-sub {
+        > .tree-item {
+            > .tree-row > .tree-content {
+                padding-left: calc(#{1 * $value} + #{$offset});
+            }
+
+            > .tree-sub {
+                > .tree-item {
+                    > .tree-row > .tree-content {
+                        padding-left: calc(#{2 * $value} + #{$offset});
+                    }
+
+                    > .tree-sub {
+                        > .tree-item {
+                            > .tree-row > .tree-content {
+                                padding-left: calc(#{3 * $value} + #{$offset});
+                            }
+
+                            > .tree-sub {
+                                > .tree-item {
+                                    > .tree-row > .tree-content {
+                                        padding-left: calc(#{4 * $value} + #{$offset});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tree {
+    .tree-item {
+        .tree-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .tree-check {
+                margin-right: 1rem;
+            }
+
+            .tree-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .tree-icon {
+                    margin-right: 1rem;
+
+                    ::ng-deep {
+                        .svg-icon {
+                            @include svg-icon-color($primary);
+                        }
+                    }
+                }
+            }
+        }
+
+        &.disabled {
+            .tree-icon {
+                ::ng-deep {
+                    .svg-icon {
+                        @include svg-icon-color($gray-300, true);
+                    }
+                }
+            }
+
+            .tree-title {
+                color: $gray-600;
+            }
+        }
+    }
+
+    @include tree-content-indention(1rem, 1rem);
+}

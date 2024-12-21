@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+  <changeSet author="devacfr" context="production" id="1617875767569-15">
+    <addForeignKeyConstraint baseColumnNames="REV" baseTableName="t_submitter_aud"
+      constraintName="FK4vs50wqrq3rrjlxl12p10vfyf" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="REV" referencedTableName="REVINFO" validate="true" />
+  </changeSet>
+  <changeSet author="devacfr" context="production" id="1617875767569-16">
+    <addForeignKeyConstraint baseColumnNames="REV" baseTableName="t_attachment_aud"
+      constraintName="FKn5h4exx2aj53lyd6wririuv41" deferrable="false" initiallyDeferred="false"
+      referencedColumnNames="REV" referencedTableName="REVINFO" validate="true" />
+  </changeSet>
+</databaseChangeLog>

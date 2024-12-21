@@ -1,0 +1,31 @@
+<ng-container *ngIf="parent && displayed">
+  <div
+    class="accordion-header d-flex"
+    [ngClass]="headerClass"
+    [class.collapsed]="collapse.collapsed"
+    (click)="collapse.toggle()"
+  >
+    <span class="accordion-icon" *ngIf="parent.toggleSvg && parent.togglePosition === 'left'">
+      <span class="svg-icon svg-icon-4" [inlineSVG]="toggleSVG"></span>
+    </span>
+    <h3 class="flex-grow-1 px-3 fs-4 fw-bold mb-0 ms-4" style="color: inherit">
+      <i *ngIf="!useSVG && icon" [class]="icon" [ngClass]="iconCLass"></i>
+      <inline-svg class="me-2" *ngIf="useSVG && icon" [inlineSVG]="icon" [ngClass]="iconCLass"></inline-svg>
+      {{ heading }}
+    </h3>
+    <span class="accordion-icon" *ngIf="parent.toggleSvg && parent.togglePosition === 'right'">
+      <span class="svg-icon svg-icon-4" [inlineSVG]="toggleSVG"></span>
+    </span>
+  </div>
+  <div
+    class="accordion-collapse"
+    #collapse="ltCollapse"
+    [ltCollapse]="isOpen"
+    (collapse)="handleCollapse($event)"
+    [parentContainer]="parentId"
+  >
+    <div class="accordion-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</ng-container>

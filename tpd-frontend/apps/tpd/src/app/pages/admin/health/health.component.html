@@ -1,0 +1,49 @@
+<lt-toolbar></lt-toolbar>
+<lt-portlet mode="bordered-semi" id="m_portlet_health">
+  <lt-portlet-head title="&nbsp;">
+    <lt-portlet-tool type="reload" (action)="refresh()"></lt-portlet-tool>
+  </lt-portlet-head>
+  <lt-portlet-body>
+    <table class="table table-row-bordered table-striped g-2">
+      <thead>
+        <tr>
+          <th>{{ 'health.table.service' | translate }}</th>
+          <th class="text-center">{{ 'health.table.product' | translate }}</th>
+          <th class="text-center">{{ 'health.table.type' | translate }}</th>
+          <th class="text-center">{{ 'health.table.status' | translate }}</th>
+          <th>{{ 'health.stacktrace' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of healthCheck">
+          <tr *ngIf="item.key !== 'status'">
+            <td>{{ 'health.indicator.' + item.key | translate }}</td>
+            <td>{{ item.value.product }}</td>
+            <td>{{ item.value.type }}</td>
+            <td class="text-center">
+              <span
+                class="badge badge-bold badge-sm"
+                [ngClass]="{
+                  'badge-light-success': item.value.status === 'UP',
+                  'badge-light-danger': item.value.status === 'DOWN',
+                  'badge-light-secondary': item.value.status === 'OUT_OF_SERVICE'
+                }"
+              >
+                {{ 'health.status.' + item.value.status | translate }}
+              </span>
+            </td>
+            <td class="text-center">
+              <i
+                class="text-danger la la-exclamation-circle"
+                style="font-size: 1.9rem"
+                *ngIf="item.value.error"
+                placement="top"
+                [ltTooltip]="item.value.error"
+              ></i>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </lt-portlet-body>
+</lt-portlet>

@@ -1,0 +1,16 @@
+{
+  "name": "@devacfr/bootstrap",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~16",
+    "@angular/core": "~16",
+    "bootstrap": "~5.3.1",
+    "@ngx-translate/core": "^15.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.6"
+  }
+}

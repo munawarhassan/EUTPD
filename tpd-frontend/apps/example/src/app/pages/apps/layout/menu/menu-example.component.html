@@ -1,0 +1,64 @@
+<div class="bg-dark d-block p-2">
+  <lt-menu
+    [items]="menuItems"
+    [menuType]="'dropdown'"
+    class="
+      menu-rounded
+      menu-row
+      menu-state-bg
+      menu-title-gray-700
+      menu-state-title-dark
+      menu-state-icon-primary
+      menu-state-bullet-primary
+      menu-arrow-gray-400
+      fw-bold
+      fs-6
+    "
+  ></lt-menu>
+</div>
+<div class="card w-350px min-h-100 mt-15">
+  <div class="card-body">
+    <div
+      ltMenu
+      id="m_import_product_list_product"
+      class="menu menu-column menu-dark menu-state-bg-light-primary menu-state-icon-primary menu-state-title-dark"
+    >
+      <div class="menu-item menu-accordion" data-lt-menu-trigger="click">
+        <span class="menu-link"
+          ><span class="menu-title">tobacco-product-submission.xlsx</span><span class="menu-arrow"></span
+        ></span>
+        <div class="menu-sub menu-sub-accordion menu-active-bg">
+          <a href="#" class="menu-link d-flex flex-row"
+            ><span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.shopping.box2"></inline-svg>
+            </span>
+            <span>POM.received.error</span><span class="badge text-uppercase ms-auto badge-light-dark">Unchanged</span
+            ><i lttooltip="This product is valid" class="fas fa-check-circle ms-2 text-success"></i
+          ></a>
+
+          <a href="#" class="menu-link d-flex flex-row"
+            ><span class="menu-icon"> <inline-svg [src]="svgIcons.Simple.shopping.box2"></inline-svg> </span
+            ><span>POM.rejected</span><span class="badge text-uppercase ms-auto badge-light-dark">Unchanged</span
+            ><i ltTooltip="This product is valid" class="fas fa-check-circle ms-2 text-success"></i
+          ></a>
+          <a href="#" class="menu-link d-flex flex-row"
+            ><span class="menu-icon"> <inline-svg [src]="svgIcons.Simple.shopping.box2"></inline-svg> </span
+            ><span>POM.deleted</span><span class="badge text-uppercase ms-auto badge-light-dark">Unchanged</span
+            ><i ltTooltip="This product is valid" class="fas fa-check-circle ms-2 text-success"></i
+          ></a>
+
+          <a href="#" class="menu-link d-flex flex-row"
+            ><span class="menu-icon"> <inline-svg [src]="svgIcons.Simple.shopping.box2"></inline-svg></span
+            ><span>POM.pending</span><span class="badge text-uppercase ms-auto badge-light-primary">Modified</span
+            ><i ltTooltip="This product is valid" class="fas fa-check-circle ms-2 text-success"></i
+          ></a>
+          <a href="#" class="menu-link d-flex flex-row"
+            ><span class="menu-icon"><inline-svg [src]="svgIcons.Simple.shopping.box2"></inline-svg></span
+            ><span>POM.received</span><span class="badge text-uppercase ms-auto badge-light-primary">Modified</span
+            ><i ltTooltip="This product is valid" class="fas fa-check-circle ms-2 text-success"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

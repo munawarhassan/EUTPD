@@ -1,0 +1,132 @@
+{
+  "name": "tpd",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/tpd/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "customWebpackConfig": {
+          "path": "apps/tpd/webpack.config.ts",
+          "mergeRules": {
+            "plugins": "prepend"
+          }
+        },
+        "sourceMap": true,
+        "namedChunks": true,
+        "vendorChunk": true,
+        "aot": true,
+        "buildOptimizer": false,
+        "optimization": false,
+        "outputPath": "dist/apps/tpd",
+        "index": "apps/tpd/src/index.html",
+        "main": "apps/tpd/src/main.ts",
+        "polyfills": "apps/tpd/src/polyfills.ts",
+        "tsConfig": "apps/tpd/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/tpd/src/favicon.ico",
+          "apps/tpd/src/assets",
+          {
+            "glob": "**/*",
+            "input": "libs/layout/assets/media",
+            "output": "/assets/media"
+          }
+        ],
+        "styles": ["apps/tpd/src/styles.scss"],
+        "scripts": [
+          "node_modules/jquery/dist/jquery.min.js",
+          "node_modules/moment/min/moment-with-locales.min.js",
+          "node_modules/select2/dist/js/select2.full.min.js",
+          "node_modules/daterangepicker/daterangepicker.js",
+          "node_modules/toastr/build/toastr.min.js",
+          "node_modules/apexcharts/dist/apexcharts.min.js"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/shared/styles/src/lib/sass"]
+        }
+      },
+      "configurations": {
+        "production": {
+          "customWebpackConfig": {
+            "path": "apps/tpd/webpack.config.ts"
+          },
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1mb",
+              "maximumError": "6mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "10kb",
+              "maximumError": "40kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/tpd/src/environments/environment.ts",
+              "with": "apps/tpd/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "aot": true,
+          "buildOptimizer": true
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "browserTarget": "tpd:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "tpd:build:production"
+        },
+        "development": {
+          "browserTarget": "tpd:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "tpd:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/tpd/src/**/*.ts", "apps/tpd/src/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/tpd"],
+      "options": {
+        "jestConfig": "apps/tpd/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

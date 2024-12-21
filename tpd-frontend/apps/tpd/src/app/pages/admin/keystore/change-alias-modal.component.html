@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Change Alias Name</h4>
+</div>
+<form #form="ngForm" [formGroup]="theForm" (ngSubmit)="onClose()" novalidate show-validation>
+  <div class="modal-body">
+    <div class="row">
+      <form-text
+        class="col-sm-9"
+        label="Alias"
+        type="text"
+        controlClass="form-control-solid"
+        formControlName="alias"
+        helpText="The alias name of trusted certificate."
+      ></form-text>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary me-3">Import</button>
+    <a href="#" class="link link-primary" (click)="onCancel()" translate="global.button.cancel"></a>
+  </div>
+</form>

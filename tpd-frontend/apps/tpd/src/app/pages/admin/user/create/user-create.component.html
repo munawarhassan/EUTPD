@@ -1,0 +1,148 @@
+<lt-toolbar> </lt-toolbar>
+<lt-portlet [mode]="['bordered']" id="m_portlet_user_create">
+  <lt-portlet-head [sticky]="true" [mode]="['right']">
+    <div class="portlet-head-tools align-items-center d-flex">
+      <div class="btn-group me-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="form.onSubmit($event)"
+          translate="global.button.save"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+          id="m_user_save_btn"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          data-bs-reference="parent"
+        >
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+          <li>
+            <a id="m_user_save_new_btn" class="dropdown-item" href="#" (click)="form.onSubmit($event)">
+              <span>
+                <inline-svg [src]="svgIcons.Simple.code.plusCircle" class="me-2" size="1"></inline-svg>
+                <span>Save &amp; New</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a id="m_user_save_exit_btn" class="dropdown-item" href="#" (click)="form.onSubmit($event)">
+              <span>
+                <inline-svg [src]="svgIcons.Simple.navigation.backLeft" size="1" class="me-2"></inline-svg>
+                <span>Save &amp; Close</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a routerLink="/admin/users" class="btn btn-secondary btn-bold" translate="global.button.back"></a>
+    </div>
+  </lt-portlet-head>
+  <lt-portlet-body>
+    <form [formGroup]="formControl" #form="ngForm" (ngSubmit)="save($event)" novalidate show-validation>
+      <div class="row mb-4">
+        <label
+          class="col-3 d-flex justify-content-end col-form-label required"
+          translate="global.form.username"
+        ></label>
+        <form-text
+          class="col-md-9 col-lg-6"
+          controlClass="form-control-solid"
+          formControlName="username"
+          [placeholder]="'global.form.username.placeholder' | translate"
+          [icon]="svgIcons.Duotone.communication.user"
+          [iconPosition]="'start'"
+        ></form-text>
+      </div>
+      <div class="row mb-4">
+        <label
+          class="col-3 d-flex justify-content-end col-form-label required"
+          translate="users.fields.displayname"
+        ></label>
+        <form-text
+          class="col-md-9 col-lg-6"
+          controlClass="form-control-solid"
+          formControlName="displayName"
+          [placeholder]="'users.fields.displayname.placeholder' | translate"
+          [icon]="svgIcons.Duotone.communication.addressBook"
+          [iconPosition]="'start'"
+        ></form-text>
+      </div>
+      <div class="row mb-4">
+        <label class="col-3 d-flex justify-content-end col-form-label required" translate="users.fields.email"></label>
+        <form-text
+          class="col-md-9 col-lg-6"
+          controlClass="form-control-solid"
+          formControlName="emailAddress"
+          [placeholder]="'users.fields.email.placeholder' | translate"
+          [icon]="svgIcons.Duotone.communication.envelopOpen"
+          [iconPosition]="'start'"
+        ></form-text>
+      </div>
+
+      <div class="row mb-4">
+        <label
+          class="col-3 d-flex justify-content-end col-form-label required"
+          translate="users.fields.directory"
+        ></label>
+        <form-select
+          class="col-md-9 col-lg-6"
+          controlClass="form-select-solid"
+          formControlName="directory"
+          placeholder="Choose Directory"
+          [options]="userDirectories"
+        ></form-select>
+      </div>
+      <!-- end section-->
+      <div class="separator separator-dashed my-10"></div>
+      <!-- begin section -->
+      <ng-container *ngIf="passwordRequired()">
+        <div class="row mb-4">
+          <div class="col-md-9 col-lg-6 offset-md-3">
+            <h3 class="text-gray-800">Setup Email Password Notification</h3>
+          </div>
+        </div>
+        <div class="row mb-10">
+          <form-checkbox
+            class="offset-md-3 col-md-9 col-lg-6"
+            controlClass="form-check-solid"
+            [label]="'users.fields.email.link' | translate"
+            formControlName="notify"
+          ></form-checkbox>
+        </div>
+        <div *ngIf="passwordRequired() && !notify.value">
+          <div class="row mb-4">
+            <label
+              class="col-3 d-flex justify-content-end col-form-label required"
+              translate="global.form.password"
+            ></label>
+            <lt-password-input
+              type="password"
+              class="col-md-9 col-lg-6"
+              controlClass="form-control-solid"
+              formControlName="password"
+              [placeholder]="'global.form.password.placeholder' | translate"
+            ></lt-password-input>
+          </div>
+          <div class="row mb-4">
+            <label
+              class="col-3 d-flex justify-content-end col-form-label required"
+              translate="global.form.confirmpassword"
+            ></label>
+            <form-text
+              type="password"
+              class="col-md-9 col-lg-6"
+              controlClass="form-control-solid"
+              formControlName="confirmPassword"
+              [placeholder]="'global.form.confirmpassword.placeholder' | translate"
+            ></form-text>
+          </div>
+        </div>
+      </ng-container>
+      <!-- end : section -->
+    </form>
+  </lt-portlet-body>
+</lt-portlet>

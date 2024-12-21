@@ -1,0 +1,128 @@
+<ng-container *ngIf="product">
+  <lt-toolbar [sticky]="true">
+    <app-pir-status [readonly]="false" [product]="product" (changed)="pirStatusChanged($event)"></app-pir-status>
+    <!--begin::Button Tools-->
+    <a href="#" class="btn btn-light-dark me-2" data-lt-menu-trigger="click" data-lt-menu-placement="bottom-start">
+      <inline-svg size="2" [src]="svgIcons.Duotone.coding.setting"></inline-svg>
+      <span>Tools</span>
+      <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+    </a>
+    <!--begin::Menu-->
+    <div
+      ltMenu
+      class="
+        menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary menu-state
+        fw-bold
+        fs-7
+        w-200px
+        py-4
+      "
+    >
+      <!--begin::Menu item-->
+      <ng-container *ngIf="product.sendable">
+        <div class="menu-item px-3">
+          <a href="#" (click)="send(product)" class="menu-link px-3">
+            <span class="menu-icon">
+              <inline-svg [src]="svgIcons.Simple.communication.share" size="2"></inline-svg>
+            </span>
+            <span class="menu-title">Send</span>
+          </a>
+        </div>
+        <!--end::Menu item-->
+        <div class="separator my-3"></div>
+      </ng-container>
+      <!--begin::Menu item-->
+      <div class="menu-item px-3">
+        <a href="#" (click)="revision(product)" class="menu-link px-3">
+          <span class="menu-icon">
+            <inline-svg [src]="svgIcons.Simple.code.git4" size="2"></inline-svg>
+          </span>
+          <span class="menu-title">Revisions</span>
+        </a>
+      </div>
+      <!--end::Menu item-->
+    </div>
+    <!--end::Menu-->
+    <!--end::Button Tools-->
+    <!--begin::Button Export-->
+    <a href="#" class="btn btn-light-dark" data-lt-menu-trigger="click" data-lt-menu-placement="bottom-start">
+      <inline-svg size="2" [src]="svgIcons.Duotone.arrows.download"></inline-svg>
+      <span>Export</span>
+      <inline-svg class="ms-2" size="2" [src]="svgIcons.Duotone.arrows.down"></inline-svg>
+    </a>
+    <!--begin::Menu-->
+    <div
+      ltMenu
+      class="
+        menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary
+        fw-bold
+        fs-7
+        w-200px
+        py-4
+      "
+    >
+      <!--begin::Menu item-->
+      <div class="menu-item px-3">
+        <a href="#" (click)="export(product)" class="menu-link px-3">
+          <span class="menu-icon">
+            <span class="svg-original svg-icon-1" [inlineSVG]="svgIcons.Files.xlsx"></span>
+          </span>
+          <span class="menu-title">Export to Excel</span>
+        </a>
+      </div>
+      <!--end::Menu item-->
+    </div>
+    <!--end::Menu-->
+    <!--end::Button Export-->
+    <!--begin::Separator-->
+    <span class="h-25px border-gray-300 border-start mx-4"></span>
+    <!--end::Separator-->
+    <a (click)="save()" class="btn btn-primary btn-bold me-2">Save Changes</a>
+    <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+  </lt-toolbar>
+  <form name="editForm">
+    <lt-portlet [mode]="['bordered-semi']" id="m_portlet_tobacco">
+      <lt-portlet-head></lt-portlet-head>
+      <lt-portlet-body>
+        <portlet-tab #tabInfo="portletTab" id="m_product_tab_information" heading="Information">
+          <app-product-info *ngIf="tabInfo.active" [product]="product" [submitter]="submitter"></app-product-info>
+        </portlet-tab>
+        <portlet-tab #tabDetail="portletTab" id="m_product_tab_details" heading="Product Details">
+          <app-tobacco-product-detail *ngIf="tabDetail.active" [product]="product" [readonly]="isReadOnly">
+          </app-tobacco-product-detail>
+        </portlet-tab>
+        <portlet-tab #tabManufacturer="portletTab" id="" heading="Manufacturers">
+          <app-product-manufacturer *ngIf="tabManufacturer.active" [product]="product" [readonly]="isReadOnly">
+          </app-product-manufacturer>
+        </portlet-tab>
+        <portlet-tab #tabPresentation="portletTab" id="m_product_tab_presentation" heading="Product Presentation">
+          <app-tobacco-product-presentation *ngIf="tabPresentation.active" [product]="product" [readonly]="isReadOnly">
+          </app-tobacco-product-presentation>
+        </portlet-tab>
+        <portlet-tab #tabIngredient="portletTab" id="m_product_tab_ingredients" heading="Product Ingredients">
+          <app-tobacco-product-ingredient *ngIf="tabIngredient.active" [product]="product" [readonly]="isReadOnly">
+          </app-tobacco-product-ingredient>
+        </portlet-tab>
+        <portlet-tab #tabOther="portletTab" id="m_product_tab_other" heading="Other Ingredients">
+          <app-tobacco-product-other-ingredient *ngIf="tabOther.active" [product]="product" [readonly]="isReadOnly">
+          </app-tobacco-product-other-ingredient>
+        </portlet-tab>
+        <portlet-tab #tabTnco="portletTab" id="m_product_tab_tnco" heading="TNCO">
+          <app-tobacco-product-tnco
+            *ngIf="tabTnco.active"
+            [product]="product"
+            [readonly]="isReadOnly"
+          ></app-tobacco-product-tnco>
+        </portlet-tab>
+        <portlet-tab #tabEmission="portletTab" id="m_product_tab_emissions" heading="Other Emissions">
+          <app-tobacco-product-other-emission *ngIf="tabEmission.active" [product]="product" [readonly]="isReadOnly">
+          </app-tobacco-product-other-emission>
+        </portlet-tab>
+        <portlet-tab #tabValidation="portletTab" id="m_product_tab_validation" heading="Validation">
+          <app-product-validation *ngIf="tabValidation.active" [product]="product"></app-product-validation>
+        </portlet-tab>
+      </lt-portlet-body>
+    </lt-portlet>
+    <app-audit-detail [audit]="product"></app-audit-detail>
+  </form>
+</ng-container>

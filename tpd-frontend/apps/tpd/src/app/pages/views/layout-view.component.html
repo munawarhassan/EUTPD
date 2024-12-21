@@ -1,0 +1,12 @@
+<lt-layout>
+  <app-topbar ltTopbar></app-topbar>
+  <ng-container ltAside>
+    <router-outlet name="aside" (activate)="onAsideActivated($event)" (deactivate)="onAsideDesactivated($event)">
+    </router-outlet>
+  </ng-container>
+  <lt-content [width]="width">
+    <router-outlet></router-outlet>
+    <ng-content></ng-content>
+  </lt-content>
+  <app-footer ltFooter></app-footer>
+</lt-layout>

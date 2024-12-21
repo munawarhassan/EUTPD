@@ -1,0 +1,45 @@
+<ng-container *ngIf="value">
+  <ng-container
+    *ngTemplateOutlet="readonly ? itemTemplate : menuTemplate; context: { $implicit: product }"
+  ></ng-container>
+</ng-container>
+
+<ng-template #itemTemplate let-product>
+  <div class="d-flex align-items-center">
+    <span class="bullet bullet-dot h-15px w-15px me-2" [ngClass]="getClassPirStatus(value)"></span>
+    <span class="text-muted text-lowercase">{{ value }}</span>
+  </div>
+</ng-template>
+
+<ng-template #menuTemplate let-product>
+  <a
+    href="#"
+    class="btn btn-sm d-flex align-items-center"
+    data-lt-menu-trigger="click"
+    data-lt-menu-placement="bottom-start"
+  >
+    <span class="bullet bullet-dot h-15px w-15px me-2" [ngClass]="getClassPirStatus(product.pirStatus)"></span>
+    <span class="text-muted text-lowercase">{{ product.pirStatus }}</span>
+    <span class="svg-icon svg-icon-5 ms-auto" [inlineSVG]="svgIcons.Duotone.arrows.down"></span>
+  </a>
+  <!--begin::Menu-->
+  <div
+    ltMenu
+    class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4"
+  >
+    <!--begin::Menu item-->
+    <div class="menu-item px-3" *ngFor="let status of productPirStatusList">
+      <a
+        href="#"
+        (click)="this.updatePirStatus(status)"
+        class="menu-link px-3"
+        [class.active]="status === product.pirStatus"
+      >
+        <span class="bullet bullet-dot h-15px w-15px me-2" [ngClass]="getClassPirStatus(status)"></span>
+        <span class="text-muted text-lowercase">{{ status }}</span>
+      </a>
+    </div>
+    <!--end::Menu item-->
+  </div>
+  <!--end::Menu-->
+</ng-template>

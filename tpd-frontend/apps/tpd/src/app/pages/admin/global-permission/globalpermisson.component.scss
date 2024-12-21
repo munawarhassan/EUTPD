@@ -1,0 +1,18 @@
+@import 'init';
+
+.permission-row {
+    a.delete-button {
+        display: none;
+    }
+
+    &:hover {
+        background-color: $primary-light;
+        border-radius: $border-radius;
+
+        a.delete-button {
+            cursor: pointer;
+            @include transition();
+            display: block;
+        }
+    }
+}

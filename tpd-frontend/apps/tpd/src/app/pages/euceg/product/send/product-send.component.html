@@ -1,0 +1,123 @@
+<lt-toolbar>
+  <a (click)="goBack()" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<form name="sendForm" #sendForm="ngForm" class="form-horizontal" novalidate>
+  <lt-portlet id="m_portlet_product_send">
+    <lt-portlet-body [mode]="['fit-y']">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="card card-flush shadow-none" *ngIf="product">
+            <div class="card-header">
+              <h4 class="card-title">
+                <inline-svg class="me-2" size="1" color="primary" [src]="svgIcons.Simple.shopping.box2"></inline-svg>
+                <span>Product</span>
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <label class="form-label">Product Number</label>
+                <input class="form-control form-control-transparent" readonly [value]="product.productNumber" />
+              </div>
+              <div class="row mb-3">
+                <label class="form-label">Submitter</label>
+                <input class="form-control form-control-transparent" readonly [value]="submitter?.details?.Name" />
+              </div>
+              <div class="row mb-3">
+                <label class="form-label">Type</label>
+                <input
+                  class="form-control form-control-transparent"
+                  readonly
+                  [value]="euceg.getProductType(product.product.ProductType, product.productType)"
+                />
+              </div>
+              <div class="row mb-3" *ngIf="latestSubmission">
+                <label class="form-label">Latest Submission</label>
+                <p class="form-control-plaintext">
+                  {{ latestSubmission.productId }}&nbsp;
+                  <span submissionStatus [status]="latestSubmission.submissionStatus"></span>
+                  <span class="help-block" *ngIf="child"
+                    >This latest submission provides from <a [routerLink]="['/view', child]">{{ child }}</a></span
+                  >
+                </p>
+              </div>
+              <div class="row mb-3" *ngIf="latestSubmission">
+                <label class="form-label">Latest Submission Type</label>
+                <input
+                  class="form-control form-control-transparent"
+                  readonly
+                  [value]="euceg.getSubmissionType(latestSubmission.submissionType)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1 text-center text-secondary h-100 my-auto">
+          <i class="fa fa-arrow-right fa-4x" aria-hidden="true"></i>
+        </div>
+        <div class="col-sm-6">
+          <div class="card card-flush shadow-none">
+            <div class="card-header">
+              <h4 class="card-title">
+                <inline-svg class="me-2" size="1" color="primary" [src]="svgIcons.Simple.code.git4"></inline-svg>
+                <span>Submission</span>
+              </h4>
+              <div class="card-toolbar">
+                <div *ngIf="domibus">
+                  <span class="text-gray-700 me-2">Domibus State</span>
+                  <span
+                    class="badge badge-lg"
+                    [ngClass]="{
+                      'badge-success': domibus.status === 'UP',
+                      'badge-danger': domibus.status === 'DOWN',
+                      'badge-dark': domibus.status === 'OUT_OF_SERVICE'
+                    }"
+                    >{{ domibus.status }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div>
+                <label class="form-label text-left required">Type</label>
+                <form-select
+                  name="submissionType"
+                  placeholder="Select Submission Type..."
+                  [(ngModel)]="request.submissionType"
+                  [options]="submissionTypes"
+                  [required]="true"
+                ></form-select>
+              </div>
+              <div *ngIf="checkSubmissionType()">
+                <label class="form-label text-left required">Previous Submission</label>
+                <p class="form-control-static">{{ previousProductId }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </lt-portlet-body>
+    <lt-portlet-foot>
+      <div class="row align-items-center">
+        <div class="offset-md-3 col align-right">
+          <button
+            type="submit"
+            class="btn btn-primary me-3"
+            (click)="sendImmediatProduct(sendForm)"
+            id="m_submission_send_btn"
+          >
+            Send Submission
+          </button>
+          <button
+            type="button"
+            id="m_submission_create_btn"
+            class="btn btn-light-primary btn-bold me-4"
+            (click)="createSubmission(sendForm)"
+          >
+            Create Submission
+          </button>
+          <a href="#" (click)="goBack()" class="link link-primary me-3" translate="global.button.cancel"></a>
+        </div>
+      </div>
+    </lt-portlet-foot>
+  </lt-portlet>
+</form>

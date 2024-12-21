@@ -1,0 +1,8 @@
+<ngx-loading-bar color="#3699FF" [includeSpinner]="false" ref="router"> </ngx-loading-bar>
+<div *ngIf="isDev" class="ribbon development"></div>
+<div *ngIf="isQA" class="ribbon qa"></div>
+<div *ngIf="splashScreenEnable" id="splash-screen" class="splash-screen">
+  <img src="./assets/media/logos/logo.svg" alt="Devacfr" />
+  <span>Loading ...</span>
+</div>
+<router-outlet></router-outlet>

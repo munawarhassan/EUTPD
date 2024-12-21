@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EcigProductSubmission>
+  <Submitter confidential="false" submitterID="99962">
+    <SubmitterType>MANUFACTURER</SubmitterType>
+    <HasParent>true</HasParent>
+    <Parent confidential="false">
+      <Name>PHILIP MORRIS PRODUCTS S.A.</Name>
+      <Address>Quai Jeanrenaud 3, 2000 Neuchâtel</Address>
+      <Country>CH</Country>
+      <PhoneNumber>+41 (58) 242 3384</PhoneNumber>
+      <Email>ProductInformationReporting.PIR@pmi.com</Email>
+    </Parent>
+    <HasAffiliates>true</HasAffiliates>
+    <Affiliates>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Austria GmbH</Name>
+        <Address>Vorgartenstraße 206 B-C, A-1020 Vienna</Address>
+        <Country>AT</Country>
+        <PhoneNumber>0043 1 72786 1001</PhoneNumber>
+        <Email>Office.PMAT@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Bulgaria EOOD</Name>
+        <Address>Sofia, 53A Nikola Vaptsarov Blvd., East Park Trade
+          Center, fl. 3
+        </Address>
+        <Country>BG</Country>
+        <PhoneNumber>+359 2 8063100</PhoneNumber>
+        <Email>Administration.PMBG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS ZAGREB, d.o.o.</Name>
+        <Address>Heinzelova ulica 70, 10000 Zagreb</Address>
+        <Country>HR</Country>
+        <PhoneNumber>+385 (0)1 6166 900</PhoneNumber>
+        <Email>pmz.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris ČR a.s.</Name>
+        <Address>Vítězná 1, 284 03 Kutná Hora</Address>
+        <Country>CZ</Country>
+        <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+        <Email>philipmorris.cz@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris ApS</Name>
+        <Address>Weidekampsgade 14 A, 3 DK-2300 Copenhagen S</Address>
+        <Country>DK</Country>
+        <PhoneNumber>+45 70 23 10 21</PhoneNumber>
+        <Email>thomas.jepsen@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Eesti OÜ</Name>
+        <Address>Tartu mnt 43/F.R. Kreutzwaldi 24, 10147 Tallinn,
+          Estonia
+        </Address>
+        <Country>EE</Country>
+        <PhoneNumber>+ 372 6050400</PhoneNumber>
+        <Email>kai.tammist@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Finland Oy</Name>
+        <Address>Lautatarhankatu 6 FI-00580 Helsinki</Address>
+        <Country>FI</Country>
+        <PhoneNumber>+358 207 600 600</PhoneNumber>
+        <Email>berth.sundstrom@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris GmbH</Name>
+        <Address>Am Haag 14, 82166 Gräfelfing</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Manufacturing GmbH</Name>
+        <Address>Neuköllnische Allee 80, 12057 Berlin</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>f6 Cigarettenfabrik GmbH &amp; Co.KG</Name>
+        <Address>Glashütter Straße 94, 01277 Dresden</Address>
+        <Country>DE</Country>
+        <PhoneNumber>+498972470</PhoneNumber>
+        <Email>CorporateAffairs.PMG@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Papastratos Cigarettes Manufacturing Company S.A.</Name>
+        <Address>Imeros Topos, Location Kororemi, Aspropyrgos, 193 00,
+          Greece
+        </Address>
+        <Country>GR</Country>
+        <PhoneNumber>+30 210 4193000</PhoneNumber>
+        <Email>papastratos@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Hungary Cigarette Trading Ltd.</Name>
+        <Address>1085 Budapest, Kálvin square 12. II-III. Floor
+        </Address>
+        <Country>HU</Country>
+        <PhoneNumber>+36 (1) 450 4417</PhoneNumber>
+        <Email>zoltan.pozsga@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris AB</Name>
+        <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm
+        </Address>
+        <Country>SE</Country>
+        <PhoneNumber>+46 8440 59 40</PhoneNumber>
+        <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Limited</Name>
+        <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+        <Country>GB</Country>
+        <PhoneNumber>44 20 7076 6000</PhoneNumber>
+        <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Italia Srl</Name>
+        <Address>Via Po 11-13-15, 00198 Rome</Address>
+        <Country>IT</Country>
+        <PhoneNumber>003906854451</PhoneNumber>
+        <Email>philipmorrisitaliasrl@pec.it</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PM Tobakk Norge AS</Name>
+        <Address>Stenersgata 2 0184 Oslo</Address>
+        <Country>NO</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>reception.pmno@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Polska S.A.</Name>
+        <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+        <Country>PL</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Polska Distribution Spółka z o.o.</Name>
+        <Address>Al. Jana Pawła II 196, 31-982 Kraków, Poland</Address>
+        <Country>PL</Country>
+        <PhoneNumber>+47 23 10 03 60</PhoneNumber>
+        <Email>PMPLBiuroPrasowe@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS LJUBLJANA D.O.O.</Name>
+        <Address>Letališka cesta 29a, 1000 Ljubljana</Address>
+        <Country>SI</Country>
+        <PhoneNumber>01 586 37 00</PhoneNumber>
+        <Email>pmi.info@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Slovakia s.r.o.</Name>
+        <Address>Galvaniho 15/A Bratislava 821 04</Address>
+        <Country>SK</Country>
+        <PhoneNumber>+421249242111</PhoneNumber>
+        <Email>sk.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>PHILIP MORRIS SPAIN S.L.</Name>
+        <Address>Paseo de la Habana 101 28036 Madrid Spain</Address>
+        <Country>ES</Country>
+        <PhoneNumber>0034 91 748 5500</PhoneNumber>
+        <Email>spain.reception@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris AB</Name>
+        <Address>Karlavägen 108, 12 TR, Box 24242, 104 51 Stockholm
+        </Address>
+        <Country>SE</Country>
+        <PhoneNumber>+46 8440 59 40</PhoneNumber>
+        <Email>peter.strempel@pmi.com</Email>
+      </Affiliate>
+      <Affiliate confidential="false">
+        <Name>Philip Morris Limited</Name>
+        <Address>10 Hammersmith Grove, London W6 7AP, UK</Address>
+        <Country>GB</Country>
+        <PhoneNumber>44 20 7076 6000</PhoneNumber>
+        <Email>alastair.mackay@pmi.com</Email>
+      </Affiliate>
+    </Affiliates>
+    <HasEnterer>false</HasEnterer>
+    <HasNaturalLegalRepresentative
+      confidential="false">false</HasNaturalLegalRepresentative>
+  </Submitter>
+  <SubmissionType confidential="false">1</SubmissionType>
+  <GeneralComment confidential="false">For testing purposes only
+  </GeneralComment>
+  <Product>
+    <ProductID confidential="false">99962-22-00003</ProductID>
+    <OtherProductsExist confidential="true">true
+    </OtherProductsExist>
+    <OtherProducts>
+      <ProductIdentification type="PRODUCT_ID"
+        confidential="true">SubmitterID-2016-POM.other</ProductIdentification>
+    </OtherProducts>
+    <SameCompositionProductsExist
+      confidential="true">false</SameCompositionProductsExist>
+    <Manufacturers>
+      <Manufacturer confidential="false">
+        <Name>Nicocigs Ltd.</Name>
+        <Address>1234 Address St</Address>
+        <Country>GB</Country>
+        <PhoneNumber>41 (0)73 985 68 25</PhoneNumber>
+        <Email>pmi@pmi</Email>
+        <ProductionSiteAddresses>
+          <ProductionSiteAddress
+            confidential="false">
+            <Address>1234 Keller Drive</Address>
+            <Country>CH</Country>
+          </ProductionSiteAddress>
+        </ProductionSiteAddresses>
+      </Manufacturer>
+    </Manufacturers>
+    <MarketResearchFiles>
+      <Attachment
+        attachmentID="be6acaf5-9b41-4f4d-98a0-ee5bec64b701" />
+    </MarketResearchFiles>
+    <ProductType confidential="false">4</ProductType>
+    <Weight confidential="false">10756</Weight>
+    <Volume confidential="false">10</Volume>
+    <ClpClassification confidential="false">Not classified
+    </ClpClassification>
+    <StudySummaryFiles>
+      <Attachment
+        attachmentID="0b950b9b-5740-41c2-b5da-bdbed2b434fc" />
+    </StudySummaryFiles>
+    <Presentations>
+      <Presentation>
+        <NationalMarket confidential="false">GB</NationalMarket>
+        <NationalComment confidential="false">Should be GB not
+          UK
+        </NationalComment>
+        <BrandName confidential="false">Brand 1</BrandName>
+        <BrandSubtypeNameExists
+          confidential="false">true</BrandSubtypeNameExists>
+        <BrandSubtypeName confidential="false">Starter Kit
+        </BrandSubtypeName>
+        <LaunchDate confidential="false">2016-09-01</LaunchDate>
+        <WithdrawalIndication confidential="false">false
+        </WithdrawalIndication>
+        <ProductNumberType confidential="false">SUBMITTER
+        </ProductNumberType>
+        <ProductNumber confidential="false">POM.nnnnn
+        </ProductNumber>
+        <PackageUnits confidential="false">1</PackageUnits>
+        <UnitPacketPictureFile
+          attachmentID="20900b34-f2fe-48df-be4c-2afd2106ebf4" />
+        <AnnualSalesDataList>
+          <AnnualSalesData>
+            <Year confidential="true">2016</Year>
+            <SalesVolume confidential="true">8000</SalesVolume>
+            <SalesMode
+              attachmentID="5aedb950-5074-449d-81b5-e268e8ca31ff" />
+          </AnnualSalesData>
+        </AnnualSalesDataList>
+      </Presentation>
+    </Presentations>
+    <Ingredients>
+      <Ingredient>
+        <Name confidential="false">Ingredient_ Name1</Name>
+        <CasNumberExists confidential="false">true
+        </CasNumberExists>
+        <CasNumber confidential="false">11-11-1</CasNumber>
+        <AdditionalCasNumbers>
+          <CasNumber confidential="false">11-11-3</CasNumber>
+          <CasNumber confidential="false">11-11-4</CasNumber>
+          <CasNumber confidential="false">11-11-5</CasNumber>
+        </AdditionalCasNumbers>
+        <RecipeQuantity confidential="false">7752.214919
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="false">4</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">0</ToxicityStatus>
+        <ReachRegistration confidential="false">NOT_YET_REGISTERED
+        </ReachRegistration>
+        <ClpWhetherClassification
+          confidential="false">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="false">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">true</ToxEmission>
+          <ToxCmr confidential="false">true</ToxCmr>
+          <ToxCardioPulmonary confidential="false">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="false">true</ToxAddictive>
+          <ToxOther confidential="false">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxAddictiveFiles>
+            <Attachment
+              attachmentID="618ccdc8-ae56-462c-ac49-4397b5b943ce" />
+          </ToxAddictiveFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="false">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="false">Ingredient_ Name2</Name>
+        <CasNumberExists confidential="false">true
+        </CasNumberExists>
+        <CasNumber confidential="false">222-22-2</CasNumber>
+        <AdditionalCasNumbers>
+          <CasNumber confidential="false">11-11-3</CasNumber>
+          <CasNumber confidential="false">11-11-4</CasNumber>
+        </AdditionalCasNumbers>
+        <RecipeQuantity confidential="false">2151.4
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="false">4</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">0</ToxicityStatus>
+        <ReachRegistration confidential="false">EXEMPTED
+        </ReachRegistration>
+        <ClpWhetherClassification
+          confidential="false">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="false">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">true</ToxEmission>
+          <ToxCmr confidential="false">true</ToxCmr>
+          <ToxCardioPulmonary confidential="false">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="false">false</ToxAddictive>
+          <ToxOther confidential="false">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="false">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="false">Ingredient_ Name3</Name>
+        <CasNumberExists confidential="false">true
+        </CasNumberExists>
+        <CasNumber confidential="false">3333-33-3</CasNumber>
+        <AdditionalCasNumbers>
+          <CasNumber confidential="false">11-11-3</CasNumber>
+        </AdditionalCasNumbers>
+        <RecipeQuantity confidential="false">645.42
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="false">2</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">0</ToxicityStatus>
+        <ReachRegistrationNumber
+          confidential="false">1</ReachRegistrationNumber>
+        <ClpWhetherClassification
+          confidential="false">true</ClpWhetherClassification>
+        <ClpAcuteToxOral confidential="false">1
+        </ClpAcuteToxOral>
+        <ClpAcuteToxDermal confidential="false">1
+        </ClpAcuteToxDermal>
+        <ClpAcuteToxInhalation
+          confidential="false">1</ClpAcuteToxInhalation>
+        <ClpSkinCorrosiveIrritant
+          confidential="false">1C</ClpSkinCorrosiveIrritant>
+        <ClpEyeDamageIrritation
+          confidential="false">1</ClpEyeDamageIrritation>
+        <ClpRespiratorySensitisation
+          confidential="false">1</ClpRespiratorySensitisation>
+        <ClpSkinSensitisation confidential="false">1
+        </ClpSkinSensitisation>
+        <ClpMutagenGenotox confidential="false">1A
+        </ClpMutagenGenotox>
+        <ClpCarcinogenicity confidential="false">1A
+        </ClpCarcinogenicity>
+        <ClpReproductiveTox confidential="false">1B
+        </ClpReproductiveTox>
+        <ClpStot confidential="false">1</ClpStot>
+        <ClpStotDescription confidential="false">CLP STOT
+          Description
+        </ClpStotDescription>
+        <ClpAspirationTox confidential="false">1
+        </ClpAspirationTox>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="false">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">true</ToxEmission>
+          <ToxCmr confidential="false">true</ToxCmr>
+          <ToxCardioPulmonary confidential="false">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="false">false</ToxAddictive>
+          <ToxOther confidential="false">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="false">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="false">Ingredient_ Name4</Name>
+        <CasNumberExists confidential="false">false
+        </CasNumberExists>
+        <FemaNumber confidential="false">1234</FemaNumber>
+        <RecipeQuantity confidential="false">180.07218
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="false">1</Function>
+        </Functions>
+        <ToxicityStatus confidential="false">1</ToxicityStatus>
+        <ReachRegistration confidential="false">NOT_YET_REGISTERED
+        </ReachRegistration>
+        <ClpWhetherClassification
+          confidential="false">true</ClpWhetherClassification>
+        <ClpAcuteToxOral confidential="false">1
+        </ClpAcuteToxOral>
+        <ClpAcuteToxDermal confidential="false">1
+        </ClpAcuteToxDermal>
+        <ClpAcuteToxInhalation
+          confidential="false">1</ClpAcuteToxInhalation>
+        <ClpSkinCorrosiveIrritant
+          confidential="false">1B</ClpSkinCorrosiveIrritant>
+        <ClpEyeDamageIrritation
+          confidential="false">1</ClpEyeDamageIrritation>
+        <ClpRespiratorySensitisation
+          confidential="false">1</ClpRespiratorySensitisation>
+        <ClpSkinSensitisation confidential="false">1
+        </ClpSkinSensitisation>
+        <ClpMutagenGenotox confidential="false">1A
+        </ClpMutagenGenotox>
+        <ClpCarcinogenicity confidential="false">1A
+        </ClpCarcinogenicity>
+        <ClpReproductiveTox confidential="false">1B
+        </ClpReproductiveTox>
+        <ClpStot confidential="false">1</ClpStot>
+        <ClpStotDescription confidential="false">CLP STOT
+          Description
+        </ClpStotDescription>
+        <ClpAspirationTox confidential="false">1
+        </ClpAspirationTox>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="false">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="false">true</ToxEmission>
+          <ToxCmr confidential="false">true</ToxCmr>
+          <ToxCardioPulmonary confidential="false">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="false">false</ToxAddictive>
+          <ToxOther confidential="false">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="false">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="true">Ingredient_ Name5</Name>
+        <CasNumberExists confidential="true">false
+        </CasNumberExists>
+        <AdditiveNumber confidential="true">12345
+        </AdditiveNumber>
+        <RecipeQuantity confidential="true">7.5299
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="true">12</Function>
+        </Functions>
+        <ToxicityStatus confidential="true">1</ToxicityStatus>
+        <ReachRegistration confidential="true">NOT_YET_REGISTERED
+        </ReachRegistration>
+        <ClpWhetherClassification
+          confidential="true">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="true">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="true">true</ToxEmission>
+          <ToxCmr confidential="true">true</ToxCmr>
+          <ToxCardioPulmonary confidential="true">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="true">false</ToxAddictive>
+          <ToxOther confidential="true">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="true">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="true">Ingredient_ Name6</Name>
+        <CasNumberExists confidential="true">false
+        </CasNumberExists>
+        <FlNumber confidential="true">222-22-2</FlNumber>
+        <RecipeQuantity confidential="true">6.88448
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="true">12</Function>
+        </Functions>
+        <ToxicityStatus confidential="true">2</ToxicityStatus>
+        <ReachRegistration confidential="true">EXEMPTED
+        </ReachRegistration>
+        <ClpWhetherClassification
+          confidential="true">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="true">1</ToxicologicalDataAvailable>
+          <ToxEmission confidential="true">true</ToxEmission>
+          <ToxCmr confidential="true">true</ToxCmr>
+          <ToxCardioPulmonary confidential="true">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="true">false</ToxAddictive>
+          <ToxOther confidential="true">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="true">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+      <Ingredient>
+        <Name confidential="true">Ingredient_ Name7</Name>
+        <CasNumberExists confidential="true">false
+        </CasNumberExists>
+        <EcNumber confidential="true">333-333-3</EcNumber>
+        <RecipeQuantity confidential="true">2.829091
+        </RecipeQuantity>
+        <Functions>
+          <Function confidential="true">12</Function>
+        </Functions>
+        <ToxicityStatus confidential="true">0</ToxicityStatus>
+        <ReachRegistrationNumber
+          confidential="true">0</ReachRegistrationNumber>
+        <ClpWhetherClassification
+          confidential="true">false</ClpWhetherClassification>
+        <ToxicologicalDetails>
+          <ToxicologicalDataAvailable
+            confidential="true">2</ToxicologicalDataAvailable>
+          <ToxEmission confidential="true">true</ToxEmission>
+          <ToxCmr confidential="true">true</ToxCmr>
+          <ToxCardioPulmonary confidential="true">true
+          </ToxCardioPulmonary>
+          <ToxAddictive confidential="true">false</ToxAddictive>
+          <ToxOther confidential="true">true</ToxOther>
+          <ToxEmissionFiles>
+            <Attachment
+              attachmentID="4c0deba6-44b4-4979-8d84-e99ea7a35b6a" />
+          </ToxEmissionFiles>
+          <ToxCmrFiles>
+            <Attachment
+              attachmentID="916fae5b-6f82-4bf7-8a15-83a0d5fdc4eb" />
+          </ToxCmrFiles>
+          <ToxCardioPulmonaryFiles>
+            <Attachment
+              attachmentID="be5a1ba5-81ad-48c8-b3d5-96f1e5493ead" />
+          </ToxCardioPulmonaryFiles>
+          <ToxOtherFiles>
+            <Attachment
+              attachmentID="5a9d2a84-f13e-4694-97b3-581c4f7995b6" />
+          </ToxOtherFiles>
+        </ToxicologicalDetails>
+        <IdentificationRefillContainerCartridge
+          confidential="true">N/A</IdentificationRefillContainerCartridge>
+      </Ingredient>
+    </Ingredients>
+    <Emissions>
+      <Emission>
+        <CasNumber confidential="true">54-11-5</CasNumber>
+        <Quantity confidential="true">10000</Quantity>
+        <Unit confidential="true">mg per puff</Unit>
+        <MethodsFile>
+          <Attachment
+            attachmentID="78c332dc-8929-4b85-8e07-349685464113" />
+        </MethodsFile>
+        <ProductCombination confidential="true">ecig with
+          refill container 1
+        </ProductCombination>
+        <Name confidential="true">1</Name>
+      </Emission>
+      <Emission>
+        <CasNumber confidential="true">7439-97-6</CasNumber>
+        <Quantity confidential="true">0.000000009</Quantity>
+        <Unit confidential="true">mg/puff</Unit>
+        <MethodsFile>
+          <Attachment
+            attachmentID="78c332dc-8929-4b85-8e07-349685464113" />
+        </MethodsFile>
+        <Name confidential="true">22</Name>
+        <NameOther confidential="true">Emission 4</NameOther>
+      </Emission>
+      <Emission>
+        <CasNumber confidential="true">431-03-8</CasNumber>
+        <Quantity confidential="true">0.0000000009</Quantity>
+        <Unit confidential="true">mg/puff</Unit>
+        <MethodsFile>
+          <Attachment
+            attachmentID="78c332dc-8929-4b85-8e07-349685464113" />
+        </MethodsFile>
+        <Name confidential="true">20</Name>
+      </Emission>
+      <Emission>
+        <CasNumber confidential="true">600-14-6</CasNumber>
+        <Quantity confidential="true">0.00000000009</Quantity>
+        <Unit confidential="true">mg/puff</Unit>
+        <MethodsFile>
+          <Attachment
+            attachmentID="78c332dc-8929-4b85-8e07-349685464113" />
+        </MethodsFile>
+        <Name confidential="true">21</Name>
+      </Emission>
+    </Emissions>
+    <Design>
+      <Description confidential="false">Ecigarette 1</Description>
+      <IdentificationEcigDevice
+        confidential="false">N/A</IdentificationEcigDevice>
+      <LiquidVolumeCapacity confidential="false">2
+      </LiquidVolumeCapacity>
+      <NicotineConcentration confidential="false">20
+      </NicotineConcentration>
+      <BatteryType confidential="false">lithium-ion cell /
+        e-New
+        energy 13450 model
+      </BatteryType>
+      <BatteryCapacity confidential="false">650
+      </BatteryCapacity>
+      <VoltageWattageAdjustable
+        confidential="false">4</VoltageWattageAdjustable>
+      <Voltage confidential="false">3.7</Voltage>
+      <Wattage confidential="false">7</Wattage>
+      <AirflowAdjustable confidential="false">false
+      </AirflowAdjustable>
+      <WickChangeable confidential="false">false</WickChangeable>
+      <Microprocessor confidential="false">true</Microprocessor>
+      <CoilComposition confidential="false">Ni80Cr20
+      </CoilComposition>
+      <NicotineDoseUptakeFile
+        attachmentID="4fdb49fd-6c72-4b37-ab9b-ec1454078781" />
+      <ProductionFile
+        attachmentID="238d0f2d-5dd0-4f07-838e-24680cb37d51" />
+      <ProductionConformity confidential="false">true
+      </ProductionConformity>
+      <QualitySafety confidential="false">true</QualitySafety>
+      <OpeningRefillFile
+        attachmentID="3ce48d55-46a6-4abd-b619-0b588a44c628" />
+      <ChildTamperProof confidential="false">false
+      </ChildTamperProof>
+      <HighPurity confidential="false">true</HighPurity>
+      <NonRisk confidential="false">true</NonRisk>
+      <ConsistentDosing confidential="false">true
+      </ConsistentDosing>
+    </Design>
+  </Product>
+</EcigProductSubmission>

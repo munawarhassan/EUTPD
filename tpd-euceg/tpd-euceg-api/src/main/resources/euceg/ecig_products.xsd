@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+           jaxb:version="2.1">
+
+    <xs:include schemaLocation="products.xsd"/>
+
+    <xs:complexType name="EcigProduct">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette product.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Product">
+                <xs:sequence>
+                    <xs:element name="ProductType" type="EcigProductType">
+                        <xs:annotation>
+                            <xs:documentation>The e-cigarette product type.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Weight" type="Double" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Total weight of e-liquid in one product unit in mg.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Volume" type="Double" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Total weight of e-liquid in one product unit in ml.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ClpClassification" type="String300" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Overall product classification (including labelling elements) as a mixture of substances based
+                                on Regulation (EC) No 1272/2008 of the European Parliament and of the Council and as described in the
+                                "Guidance on the Application of the CLP Criteria".
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="StudySummaryFiles" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Executive summaries of any market studies carried out in respect of the above fields (Sales
+                                Volume, Mode of Sales, Market Research), including an English translation thereof
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Attachment" type="AttachmentRef" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Presentations">
+                        <xs:annotation>
+                            <xs:documentation>Description of the format(s) and Member State(s) in which the product is presented for sale.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Presentation" type="EcigPresentation" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Ingredients" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>The list of product ingredients.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Ingredient" type="EcigIngredient" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Emissions" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>The list of product emissions.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Emission" type="EcigEmission" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Design" type="Design">
+                        <xs:annotation>
+                            <xs:documentation>The product design information.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EcigProductType">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette product type.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EcigProductTypeEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the product type is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EcigProductTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The list of e-cigarette product types.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Electronic cigarette – Disposable.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="DISPOSABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Electronic cigarette – Rechargeable, placed on the market with one type of e-liquid (fixed
+                        combination). Any rechargeable which can also be used as a refillable should be reported under the refillable
+                        category.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="RECHARGEABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Electronic cigarette – Rechargeable, device only Any rechargeable which can also be used as a
+                        refillable should be reported under the refillable category.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="RECHARGEABLE_DEVICE_ONLY"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>Electronic cigarette – Refillable, placed on the market with one type of e-liquid (fixed
+                        combination).
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="REFILLABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>Electronic cigarette – Refillable, device only.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="REFILLABLE_DEVICE_ONLY"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>Kit – Pack containing more than one different e-cigarette device and/or more than one different refill
+                        container/cartridge.
+                    </xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="KIT"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>Refill container/cartridge containing e-liquid.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="REFILL_CONTAINER_CARTRIDGE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+                <xs:annotation>
+                    <xs:documentation>Individual part of electronic cigarette capable of containing e-liquid.</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="INDIVIDUAL_PART"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+                <xs:annotation>
+                    <xs:documentation>Other</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="OTHER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="EcigPresentation">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette product presentation.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Presentation">
+                <xs:sequence>
+                    <xs:element name="PackageUnits" type="Integer">
+                        <xs:annotation>
+                            <xs:documentation>The number of individual units in the unit packet.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence>
+                    <xs:element name="UnitPacketPictureFile" type="AttachmentRef" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>The picture of the unit packet. The picture must be clear enough to view details and to assist
+                                in the identification of unique products.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    </xs:sequence>
+                    <xs:element name="AnnualSalesDataList" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>The supplementary market data available to the submitter. To be updated in case new data
+                                become available.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="AnnualSalesData" type="EcigAnnualSalesData" maxOccurs="unbounded">
+                                    <xs:annotation>
+                                        <xs:documentation>The list of annual sales data.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EcigAnnualSalesData">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette annual sales data.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AnnualSalesData">
+                <xs:sequence>
+                    <xs:element name="SalesMode" type="AttachmentRef" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Description of mode of sale of the product.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EcigIngredient">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette ingredient.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Ingredient">
+                <xs:sequence>
+                    <xs:element name="IdentificationRefillContainerCartridge" type="String300" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Identification of the refill container/cartridge.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EcigEmission">
+        <xs:annotation>
+            <xs:documentation>Defines an e-cigarette emission.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="Emission">
+                <xs:sequence>
+                    <xs:element name="AdditionalProducts" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>If the product requires an additional product(s) for use, the EC-ID of the additional
+                                product(s) used to carry out the tests must be provided. If EC_ID of the additional product(s) is not known
+                                to the submitter, brand and subtype name(s) as well as Member State(s) where product is placed on the market
+                                shall at least be provided.
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="ProductIdentification" type="ProductIdentification" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ProductCombination" type="String500" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>If the product contains more than one item or more than one combination of an e-cigarette or
+                                refill container, specification of the item or combination used to measure the emission.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:sequence>
+                        <xs:element name="Name" type="EmissionName">
+                            <xs:annotation>
+                                <xs:documentation>Name of the emission produced during the testing of the product.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="NameOther" type="String100" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>Other name of the emission produced during the testing of the product.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EmissionName">
+        <xs:annotation>
+            <xs:documentation>Defines an emission name.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EmissionNameEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the emission name is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="EmissionNameEnum">
+        <xs:annotation>
+            <xs:documentation>The list of emission names.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Nicotine</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NICOTINE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Ethylene glycol</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ETHYLENE_GLYCOL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Diethylene glycol</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="DIETHYLENE_GLYCOL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>Formaldehyde</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="FORMALDEHYDE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>Acetaldehyde</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ACETALDEHYDE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>Acrolein</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ACROLEIN"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>Crotonaldehyde</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CROTONALDEHYDE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+                <xs:annotation>
+                    <xs:documentation>TSNA: NNN</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TSNA_NNN"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+                <xs:annotation>
+                    <xs:documentation>TSNA: NNK</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TSNA_NNK"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+                <xs:annotation>
+                    <xs:documentation>Cadmium</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CADMIUM"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>Chromium</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="CHROMIUM"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>Copper</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="COPPER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+                <xs:annotation>
+                    <xs:documentation>Lead</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="LEAD"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+                <xs:annotation>
+                    <xs:documentation>Nickel</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="NICKEL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+                <xs:annotation>
+                    <xs:documentation>Arsenic</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ARSENIC"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+                <xs:annotation>
+                    <xs:documentation>Toluene</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="TOLUENE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+                <xs:annotation>
+                    <xs:documentation>Benzene</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="BENZENE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+                <xs:annotation>
+                    <xs:documentation>1,3-Butadiene</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="BUTADIENE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="19">
+                <xs:annotation>
+                    <xs:documentation>Isoprene</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ISOPRENE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+                <xs:annotation>
+                    <xs:documentation>Diacetyl</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="DIACETYL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="21">
+                <xs:annotation>
+                    <xs:documentation>Acetyl Propionyl</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ACETYL_PROPIONYL"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+                <xs:annotation>
+                    <xs:documentation>Other</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="OTHER"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Design">
+        <xs:annotation>
+            <xs:documentation>Defines a product design.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Description" type="String1000">
+                <xs:annotation>
+                    <xs:documentation>Description of the product to facilitate unique product identification, including a description of all
+                        items and the individual parts (components/e-liquid).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IdentificationEcigDevice" type="String300" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Identification of the refill container/cartridge.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LiquidVolumeCapacity" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Volume/capacity in ml (for devices, indicate tank size, for cartridges/cartomisers or for refill
+                        container actual volume when placed on the market).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NicotineConcentration" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nicotine concentration in mg/ml.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BatteryType" type="String300" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of the battery type.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BatteryCapacity" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication of the battery capacity in mAh.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VoltageWattageAdjustable" type="VoltageWattageAdjustable" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the e-cigarette is voltage/wattage adjustable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Voltage" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nominal voltage of the e-cigarette if non-adjustable and recommended voltage if adjustable.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VoltageLowerRange" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The lower voltage obtainable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VoltageUpperRange" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upper voltage obtainable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Wattage" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The nominal wattage output if non-adjustable and recommended wattage if adjustable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WattageLowerRange" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The lower wattage obtainable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WattageUpperRange" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The upper wattage obtainable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AirflowAdjustable" type="Boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the airflow of the e-cigarette is adjustable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="WickChangeable" type="Boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the consumer may adjust/alter/replace the wick.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Microprocessor" type="Boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication whether the e-cigarette contains a microprocessor.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CoilComposition" type="String300" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Chemical composition of the wiring (coil) in the atomiser.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NicotineDoseUptakeFile" type="AttachmentRef" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of the measurement methods used to assess consistent dosing and nicotine uptake, including
+                        reference to the relevant approved standard, when available. Description of the outcomes of the assessment.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductionFile" type="AttachmentRef">
+                <xs:annotation>
+                    <xs:documentation>Description of the final production process, including series production.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductionConformity" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Declaration that the production process ensures conformity (including but not limited to information
+                        on series production).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="QualitySafety" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Declaration that the manufacturer and importer bear full responsibility for the quality and safety of
+                        the product, when placed on the market and used under normal or reasonably foreseeable conditions.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OpeningRefillFile" type="AttachmentRef" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of the opening and refill mechanism, where applicable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ChildTamperProof" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Declaration that the product is child resistant and tamper proof protected against breakage and
+                        leakage and has a mechanism that ensures refilling without leakage (where applicable).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HighPurity" type="BooleanNullable" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Declaration that only ingredients of high purity are used in the manufacture of the liquid.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NonRisk" type="BooleanNullable">
+                <xs:annotation>
+                    <xs:documentation>Declaration that the product (with an exception for its nicotine content) does not pose reasonably
+                        foreseeable risk to human health under normal conditions of use.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ConsistentDosing" type="BooleanNullable" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Declaration of nicotine dosing at consistent levels during product use and across batches under normal
+                        or reasonably foreseeable conditions.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ConsistentDosingMethodsFile" type="AttachmentRef" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Description of how consistent dosing is ensured, including reference to the relevant approved
+                        standard, when available.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LeafletFile" type="AttachmentRef" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Upload of scanned file of the leaflet of information for consumers.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CoilResistance" type="Double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indication of the coil resistance in ohm.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VoltageWattageAdjustable">
+        <xs:annotation>
+            <xs:documentation>Defines the voltage/wattage adjustability.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="VoltageWattageAdjustableEnum">
+                <xs:attribute name="confidential" type="xs:boolean" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Indicates whether or not the voltage/wattage adjustability is confidential.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="VoltageWattageAdjustableEnum">
+        <xs:annotation>
+            <xs:documentation>The list of voltage/wattage adjustability values.</xs:documentation>
+            <xs:appinfo>
+                <jaxb:typesafeEnumClass/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>Yes, voltage and wattage adjustable</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="VOLTAGE_WATTAGE_ADJUSTABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Yes, only voltage adjustable</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ONLY_VOLTAGE_ADJUSTABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>Yes, only wattage adjustable</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="ONLY_WATTAGE_ADJUSTABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>No, un-adjustable</xs:documentation>
+                    <xs:appinfo>
+                        <jaxb:typesafeEnumMember name="UNADJUSTABLE"/>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

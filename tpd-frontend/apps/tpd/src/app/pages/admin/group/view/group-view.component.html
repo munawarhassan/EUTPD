@@ -1,0 +1,183 @@
+<ng-container *ngIf="group$ | async as group">
+  <lt-toolbar>
+    <!--begin:::Tabs-->
+    <lt-nav
+      class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold"
+      linkClass="nav-link text-active-primary pb-4"
+    >
+      <li navItem class="nav-item ms-auto">
+        <!--begin::Action menu-->
+        <a
+          href="#"
+          class="btn btn-active-color-dark btn-bg-secondary btn-icon btn-sm"
+          data-lt-menu-trigger="click"
+          data-lt-menu-attach="parent"
+          data-lt-menu-placement="bottom-end"
+        >
+          <inline-svg class="me-0" size="2" [src]="svgIcons.Simple.general.otherVertical"></inline-svg>
+        </a>
+        <!--end::Action menu-->
+        <!--begin::Menu-->
+        <div
+          class="
+            menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary
+            fw-bold
+            py-4
+            w-200px
+            fs-6
+          "
+          ltMenu
+        >
+          <!--end::Menu item-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-5">
+            <a href="#" class="menu-link">
+              <span class="menu-title" (click)="openDialogAddUser(group)">Add User...</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+          <!--begin::Menu separator-->
+          <div class="separator my-3"></div>
+          <!--end::Menu separator-->
+          <!--begin::Menu item-->
+          <div class="menu-item px-5">
+            <a href="#" class="menu-link">
+              <span class="menu-title text-danger" (click)="deleteGroup(group)">Delete Group...</span>
+            </a>
+          </div>
+          <!--end::Menu item-->
+        </div>
+        <!--end::Menu-->
+      </li>
+    </lt-nav>
+    <!--end:::Tabs-->
+  </lt-toolbar>
+
+  <div class="d-flex flex-column flex-lg-row" *ngIf="users$ | async as users">
+    <div class="flex-column flex-lg-row-auto w-100 min-w-300px w-lg-200px w-xl-300px mb-10">
+      <div class="card card-flush">
+        <!--begin::Card header-->
+        <div class="card-header">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex flex-center mb-0">
+              Group
+              <span class="badge badge-lg badge-light-primary ms-2">
+                <inline-svg class="me-2" [src]="svgIcons.Simple.communication.group"></inline-svg>
+                <span>{{ group.name }}</span>
+              </span>
+            </h2>
+          </div>
+          <!--end::Card title-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <app-user-symbol [users]="users" [size]="5"></app-user-symbol>
+        </div>
+        <!--end::Card body-->
+        <!--begin::Card footer-->
+        <div class="card-footer pt-0">
+          <button type="button" class="btn btn-light btn-active-primary" (click)="openDialogAddUser(group)">
+            Add User
+          </button>
+        </div>
+        <!--end::Card footer-->
+      </div>
+    </div>
+    <div class="flex-lg-row ms-lg-10">
+      <div class="card card-flush mb-6 mb-xl-9">
+        <!--begin::Card header-->
+        <div class="card-header pt-5">
+          <!--begin::Card title-->
+          <div class="card-title">
+            <h2 class="d-flex align-items-center">
+              Users Assigned <span class="text-gray-600 fs-6 ms-1">({{ users.length }})</span>
+            </h2>
+          </div>
+          <!--end::Card title-->
+          <!--begin::Card toolbar-->
+          <div class="card-toolbar">
+            <!--begin::Search-->
+            <div class="d-flex align-items-center position-relative my-1">
+              <app-search
+                [placeholder]="'Search Users'"
+                (search)="userFilter = $event"
+                (cleared)="userFilter = ''"
+              ></app-search>
+            </div>
+            <!--end::Search-->
+          </div>
+          <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body pt-0">
+          <!--begin::Table-->
+          <table class="align-middle fs-6 gy-5 mb-0 table table-row-dashed">
+            <!--begin::Table head-->
+            <thead>
+              <!--begin::Table row-->
+              <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                <th class="min-w-150px">User</th>
+                <th class="text-end min-w-100px">Actions</th>
+              </tr>
+              <!--end::Table row-->
+            </thead>
+            <!--end::Table head-->
+            <!--begin::Table body-->
+            <tbody class="fw-bold text-gray-600">
+              <tr *ngFor="let user of users | filter: 'displayName':userFilter">
+                <!--begin::User=-->
+                <td class="d-flex align-items-center">
+                  <app-user-card [user]="user" [link]="['/admin/users/view', user.username]"></app-user-card>
+                </td>
+                <!--end::user=-->
+                <!--begin::Action=-->
+                <td class="text-end">
+                  <a
+                    href="#"
+                    class="btn btn-sm btn-light btn-active-light-primary"
+                    data-lt-menu-trigger="click"
+                    data-lt-menu-placement="bottom-end"
+                    >Actions
+                    <span class="svg-icon svg-icon-5 m-0" [inlineSVG]="svgIcons.Duotone.arrows.down"> </span>
+                  </a>
+                  <!--begin::Menu-->
+                  <div
+                    ltMenu
+                    class="
+                      menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary
+                      fw-bold
+                      fs-7
+                      w-200px
+                      py-4
+                    "
+                  >
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-3">
+                      <a href="#" class="menu-link px-3" [routerLink]="['/admin/users/view', user.username]">View</a>
+                    </div>
+                    <!--end::Menu item-->
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-3">
+                      <a href="#" class="menu-link px-3 text-nowrap" (click)="removeUserFromGroup(group, user)"
+                        >Remove from group</a
+                      >
+                    </div>
+                    <!--end::Menu item-->
+                  </div>
+                  <!--end::Menu-->
+                </td>
+                <!--end::Action=-->
+              </tr>
+            </tbody>
+            <!--end::Table body-->
+          </table>
+          <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+      </div>
+    </div>
+  </div>
+</ng-container>

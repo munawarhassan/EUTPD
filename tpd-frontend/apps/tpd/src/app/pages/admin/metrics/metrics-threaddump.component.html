@@ -1,0 +1,72 @@
+<lt-portlet mode="bordered-semi">
+  <lt-portlet-head [icon]="svgIcons.Duotone.abstract.abs026" title="Thread Dump"> </lt-portlet-head>
+  <lt-portlet-body>
+    <div class="mb-5">
+      <a class="btn btn-info me-1" (click)="threadDumpFilter = ''">
+        {{ 'metrics.jvm.threads.all' | translate }}&nbsp;
+        <span class="badge badge-circle badge-light-info">{{ threadDumpAll }}</span>
+      </a>
+      <a class="btn btn-success me-1" (click)="threadDumpFilter = 'RUNNABLE'">
+        {{ 'metrics.jvm.threads.runnable' | translate }}&nbsp;
+        <span class="badge badge-circle badge-light-success">{{ threadDumpRunnable }}</span>
+      </a>
+      <a class="btn btn-primary me-1" (click)="threadDumpFilter = 'WAITING'">
+        {{ 'metrics.jvm.threads.waiting' | translate }}&nbsp;
+        <span class="badge badge-circle badge-light-primary">{{ threadDumpWaiting }}</span>
+      </a>
+      <a class="btn btn-secondary me-1" (click)="threadDumpFilter = 'TIMED_WAITING'">
+        {{ 'metrics.jvm.threads.timedwaiting' | translate }}&nbsp;
+        <span class="badge badge-circle badge-light">{{ threadDumpTimedWaiting }}</span>
+      </a>
+      <a class="btn btn-danger me-1" (click)="threadDumpFilter = 'BLOCKED'">
+        {{ 'metrics.jvm.threads.blocked' | translate }}&nbsp;
+        <span class="badge badge-circle badge-light-danger">{{ threadDumpBlocked }}</span>
+      </a>
+    </div>
+    <ng-container *ngIf="threadDumps">
+      <div
+        class="row"
+        *ngFor="let threadDump of threadDumps | filter : 'threadState' : threadDumpFilter : 'strict'; let i = index"
+      >
+        <div class="col">
+          <lt-accordion [closeOthers]="false" [mode]="['icon-toggle']" class="py-2">
+            <lt-accordion-item
+              [headerClass]="getHeaderAccordionClass(threadDump.threadState)"
+              heading="{{ threadDump.threadName }} ({{ 'metrics.jvm.threads.dump.id' | translate }} {{
+                threadDump.threadId
+              }})"
+              togglePosition="left"
+            >
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="text-right" translate="metrics.jvm.threads.dump.blockedtime">Blocked Time</th>
+                    <th class="text-right" translate="metrics.jvm.threads.dump.blockedcount">Blocked Count</th>
+                    <th class="text-right" translate="metrics.jvm.threads.dump.waitedtime">Waited Time</th>
+                    <th class="text-right" translate="metrics.jvm.threads.dump.waitedcount">Waited Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ threadDump.blockedTime }}</td>
+                    <td>{{ threadDump.blockedCount }}</td>
+                    <td>{{ threadDump.waitedTime }}</td>
+                    <td>{{ threadDump.waitedCount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>{{ threadDump.lockName }}</p>
+              <ng-scrollbar style="height: 180px" [visibility]="'hover'">
+                <div *ngFor="let throwable of threadDump.stackTrace">
+                  {{ throwable.className }}.{{ throwable.methodName }}({{ throwable.fileName }}:{{
+                    throwable.lineNumber
+                  }})
+                </div>
+              </ng-scrollbar>
+            </lt-accordion-item>
+          </lt-accordion>
+        </div>
+      </div>
+    </ng-container>
+  </lt-portlet-body>
+</lt-portlet>

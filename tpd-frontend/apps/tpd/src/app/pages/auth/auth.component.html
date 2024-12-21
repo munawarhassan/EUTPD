@@ -1,0 +1,26 @@
+<div class="d-flex flex-column flex-root vh-100">
+  <div class="d-flex flex-column flex-column-fluid position-x-center">
+    <div class="row m-4 justify-content-end">
+      <div class="col-auto">
+        <app-select-language [lang]="currentLanguage"></app-select-language>
+      </div>
+    </div>
+    <!--begin::Content-->
+    <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
+      <!--begin::Logo-->
+      <a routerLink="/" class="mb-12">
+        <img alt="Logo" [src]="headerLogo" class="h-50px" />
+        <span class="ms-3 text-gray-400 fw-bolder fs-1 align-baseline">{{ 'global.title' | translate }}</span>
+      </a>
+      <!--end::Logo-->
+      <!--begin::Wrapper-->
+      <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer class="d-flex flex-center flex-column-auto mb-10 ms-11 fs-3 text-gray-400"></app-footer>
+    </div>
+    <!--begin::Footer-->
+
+    <!--end::Footer-->
+  </div>
+</div>

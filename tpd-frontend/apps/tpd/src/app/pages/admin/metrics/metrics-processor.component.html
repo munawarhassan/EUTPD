@@ -1,0 +1,46 @@
+<lt-portlet [mode]="['bordered-semi']">
+  <lt-portlet-body>
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col-xl-12">
+        <!--begin:: Widgets/Processor-->
+        <div class="m-widget14">
+          <div>
+            <h3>Processor</h3>
+            <!-- <span class="m-widget14__desc"></span> -->
+          </div>
+          <div class="row align-items-center">
+            <div class="col">
+              <div style="width: 100%; height: 160px">
+                <canvas
+                  baseChart
+                  [datasets]="data.datasets"
+                  [labels]="data.labels"
+                  type="line"
+                  [options]="options"
+                  [legend]="false"
+                >
+                </canvas>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="data.datasets[0].borderColor"></span>
+                  <span>{{ data.datasets[0].label }}</span>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                  <span class="bullet me-5 w-20px" [style.backgroundColor]="data.datasets[1].borderColor"></span>
+                  <span>{{ data.datasets[1].label }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end:: Widgets/Processor-->
+      </div>
+    </div>
+    <!-- end : row -->
+  </lt-portlet-body>
+</lt-portlet>

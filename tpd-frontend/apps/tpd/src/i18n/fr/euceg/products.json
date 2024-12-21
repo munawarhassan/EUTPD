@@ -1,0 +1,51 @@
+{
+  "products": {
+    "ECIGARETTE": {
+      "title": "Ecigarette Products",
+      "desciption": ""
+    },
+    "TOBACCO": {
+      "title": "Tobacco Products",
+      "desciption": ""
+    },
+    "button": {
+      "create": "Create Product"
+    },
+    "fields": {
+      "productNumber": "Numéro de Product",
+      "child": "Précédent Numéro de Product",
+      "nationalMarkets": "Marché National",
+      "submissionType": "Type de Soumission",
+      "submitterId": "Submitter Id",
+      "productType": "Type de Produit",
+      "pirStatus": "PIR Status",
+      "status": "Status",
+      "latestSubmissionStatus": "Dernière Soumission",
+      "lastModifiedDate": "Dernière Modification",
+      "action": "Action"
+    },
+    "search": {
+      "placeholder": "Search Product..."
+    },
+    "view": {
+      "title": "{{type}} Product {{productNumber}}",
+      "desciption": ""
+    },
+    "send": {
+      "title": "Send {{type}} {{productNumber}}",
+      "description": "This will submit the selected product to U.E. system-to-system."
+    },
+    "revision": {
+      "title": "Revisions of product {{productNumber}}",
+      "fields": {
+        "check": "Compare",
+        "revision": "Version",
+        "productNumber": "Product Number",
+        "status": "Status",
+        "pirStatus": "PIR Status",
+        "modifiedDate": "Latest Update",
+        "modifiedBy": "Update By"
+      }
+    }
+  }
+}

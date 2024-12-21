@@ -1,0 +1,29 @@
+<lt-toolbar>
+  <a href="#" (click)="goBack($event)" class="btn btn-secondary btn-bold me-2" translate="global.button.back"></a>
+</lt-toolbar>
+<lt-portlet id="m_portlet_attachment_revision">
+  <lt-portlet-body>
+    <lt-table
+      id="m_attachment_revision_list"
+      [pageable]="currentPageable"
+      [page]="page"
+      [options]="tableOptions"
+      [lineTemplate]="lineTemplate"
+    >
+    </lt-table>
+  </lt-portlet-body>
+</lt-portlet>
+<ng-template #lineTemplate let-page="page">
+  <tr *ngFor="let attachment of page.content; let i = index">
+    <td data-header="version">
+      {{ attachment.version }}
+      <div *ngIf="attachment.id === latest?.id" class="badge badge-bold badge-sm badge-light-primary ms-3">CURRENT</div>
+    </td>
+    <td data-header="filename">{{ attachment.filename }}</td>
+    <td data-header="confidential">
+      <app-confidential [disabled]="true" [value]="attachment.confidential"></app-confidential>
+    </td>
+    <td data-header="confidential">{{ attachment.lastModifiedBy }}</td>
+    <td data-header="confidential">{{ attachment.lastModifiedDate | date: 'short' }}</td>
+  </tr>
+</ng-template>

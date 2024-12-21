@@ -1,0 +1,50 @@
+{
+  "groups": {
+    "title": "Groupes",
+    "description": "Créer des groupes et gérer les utilisateurs dans chaque groupe.",
+    "fields": {
+      "name": "Nom du Groupe",
+      "name.placeholder": "Nom du Groupe",
+      "add.user": "Ajouter des Utilisateurs",
+      "add.user.placeholder": "Ajouter des Utilisateurs"
+    },
+    "button": {
+      "create": "Créer un Groupe"
+    },
+    "search": {
+      "placeholder": "Rechercher Groupe..."
+    },
+    "view": {
+      "tooltip.userremove": "Enlever l'utilisateur",
+      "button": {
+        "back": "Retourner à liste des groupes",
+        "add": "Ajouter",
+        "delete": "Effacer"
+      },
+      "notify": {
+        "deleted": "The group <b>{{name}}</b> has been deleted.",
+        "addUsersToGroup": "Le(s) utilisateur(s) <b>{{users}}</b> a/ont été ajouté au groupe <b>{{name}}</b>.",
+        "removeUserFromGroup": "L'utilisateur <b>{{user}}</b> a été enlevé du groupe <b>{{name}}</b>."
+      },
+      "alert": {
+        "delete": {
+          "title": "Êtes-vous sûr ?",
+          "msg": "Êtes-vous sûr de vouloir effacer le group <b>{{name}}</b>?"
+        }
+      }
+    },
+    "create": {
+      "title": "Créer un Groupe",
+      "notify": {
+        "created": "Le groupe <b>{{name}}</b> a été crée."
+      },
+      "button": {
+        "create": "Créer un Groupe"
+      },
+      "validate": {
+        "name.required": "Le nom du groupe est requis.",
+        "name.maxlength": "Le nom du groupe doit avoir au plus 255 caractères."
+      }
+    }
+  }
+}

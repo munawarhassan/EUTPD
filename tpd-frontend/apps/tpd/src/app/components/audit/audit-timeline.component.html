@@ -1,0 +1,316 @@
+<!--begin::Card head-->
+<div class="card-header">
+  <!--begin::Title-->
+  <div class="card-title d-flex align-items-center">{{ title }}</div>
+  <!--end::Title-->
+  <!--begin::Toolbar-->
+  <div [formGroup]="formControl" class="card-toolbar m-0">
+    <ng-container *ngIf="channels.length > 1">
+      <div class="nav-group nav-group-fluid me-3">
+        <!--begin::Option-->
+        <label>
+          <input type="radio" class="btn-check" name="type" [formControl]="channel" value="all" autocomplete="off" />
+          <span class="btn btn-active btn-active-primary btn-color-gray-500 btn-sm fw-bolder px-4 text-nowrap"
+            >All</span
+          >
+        </label>
+        <!--end::Option-->
+        <ng-container *ngFor="let achannel of channels">
+          <!--begin::Option-->
+          <label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="type"
+              [formControl]="channel"
+              [value]="achannel.channel"
+              autocomplete="off"
+            />
+            <span class="btn btn-active btn-active-primary btn-color-gray-500 btn-sm fw-bolder px-4 text-nowrap">{{
+              achannel.name
+            }}</span>
+          </label>
+          <!--end::Option-->
+        </ng-container>
+      </div>
+    </ng-container>
+    <lt-button-rangepicker [range]="range" (rangeChange)="handleRangeChange($event)"></lt-button-rangepicker>
+    <!--begin::Close-->
+    <div
+      *ngIf="closeAudit.observers.length > 0"
+      class="btn btn-sm btn-icon btn-active-light-primary ms-3"
+      (click)="closeAudit.emit()"
+    >
+      <inline-svg [src]="svgIcons.Duotone.arrows.cross" size="2"></inline-svg>
+    </div>
+    <!--end::Close-->
+  </div>
+  <!--end::Toolbar-->
+</div>
+<!--end::Card head-->
+<!--begin::Card body-->
+<div class="card-body hover-scroll-overlay-y px-0">
+  <div class="timeline px-4">
+    <!--begin::Timeline item-->
+    <ng-container *ngFor="let entry of fetchedPages | keyvalue; trackBy: trackPage">
+      <ng-container *ngFor="let audit of entry.value.content; trackBy: trackAuditEntity">
+        <ng-container
+          [ngTemplateOutlet]="auditItemTemplate || DefaultAuditItem"
+          [ngTemplateOutletContext]="{ $implicit: audit }"
+        ></ng-container>
+      </ng-container>
+    </ng-container>
+    <!--end::Timeline item-->
+  </div>
+  <div *ngIf="currentPage?.hasNext()" class="d-flex flex-center">
+    <button class="btn btn-primary" [attr.data-lt-indicator]="loading" (click)="showMore()">
+      <span class="indicator-label">Show more</span>
+      <span class="indicator-progress"
+        >Loading...
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+      </span>
+    </button>
+  </div>
+</div>
+<!--end::Card body-->
+
+<ng-template #DefaultAuditItem let-audit>
+  <ng-container [ngSwitch]="audit.action">
+    <ng-container
+      *ngSwitchCase="'AttachmentMovedEvent'"
+      [ngTemplateOutlet]="AttachmentMovedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'AttachmentActionEvent'"
+      [ngTemplateOutlet]="AttachmentActionEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'ProductImportEvent'"
+      [ngTemplateOutlet]="ProductImportEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'SubmissiontCreatedEvent'"
+      [ngTemplateOutlet]="SubmissiontCreatedEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+    <ng-container
+      *ngSwitchCase="'SubmissiontSentEvent'"
+      [ngTemplateOutlet]="SubmissiontSentEvent"
+      [ngTemplateOutletContext]="{ $implicit: audit }"
+    ></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #AttachmentActionEvent let-audit>
+  <ng-container [ngSwitch]="audit.data.action">
+    <ng-container *ngSwitchCase="'created'">
+      <app-timeline-item [icon]="svgIcons.Simple.files.upload" color="success" [audit]="audit">
+        <timeline-title>
+          <span
+            >Uploaded file to folder
+            <app-breadcrumb-path
+              class="my-1 d-inline-block"
+              [path]="audit.data.path"
+              [disabled]="true"
+            ></app-breadcrumb-path>
+            .
+          </span>
+        </timeline-title>
+        <timeline-details>
+          <ng-container
+            [ngTemplateOutlet]="AttachmentAuditDetails"
+            [ngTemplateOutletContext]="{ $implicit: audit }"
+          ></ng-container>
+        </timeline-details>
+      </app-timeline-item>
+    </ng-container>
+    <ng-container *ngSwitchCase="'updated'">
+      <app-timeline-item [icon]="svgIcons.Duotone.files.fileCheck" [audit]="audit">
+        <timeline-title>
+          <span>Updated file. </span>
+        </timeline-title>
+        <timeline-details>
+          <ng-container
+            [ngTemplateOutlet]="AttachmentAuditDetails"
+            [ngTemplateOutletContext]="{ $implicit: audit }"
+          ></ng-container>
+        </timeline-details>
+      </app-timeline-item>
+    </ng-container>
+    <ng-container *ngSwitchCase="'deleted'">
+      <app-timeline-item [icon]="svgIcons.Duotone.files.fileCross" color="danger" [audit]="audit">
+        <timeline-title>
+          <span>Deleted file. </span>
+        </timeline-title>
+        <timeline-details>
+          <ng-container
+            [ngTemplateOutlet]="AttachmentAuditDetails"
+            [ngTemplateOutletContext]="{ $implicit: audit }"
+          ></ng-container>
+        </timeline-details>
+      </app-timeline-item>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #AttachmentMovedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.arrows.doubleChevronRight" color="primary" [audit]="audit">
+    <timeline-title>
+      <span
+        >Moved file from
+        <app-breadcrumb-path
+          class="my-1 d-inline-block"
+          [path]="audit.data.path"
+          [disabled]="true"
+        ></app-breadcrumb-path>
+        to
+        <app-breadcrumb-path
+          class="my-1 d-inline-block"
+          [path]="audit.data.newPath"
+          [disabled]="true"
+        ></app-breadcrumb-path>
+        folder.
+      </span>
+    </timeline-title>
+    <timeline-details>
+      <ng-container
+        [ngTemplateOutlet]="AttachmentAuditDetails"
+        [ngTemplateOutletContext]="{ $implicit: audit }"
+      ></ng-container>
+    </timeline-details>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #AttachmentAuditDetails let-audit>
+  <div class="d-flex align-items-center border border-dashed border-gray-300 rounded p-5">
+    <!--begin::Item-->
+    <div class="d-flex flex-center pe-10 pe-lg-20">
+      <!--begin::Icon-->
+      <inline-svg-file class="me-3" [extension]="svgIcons.getExtension(audit.data.filename)"></inline-svg-file>
+      <!--end::Icon-->
+      <!--begin::Info-->
+      <div class="ms-1 fw-bold text-nowrap">
+        <!--begin::Desc-->
+        {{ audit.data.filename }}
+        <!--end::Desc-->
+        <!--begin::Number-->
+        <div *ngIf="audit.data.size" class="text-gray-400">{{ audit.data.size | bytes }}</div>
+        <!--end::Number-->
+      </div>
+      <!--begin::Info-->
+    </div>
+    <!--end::Item-->
+  </div>
+</ng-template>
+
+<ng-template #ProductImportEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Simple.files.upload" color="primary" [audit]="audit">
+    <timeline-title>
+      <span
+        >Imported <span class="badge badge-light-dark badge-sm">{{ audit.data.productType }}</span> product Excel
+        file.</span
+      >
+    </timeline-title>
+    <timeline-details>
+      <ng-container [ngTemplateOutlet]="AttachmentAuditDetails" [ngTemplateOutletContext]="{ $implicit: audit }">
+      </ng-container>
+      <h6 class="mt-5 text-gray-700">Imported Product(s):</h6>
+      <div class="d-flex flex-column" *ngFor="let productNumber of audit.data.productNumbers | split">
+        <li class="d-flex align-items-center py-2"><span class="bullet bg-primary me-5"></span> {{ productNumber }}</li>
+      </div>
+    </timeline-details>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #SubmissiontCreatedEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.rocket" color="dark" [audit]="audit">
+    <timeline-title>
+      <span>
+        Created Submission
+        <a class="mx-1" [routerLink]="['/product', 'submissions', 'view', audit.data.submissionId]">{{
+          audit.data.productId
+        }}</a>
+        for <span class="badge badge-light-dark badge-sm">{{ audit.data.productType }}</span> product
+        <a class="ms-1" [routerLink]="['/product', audit.data.productType, 'view', audit.data.productNumber]"
+          >{{ audit.data.productNumber }}
+        </a>
+        .
+      </span>
+    </timeline-title>
+    <timeline-details>
+      <div class="d-flex align-items-center border border-dashed border-gray-300 rounded p-5">
+        <!--begin::Item-->
+        <div class="d-flex flex-center pe-10 pe-lg-20">
+          <!--begin::Icon-->
+          <inline-svg class="me-3" [src]="svgIcons.Simple.shopping.box2" size="3x" color="dark"></inline-svg>
+          <!--end::Icon-->
+          <!--begin::Info-->
+          <div class="ms-1 fw-bold">
+            <!--begin::Desc-->
+            Submission <strong>{{ audit.data.submissionType }}</strong>
+            <a class="mx-1" [routerLink]="['/product', 'submissions', 'view', audit.data.submissionId]">{{
+              audit.data.productId
+            }}</a>
+            for <span class="badge badge-light-dark badge-sm">{{ audit.data.productType }}</span> product
+            <a class="ms-1" [routerLink]="['/product', audit.data.productType, 'view', audit.data.productNumber]"
+              >{{ audit.data.productNumber }}
+            </a>
+            .
+            <!--end::Desc-->
+            <!--begin::Number-->
+            <div class="text-gray-400">{{ audit.data.submissionType }}</div>
+            <!--end::Number-->
+          </div>
+          <!--begin::Info-->
+        </div>
+        <!--end::Item-->
+      </div>
+    </timeline-details>
+  </app-timeline-item>
+</ng-template>
+
+<ng-template #SubmissiontSentEvent let-audit>
+  <app-timeline-item [icon]="svgIcons.Duotone.general.send" color="success" [audit]="audit">
+    <timeline-title>
+      <span>
+        Sent <strong>{{ audit.data.submissionType }}</strong> Submission
+        <a class="ms-1" [routerLink]="['/product', 'submissions', 'view', audit.data.submissionId]">{{
+          audit.data.productId
+        }}</a>
+        .
+      </span>
+    </timeline-title>
+    <timeline-details>
+      <div class="d-flex align-items-center border border-dashed border-gray-300 rounded p-5">
+        <!--begin::Item-->
+        <div class="d-flex flex-center pe-10 pe-lg-20">
+          <!--begin::Icon-->
+          <inline-svg-file class="me-3" extension="zip"></inline-svg-file>
+          <!--end::Icon-->
+          <!--begin::Info-->
+          <div class="ms-1 fw-bold">
+            <!--begin::Desc-->
+            Submission
+            <a class="mx-1" [routerLink]="['/product', 'submissions', 'view', audit.data.submissionId]">{{
+              audit.data.productId
+            }}</a>
+            for <span class="badge badge-light-dark badge-sm">{{ audit.data.productType }}</span> product
+            <a class="ms-1" [routerLink]="['/product', audit.data.productType, 'view', audit.data.productNumber]"
+              >{{ audit.data.productNumber }}
+            </a>
+            .
+            <!--end::Desc-->
+            <!--begin::Number-->
+            <div class="text-gray-400">{{ audit.data.submissionType }}</div>
+            <!--end::Number-->
+          </div>
+          <!--begin::Info-->
+        </div>
+        <!--end::Item-->
+      </div>
+    </timeline-details>
+  </app-timeline-item>
+</ng-template>

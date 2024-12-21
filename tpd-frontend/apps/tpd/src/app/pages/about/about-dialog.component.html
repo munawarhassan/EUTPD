@@ -1,0 +1,183 @@
+<!-- About Modal -->
+<div class="modal-header about-dialog">
+  <h3>TPD Submission <span class="color-highlight">Tool</span></h3>
+</div>
+<div *ngIf="info" class="modal-body about-dialog">
+  <table>
+    <tr>
+      <td width="120px">Branch :</td>
+      <td>{{ info.branch }}</td>
+    </tr>
+    <tr>
+      <td>Version :</td>
+      <td>{{ info.describe }}</td>
+    </tr>
+    <tr>
+      <td>Short Version :</td>
+      <td>{{ info.shortDescribe }}</td>
+    </tr>
+    <tr>
+      <td>Build Time :</td>
+      <td>{{ info.buildTime }}</td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2">This product also includes the following libraries which are covered by the GNU LGPL license:</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div style="height: 200px; overflow-y: auto; overflow-x: hidden; margin-top: 10px">
+          <div class="section">
+            <h2 id="Licenses">Licenses</h2>
+            <p><b>LGPL, version 2.1: </b>Java Native Access</p>
+            <p>
+              <b>CDDL + GPLv2 with classpath exception: </b>ASM library repackaged as OSGi bundle, Class Model for Hk2,
+              Expression Language 2.2 Implementation, HK2 API module, HK2 Implementation Utilities, HK2 Spring Bridge,
+              HK2 config types, HK2 configuration module, HK2 core module, HK2 module of HK2 itself, Java(TM) EE 7 Web
+              Specification APIs, OSGi resource locator bundle - used by various API providers that rely on
+              META-INF/services mechanism to locate providers., Run Level Service, ServiceLocator Default
+              Implementation, aopalliance version 1.0 repackaged as a module, javax.annotation API, javax.inject:1 as
+              OSGi bundle, javax.validation:1.1.0.Final as OSGi bundle
+            </p>
+            <p>
+              <b>Apache 2: </b>Apache Derby Database Engine and Embedded JDBC Driver, Atlassian Concurrency Utilities,
+              EasyMock, Jadira Usertype Core (for Joda Time, Joda Money, Libphonenum and JDK Types with Hibernate),
+              Jadira Usertype SPI Classes for Hibernate, Joda convert, Joda-Time, Lucene Common Analyzers, Lucene Core,
+              Lucene Grouping, Lucene Highlighter, Lucene Join, Lucene Memory, Lucene Miscellaneous, Lucene Queries,
+              Lucene QueryParsers, Lucene Sandbox, Lucene Spatial, Lucene Spatial 3D, Lucene Suggest, Objenesis, Spring
+              Test DBUnit
+            </p>
+            <p>
+              <b>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0: </b>JSR-250 Common Annotations for the
+              JavaTM Platform
+            </p>
+            <p><b>Eclipse Public License (EPL), Version 1.0: </b>Java Persistence API, Version 2.1</p>
+            <p><b>The SAX License: </b>XML Commons External Components XML APIs</p>
+            <p><b>Apache v2: </b>BoneCP :: Core Library</p>
+            <p><b>AL 2.0: </b>Java Annotation Indexer</p>
+            <p><b>Common Public License Version 1.0: </b>JUnit</p>
+            <p><b>The MIT License: </b>Mockito, jsoup</p>
+            <p><b>ASF 2.0: </b>Code Generation Library</p>
+            <p>
+              <b>Apache Public License 2.0: </b>Plexus Cipher: encryption/decryption Component, Plexus Security
+              Dispatcher Component
+            </p>
+            <p><b>OpenSymphony (Apache 2): </b>OS Core</p>
+            <p><b>Apache License, version 2.0: </b>JBoss Logging 3</p>
+            <p><b>GNU LESSER GENERAL PUBLIC LICENSE: </b>c3p0:JDBC DataSources/Resource Pools</p>
+            <p><b>BSD: </b>ASM Core, Janino, UrlRewriteFilter</p>
+            <p>
+              <b>Apache License, Version 2.0: </b>Apache Commons CLI, Apache HttpClient, Apache HttpClient Mime, Apache
+              HttpCore, Arquillian Config API, Arquillian Config Implementation Base, Arquillian Container
+              Implementation Base, Arquillian Container SPI, Arquillian Container Test API, Arquillian Container Test
+              Implementation Base, Arquillian Container Test SPI, Arquillian Core API, Arquillian Core Implementation
+              Base, Arquillian Core SPI, Arquillian Protocol Servlet 2.5/3.x, Arquillian Test API, Arquillian Test
+              Implementation Base, Arquillian Test SPI, Arquillian TestRunner JUnit Container, Arquillian TestRunner
+              JUnit Core, Arquillian suite extension, CDI APIs, Codegen, Hibernate Validator Engine, Liquibase Core,
+              Liquibase Hibernate Integration, Netty, Querydsl - APT support, Querydsl - Codegen module, Querydsl -
+              Collections support, Querydsl - Core module, Querydsl - JPA support, Querydsl - SQL support, ShrinkWrap
+              API, ShrinkWrap Descriptors API Base, ShrinkWrap Descriptors SPI, ShrinkWrap Implementation Base,
+              ShrinkWrap Resolver API, ShrinkWrap Resolver Dependency Chain, ShrinkWrap Resolver Maven API, ShrinkWrap
+              Resolver Maven Archive API, ShrinkWrap Resolver Maven Archive Implementation, ShrinkWrap Resolver Maven
+              Archive SPI, ShrinkWrap Resolver Maven Implementation, ShrinkWrap Resolver Maven SPI, ShrinkWrap Resolver
+              SPI, ShrinkWrap SPI, Spring Data Core, Spring Data Elasticsearch, Spring Data JPA, Spring HATEOAS, Spring
+              Plugin - Core
+            </p>
+            <p><b>GNU Lesser Public License: </b>FindBugs-Annotations</p>
+            <p><b>CPL: </b>WSDL4J</p>
+            <p><b>Public Domain, per Creative Commons CC0: </b>HdrHistogram</p>
+            <p>
+              <b>Apache License 2.0: </b>Annotations for Metrics, Compress-LZF, Functional Guava Extensions, Graphite
+              Integration for Metrics, JVM Integration for Metrics, Jackson Integration for Metrics, Javassist, Metrics
+              Core, Metrics Health Checks, Metrics Integration for Ehcache, Metrics Integration for Jersey 2.x, Metrics
+              Integration for Logback, Metrics Integration for Servlets, Metrics Spring Integration, Metrics Utility
+              Servlets, TagSoup, compiler, swagger-annotations, swagger-core, swagger-jaxrs, swagger-jersey2-jaxrs
+              (Jersey 2.x support), swagger-models
+            </p>
+            <p><b>Eclipse Distribution License (EDL), Version 1.0: </b>Java Persistence API, Version 2.1</p>
+            <p><b>CDDL/GPLv2+CE: </b>JavaMail API, JavaMail API jar</p>
+            <p><b>Apache Software Licenses: </b>Log4j Implemented Over SLF4J</p>
+            <p><b>The New BSD License: </b>Reflections</p>
+            <p><b>Public Domain: </b>AOP alliance, JBoss Logging I18n Annotations</p>
+            <p><b>New BSD License: </b>Commons Compiler, Hamcrest Core, Hamcrest library, Janino</p>
+            <p><b>The Apache License, Version 2.0: </b>Apache Spark Integration for Metrics</p>
+            <p><b>WTFPL: </b>Reflections</p>
+            <p><b>Common Development and Distribution License: </b>Java Transaction API</p>
+            <p>
+              <b>Eclipse Public License - v 1.0: </b>AspectJ runtime, AspectJ weaver, Logback Classic Module, Logback
+              Core Module, minimal-json
+            </p>
+            <p><b>MPL 1.1: </b>Javassist</p>
+            <p><b>GNU General Public License, Version 2 with the Classpath Exception: </b>Java Transaction API</p>
+            <p>
+              <b>GNU Lesser General Public License: </b>Core Hibernate O/RM functionality, Entity versioning support,
+              Hibernate Commons Annotations, Hibernate JPA Support, Hibernate/Ehcache Integration, Logback Classic
+              Module, Logback Core Module, UADetector :: Core
+            </p>
+            <p><b>The BSD License: </b>Stax2 API</p>
+            <p><b>ASL, version 2: </b>Java Native Access</p>
+            <p><b>CDDL 1.1: </b>MIME streaming extension, javax.ws.rs-api</p>
+            <p><b>BSD License: </b>AntLR Parser Generator</p>
+            <p>
+              <b>CDDL+GPL License: </b>Old JAXB Core, Old JAXB XJC, jersey-container-servlet-core, jersey-core-client,
+              jersey-core-common, jersey-core-server, jersey-ext-bean-validation, jersey-ext-entity-filtering,
+              jersey-ext-mvc, jersey-ext-mvc-bean-validation, jersey-ext-mvc-mustache, jersey-media-jaxb,
+              jersey-media-json-jackson, jersey-media-multipart, jersey-repackaged-guava, jersey-spring3
+            </p>
+            <p><b>Apache 2.0: </b>REST Assured, Spring Retry, json-path, rest-assured-common, xml-path</p>
+            <p><b>Common Development and Distribution License (CDDL) v1.0: </b>JavaBeans Activation Framework (JAF)</p>
+            <p><b>OpenSymphony Software License, Version 1.1: </b>PropertySet API, PropertySet Core</p>
+            <p><b>Bouncy Castle Licence: </b>Bouncy Castle Provider</p>
+            <p><b>LGPL 2.1: </b>Javassist</p>
+            <p><b>The W3C License: </b>XML Commons External Components XML APIs</p>
+            <p>
+              <b>The Apache Software License, Version 2.0: </b>ASM helper Minidev, Apache CXF Command Line Tools Common,
+              Apache CXF Core, Apache CXF Runtime Core for WSDL, Apache CXF Runtime HTTP Transport, Apache CXF Runtime
+              JAX-WS Frontend, Apache CXF Runtime JAXB DataBinding, Apache CXF Runtime SOAP Binding, Apache CXF Runtime
+              Simple Frontend, Apache CXF Runtime WS Addressing, Apache CXF Runtime WS Policy, Apache CXF Runtime XML
+              Binding, Apache Commons BeanUtils, Apache Commons Codec, Apache Commons Compress, Apache Commons Lang,
+              Apache Commons Logging, Apache Maven Wagon :: API, Apache Maven Wagon :: Providers :: File Provider,
+              Apache Maven Wagon :: Providers :: HTTP Shared Library, Apache Maven Wagon :: Providers :: Lightweight
+              HTTP Provider, Apache Neethi, Apache POI, Apache ServiceMix :: Bundles :: javax.inject, Apache Velocity,
+              Bean Validation API, ClassMate, Commons Collections, Commons DBCP, Commons IO, Commons JXPath, Commons
+              Lang, Commons Pool, Elasticsearch SecureSM, Elasticsearch: Core, FindBugs-jsr305, Groovy, Guava: Google
+              Core Libraries for Java, HPPC Collections, JSON Small and Fast Parser, Jackson dataformat: CBOR, Jackson
+              dataformat: Smile, Jackson-JAXRS-JSON, Jackson-JAXRS-base, Jackson-annotations, Jackson-core,
+              Jackson-dataformat-XML, Jackson-dataformat-YAML, Jackson-datatype-Hibernate4, Jackson-datatype-Joda,
+              Jackson-module-JAXB-annotations, Json Path, JsonPath Assert, Maven Aether Provider, Maven Model, Maven
+              Model Builder, Maven Repository Metadata Model, Maven Settings, Maven Settings Builder, OGNL - Object
+              Graph Navigation Library, Plexus :: Component Annotations, Plexus Common Utilities, Plexus Compiler Api,
+              Plexus Interpolation API, Plexus Javac Component, Quality-Check, Sisu Guice - Core Library, Spatial4J,
+              Spring AOP, Spring Aspects, Spring Beans, Spring Context, Spring Context Support, Spring Core, Spring Data
+              JDBC Extensions Core, Spring Expression Language (SpEL), Spring JDBC, Spring Messaging, Spring
+              Object/Relational Mapping, Spring TestContext Framework, Spring Transaction, Spring Web, Spring Web MVC,
+              Spring WebSocket, T-Digest, Thymeleaf Layout Dialect, UADetector :: Core, UADetector :: Resources,
+              Woodstox, XML Commons External Components XML APIs, XML Commons Resolver Component, Xerces2-j, XmlBeans,
+              XmlSchema Core, ehcache, hazelcast, hazelcast-cloud, hazelcast-hibernate4, hazelcast-spring, hazelcast-wm,
+              jackson-databind, javax.inject, lang, quartz, spring-ldap-core, spring-security-config,
+              spring-security-core, spring-security-ldap, spring-security-web, thymeleaf, thymeleaf-spring4, unbescape
+            </p>
+            <p><b>Eclipse Public License v1.0: </b>Eclipse ECJ</p>
+            <p><b>CC0 1.0 Universal: </b>JSR166e</p>
+            <p><b>GPL2 w/ CPE: </b>MIME streaming extension, javax.ws.rs-api</p>
+            <p>
+              <b>Eclipse Public License, Version 1.0: </b>Aether API, Aether Connector Wagon, Aether Implementation,
+              Aether SPI, Aether Utilities, TrueZIP Driver ZIP, TrueZIP Kernel, TrueZIP Swing, org.eclipse.sisu.inject,
+              org.eclipse.sisu.plexus
+            </p>
+            <p>
+              <b>MIT License: </b>Bridge method injection annotations, JCL 1.1.1 implemented over SLF4J, JUL to SLF4J
+              bridge, SLF4J API Module
+            </p>
+            <p><b>Apache License Version 2.0: </b>SnakeYAML</p>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="close()">Close</button>
+</div>
